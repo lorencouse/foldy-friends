@@ -5,3 +5,8 @@ export interface ProductData {
     new_price: number;
     old_price: number;
 }
+
+export interface LinkInfo {
+    title: string, 
+    url: string
+}
