@@ -1,10 +1,24 @@
 import React from 'react'
-import { Hero } from '../Components/Hero/Hero'
+import { Hero } from '../Components/Hero'
+import { Collections } from '../Components/Collections'
+import { Offers } from '../Components/Offers'
+import womensTopSellers from '../Assets/data'
+import newItems from '../Assets/new_collections'
+import { Subscribe } from '../Components/Subscribe'
+
 
 export const Shop = () => {
   return (
-    <div>
+    <div className='flex flex-col justify-between' >
       <Hero />
+      <div className='lg:mx-16 md:mx-12'>
+      <Collections header='Womens Top Sellers' productData={womensTopSellers} />
+      <Offers />
+      <Collections header='New Items' productData={newItems} />
+      <Subscribe />
+      </div>
+
+
     </div>
     
   )
