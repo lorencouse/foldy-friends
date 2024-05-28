@@ -1,5 +1,5 @@
 import React from 'react'
-import { BannerButtonBlack } from './BannerButton'
+import { ButtonRoundBlack } from './BannerButton'
 
 export const Subscribe = () => {
   return (

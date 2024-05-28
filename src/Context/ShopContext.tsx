@@ -1,8 +1,11 @@
-import React, { createContext, ReactNode } from 'react'
+import React, { createContext, ReactNode, useState, Dispatch, SetStateAction } from 'react'
 import allProducts from '../Assets/all_product'
+import { ProductData } from '../types';
 
 interface ShopContextType {
-  allProducts: typeof allProducts;
+  allProducts: ProductData[];
+  cartItems: number[];
+  setCartItems: Dispatch<SetStateAction<number[]>>;
 }
 
 interface ShopContextProviderProps {
@@ -12,7 +15,9 @@ interface ShopContextProviderProps {
 export const ShopContext = createContext<ShopContextType | null>(null);
 
 const ShopContextProvider: React.FC<ShopContextProviderProps> = (props) => {
-  const contextVal: ShopContextType = { allProducts };
+  const [cartItems, setCartItems] = useState<number[]>([]);
+
+  const contextVal: ShopContextType = { allProducts, cartItems, setCartItems };
 
   return (
     <ShopContext.Provider value={contextVal}>

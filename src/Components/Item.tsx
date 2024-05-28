@@ -1,19 +1,16 @@
 import React from 'react'
 import { ProductData } from '../types'
+import { Link } from 'react-router-dom'
+import { Prices } from './Product/Prices'
 
 export const Item = ( props:ProductData ) => {
   return (
-    <div className='transition ease-in-out hover:scale-105 p-3 w-80 text-left m-auto'>
-        <img src={props.image} alt={props.name} className=' ' />
-        <p> {props.name} </p>
-        <div className="prices flex flex-row my-3">
-            <div className="sale-price font-bold">
-                {`$${props.new_price}`}
-            </div>
-            <div className="retail-price mx-3 font-extralight line-through">
-                 {`$${props.old_price}`}
-            </div>
-        </div>
+    <Link to={`/product/${props.id}`} >
+    <div className='transition ease-in-out hover:scale-105 pl-2 my-3 w-72 text-left m-auto'>
+        <img src={props.image} alt={props.name} className='' />
+        <p className=' capitalize font-medium ' > {props.name} </p>
+        <Prices oldPrice={props.old_price} newPrice={props.new_price} />
     </div>
+    </Link>
   )
 }

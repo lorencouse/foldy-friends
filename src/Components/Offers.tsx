@@ -1,6 +1,6 @@
 import React from 'react'
 import offersImage from "../Assets/exclusive_image.png"
-import { BannerButtonRed } from './BannerButton'
+import { ButtonRoundRed } from './BannerButton'
 
 export const Offers = () => {
   return (
@@ -11,7 +11,7 @@ export const Offers = () => {
                 For You
             </p>
             <p className='banner-sub-text' >Great prices on our best selling items</p>
-            <BannerButtonRed label='Shop Now' url='' />
+            <ButtonRoundRed label='Shop Now' url='' />
         </div>
         <div className="offers-right">
             <img src={offersImage} alt="" />
