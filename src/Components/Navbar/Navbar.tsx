@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react'
 import "./Navbar.css"
-import logo from "../../Assets/logo.png"
+import logo from "../../Assets/foldy-friends-logo-192x192.png"
 import cart from "../../Assets/cart_icon.png"
 import { Link } from 'react-router-dom'
 import { LinkInfo } from '../../types'
-import { ShopContext } from '../../Context/ShopContext'
-
+import { useShopContext } from '../../Context/ShopContext'
 
 
 function NavLink({ navLink, active, setActive }: { navLink: LinkInfo, active: string, setActive: (active: string) => void }) {
@@ -19,21 +18,19 @@ function NavLink({ navLink, active, setActive }: { navLink: LinkInfo, active: st
 export function NavLogo() {
     return (
             <div className="nav-logo flex flex-row items-center">
-                <img src={logo} alt="Foldy Friends Logo" />
-                <p className='text-3xl text-gray-700 items-center px-4'>Foldy Friends</p>
+                <Link to='/'><img src={logo} alt="Foldy Friends Logo" className='h-16' /></Link>
+                <p className='text-3xl text-gray-700 items-center px-4 select-none'>Foldy Friends</p>
+                
             </div>
     )
 }
 
 export const Navbar = () => {
     const [active, setActive] = useState("Shop");
-    const context = useContext(ShopContext);
+    const { cartItems } = useShopContext();
 
-    if (!context) {
-        return <div>Loading...</div>;
-    }
 
-    const { cartItems } = context;
+
     
     const links: LinkInfo[] = [
         { title: "Shop", url: "/" },

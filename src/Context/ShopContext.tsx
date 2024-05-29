@@ -1,29 +1,37 @@
-import React, { createContext, ReactNode, useState, Dispatch, SetStateAction } from 'react'
-import allProducts from '../Assets/all_product'
-import { ProductData } from '../types';
+import React, { createContext, ReactNode, useState, Dispatch, SetStateAction, useContext } from 'react';
+import allProducts from '../Assets/all_product';
+import { CartItem, ProductData } from '../types';
 
+// Define the context type
 interface ShopContextType {
   allProducts: ProductData[];
-  cartItems: number[];
-  setCartItems: Dispatch<SetStateAction<number[]>>;
+  cartItems: CartItem[];
+  setCartItems: Dispatch<SetStateAction<CartItem[]>>;
 }
 
 interface ShopContextProviderProps {
   children: ReactNode;
 }
 
-export const ShopContext = createContext<ShopContextType | null>(null);
+export const ShopContext = createContext<ShopContextType | null>(null); 
 
-const ShopContextProvider: React.FC<ShopContextProviderProps> = (props) => {
-  const [cartItems, setCartItems] = useState<number[]>([]);
+export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const contextVal: ShopContextType = { allProducts, cartItems, setCartItems };
 
   return (
     <ShopContext.Provider value={contextVal}>
-      {props.children}
+      {children}
     </ShopContext.Provider>
   );
-}
+};
 
-export default ShopContextProvider;
+// Custom hook for typed context access
+export const useShopContext = () => {
+  const context = useContext(ShopContext);
+  if (!context) {
+    throw new Error('useShopContext must be used within a ShopContextProvider');
+  }
+  return context; // Return the full context
+};

@@ -7,6 +7,12 @@ export interface ProductData {
     old_price: number;
 }
 
+export interface CartItem {
+    id: number;
+    quantity: number;
+    size: string;
+}
+
 export interface LinkInfo {
     title: string, 
     url: string

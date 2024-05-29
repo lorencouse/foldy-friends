@@ -51,8 +51,8 @@ h1 {
     background-image: linear-gradient(#fbcfe8, white);
 }
 
-.banner-button:hover {
-
+.cart-labels {
+  font-weight: 700;
 }
 
 
