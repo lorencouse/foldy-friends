@@ -12,17 +12,17 @@ import { CartItem, ProductData } from '../types';
 export const Product: React.FC = () => {
 
   const { productId } = useParams();
-  const { allProducts, cartItems, setCartItems } = useShopContext();
+  const { allProducts, cartItems, setCartItems, setCartCount} = useShopContext();
   const sizes = ["s", "m","l","xl","xxl",]
   const [currentSize, setCurrentSize] = useState<number>(0);
   
 
-  useEffect(() => {
-    window.scrollTo(0,0)
-  },[productId])
+
 
 
   const product = allProducts.find(i => i.id === Number(productId));
+
+
   const relatedProducts = allProducts.filter(p => p.category === product?.category && p.id !== product?.id);
     const shuffleArray = (array: ProductData[]) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -30,6 +30,11 @@ export const Product: React.FC = () => {
       [array[i], array[j]] = [array[j], array[i]];
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0,0)
+
+  },[productId]);
 
   const images = product?.image ? [product.image, product.image, product.image, product.image] : []; 
 
@@ -55,6 +60,9 @@ function handleAddToCart() {
       )
     );
   }
+
+  setCartCount( oldCount => oldCount + 1 );
+  
 }
 
 
