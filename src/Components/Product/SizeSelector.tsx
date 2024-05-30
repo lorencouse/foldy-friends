@@ -4,8 +4,8 @@ export const SizeSelector = ( {sizes, currentSize, setCurrentSize}:{sizes:string
 
 
   return (
-    <div className='flex flex-col my-5'>
-        <p>Select Size:</p>
+    <div className='flex flex-col mt-5'>
+        <p className="font-semibold m-1">Select Size</p>
         <div className="sizes flex flex-row justify-start uppercase ">
          
             {sizes.map( (s, index) => <div onClick={ () => setCurrentSize(index) } 

@@ -35,7 +35,7 @@ export const Footer = () => {
 
         <SocialIcons />
         </div>
-        <hr className='bg-gray-300 h-1 m-5' />
+        <hr className='h-0 outline outline-1 outline-gray-400  m-auto' />
         <div className="copyright my-12">
             <p>Foldy Friends Inc. 2024 - All Rights Reserved</p>
         </div>

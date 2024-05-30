@@ -10,7 +10,9 @@ export const CartPage = () => {
 
   return (
     <div>
-        { cartCount > 0 && <Cart /> }
+        { cartCount > 0 && 
+        
+        <Cart /> }
 
         { cartCount < 1 && 
         

@@ -33,6 +33,16 @@ h1 {
   font-weight: 600;
 }
 
+h2 {
+  font-size: 2rem;
+  
+}
+
+h3 {
+  font-size: 1.5rem;
+  padding: 15px 5px;
+}
+
 .banner-heading {
   font-size: 3.5rem;
   text-transform: uppercase;

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { CartItem, ProductData } from '../types'
 import { useShopContext } from '../Context/ShopContext'
 import { Link } from 'react-router-dom';
-import { ButtonInput } from './BannerButton';
+import { ButtonInput, ButtonSquareRed } from './BannerButton';
 
 
 export const Cart = () => {
@@ -14,9 +14,21 @@ export const Cart = () => {
       return map;
     }, {} as { [id: number]: ProductData });
 
+  function CartTotal() {
+      let total = 0;
+
+      cartItems.forEach(cartItem => {
+        total += productMap[cartItem.id].new_price * cartItem.quantity;
+      });
+
+      return <div className="cart-total mt-4 "  ><p> <span className='font-semibold'>Total: </span> {`$${total.toFixed(2)}`}</p></div> 
+  };
+
+
+
   return (
-    <div className="cart-container">
-      <div className="grid grid-cols-[auto_2fr_auto_auto_auto] lg:gap-12 gap-5 m-auto py-10 text-left max-w-4xl"> 
+    <div className="cart-container flex flex-col lg:m-auto sm:mx-3 xs: mx-3  max-w-4xl text-left items-end ">
+      <div className="grid grid-cols-[auto_2fr_auto_auto_auto] lg:gap-12 gap-5 py-10 w-full  "> 
 
         <div className="cart-labels">
           <p>Image</p>
@@ -34,7 +46,9 @@ export const Cart = () => {
           <p>Remove</p>
         </div>
 
-            {cartItems.map((cartItem) => {
+
+      </div>
+                  {cartItems.map((cartItem) => {
               const product = productMap[cartItem.id];
 
               return product ? ( 
@@ -46,7 +60,9 @@ export const Cart = () => {
               ) : null;
             })}
 
-      </div>
+      <CartTotal />
+          
+      <ButtonSquareRed label='Checkout' onclick={ () => {  }} />
 </div>
   )
 }
@@ -55,7 +71,6 @@ const CartLineItem = ( {product, cartItem}:{product:ProductData, cartItem:CartIt
 
   const { setCartItems, setCartCount } = useShopContext();
 
-
   function removeCartItem() {
       if (cartItem.quantity > 1) {
         setCartCount( oldCount => oldCount - cartItem.quantity );
@@ -63,7 +78,6 @@ const CartLineItem = ( {product, cartItem}:{product:ProductData, cartItem:CartIt
       setCartItems( oldCartItems => oldCartItems.filter( item => item !== cartItem) )
 
   }
-
 
     function incrementQuantity() {
     setCartItems((oldCartItems) =>
@@ -89,7 +103,7 @@ const CartLineItem = ( {product, cartItem}:{product:ProductData, cartItem:CartIt
   }
 
   return (
-    <>
+    <div className='grid grid-cols-[auto_2fr_auto_auto_auto] lg:gap-12 gap-5 m-auto py-8 w-full border border-y-1 border-x-0 border-gray-200  '>
       <div className="cart-item ">
         <Link to={`/product/${product.id}`}><img src={product.image} alt={product.name} className='max-h-24'/> </Link>
       </div>
@@ -97,13 +111,13 @@ const CartLineItem = ( {product, cartItem}:{product:ProductData, cartItem:CartIt
        <Link to={`/product/${product.id}`}> <p>{`${product.name} - `} <span className='font-semibold'>{`Size: ${cartItem.size.toUpperCase()}`}</span> </p></Link>
       </div>
       <div className="cart-item flex items-center">
-        <p>{`$${product.new_price}`}</p>
+        <p>{`$${product.new_price.toFixed(2)}`}</p>
       </div>
       <div className="cart-item flex flex-row items-center ">
 
         <ButtonInput onclick={decrementQuantity} label='-' />
 
-        <p className="w-6 h-6 text-center m-3 outline outline-1 rounded-lg font-bold ">{cartItem.quantity}</p>
+        <p className="w-6 h-6 text-center m-3 outline outline-1 rounded-lg font-semibold ">{cartItem.quantity}</p>
 
         <ButtonInput onclick={incrementQuantity}  label='+' />
         
@@ -111,6 +125,6 @@ const CartLineItem = ( {product, cartItem}:{product:ProductData, cartItem:CartIt
       <div className="cart-item flex items-center m-auto">
         <ButtonInput onclick={removeCartItem} label='X' />
       </div>
-    </>
+    </div>
   )
 }

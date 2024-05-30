@@ -8,14 +8,20 @@ import { ProductImages } from '../Components/Product/ProductImages';
 import { Breadcrumbs } from '../Components/Product/Breadcrumbs';
 import { Collections } from '../Components/Collections';
 import { CartItem, ProductData } from '../types';
+import { StarRatingCount } from '../Components/Product/StarRating';
+import { DescriptionBox } from '../Components/Product/DescriptionBox';
+import { reviewData } from '../Assets/reviewData';
+import { ReviewData } from '../types';
 
 export const Product: React.FC = () => {
 
   const { productId } = useParams();
   const { allProducts, cartItems, setCartItems, setCartCount} = useShopContext();
   const sizes = ["s", "m","l","xl","xxl",]
+  const description = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor laudantium a at pariatur? Esse cum mollitia velit ipsam maxime hic, laborum eaque et id, tenetur, non corporis iure pariatur ab. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor laudantium a at pariatur? Esse cum mollitia velit ipsam maxime hic, laborum eaque et id, tenetur, non corporis iure pariatur ab. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor laudantium a at pariatur? Esse cum mollitia velit ipsam maxime hic, laborum eaque et id, tenetur, non corporis iure pariatur ab."
   const [currentSize, setCurrentSize] = useState<number>(0);
-  
+  const reviews: ReviewData[] = reviewData.filter(review => review.id.toString() === productId); 
+
 
 
 
@@ -65,9 +71,6 @@ function handleAddToCart() {
   
 }
 
-
-  
-
   return (
     <div className='lg:mx-16 md:mx-12'>
     <div className='flex flex-row flex-wrap  '>
@@ -78,9 +81,9 @@ function handleAddToCart() {
 
         <Breadcrumbs category={product.category} name={product.name} />
         <h1>{product.name}</h1>
-
+        <StarRatingCount reviews={reviews} />
         <Prices oldPrice={product.old_price} newPrice={product.new_price} />
-        <p className="product-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eligendi voluptates impedit minima voluptas sed perferendis ut, dolores nisi animi rerum molestias. Nemo, hic! Deleniti enim exercitationem aliquam rerum numquam!</p>
+        <p className="short-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eligendi voluptates impedit minima voluptas sed perferendis ut, dolores nisi animi rerum molestias. Nemo, hic! Deleniti enim exercitationem aliquam rerum numquam!</p>
         <SizeSelector currentSize={currentSize} setCurrentSize={setCurrentSize} sizes={sizes} />
         <ButtonSquareRed label='Add To Cart' onclick={ handleAddToCart } />
 
@@ -92,6 +95,7 @@ function handleAddToCart() {
 
     </div>
 
+    <DescriptionBox description={description} id={product.id} reviews={reviews} />
     <div className="related-Products" >
       <Collections productData={randomRelatedProducts} header='Related Products' />
     </div>

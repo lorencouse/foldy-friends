@@ -7,6 +7,13 @@ export interface ProductData {
     old_price: number;
 }
 
+export interface ReviewData {
+    id: number;
+    title: string;
+    content: string;
+    rating: number;
+}
+
 export interface CartItem {
     id: number;
     quantity: number;
