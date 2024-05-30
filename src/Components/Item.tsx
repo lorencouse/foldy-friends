@@ -3,6 +3,7 @@ import { ProductData } from '../types';
 import { Link } from 'react-router-dom';
 import { Prices } from './Product/Prices';
 import { useShopContext } from '../Context/ShopContext';
+import { StarRating, StarRatingAverage } from './Product/StarRating';
 
 export const Item: React.FC<ProductData> = (props) => {
     const { setActiveCategory } = useShopContext();
@@ -15,6 +16,7 @@ export const Item: React.FC<ProductData> = (props) => {
             >
                 <img src={props.image} alt={props.name} />
                 <p className='capitalize font-medium'>{props.name}</p>
+                <StarRatingAverage id={props.id} />
                 <Prices oldPrice={props.old_price} newPrice={props.new_price} />
             </div>
         </Link>

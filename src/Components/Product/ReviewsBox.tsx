@@ -1,26 +1,25 @@
 import React from 'react'
 import { StarRating } from './StarRating'
 import { ReviewData } from '../../types'
+import { reviewData } from '../../Assets/reviewData'
 
-export const ReviewsBox = ( props:{reviews:ReviewData[], id:number} ) => {
+export const ReviewsBox = ( props:{id:number} ) => {
 
-
+  const reviews: ReviewData[] = reviewData.filter(review => review.id === props.id);
 
   return (
+
     <div className='review-box flex flex-col' >
 
-      <h3>Reviews {`(${props.reviews.length})`}</h3>
+      <h3>Reviews {`(${reviews.length})`}</h3>
 
-      {props.reviews.map(review => <ReviewLine title={review.title} content={review.content} rating={review.rating} /> )}
-
+      {reviews.map(review => <ReviewLine title={review.title} content={review.content} rating={review.rating} /> )}
       
-
     </div>
   )
 }
 
 const ReviewLine = ( props:{title: string, content:string, rating:number}) => {
-
 
   return (
     <div className="review-line border border-y-1 border-x-0 p-5 ">

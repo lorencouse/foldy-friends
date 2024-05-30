@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ReviewsBox } from './ReviewsBox';
 import { ReviewData } from '../../types';
 
-export const DescriptionBox = ( props:{description:string, id:number, reviews:ReviewData[]} ) => {
+export const DescriptionBox = ( props:{description:string, id:number} ) => {
     const [descriptionBox, setDescriptionBox] = useState<boolean>(true);
 
   return (
@@ -15,7 +15,7 @@ export const DescriptionBox = ( props:{description:string, id:number, reviews:Re
         
         <div className="description-text-box p-10 outline outline-1 outline-gray-400 text-left">
             
-                {descriptionBox ? props.description : <ReviewsBox reviews={props.reviews} id={ props.id } /> }
+                {descriptionBox ? props.description : <ReviewsBox id={ props.id }/> }
             
         </div> 
 
