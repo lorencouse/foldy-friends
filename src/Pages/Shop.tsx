@@ -1,10 +1,10 @@
 import React from 'react'
-import { Hero } from '../Components/Hero'
+import { Hero } from '../Components/Home/Hero'
 import { Collections } from '../Components/Collections'
-import { Offers } from '../Components/Offers'
+import { Offers } from '../Components/Home/Offers'
 import womensTopSellers from '../Assets/data'
 import newItems from '../Assets/new_collections'
-import { Subscribe } from '../Components/Subscribe'
+import { Subscribe } from '../Components/Home/Subscribe'
 
 
 export const Shop = () => {

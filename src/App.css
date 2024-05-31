@@ -45,7 +45,6 @@ h3 {
 
 .banner-heading {
   font-size: 3.5rem;
-  text-transform: uppercase;
   color: #333;
   line-height: 4.5rem;
 }
@@ -53,7 +52,6 @@ h3 {
 .banner-sub-text {
   color: #555;
   font-weight: 200;
-  text-transform: uppercase;
   padding: 15px;
 }
 
