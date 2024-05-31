@@ -15,7 +15,7 @@ export const Item: React.FC<ProductData> = (props) => {
                 onClick={() => setActiveCategory(props.category)} 
             >
                 <img src={props.image} alt={props.name} />
-                <p className='capitalize font-medium'>{props.name}</p>
+                <p className='capitalize'>{props.name}</p>
                 <StarRatingAverage id={props.id} />
                 <Prices oldPrice={props.old_price} newPrice={props.new_price} />
             </div>

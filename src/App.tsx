@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Navbar } from './Components/Navbar/Navbar';
 import { Category } from './Components/Category';
+import { Home } from './Pages/Home';
 import { Shop } from './Pages/Shop';
 import { Product } from './Pages/Product';
 import { CartPage } from './Pages/CartPage'; 
@@ -17,7 +18,8 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path='/' element={<Shop />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/shop' element={ <Shop /> } />
         <Route path='/men' element={ <Category  category="men" /> } />
         <Route path='/women' element={<Category category="women" />} />
         <Route path='/kids' element={<Category category="kids" />} />

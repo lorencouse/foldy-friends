@@ -71,6 +71,10 @@ hr {
     background: red;
 }
 
+select option {
+  text-transform: capitalize;
+}
+
 
 @keyframes App-logo-spin {
   from {

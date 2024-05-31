@@ -2,9 +2,8 @@ import "./Navbar.css";
 import logo from "../../Assets/foldy-friends-logo-192x192.png";
 import cart from "../../Assets/cart_icon.png";
 import { Link } from 'react-router-dom';
-import { LinkInfo } from '../../types';
 import { useShopContext } from '../../Context/ShopContext';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function NavLink({ url, label, activeCategory, setActiveCategory }: { url: string, label: string, activeCategory: string, setActiveCategory: (active: string) => void }) {
     return (
@@ -51,17 +50,36 @@ export function NavBarCart() {
 }
 
 export const Navbar = () => {
-    const { setActiveCategory, activeCategory, cartCount } = useShopContext();
+    const { setActiveCategory, activeCategory } = useShopContext();
     const [showMenu, setShowMenu] = useState<boolean>(true);
 
     const toggleMenu = () => { setShowMenu(!showMenu); }
 
     const links = [
-        { title: "Shop", url: "/" },
+        { title: "Home", url: "/" },
+        { title: "Shop", url: "/shop" },
         { title: "Men", url: "/men" },
         { title: "Women", url: "/women" },
         { title: "Kids", url: "/kids" },
     ];
+
+        useEffect(() => {
+        const handleResize = () => {
+            if (window.matchMedia("(min-width: 1024px)").matches) {
+                setShowMenu(true);
+            } else {
+                setShowMenu(false);
+            }
+        };
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
         <div className="navbar flex flex-col lg:flex-row justify-between p-4 shadow-md">

@@ -7,11 +7,11 @@ import { ButtonSquareRed } from '../Components/BannerButton';
 import { ProductImages } from '../Components/Product/ProductImages';
 import { Breadcrumbs } from '../Components/Product/Breadcrumbs';
 import { Collections } from '../Components/Collections';
-import { CartItem, ProductData } from '../types';
+import { CartItem } from '../types';
 import { StarRatingAverage } from '../Components/Product/StarRating';
 import { DescriptionBox } from '../Components/Product/DescriptionBox';
-import { reviewData } from '../Assets/reviewData';
-import { ReviewData } from '../types';
+import { shuffleProducts } from '../Tools/ShuffleProducts';
+
 
 export const Product: React.FC = () => {
 
@@ -21,20 +21,12 @@ export const Product: React.FC = () => {
   const description = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor laudantium a at pariatur? Esse cum mollitia velit ipsam maxime hic, laborum eaque et id, tenetur, non corporis iure pariatur ab. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor laudantium a at pariatur? Esse cum mollitia velit ipsam maxime hic, laborum eaque et id, tenetur, non corporis iure pariatur ab. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor laudantium a at pariatur? Esse cum mollitia velit ipsam maxime hic, laborum eaque et id, tenetur, non corporis iure pariatur ab."
   const [currentSize, setCurrentSize] = useState<number>(0);
 
-
-
-
-
   const product = allProducts.find(i => i.id === Number(productId));
 
 
   const relatedProducts = allProducts.filter(p => p.category === product?.category && p.id !== product?.id);
-    const shuffleArray = (array: ProductData[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  };
+  
+
 
   useEffect(() => {
     window.scrollTo(0,0)
@@ -44,8 +36,8 @@ export const Product: React.FC = () => {
   const images = product?.image ? [product.image, product.image, product.image, product.image] : []; 
 
 
-    shuffleArray(relatedProducts);
-    const randomRelatedProducts = relatedProducts.slice(0, 4);
+    
+    const randomRelatedProducts = shuffleProducts(relatedProducts, 4);
 
   if (!product) {
     return <div>Product not found</div>;
