@@ -1,6 +1,6 @@
 import React from 'react'
 import { Hero } from '../Components/Home/Hero'
-import { Collections } from '../Components/Collections'
+import { Collections } from '../Components/ProductCategory/Collections'
 import { Offers } from '../Components/Home/Offers'
 import womensTopSellers from '../Assets/data'
 import newItems from '../Assets/new_collections'

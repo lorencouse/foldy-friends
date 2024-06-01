@@ -1,6 +1,6 @@
 import React from 'react'
 import { Item } from './Item'
-import { ProductData } from '../types'
+import { ProductData } from '../../types'
 
 export const Collections = ( props:{header: string, productData:ProductData[] } ) => {
   return (

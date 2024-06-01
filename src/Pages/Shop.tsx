@@ -1,36 +1,19 @@
 import React, { useMemo, useState } from 'react'
-import { CategoryCard } from '../Components/CategoryCard'
-import { Collections } from '../Components/Collections'
-import { filterProductCategory, filterProductPrice, shuffleProducts } from '../Tools/ShuffleProducts'
+import { CategoryCard } from '../Components/ProductCategory/CategoryCard'
+import { Collections } from '../Components/ProductCategory/Collections'
+import { filterProductCategory, shuffleProducts } from '../Tools/ShuffleProducts'
 import { useShopContext } from '../Context/ShopContext'
 import { Link } from 'react-router-dom'
 import { ProductData } from '../types'
+import { PriceFilters, CategoryFilter } from '../Components/ProductCategory/ProductFilters'
 
 export const Shop = () => {
     const { setActiveCategory, allProducts } = useShopContext();
     const [filteredProducts, setFilteredProducts] = useState<ProductData[]>(allProducts);
-    const [ priceFilter, setPriceFilter ] = useState<{min:number, max:number}>({min:0, max:100})
-
     const categories = useMemo(() => ["men", "women", "kids"], []); 
+    const [priceFilter, setPriceFilter] = useState<{ min: number; max: number }>({ min: 0, max: 100 });
 
-    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedCategory = e.target.value;
-        if (selectedCategory === "all") {
-            setFilteredProducts(allProducts);
-        } else {
-            setFilteredProducts(filterProductCategory(allProducts, selectedCategory));
-        }
-    };
 
-    const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const value = e.target.value;
-      setPriceFilter( p => ({...p, min: Number(value)}))
-
-      setFilteredProducts( filterProductPrice(filteredProducts, priceFilter.min, 200));
-
-    }
-
-    // Memoize the top-sellers products
     const topSellers = useMemo(() => {
         return categories.map(category => ({
             category,
@@ -67,18 +50,9 @@ export const Shop = () => {
                   
                     <p className='font-bold text-lg'>Sort By:</p>
 
-
-                    <select name="categories" id="categories" onChange={handleCategoryChange} className="p-2 border rounded capitalize font-bold bg-gray-100">
-                        <option value="all">Category</option>
-                        {categories.map(category => (
-                            <option key={category} value={category} >
-                                {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}
-                            </option>
-                        ))}
-                    </select>
-
-                    <input type="number" value={priceFilter.min} onChange={ handlePriceChange } />
-
+                    <CategoryFilter categories={categories} products={allProducts} setFilteredProducts={setFilteredProducts} />
+                    <PriceFilters products={allProducts} setFilteredProducts={setFilteredProducts}         priceFilter={priceFilter}
+                    setPriceFilter={setPriceFilter} />
 
                 </div>
                 <Collections productData={filteredProducts} header='' />

@@ -6,7 +6,7 @@ import { SizeSelector } from '../Components/Product/SizeSelector';
 import { ButtonSquareRed } from '../Components/BannerButton';
 import { ProductImages } from '../Components/Product/ProductImages';
 import { Breadcrumbs } from '../Components/Product/Breadcrumbs';
-import { Collections } from '../Components/Collections';
+import { Collections } from '../Components/ProductCategory/Collections';
 import { CartItem } from '../types';
 import { StarRatingAverage } from '../Components/Product/StarRating';
 import { DescriptionBox } from '../Components/Product/DescriptionBox';

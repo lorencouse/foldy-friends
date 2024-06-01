@@ -2,7 +2,7 @@ import React from 'react'
 import { Cart } from '../Components/Cart'
 import { useShopContext } from '../Context/ShopContext'
 import { ButtonRoundRed } from '../Components/BannerButton';
-import { Collections } from '../Components/Collections';
+import { Collections } from '../Components/ProductCategory/Collections';
 
 export const CartPage = () => {
 

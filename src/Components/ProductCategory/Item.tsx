@@ -1,9 +1,9 @@
 import React from 'react';
-import { ProductData } from '../types';
+import { ProductData } from '../../types';
 import { Link } from 'react-router-dom';
-import { Prices } from './Product/Prices';
-import { useShopContext } from '../Context/ShopContext';
-import { StarRating, StarRatingAverage } from './Product/StarRating';
+import { Prices } from '../Product/Prices';
+import { useShopContext } from '../../Context/ShopContext';
+import { StarRatingAverage } from '../Product/StarRating';
 
 export const Item: React.FC<ProductData> = (props) => {
     const { setActiveCategory } = useShopContext();
