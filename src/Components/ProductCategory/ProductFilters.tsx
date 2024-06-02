@@ -1,46 +1,54 @@
 import React from 'react'
 import { ProductData } from '../../types';
 import { filterProductCategory, filterProductPrice } from '../../Tools/ShuffleProducts';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useShopContext } from '../../Context/ShopContext';
+import { Category } from './Category';
 
 
 
 interface PriceFiltersProps {
   products: ProductData[];
   setFilteredProducts: (products: ProductData[]) => void;
-  priceFilter: { min: number; max: number };
-  setPriceFilter: React.Dispatch<React.SetStateAction<{ min: number; max: number }>>;
+  // category: string;
 }
 
 export const PriceFilters: React.FC<PriceFiltersProps> = ({
   products,
   setFilteredProducts,
-  priceFilter,
-  setPriceFilter,
+  // category
 }) => {
+
+  const [priceFilter, setPriceFilter] = useState<{ min: number; max: number }>({ min: 0, max: 100 });
+  const { activeCategory } = useShopContext();
+
   const handleMinPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPriceFilter(p => ({ ...p, min: Number(value) }));
-    setFilteredProducts(filterProductPrice(products, Number(value), priceFilter.max));
+    setPriceFilter(p => ({ ...p, min: Number(e.target.value) }));
+    setFilteredProducts(filterProductPrice(products, Number(e.target.value), priceFilter.max));
   };
 
   const handleMaxPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPriceFilter(p => ({ ...p, max: Number(value) }));
-    setFilteredProducts(filterProductPrice(products, priceFilter.min, Number(value)));
+    setPriceFilter(p => ({ ...p, max: Number(e.target.value) }));
+    setFilteredProducts(filterProductPrice(products, priceFilter.min, Number(e.target.value)));
   };
+
+
+  useEffect(() => {
+    setFilteredProducts(filterProductCategory( products, activeCategory));
+    setPriceFilter({ min: 0, max: 130 }); 
+  }, [activeCategory]);
 
   return (
     <div className="price-filters flex flex-row items-center">
       <PriceFilter
-        label="Min"
+        label="Price:"
         min={1}
         max={priceFilter.max - 1}
         value={priceFilter.min}
         onchange={handleMinPrice}
       />
       <PriceFilter
-        label="Max"
+        label="- "
         min={priceFilter.min + 1}
         max={200}
         value={priceFilter.max}
@@ -76,26 +84,70 @@ const PriceFilter = (props: {
   );
 };
 
+export const AllProductFilters = (props: { categories: string[], products: ProductData[], setFilteredProducts: (products: ProductData[]) => void }) => {
+  const [priceFilter, setPriceFilter] = useState<{ min: number; max: number }>({ min: 0, max: 100 });
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-export const CategoryFilter = ( props:{ categories:string[], products:ProductData[], setFilteredProducts:(products:ProductData[]) => void } ) => {
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newCategory = e.target.value;
+    setSelectedCategory(newCategory);
+    applyFilters(priceFilter, newCategory);
+  };
 
-    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedCategory = e.target.value;
-        if (selectedCategory === "all") {
-            props.setFilteredProducts(props.products);
-        } else {
-            props.setFilteredProducts(filterProductCategory(props.products, selectedCategory));
-        }
-    };
+  const handleMinPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setPriceFilter(p => {
+      const newFilter = { ...p, min: value };
+      applyFilters(newFilter, selectedCategory);
+      return newFilter;
+    });
+  };
 
-    return (
-                    <select name="categories" id="categories" onChange={handleCategoryChange} className="p-2 border rounded capitalize font-bold bg-gray-100">
-                        <option value="all">Category</option>
-                        {props.categories.map(category => (
-                            <option key={category} value={category} >
-                                {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}
-                            </option>
-                        ))}
-                    </select>
-    )
-}
+  const handleMaxPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setPriceFilter(p => {
+      const newFilter = { ...p, max: value };
+      applyFilters(newFilter, selectedCategory);
+      return newFilter;
+    });
+  };
+
+  const applyFilters = (priceFilter: { min: number; max: number }, category: string) => {
+    let filteredProducts = props.products;
+    if (category !== 'all') {
+      filteredProducts = filterProductCategory(filteredProducts, category);
+    }
+    filteredProducts = filterProductPrice(filteredProducts, priceFilter.min, priceFilter.max);
+    props.setFilteredProducts(filteredProducts);
+  };
+
+  return (
+    <div className="sort-by flex justify-center items-center gap-4">
+      <p className='font-bold text-lg'>Sort By:</p>
+      <select name="categories" id="categories" onChange={handleCategoryChange} className="p-2 border rounded capitalize font-bold bg-gray-100">
+        <option value="all">Category</option>
+        {props.categories.map(category => (
+          <option key={category} value={category}>
+            {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}
+          </option>
+        ))}
+      </select>
+      <div className="price-filters flex flex-row items-center">
+        <PriceFilter
+          label="Price:"
+          min={1}
+          max={priceFilter.max - 1}
+          value={priceFilter.min}
+          onchange={handleMinPrice}
+        />
+        <PriceFilter
+          label="- "
+          min={priceFilter.min + 1}
+          max={200}
+          value={priceFilter.max}
+          onchange={handleMaxPrice}
+        />
+      </div>
+    </div>
+  );
+};

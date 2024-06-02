@@ -5,13 +5,12 @@ import { filterProductCategory, shuffleProducts } from '../Tools/ShuffleProducts
 import { useShopContext } from '../Context/ShopContext'
 import { Link } from 'react-router-dom'
 import { ProductData } from '../types'
-import { PriceFilters, CategoryFilter } from '../Components/ProductCategory/ProductFilters'
+import {  AllProductFilters } from '../Components/ProductCategory/ProductFilters'
 
 export const Shop = () => {
     const { setActiveCategory, allProducts } = useShopContext();
     const [filteredProducts, setFilteredProducts] = useState<ProductData[]>(allProducts);
     const categories = useMemo(() => ["men", "women", "kids"], []); 
-    const [priceFilter, setPriceFilter] = useState<{ min: number; max: number }>({ min: 0, max: 100 });
 
 
     const topSellers = useMemo(() => {
@@ -46,15 +45,11 @@ export const Shop = () => {
 
             <div className="all-products ">
               <h2 className='my-10 text-5xl font-semibold'>All Products</h2>
-                <div className="sort-by flex justify-center items-center gap-4 ">
-                  
-                    <p className='font-bold text-lg'>Sort By:</p>
+                
 
-                    <CategoryFilter categories={categories} products={allProducts} setFilteredProducts={setFilteredProducts} />
-                    <PriceFilters products={allProducts} setFilteredProducts={setFilteredProducts}         priceFilter={priceFilter}
-                    setPriceFilter={setPriceFilter} />
+                <AllProductFilters categories={categories} products={allProducts} setFilteredProducts={setFilteredProducts} />
 
-                </div>
+             
                 <Collections productData={filteredProducts} header='' />
             </div>
         </div>
