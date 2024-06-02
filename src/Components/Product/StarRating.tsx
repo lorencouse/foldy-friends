@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import starIcon from "../../Assets/star_icon.png"
 import starIconGray from "../../Assets/star_dull_icon.png"
 import { ReviewData } from '../../types';
@@ -41,6 +41,42 @@ export const StarRating = (props: { rating: number }) => {
     return (
         <div className="rating flex flex-row items-center">
             <div className='flex flex-row w-22'>{renderStars(props.rating)}</div>
+        </div>
+    );
+};
+
+export const CreateStarRating = () => {
+    const [rating, setRating] = useState<number>(3);
+
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            stars.push(
+                <img
+                    key={i}
+                    src={starIcon}
+                    alt="Full Star"
+                    className='h-4 w-4 cursor-pointer hover:opacity-70 '
+                    onClick={() => setRating(i)}
+                />
+            );
+        } else {
+            stars.push(
+                <img
+                    key={i}
+                    src={starIconGray}
+                    alt="Gray Star"
+                    className='h-4 w-4 cursor-pointer hover:opacity-70 '
+                    onClick={() => setRating(i)}
+                />
+            );
+        }
+    }
+
+    return (
+        <div className="rating flex flex-row items-center m-4">
+            <p className='font-bold'>Rating: </p>
+            <div className='flex flex-row w-22 mx-3'>{stars}</div>
         </div>
     );
 };

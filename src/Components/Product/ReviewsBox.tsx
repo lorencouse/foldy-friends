@@ -2,6 +2,7 @@ import React from 'react'
 import { StarRating } from './StarRating'
 import { ReviewData } from '../../types'
 import { reviewData } from '../../Assets/reviewData'
+import { WriteReviewBox } from './WriteReviewBox'
 
 export const ReviewsBox = ( props:{id:number} ) => {
 
@@ -9,11 +10,17 @@ export const ReviewsBox = ( props:{id:number} ) => {
 
   return (
 
+    
+
     <div className='review-box flex flex-col' >
+
+      
 
       <h3>Reviews {`(${reviews.length})`}</h3>
 
       {reviews.map(review => <ReviewLine title={review.title} content={review.content} rating={review.rating} /> )}
+      
+      <WriteReviewBox />
       
     </div>
   )
