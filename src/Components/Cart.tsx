@@ -69,7 +69,49 @@ export const Cart = () => {
 
 const CartLineItem = ( {product, cartItem}:{product:ProductData, cartItem:CartItem } ) => {
 
+
+
+  return (
+    <div className='grid grid-cols-[auto_2fr_auto_auto_auto] lg:gap-12 gap-5 m-auto py-8 w-full border border-y-1 border-x-0 border-gray-200  '>
+      <div className="cart-item ">
+        <Link to={`/product/${product.id}`}><img src={product.image} alt={product.name} className='max-h-24'/> </Link>
+      </div>
+      <div className="cart-item flex items-center">
+       <Link to={`/product/${product.id}`}> <p>{`${product.name} - `} <span className='font-semibold'>{`Size: ${cartItem.size.toUpperCase()}`}</span> </p></Link>
+      </div>
+      <div className="cart-item flex items-center">
+        <p>{`$${product.new_price.toFixed(2)}`}</p>
+      </div>
+      <CartQuantityButtons cartItem={cartItem} />
+      <div className="cart-item flex items-center m-auto">
+        <RemoveItemButton cartItem={cartItem} />
+      </div>
+    </div>
+  )
+}
+
+
+
+export const RemoveItemButton = ({cartItem}:{cartItem:CartItem}) => {
   const { setCartItems, setCartCount } = useShopContext();
+
+  function removeCartItem() {
+      if (cartItem.quantity > 1) {
+        setCartCount( oldCount => oldCount - cartItem.quantity );
+      }
+      setCartItems( oldCartItems => oldCartItems.filter( item => item !== cartItem) )
+
+  }
+  return (
+    <ButtonInput onclick={removeCartItem} label='X' />
+  )
+}
+
+
+
+export const CartQuantityButtons = ({cartItem}:{cartItem:CartItem}) => {
+
+    const { setCartItems, setCartCount } = useShopContext();
 
   function removeCartItem() {
       if (cartItem.quantity > 1) {
@@ -103,16 +145,6 @@ const CartLineItem = ( {product, cartItem}:{product:ProductData, cartItem:CartIt
   }
 
   return (
-    <div className='grid grid-cols-[auto_2fr_auto_auto_auto] lg:gap-12 gap-5 m-auto py-8 w-full border border-y-1 border-x-0 border-gray-200  '>
-      <div className="cart-item ">
-        <Link to={`/product/${product.id}`}><img src={product.image} alt={product.name} className='max-h-24'/> </Link>
-      </div>
-      <div className="cart-item flex items-center">
-       <Link to={`/product/${product.id}`}> <p>{`${product.name} - `} <span className='font-semibold'>{`Size: ${cartItem.size.toUpperCase()}`}</span> </p></Link>
-      </div>
-      <div className="cart-item flex items-center">
-        <p>{`$${product.new_price.toFixed(2)}`}</p>
-      </div>
       <div className="cart-item flex flex-row items-center ">
 
         <ButtonInput onclick={decrementQuantity} label='-' />
@@ -122,9 +154,7 @@ const CartLineItem = ( {product, cartItem}:{product:ProductData, cartItem:CartIt
         <ButtonInput onclick={incrementQuantity}  label='+' />
         
       </div>
-      <div className="cart-item flex items-center m-auto">
-        <ButtonInput onclick={removeCartItem} label='X' />
-      </div>
-    </div>
   )
 }
+
+

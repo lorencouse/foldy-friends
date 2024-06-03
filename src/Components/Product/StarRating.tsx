@@ -17,25 +17,6 @@ const renderStars = (rating: number) => {
     return stars;
 };
 
-// export const StarRatingCount = (props: { reviews: ReviewData[] }) => {
-//     let totalRatings = 0;
-//     let reviewCount = props.reviews.length;
-
-//     if (props.reviews) {
-//         props.reviews.forEach(review => {
-//             totalRatings += review.rating;
-//         });
-//     }
-
-//     const averageRating = reviewCount > 0 ? totalRatings / reviewCount : 0;
-
-//     return (
-//         <div className="rating flex flex-row items-center">
-//             <div className='flex flex-row w-22'>{renderStars(Math.round(averageRating))}</div>
-//             <p className="review-count mx-1">{`(${reviewCount})`}</p>
-//         </div>
-//     );
-// };
 
 export const StarRating = (props: { rating: number }) => {
     return (
@@ -46,32 +27,39 @@ export const StarRating = (props: { rating: number }) => {
 };
 
 export const CreateStarRating = () => {
-    const [rating, setRating] = useState<number>(3);
+  const [rating, setRating] = useState(0);
+  const [isRatingSelected, setIsRatingSelected] = useState(false);
+  const [originalRating, setOriginalRating] = useState(0); 
 
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-        if (i <= rating) {
-            stars.push(
-                <img
-                    key={i}
-                    src={starIcon}
-                    alt="Full Star"
-                    className='h-4 w-4 cursor-pointer hover:opacity-70 '
-                    onClick={() => setRating(i)}
-                />
-            );
-        } else {
-            stars.push(
-                <img
-                    key={i}
-                    src={starIconGray}
-                    alt="Gray Star"
-                    className='h-4 w-4 cursor-pointer hover:opacity-70 '
-                    onClick={() => setRating(i)}
-                />
-            );
-        }
-    }
+  const handleMouseOver = (index:number) => {
+    setIsRatingSelected(false);
+    setRating(index);
+  };
+
+  const handleMouseOut = () => {
+    setRating(isRatingSelected ? rating : originalRating);
+  };
+
+  const handleClick = (index:number) => {
+    setRating(index);
+    setOriginalRating(index);
+    setIsRatingSelected(true); 
+  };
+
+  const stars = [];
+  for (let i = 1; i <= 5; i++) {
+    stars.push(
+      <img
+        key={i}
+        src={i <= rating ? starIcon : starIconGray}
+        alt={i <= rating ? "Full Star" : "Gray Star"}
+        className="h-4 w-4 cursor-pointer hover:opacity-70"
+        onMouseOver={() => handleMouseOver(i)}
+        onMouseOut={handleMouseOut}
+        onClick={() => handleClick(i)}
+      />
+    );
+  }
 
     return (
         <div className="rating flex flex-row items-center m-4">
@@ -104,3 +92,23 @@ export const StarRatingAverage = (props:{id:number}) => {
         </div>
     )
 }
+
+// export const StarRatingCount = (props: { reviews: ReviewData[] }) => {
+//     let totalRatings = 0;
+//     let reviewCount = props.reviews.length;
+
+//     if (props.reviews) {
+//         props.reviews.forEach(review => {
+//             totalRatings += review.rating;
+//         });
+//     }
+
+//     const averageRating = reviewCount > 0 ? totalRatings / reviewCount : 0;
+
+//     return (
+//         <div className="rating flex flex-row items-center">
+//             <div className='flex flex-row w-22'>{renderStars(Math.round(averageRating))}</div>
+//             <p className="review-count mx-1">{`(${reviewCount})`}</p>
+//         </div>
+//     );
+// };
