@@ -53,7 +53,7 @@ export const CreateStarRating = () => {
         key={i}
         src={i <= rating ? starIcon : starIconGray}
         alt={i <= rating ? "Full Star" : "Gray Star"}
-        className="h-4 w-4 cursor-pointer hover:opacity-70"
+        className="h-4 w-4 cursor-pointer"
         onMouseOver={() => handleMouseOver(i)}
         onMouseOut={handleMouseOut}
         onClick={() => handleClick(i)}

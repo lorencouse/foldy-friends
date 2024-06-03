@@ -1,5 +1,5 @@
 
-export const SizeSelector = ( {sizes, currentSize, setCurrentSize}:{sizes:string[], currentSize:number, setCurrentSize: (newSize: number) => void } ) => {
+export const SizeSelector = ( {sizes, currentSize, setCurrentSize}:{sizes:string[], currentSize:string, setCurrentSize: (newSize: string) => void } ) => {
 
 
 
@@ -8,9 +8,9 @@ export const SizeSelector = ( {sizes, currentSize, setCurrentSize}:{sizes:string
         <p className="font-semibold m-1">Select Size</p>
         <div className="sizes flex flex-row justify-start uppercase ">
          
-            {sizes.map( (s, index) => <div onClick={ () => setCurrentSize(index) } 
+            {sizes.map( (s) => <div onClick={ () => setCurrentSize(s) } 
             className={`px-6 py-4 m-2 w-auto bg-gray-100 hover:bg-gray-50 pointer cursor-pointer click:bg-gray-300 
-            ${ index === currentSize ? " outline outline-1 bg-gray-50 " : ""} `}>{s}</div> )}
+            ${ s === currentSize ? " outline outline-1 bg-gray-50 " : ""} `}>{s}</div> )}
           
         </div>
         

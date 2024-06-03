@@ -27,9 +27,13 @@ export const Cart = () => {
 
 
   return (
-    <div className="cart-container flex flex-col lg:m-auto sm:mx-3 xs: mx-3  max-w-4xl text-left items-end ">
-      <div className="grid grid-cols-[auto_2fr_auto_auto_auto] lg:gap-12 gap-5 py-10 w-full  "> 
-
+    <div className="cart-container flex flex-col lg:m-auto sm:mx-3 xs: mx-3  max-w-4xl text-left ">
+      <h1>Cart</h1>
+      <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-5 w-full text-center  "> 
+      
+        {/* <div className="cart-labels">
+          <p>  </p>
+        </div>
         <div className="cart-labels">
           <p>Image</p>
         </div>
@@ -38,13 +42,8 @@ export const Cart = () => {
         </div>
         <div className="cart-labels">
           <p>Price</p>
-        </div>
-        <div className="cart-labels">
-          <p>Quantity</p>
-        </div>
-        <div className="cart-labels">
-          <p>Remove</p>
-        </div>
+        </div> */}
+
 
 
       </div>
@@ -61,8 +60,9 @@ export const Cart = () => {
             })}
 
       <CartTotal />
-          
-      <ButtonSquareRed label='Checkout' onclick={ () => {  }} />
+      <div className='flex justify-end'>
+              <ButtonSquareRed label='Checkout' onclick={ () => {  }} />
+      </div>    
 </div>
   )
 }
@@ -72,20 +72,29 @@ const CartLineItem = ( {product, cartItem}:{product:ProductData, cartItem:CartIt
 
 
   return (
-    <div className='grid grid-cols-[auto_2fr_auto_auto_auto] lg:gap-12 gap-5 m-auto py-8 w-full border border-y-1 border-x-0 border-gray-200  '>
+    <div className='grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-5 m-auto py-8 w-full border border-y-1 border-x-0 border-gray-200  '>
+        
+        
+      <div className="cart-item flex items-center justify-center">
+
+        <RemoveItemButton cartItem={cartItem} />
+        
+      </div>
       <div className="cart-item ">
         <Link to={`/product/${product.id}`}><img src={product.image} alt={product.name} className='max-h-24'/> </Link>
       </div>
-      <div className="cart-item flex items-center">
-       <Link to={`/product/${product.id}`}> <p>{`${product.name} - `} <span className='font-semibold'>{`Size: ${cartItem.size.toUpperCase()}`}</span> </p></Link>
+      <div className="cart-item flex flex-col items-start justify-center">
+       <Link to={`/product/${product.id}`}> <p className='pb-2'>{`${product.name} - `} <span className='font-semibold'>{`Size: ${cartItem.size.toUpperCase()}`}</span> </p></Link>
+      
       </div>
-      <div className="cart-item flex items-center">
+      <div className="cart-item flex flex-col items-center">
+
         <p>{`$${product.new_price.toFixed(2)}`}</p>
+        <CartQuantityButtons cartItem={cartItem} />
+        
       </div>
-      <CartQuantityButtons cartItem={cartItem} />
-      <div className="cart-item flex items-center m-auto">
-        <RemoveItemButton cartItem={cartItem} />
-      </div>
+      
+
     </div>
   )
 }
@@ -96,9 +105,8 @@ export const RemoveItemButton = ({cartItem}:{cartItem:CartItem}) => {
   const { setCartItems, setCartCount } = useShopContext();
 
   function removeCartItem() {
-      if (cartItem.quantity > 1) {
-        setCartCount( oldCount => oldCount - cartItem.quantity );
-      }
+
+      setCartCount( oldCount => oldCount - cartItem.quantity );
       setCartItems( oldCartItems => oldCartItems.filter( item => item !== cartItem) )
 
   }

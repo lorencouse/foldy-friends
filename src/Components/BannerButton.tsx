@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export const ButtonRoundRed = (props:{label: string, url: string}) => {
   return (
     <Link to={props.url}>
-    <button className='rounded-full w-48 bg-red-600 p-3 text-white hover:bg-red-500 my-10' >{props.label}</button>
+    <button onClick={() => { window.scrollTo(0,0) }} className='rounded-full w-48 bg-red-600 p-3 text-white hover:bg-red-500 my-10' >{props.label}</button>
     </Link>
   )
 }
@@ -25,7 +25,7 @@ interface ButtonSquareRedProps {
 export const ButtonSquareRed: React.FC<ButtonSquareRedProps> = (props) => {
   return (
     <button
-      className='w-48 bg-red-600 p-3 text-white hover:bg-red-500 my-10 font-semibold'
+      className='w-44 bg-red-600 p-3 text-white hover:bg-red-500 my-10 font-semibold'
       onClick={props.onclick}
     >
       {props.label}

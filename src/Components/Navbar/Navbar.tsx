@@ -138,7 +138,8 @@ export const Navbar = () => {
                <div className="cart-icon relative">
                    <NavBarCartIcon />
                </div>
-               { showMiniCart &&  <div className="absolute right-0 top-24 p-4 bg-white border border-gray-200 shadow-lg" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave  }><MiniCart /></div> }
+               { showMiniCart &&  <div className="absolute right-0 top-24 p-4 bg-white border border-gray-200 shadow-lg" 
+               onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave  }><MiniCart showMiniCart={showMiniCart} setShowMiniCart={setShowMiniCart} /></div> }
            </div>
 
            )}

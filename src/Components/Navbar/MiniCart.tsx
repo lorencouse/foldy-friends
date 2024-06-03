@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { useShopContext } from '../../Context/ShopContext';
 import { CartItem, ProductData } from '../../types';
 import { Link } from 'react-router-dom';
-import { ButtonSquareRed, ButtonInput } from '../BannerButton';
-import { CartQuantityButtons, RemoveItemButton } from '../Cart';
+import { ButtonSquareRed} from '../BannerButton';
+import { CartQuantityButtons} from '../Cart';
 
 
-export const MiniCart = () => {
+export const MiniCart = ( {showMiniCart, setShowMiniCart}:{showMiniCart:boolean, setShowMiniCart:Dispatch<SetStateAction<boolean>> } ) => {
 
     const { allProducts, cartItems } = useShopContext();
 
@@ -54,8 +54,11 @@ export const MiniCart = () => {
             })}
 
       <CartTotal />
+      <div className="min-cart-buttons flex flex-row gap-x-4 justify-center items-center ">
+        <Link to="/cart"><ButtonSquareRed label='Cart' onclick={ () => { setShowMiniCart(false); window.scrollTo(0, 0) }} /></Link>
+        <ButtonSquareRed label='Checkout' onclick={ () =>{ setShowMiniCart(false); window.scrollTo(0, 0)}} /></div>
           
-      <ButtonSquareRed label='Checkout' onclick={ () => {  }} />
+      
 </div>
 
   )

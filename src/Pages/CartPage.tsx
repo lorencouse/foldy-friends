@@ -20,7 +20,7 @@ export const CartPage = () => {
         { cartCount < 1 && 
         
         <div className=' m-8'>
-        <h1>Looks like your cart is empty....</h1>
+        <h2>Looks like your cart is empty....</h2>
         <ButtonRoundRed label='Go to Shop' url='/' />
         
         </div>

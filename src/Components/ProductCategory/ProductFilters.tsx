@@ -3,20 +3,18 @@ import { ProductData } from '../../types';
 import { filterProductCategory, filterProductPrice } from '../../Tools/ShuffleProducts';
 import { useState, useEffect } from 'react';
 import { useShopContext } from '../../Context/ShopContext';
-import { Category } from './Category';
+// import { Category } from '../../Pages/Category';
 
 
 
 interface PriceFiltersProps {
   products: ProductData[];
   setFilteredProducts: (products: ProductData[]) => void;
-  // category: string;
 }
 
 export const PriceFilters: React.FC<PriceFiltersProps> = ({
   products,
   setFilteredProducts,
-  // category
 }) => {
 
   const [priceFilter, setPriceFilter] = useState<{ min: number; max: number }>({ min: 0, max: 100 });
@@ -84,7 +82,7 @@ const PriceFilter = (props: {
   );
 };
 
-export const AllProductFilters = (props: { categories: string[], products: ProductData[], setFilteredProducts: (products: ProductData[]) => void }) => {
+export const AllProductFilters = (props: { categories: string[], products: ProductData[],   filteredProducts: ProductData[], setFilteredProducts: (products: ProductData[]) => void }) => {
   const [priceFilter, setPriceFilter] = useState<{ min: number; max: number }>({ min: 0, max: 100 });
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
@@ -111,6 +109,23 @@ export const AllProductFilters = (props: { categories: string[], products: Produ
       return newFilter;
     });
   };
+
+const handleSortPrice = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const sort = e.target.value;
+  let sortedProducts = [...props.filteredProducts]; 
+
+  if (sort === "low") {
+    sortedProducts = sortedProducts.sort((p1, p2) => (p1.new_price > p2.new_price) ? 1 : (p1.new_price < p2.new_price) ? -1 : 0);
+  } else if (sort === "high") {
+    sortedProducts = sortedProducts.sort((p1, p2) => (p1.new_price < p2.new_price) ? 1 : (p1.new_price > p2.new_price) ? -1 : 0);
+  } else {
+   
+    applyFilters(priceFilter, selectedCategory);
+    return; 
+  }
+
+  props.setFilteredProducts(sortedProducts);
+};
 
   const applyFilters = (priceFilter: { min: number; max: number }, category: string) => {
     let filteredProducts = props.products;
@@ -147,7 +162,14 @@ export const AllProductFilters = (props: { categories: string[], products: Produ
           value={priceFilter.max}
           onchange={handleMaxPrice}
         />
+        <select name="sort-price" id="sort-price" onChange={handleSortPrice} className="mx-6 p-2 border rounded capitalize font-bold bg-gray-100">
+          <option value="none">Sort Price</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+        </select>
+
       </div>
+      
     </div>
   );
 };

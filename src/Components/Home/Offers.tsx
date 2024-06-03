@@ -11,7 +11,7 @@ export const Offers = () => {
                 Just For You
             </p>
             <p className='banner-sub-text' >Great prices on our best selling items</p>
-            <ButtonRoundRed label='Shop Now' url='' />
+            <ButtonRoundRed label='Shop Now' url='/shop' />
         </div>
         <div className="offers-right items-baseline ">
             <img src={offersImage} alt="" />

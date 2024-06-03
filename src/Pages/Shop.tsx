@@ -47,7 +47,7 @@ export const Shop = () => {
               <h2 className='my-10 text-5xl font-semibold'>All Products</h2>
                 
 
-                <AllProductFilters categories={categories} products={allProducts} setFilteredProducts={setFilteredProducts} />
+                <AllProductFilters categories={categories} products={allProducts} filteredProducts={filteredProducts} setFilteredProducts={setFilteredProducts} />
 
              
                 <Collections productData={filteredProducts} header='' />
