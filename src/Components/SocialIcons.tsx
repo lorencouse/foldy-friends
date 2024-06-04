@@ -59,11 +59,13 @@ function SocialIcon(props:{ bgColor: string,
     )
 }
 
-export function SocialIcons() {
+function SocialIcons() {
     return (
         <div className="flex justify-around m-auto">
-        { socialInfo.map( i =>  <SocialIcon bgColor={i.bgColor} link={i.link} svgPathName={i.svgPathName} />  ) }
+        { socialInfo.map( (i, index )=>  <SocialIcon key={index} bgColor={i.bgColor} link={i.link} svgPathName={i.svgPathName} />  ) }
         </div>
 
     )
 }
+
+export default SocialIcons

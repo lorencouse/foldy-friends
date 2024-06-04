@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import starIcon from "../../Assets/star_icon.png"
-import starIconGray from "../../Assets/star_dull_icon.png"
+
 import { ReviewData } from '../../types';
-import { reviewData } from '../../Assets/reviewData';
+import { reviewData } from '../../data/reviewData';
 
 
 
 const renderStars = (rating: number) => {
+  const starIcon = "/Assets/star_icon.png"
+  const starIconGray = "/Assets/star_dull_icon.png"
     const stars = [];
     for (let i = 0; i < rating; i++) {
         stars.push(<img key={i} src={starIcon} alt="Full Star" className='h-4 w-4' />);
@@ -30,6 +31,8 @@ export const CreateStarRating = () => {
   const [rating, setRating] = useState(0);
   const [isRatingSelected, setIsRatingSelected] = useState(false);
   const [originalRating, setOriginalRating] = useState(0); 
+  const starIcon = "/Assets/star_icon.png"
+  const starIconGray = "/Assets/star_dull_icon.png"
 
   const handleMouseOver = (index:number) => {
     setIsRatingSelected(false);

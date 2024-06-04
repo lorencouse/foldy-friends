@@ -8,10 +8,10 @@ export const useAddToCart = () => {
     const cartItem: CartItem = { id: productId, quantity: 1, size: currentSize };
 
     if (!cartItems.some((item) => item.id === cartItem.id && item.size === cartItem.size)) {
-      setCartItems(oldCartItems => [...oldCartItems, cartItem]);
+      setCartItems((oldCartItems: CartItem[]) => [...oldCartItems, cartItem]);
     } else {
-      setCartItems(oldCartItems =>
-        oldCartItems.map(item =>
+      setCartItems((oldCartItems: CartItem[]) =>
+        oldCartItems.map((item: CartItem) =>
           item.id === cartItem.id && item.size === cartItem.size
             ? { ...item, quantity: item.quantity + 1 }
             : item
@@ -19,7 +19,7 @@ export const useAddToCart = () => {
       );
     }
 
-    setCartCount(oldCount => oldCount + 1);
+    setCartCount((oldCount: number) => oldCount + 1);
   };
 
   return handleAddToCart;

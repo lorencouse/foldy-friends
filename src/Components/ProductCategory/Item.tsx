@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { ProductData } from '../../types';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Prices } from '../Product/Prices';
 import { useShopContext } from '../../Context/ShopContext';
 import { StarRatingAverage } from '../Product/StarRating';
 import { useAddToCart } from '../../Hooks/UseAddToCart';
+
 
 
 export const Item: React.FC<ProductData> = (props) => {
@@ -18,8 +19,8 @@ export const Item: React.FC<ProductData> = (props) => {
                 className='transition ease-in-out hover:scale-105 pl-2 my-3 w-72 text-left m-auto' 
                 onClick={() => setActiveCategory(props.category)} 
             >
-                <Link to={`/product/${props.id}`} >
-                <img src={props.image} alt={props.name} />
+                <Link href={`/product/${props.id}`} >
+                <img src={`/Assets/product_${props.id}.png`} alt={props.name} />
                 <p className='capitalize'>{props.name}</p>
                 </Link>
                 <div className='flex flex-row justify-between items-center '>

@@ -1,15 +1,15 @@
+// src/Context/ShopContext.tsx
 import React, { createContext, ReactNode, useState, Dispatch, SetStateAction, useContext } from 'react';
-import allProducts from '../Assets/all_product';
+import allProducts from '../data/allProducts';
 import { CartItem, ProductData } from '../types';
 
-// Define the context type
 interface ShopContextType {
   allProducts: ProductData[];
   cartItems: CartItem[];
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
-  cartCount: number; 
+  cartCount: number;
   setCartCount: Dispatch<SetStateAction<number>>;
-  activeCategory: string; 
+  activeCategory: string;
   setActiveCategory: Dispatch<SetStateAction<string>>;
 }
 
@@ -17,7 +17,7 @@ interface ShopContextProviderProps {
   children: ReactNode;
 }
 
-export const ShopContext = createContext<ShopContextType | null>(null); 
+const ShopContext = createContext<ShopContextType | null>(null);
 
 export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -33,11 +33,10 @@ export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ childr
   );
 };
 
-// Custom hook for typed context access
 export const useShopContext = () => {
   const context = useContext(ShopContext);
   if (!context) {
     throw new Error('useShopContext must be used within a ShopContextProvider');
   }
-  return context; // Return the full context
+  return context;
 };

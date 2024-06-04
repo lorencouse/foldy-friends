@@ -1,5 +1,5 @@
 import React from 'react'
-import offersImage from "../../Assets/exclusive_image.png"
+import offersImage from "../../../public/Assets/exclusive_image.png"
 import { ButtonRoundRed } from '../BannerButton'
 
 export const Offers = () => {
@@ -14,7 +14,7 @@ export const Offers = () => {
             <ButtonRoundRed label='Shop Now' url='/shop' />
         </div>
         <div className="offers-right items-baseline ">
-            <img src={offersImage} alt="" />
+            <img src='/Assets/exclusive_image.png' alt="" />
         </div>
 
     </div>

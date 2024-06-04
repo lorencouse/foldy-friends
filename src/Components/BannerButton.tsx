@@ -1,9 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 export const ButtonRoundRed = (props:{label: string, url: string}) => {
   return (
-    <Link to={props.url}>
+    <Link href={props.url}>
     <button onClick={() => { window.scrollTo(0,0) }} className='rounded-full w-48 bg-red-600 p-3 text-white hover:bg-red-500 my-10' >{props.label}</button>
     </Link>
   )
@@ -11,7 +11,7 @@ export const ButtonRoundRed = (props:{label: string, url: string}) => {
 
 export const ButtonRoundBlack = (props:{label: string, url: string}) => {
   return (
-    <Link to={props.url}>
+    <Link href={props.url}>
     <button className='rounded-full w-48 bg-black p-3 text-white hover:bg-gray-500 my-10' >{props.label}</button>
     </Link>
   )

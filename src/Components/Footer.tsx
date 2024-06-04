@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { LinkInfo } from '../types'
-import { NavLogo } from './Navbar/Navbar'
-import { SocialIcons } from '../Components/SocialIcons'
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { LinkInfo } from '../types';
+import { NavLogo } from './Navbar/NavLogo';
+import SocialIcons from './SocialIcons';
 
 function FooterLink({ navLink, active, setActive }: { navLink: LinkInfo, active: string, setActive: (active: string) => void }) {
     return (
         <li onClick={() => { setActive(navLink.title) }}>
-            <Link to={navLink.url}>{navLink.title}</Link> {active === navLink.title ? <hr /> : <></>}
+            <Link href={navLink.url}>{navLink.title}</Link> {active === navLink.title ? <hr /> : <></>}
         </li>
-    )
+    );
 }
-export const Footer = () => {
 
+export const Footer = () => {
     const [active, setActive] = useState("Shop");
 
     const links: LinkInfo[] = [
@@ -20,25 +20,21 @@ export const Footer = () => {
         { title: "Returns", url: "/returns" },
         { title: "About", url: "/about" },
         { title: "Contact", url: "/contact" },
-    ]
+    ];
 
-
-  return (
-    <div className='footer w-full p-1'>
-        <div className="footer-components flex flex-row flex-wrap m-5 justify-around">
-
-        <NavLogo />    
-
-        <ul className='nav-menu flex flex-row flex-wrap  gap-10 m-auto p-5'>
-            { links.map( link => <FooterLink navLink={link} active={active} setActive={setActive} /> ) }
-        </ul>
-
-        <SocialIcons />
+    return (
+        <div className='footer w-full p-1'>
+            <div className="footer-components flex flex-row flex-wrap m-5 justify-around">
+                <NavLogo />
+                <ul className='nav-menu flex flex-row flex-wrap  gap-10 m-auto p-5'>
+                    { links.map(link => <FooterLink key={link.title} navLink={link} active={active} setActive={setActive} />) }
+                </ul>
+                <SocialIcons />
+            </div>
+            <hr className='h-0 outline outline-1 outline-gray-400  m-auto' />
+            <div className="copyright my-12">
+                <p>Foldy Friends Inc. 2024 - All Rights Reserved</p>
+            </div>
         </div>
-        <hr className='h-0 outline outline-1 outline-gray-400  m-auto' />
-        <div className="copyright my-12">
-            <p>Foldy Friends Inc. 2024 - All Rights Reserved</p>
-        </div>
-    </div>
-  )
-}
+    );
+};

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StarRating } from './StarRating'
 import { ReviewData } from '../../types'
-import { reviewData } from '../../Assets/reviewData'
+import { reviewData } from '../../data/reviewData'
 import { WriteReviewBox } from './WriteReviewBox'
 
 export const ReviewsBox = ( props:{id:number} ) => {
