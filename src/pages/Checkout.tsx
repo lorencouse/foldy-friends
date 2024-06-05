@@ -24,23 +24,23 @@ const Checkout = () => {
     <div className='flex flex-row flex-wrap md:grid md:grid-cols-2 justify-around '>
         <div className="checkout-left-col flex flex-col">
           <CheckoutInfo heading="Shipping Details" />
-          <div className="billing-checkbox flex items-center font-semibold ml-2">
-            <input type="checkbox" value={billing} onClick={() => setBilling(!billing)} />
+          <div className="billing-checkbox flex items-center font-semibold ml-2" onClick={() => setBilling( !billing)}>
+            <input type="checkbox" checked={billing}   />
             <label >Enter Seperate Billing Details</label>
           </div>
 
         </div>
-        <div className="checkout-right-col flex flex-col justify-around ">
+        <div className="checkout-right-col flex flex-col justify-around">
           
           { billing && 
-          <div className='w-full'>
+          <div className='w-full mb-10'>
           <CheckoutInfo heading='Billing Deatils' />
           </div>
           }
           
           <MiniCart />
 
-          <div className="flex place-order-button w-full items-center justify-center ">
+          <div className="flex place-order-button w-full items-center justify-end ">
             <ButtonSquareRed label='Place Order' onclick={() => {}} />
           </div>
         </div>
