@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { ReviewsBox } from './ReviewsBox';
-import { ReviewData } from '../../types';
+import { ReviewsBox } from './Reviews/ReviewsBox';
+
 
 export const DescriptionBox = ( props:{description:string, id:number} ) => {
     const [descriptionBox, setDescriptionBox] = useState<boolean>(true);

@@ -30,6 +30,7 @@ const Category = () => {
         alt={`${category} banner`} 
         width={1200} // Set appropriate width and height
         height={400} 
+        priority={true}
       />
       <div className="sort-by flex flex-row flex-wrap justify-between items-center m-3 ">
         <p className='my-5'>

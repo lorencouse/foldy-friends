@@ -8,7 +8,7 @@ import { ButtonSquareRed } from '../components/BannerButton';
 import { ProductImages } from '../components/Product/ProductImages';
 import { Breadcrumbs } from '../components/Product/Breadcrumbs';
 import { Collections } from '../components/ProductCategory/Collections';
-import { StarRatingAverage } from '../components/Product/StarRating';
+import { StarRatingAverage } from '../components/Product/Reviews/StarRating';
 import { DescriptionBox } from '../components/Product/DescriptionBox';
 import { shuffleProducts } from '../tools/ShuffleProducts';
 import { useAddToCart } from '../hooks/UseAddToCart';

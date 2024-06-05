@@ -6,6 +6,7 @@ import { NavBarCartIcon } from './CartIcon';
 import { NavLink } from './NavLink';
 import { NavLogo } from './NavLogo';
 import MiniCart from './MiniCart';
+import { MiniCartButtons } from './MiniCartButtons';
 
 const Navbar = () => {
   const { setActiveCategory, activeCategory, cartCount } = useShopContext();
@@ -23,7 +24,7 @@ const Navbar = () => {
   const handleMouseLeave = () => {
     timerRef.current = setTimeout(() => {
       setShowMiniCart(false);
-    }, 500); 
+    }, 1000); 
   };
 
   const toggleMenu = () => { setShowMenu(!showMenu); }
@@ -99,8 +100,9 @@ const Navbar = () => {
             <NavBarCartIcon />
           </div>
           {showMiniCart && (
-            <div className="absolute my-0 right-0 top-24 px-4 bg-white border border-gray-200 shadow-lg" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-              <MiniCart showMiniCart={showMiniCart} setShowMiniCart={setShowMiniCart} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} />
+            <div className="absolute my-0 right-0 top-24 px-4 bg-white border border-gray-200 shadow-lg max-w-md" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+              <MiniCart showMiniCart={showMiniCart} setShowMiniCart={setShowMiniCart} />
+              <MiniCartButtons setShowMiniCart={setShowMiniCart} />
             </div>
           )}
         </div>

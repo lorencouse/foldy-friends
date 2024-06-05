@@ -36,6 +36,7 @@ export interface ProductInfo {
   sizes: string[];
   categories: string[];
   tags: string[];
+  reviews: ProductReview[];
   created_at: Date;
   updated_at: Date;
   sold_to_date: number;
@@ -44,7 +45,7 @@ export interface ProductInfo {
 }
 
 export interface ProductVariation {
-    id: number;
+    product_id: number;
     size: string;
     quantity: number;
 }
@@ -76,4 +77,14 @@ export interface UserProfile {
     photo_url: string;
     order_history: CustomerOrder[];
     username: string;
+}
+
+export interface ProductReview {
+    id: number;
+    created_at: Date;
+    product_id: number;
+    user_id: number;
+    title: string; 
+    content: string;
+    rating: number;
 }

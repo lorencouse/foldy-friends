@@ -2,7 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/product/[productId]": "pages/product/[productId].js",
   "/shop": "pages/shop.js",
-  "/cart": "pages/cart.js"
+  "/product/[productId]": "pages/product/[productId].js",
+  "/category/[category]": "pages/category/[category].js"
 }

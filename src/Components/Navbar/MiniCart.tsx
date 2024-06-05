@@ -1,14 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { useRouter } from 'next/router';
 import { useShopContext } from '../../context/ShopContext';
 import { CartItem, ProductData } from '../../types';
 import Link from 'next/link';
-import { ButtonSquareRed } from '../BannerButton';
 import { CartQuantityButtons } from '../Cart/CartQuantityButtons';
 
-const MiniCart = ({ showMiniCart, setShowMiniCart, handleMouseEnter, handleMouseLeave }: { showMiniCart: boolean; setShowMiniCart: Dispatch<SetStateAction<boolean>>; handleMouseEnter: () => void; handleMouseLeave: () => void; }) => {
+const MiniCart = ({ showMiniCart, setShowMiniCart }: { showMiniCart: boolean; setShowMiniCart: Dispatch<SetStateAction<boolean>>; }) => {
   const { allProducts, cartItems } = useShopContext();
-  const router = useRouter();
+  
 
   const productMap = allProducts.reduce((map, product) => {
     map[product.id] = product;
@@ -27,17 +25,11 @@ const MiniCart = ({ showMiniCart, setShowMiniCart, handleMouseEnter, handleMouse
     );
   }
 
-  const handleNavigation = (url: string) => {
-    setShowMiniCart(false);
-    window.scrollTo(0, 0);
-    router.push(url);
-  };
-
   return (
     <div
-      className="cart-container flex flex-col lg:m-auto sm:mx-3 xs:mx-3 text-left items-end max-w-96 bg-white"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className="cart-container flex flex-col lg:m-auto sm:mx-3 xs:mx-3 text-left items-end max-w-lg bg-white"
+      // onMouseEnter={handleMouseEnter}
+      // onMouseLeave={handleMouseLeave}
     >
       <div className="grid grid-cols-[auto_2fr_auto] lg:gap-12 gap-5 w-full"></div>
       <div className="overflow-y-auto max-h-96 w-full no-scrollbar">
@@ -53,14 +45,7 @@ const MiniCart = ({ showMiniCart, setShowMiniCart, handleMouseEnter, handleMouse
         })}
       </div>
       <CartTotal />
-      <div className="min-cart-buttons flex flex-row gap-x-4 justify-center items-center">
-        <button onClick={() => handleNavigation('/cart')}>
-          <ButtonSquareRed label='Cart' />
-        </button>
-        <button onClick={() => handleNavigation('/checkout')}>
-          <ButtonSquareRed label='Checkout' />
-        </button>
-      </div>
+
     </div>
   );
 };

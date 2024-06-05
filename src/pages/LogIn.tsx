@@ -27,4 +27,4 @@ const LogIn = () => {
   )
 };
 
-export default Home;
+export default LogIn;

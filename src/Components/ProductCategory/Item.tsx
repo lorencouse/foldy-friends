@@ -3,7 +3,7 @@ import { ProductData } from '../../types';
 import Link from 'next/link';
 import { Prices } from '../Product/Prices';
 import { useShopContext } from '../../context/ShopContext';
-import { StarRatingAverage } from '../Product/StarRating';
+import { StarRatingAverage } from '../Product/Reviews/StarRating';
 import { useAddToCart } from '../../hooks/UseAddToCart';
 
 
