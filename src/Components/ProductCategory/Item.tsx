@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { ProductData } from '../../types';
 import Link from 'next/link';
 import { Prices } from '../Product/Prices';
-import { useShopContext } from '../../Context/ShopContext';
+import { useShopContext } from '../../context/ShopContext';
 import { StarRatingAverage } from '../Product/StarRating';
-import { useAddToCart } from '../../Hooks/UseAddToCart';
+import { useAddToCart } from '../../hooks/UseAddToCart';
 
 
 

@@ -1,4 +1,4 @@
-import { useShopContext } from '../Context/ShopContext';
+import { useShopContext } from '../context/ShopContext';
 import { CartItem } from '../types';
 
 export const useAddToCart = () => {

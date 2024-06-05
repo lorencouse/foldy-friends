@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Category from '../../src/Category';
+import Category from '../../src/pages/Category';
 
 const CategoryPage = () => {
   const router = useRouter();

@@ -1,7 +1,7 @@
 // src/Components/CartFullSize.tsx
 import React from 'react';
 import { CartItem, ProductData } from '../types';
-import { useShopContext } from '../Context/ShopContext';
+import { useShopContext } from '../context/ShopContext';
 import Link from 'next/link';
 import { ButtonInput, ButtonSquareRed } from './BannerButton';
 import { CartQuantityButtons } from './Cart/CartQuantityButtons';

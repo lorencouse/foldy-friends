@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ProductData } from '../../types';
-import { filterProductCategory, filterProductPrice } from '../../Tools/ShuffleProducts';
-import { useShopContext } from '../../Context/ShopContext';
+import { filterProductCategory, filterProductPrice } from '../../tools/ShuffleProducts';
+import { useShopContext } from '../../context/ShopContext';
 
 interface PriceFiltersProps {
   products: ProductData[];

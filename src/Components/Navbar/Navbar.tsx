@@ -1,7 +1,7 @@
 // src/Components/Navbar/Navbar.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useShopContext } from '../../Context/ShopContext';
+import { useShopContext } from '../../context/ShopContext';
 import { NavBarCartIcon } from './CartIcon';
 import { NavLink } from './NavLink';
 import { NavLogo } from './NavLogo';

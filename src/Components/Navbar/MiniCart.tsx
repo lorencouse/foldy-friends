@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
-import { useShopContext } from '../../Context/ShopContext';
+import { useShopContext } from '../../context/ShopContext';
 import { CartItem, ProductData } from '../../types';
 import Link from 'next/link';
 import { ButtonSquareRed } from '../BannerButton';

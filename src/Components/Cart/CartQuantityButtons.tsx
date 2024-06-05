@@ -1,5 +1,5 @@
 import { ButtonInput } from "../BannerButton";
-import { useShopContext } from "../../Context/ShopContext";
+import { useShopContext } from "../../context/ShopContext";
 
 export const CartQuantityButtons = ({cartItem}:{cartItem:CartItem}) => {
 

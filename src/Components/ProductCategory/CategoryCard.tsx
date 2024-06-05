@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
-import { useShopContext } from '../../Context/ShopContext'
+import { useShopContext } from '../../context/ShopContext'
 
 export const CategoryCard = (props:{category: string}) => {
 

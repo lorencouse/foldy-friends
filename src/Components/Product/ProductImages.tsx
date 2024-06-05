@@ -12,7 +12,7 @@ export const ProductImages = ( {images, alt}:{images:string[], alt:string} ) => 
 
             <div className="product-image mx-2">
                 <img src={images[currentImg]} alt={alt} />
-                <p>{currentImg}</p>
+                {/* <p>{currentImg}</p> */}
             </div>
 
       </div>
