@@ -1,8 +1,8 @@
 import React from 'react';
-import { CartFullSize } from '../components/CartFullSize';
+import { CartFullSize } from '../components/Cart/CartFullSize';
 import { useShopContext } from '../context/ShopContext';
-import { ButtonRoundRed } from '../components/BannerButton';
 import { Collections } from '../components/ProductCategory/Collections';
+import { EmptyCart } from '../components/Cart/EmptyCart';
 
 
 const Cart = () => {
@@ -16,10 +16,7 @@ const Cart = () => {
          
         </>
       ) : (
-        <div className='m-8'>
-          <h2>Looks like your cart is empty....</h2>
-          <ButtonRoundRed label='Go to Shop' url='/' />
-        </div>
+        <EmptyCart />
       )}
       <Collections productData={allProducts} header='You Might Be Interested In...' />
     </div>

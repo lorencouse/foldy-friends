@@ -5,9 +5,13 @@ import '../styles/globals.css'
 import Navbar from '../src/components/Navbar/Navbar';
 import { Footer } from '../src/components/Footer';
 import { ShopContextProvider } from '../src/context/ShopContext';
+// import { AuthProvider } from '../src/context/AuthContex';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  
+
   return (
+    // <AuthProvider>
     <ShopContextProvider>
       <div className="App">
         <Navbar />
@@ -15,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Footer />
       </div>
     </ShopContextProvider>
+    // </AuthProvider>
   );
 }
 

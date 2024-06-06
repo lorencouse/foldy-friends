@@ -12,12 +12,14 @@ import { StarRatingAverage } from '../components/Product/Reviews/StarRating';
 import { DescriptionBox } from '../components/Product/DescriptionBox';
 import { shuffleProducts } from '../tools/ShuffleProducts';
 import { useAddToCart } from '../hooks/UseAddToCart';
+import { AddToCartButton } from '../components/Product/AddToCartButton';
 
 const Product = () => {
   const router = useRouter();
   const { productId } = router.query;
   const { allProducts } = useShopContext();
-  const handleAddToCart = useAddToCart();
+
+
 
   const description = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor laudantium a at pariatur? Esse cum mollitia velit ipsam maxime hic, laborum eaque et id, tenetur, non corporis iure pariatur ab. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor laudantium a at pariatur? Esse cum mollitia velit ipsam maxime hic, laborum eaque et id, tenetur, non corporis iure pariatur ab. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor laudantium a at pariatur? Esse cum mollitia velit ipsam maxime hic, laborum eaque et id, tenetur, non corporis iure pariatur ab.";
   const sizes = ["s", "m", "l", "xl", "xxl"];
@@ -54,9 +56,8 @@ const Product = () => {
           <h1>{product.name}</h1>
           <StarRatingAverage id={product.id} />
           <Prices oldPrice={product.old_price} newPrice={product.new_price} />
-          {/* <p className="short-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eligendi voluptates impedit minima voluptas sed perferendis ut, dolores nisi animi rerum molestias. Nemo, hic! Deleniti enim exercitationem aliquam rerum numquam!</p> */}
           <SizeSelector currentSize={currentSize} setCurrentSize={setCurrentSize} sizes={sizes} />
-          <ButtonSquareRed label='Add To Cart' onclick={() => handleAddToCart(product.id, currentSize)} />
+          <AddToCartButton id={product.id} size={currentSize} />
           {product.category && (
             <>
               <p className=' capitalize '><span className='font-bold'>Categories:</span>  <Link href={`/category/${product.category}`}>{product.category}</Link> </p>

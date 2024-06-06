@@ -30,8 +30,6 @@ export const Item: React.FC<ProductData> = (props) => {
                         
                     </div>
                     <button className='h-8 min-w-8 mr-4 bg-red-600 hover:bg-red-400 text-white px-3' onClick={() =>{ handleAddToCart(props.id, "m"); setButtonText("✓ Added"); setTimeout( () => setButtonText("+"), 1000 )  }} >{buttonText}</button>
-                    
-
                 </div>
                 
             </div>

@@ -6,7 +6,7 @@ export function NavBarCartIcon() {
   const { cartCount, setActiveCategory, activeCategory } = useShopContext();
 
   return (
-    <div className="nav-cart-icon h-full min-w-6 flex flex-col justify-center">
+    <div className="nav-cart-icon h-full min-w-6 flex flex-col items-center">
       <Link href="/cart" legacyBehavior>
         
           <img 
