@@ -100,8 +100,10 @@ const Navbar = () => {
             <NavBarCartIcon />
           </div>
           {showMiniCart && (
-            <div className="absolute my-0 right-0 top-24 px-4 bg-white border border-gray-200 shadow-lg max-w-md" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-              <MiniCart showMiniCart={showMiniCart} setShowMiniCart={setShowMiniCart} />
+            <div className="absolute my-0 right-0 top-24 px-4 bg-white border border-gray-200 shadow-lg max-w-md " onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+              <div className="w-full overflow-y-auto max-h-96 no-scrollbar"> 
+                <MiniCart showMiniCart={showMiniCart} setShowMiniCart={setShowMiniCart} />
+              </div>
               <MiniCartButtons setShowMiniCart={setShowMiniCart} />
             </div>
           )}

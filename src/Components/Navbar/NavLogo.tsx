@@ -6,7 +6,7 @@ export function NavLogo() {
   const { setActiveCategory } = useShopContext();
 
   return (
-    <div className="nav-logo flex flex-row items-center" onClick={() => setActiveCategory('shop')}>
+    <div className="nav-logo flex flex-row items-center" onClick={() => setActiveCategory('home')}>
       <Link href='/' legacyBehavior>
         <img src='/Assets/foldy-friends-logo-192x192.png' alt="Foldy Friends Logo" className='h-16 w-16' />
       </Link>

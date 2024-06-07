@@ -3,26 +3,26 @@ import { useShopContext } from '../../context/ShopContext';
 import { CartItem, ProductData } from '../../types';
 import Link from 'next/link';
 import { CartQuantityButtons } from '../Cart/CartQuantityButtons';
+import { MiniCartButtons } from './MiniCartButtons';
 
 const MiniCart = ({ showMiniCart, setShowMiniCart }: { showMiniCart: boolean; setShowMiniCart: Dispatch<SetStateAction<boolean>>; }) => {
   const { allProducts, cartItems } = useShopContext();
-  
 
-const productMap = allProducts.reduce((map, product) => {
-  map[product.id] = product;
-  return map;
-}, {} as { [id: number]: ProductData });
+  const productMap = allProducts.reduce((map, product) => {
+    map[product.id] = product;
+    return map;
+  }, {} as { [id: number]: ProductData });
 
-function CartTotal() {
-  let total = 0;
+  function CartTotal() {
+    let total = 0;
 
-  cartItems.forEach(cartItem => {
-    const product = productMap[cartItem.id];
-    if (product) {
-      const price = product.new_price ?? product.old_price;
-      total += price * cartItem.quantity;
-    }
-  });
+    cartItems.forEach(cartItem => {
+      const product = productMap[cartItem.id];
+      if (product) {
+        const price = product.new_price ?? product.old_price;
+        total += price * cartItem.quantity;
+      }
+    });
 
     return (
       <div className="cart-total mt-4">
@@ -32,11 +32,9 @@ function CartTotal() {
   }
 
   return (
-    <div
-      className="cart-container flex flex-col lg:m-auto sm:mx-3 xs:mx-3 text-left items-end max-w-lg bg-white"
-    >
+    <div className="cart-container flex flex-col lg:m-auto mx-3 text-left items-end max-w-lg bg-white">
       <div className="grid grid-cols-[auto_2fr_auto] lg:gap-12 gap-5 w-full"></div>
-      <div className="overflow-y-auto max-h-96 w-full no-scrollbar">
+      {/* <div className="w-full overflow-y-auto max-h-80">  */}
         {cartItems.map((cartItem) => {
           const product = productMap[cartItem.id];
           return product ? (
@@ -47,9 +45,8 @@ function CartTotal() {
             />
           ) : null;
         })}
-      </div>
+      {/* </div> */}
       <CartTotal />
-
     </div>
   );
 };
