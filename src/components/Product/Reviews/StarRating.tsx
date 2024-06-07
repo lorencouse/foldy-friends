@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { ReviewData } from '../../types';
+import { ReviewData } from '../../../types';
 import { reviewData } from '../../../data/reviewData'
 
 

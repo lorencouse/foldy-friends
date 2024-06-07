@@ -4,14 +4,12 @@ import Link from 'next/link';
 import { useShopContext } from '../context/ShopContext';
 import { Prices } from '../components/Product/Prices';
 import { SizeSelector } from '../components/Product/SizeSelector';
-import { ButtonSquareRed } from '../components/BannerButton';
 import { ProductImages } from '../components/Product/ProductImages';
 import { Breadcrumbs } from '../components/Product/Breadcrumbs';
 import { Collections } from '../components/ProductCategory/Collections';
 import { StarRatingAverage } from '../components/Product/Reviews/StarRating';
 import { DescriptionBox } from '../components/Product/DescriptionBox';
 import { shuffleProducts } from '../tools/ShuffleProducts';
-import { useAddToCart } from '../hooks/UseAddToCart';
 import { AddToCartButton } from '../components/Product/AddToCartButton';
 
 const Product = () => {

@@ -20,7 +20,7 @@ export const ReviewsBox = ( props:{id:number} ) => {
 
       {reviews.map(review => <ReviewLine title={review.title} content={review.content} rating={review.rating} /> )}
       
-      <WriteReviewBox id={props.id} />
+      <WriteReviewBox productId={props.id} />
       
     </div>
   )

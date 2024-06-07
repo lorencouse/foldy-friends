@@ -84,7 +84,7 @@ const Navbar = () => {
               />
             ))}
           </ul>
-          <Link href="/login" legacyBehavior>
+          <Link href="/account" >
             <button 
               onClick={() => setActiveCategory('login')} 
               className={`border-2 w-28 lg:my-0 my-8 mx-8 h-10 rounded-md cursor-pointer bg-white hover:bg-gray-100 ${activeCategory === "login" ? "border-red-500 text-red-500 " : "border-gray-300 text-gray-500"}`}>

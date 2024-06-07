@@ -1,21 +1,50 @@
 import React, { useState } from 'react';
-import { InputBox } from '../../InputBox';
+import { InputBox } from '../../Input/InputBox';
 import { ButtonSquareRed } from '../../BannerButton';
 import { supabase } from '../../../lib/supabaseClient';
+import { ProductInfo } from '../../../types';
 
 const CreateProduct = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [fullPrice, setFullPrice] = useState<number | ''>('');
-  const [salePrice, setSalePrice] = useState<number | ''>('');
+  const [productInfo, setProductInfo] = useState<ProductInfo>({
+    id: 0,
+    name: '',
+    description: '',
+    full_price: 0,
+    sale_price: 0,
+    images: [],
+    sizes: [],
+    categories: [],
+    tags: [],
+    reviews: [],
+    created_at: new Date(),
+    updated_at: new Date(),
+    sold_to_date: 0,
+    stock: 0,
+    sku: '',
+  });
+
   const [images, setImages] = useState<FileList | null>(null);
-  const [sizes, setSizes] = useState<string[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [tags, setTags] = useState<string[]>([]);
-  const [sku, setSku] = useState<string>('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProductInfo((prevInfo) => ({
+      ...prevInfo,
+      [name]: value,
+    }));
+  };
+
+  const handleMultiInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProductInfo((prevInfo) => ({
+      ...prevInfo,
+      [name]: value.split(',').map((item) => item.trim()),
+    }));
+  };
 
   const handleCreateProduct = async () => {
-    if (!name || !description || !fullPrice || !salePrice || !images || sizes.length === 0 || categories.length === 0 || tags.length === 0 || !sku) {
+    const { name, description, full_price, sale_price, sizes, categories, tags, sku } = productInfo;
+    
+    if (!name || !description || !full_price || !sale_price || !images || sizes.length === 0 || categories.length === 0 || tags.length === 0 || !sku) {
       alert('Please fill in all fields.');
       return;
     }
@@ -48,20 +77,12 @@ const CreateProduct = () => {
       .from('products')
       .insert([
         {
-          name,
-          description,
-          full_price: fullPrice,
-          sale_price: salePrice,
+          ...productInfo,
           images: imageUrls,
-          sizes,
-          categories,
-          tags,
-          reviews: [],
           created_at: new Date(),
           updated_at: new Date(),
           sold_to_date: 0,
           stock: 10,
-          sku,
         },
       ])
       .single();
@@ -71,35 +92,93 @@ const CreateProduct = () => {
     } else {
       alert('Product created successfully!');
       // Reset form fields
-      setName('');
-      setDescription('');
-      setFullPrice('');
-      setSalePrice('');
+      setProductInfo({
+        id: 0,
+        name: '',
+        description: '',
+        full_price: 0,
+        sale_price: 0,
+        images: [],
+        sizes: [],
+        categories: [],
+        tags: [],
+        reviews: [],
+        created_at: new Date(),
+        updated_at: new Date(),
+        sold_to_date: 0,
+        stock: 0,
+        sku: '',
+      });
       setImages(null);
-      setSizes([]);
-      setCategories([]);
-      setTags([]);
-      setSku('');
     }
-  };
-
-  const handleMultiInputChange = (setter: React.Dispatch<React.SetStateAction<string[]>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setter(e.target.value.split(',').map((item) => item.trim()));
   };
 
   return (
     <div className="flex flex-col max-w-7xl mx-auto my-6">
       <h1>Create New Product</h1>
       <div className="customer-information flex flex-col">
-        <InputBox type='text' placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
-        <InputBox type='text' placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} />
-        <InputBox type='number' placeholder='Full Price' value={fullPrice} onChange={(e) => setFullPrice(Number(e.target.value))} />
-        <InputBox type='number' placeholder='Sale Price' value={salePrice} onChange={(e) => setSalePrice(Number(e.target.value))} />
-        <input type="file" multiple onChange={(e) => setImages(e.target.files)} className='max-w-96 border border-gray-300 rounded-md mb-2 p-2' />
-        <InputBox type='text' placeholder='Sizes (comma separated)' value={sizes.join(', ')} onChange={handleMultiInputChange(setSizes)} />
-        <InputBox type='text' placeholder='Categories (comma separated)' value={categories.join(', ')} onChange={handleMultiInputChange(setCategories)} />
-        <InputBox type='text' placeholder='Tags (comma separated)' value={tags.join(', ')} onChange={handleMultiInputChange(setTags)} />
-        <InputBox type='text' placeholder='SKU' value={sku} onChange={(e) => setSku(e.target.value)} />
+        <InputBox
+          type='text'
+          placeholder='Name'
+          value={productInfo.name}
+          onChange={handleInputChange}
+          name='name'
+        />
+        <InputBox
+          type='text'
+          placeholder='Description'
+          value={productInfo.description}
+          onChange={handleInputChange}
+          name='description'
+        />
+        <InputBox
+          type='number'
+          placeholder='Full Price'
+          value={productInfo.full_price}
+          onChange={handleInputChange}
+          name='full_price'
+        />
+        <InputBox
+          type='number'
+          placeholder='Sale Price'
+          value={productInfo.sale_price}
+          onChange={handleInputChange}
+          name='sale_price'
+        />
+        <input
+          type="file"
+          multiple
+          onChange={(e) => setImages(e.target.files)}
+          className='max-w-96 border border-gray-300 rounded-md mb-2 p-2'
+        />
+        <InputBox
+          type='text'
+          placeholder='Sizes (comma separated)'
+          value={productInfo.sizes.join(', ')}
+          onChange={handleMultiInputChange}
+          name='sizes'
+        />
+        <InputBox
+          type='text'
+          placeholder='Categories (comma separated)'
+          value={productInfo.categories.join(', ')}
+          onChange={handleMultiInputChange}
+          name='categories'
+        />
+        <InputBox
+          type='text'
+          placeholder='Tags (comma separated)'
+          value={productInfo.tags.join(', ')}
+          onChange={handleMultiInputChange}
+          name='tags'
+        />
+        <InputBox
+          type='text'
+          placeholder='SKU'
+          value={productInfo.sku}
+          onChange={handleInputChange}
+          name='sku'
+        />
         <ButtonSquareRed label='Create Product' onClick={handleCreateProduct} />
       </div>
     </div>

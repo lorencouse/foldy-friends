@@ -133,9 +133,9 @@ export const SortBy = ( { filteredProducts, setFilteredProducts}:{  filteredProd
     let sortedProducts = [...filteredProducts];
 
     if (sort === "low") {
-      sortedProducts.sort((p1, p2) => p1.new_price - p2.new_price);
+      sortedProducts.sort((p1, p2) => ( p1.new_price ?? p1.old_price ?? 0 ) - ( p2.new_price ?? p2.old_price ?? 0 ));
     } else if (sort === "high") {
-      sortedProducts.sort((p1, p2) => p2.new_price - p1.new_price);
+      sortedProducts.sort((p1, p2) => ( p2.new_price ?? p2.old_price ?? 0 ) - ( p1.new_price ?? p1.old_price ?? 0 ));
     } else {
       // applyFilters(priceFilter, selectedCategory);
       return;

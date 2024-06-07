@@ -1,5 +1,4 @@
 import React from 'react'
-import offersImage from "../../../public/Assets/exclusive_image.png"
 import { ButtonRoundRed } from '../BannerButton'
 
 export const Offers = () => {

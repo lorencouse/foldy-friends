@@ -1,5 +1,6 @@
 import { ButtonInput } from "../BannerButton";
 import { useShopContext } from "../../context/ShopContext";
+import { CartItem } from "../../types";
 
 export const CartQuantityButtons = ({cartItem}:{cartItem:CartItem}) => {
 
@@ -39,11 +40,11 @@ export const CartQuantityButtons = ({cartItem}:{cartItem:CartItem}) => {
   return (
       <div className="cart-item flex flex-row items-center ">
 
-        <ButtonInput onclick={decrementQuantity} label='-' />
+        <ButtonInput onClick={decrementQuantity} label='-' />
 
         <p className="w-6 h-6 text-center m-3 outline outline-1 rounded-lg font-semibold ">{cartItem.quantity}</p>
 
-        <ButtonInput onclick={incrementQuantity}  label='+' />
+        <ButtonInput onClick={incrementQuantity}  label='+' />
         
       </div>
   )

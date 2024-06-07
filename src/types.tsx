@@ -2,7 +2,7 @@ export interface ProductData {
     id: number;
     name: string;
     category: string;
-    new_price: number;
+    new_price?: number;
     old_price: number;
 }
 
@@ -50,7 +50,7 @@ export interface ProductVariation {
     quantity: number;
 }
 
-interface AddressInfo {
+export interface AddressInfo {
         name: string;
         address_1: string;
         address_2: string;

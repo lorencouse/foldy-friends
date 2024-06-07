@@ -1,10 +1,11 @@
-// src/Components/CartFullSize.tsx
+// src/Components/.tsx
 import React from 'react';
-import { CartItem, ProductData } from '../types';
+import { CartItem, ProductData } from '../../types';
 import { useShopContext } from '../../context/ShopContext';
 import Link from 'next/link';
 import { ButtonInput, ButtonSquareRed } from '../BannerButton';
 import { CartQuantityButtons } from '../Cart/CartQuantityButtons';
+import { EmptyCart } from './EmptyCart';
 
 export const CartFullSize = () => {
   const { allProducts, cartItems } = useShopContext();
@@ -14,11 +15,19 @@ export const CartFullSize = () => {
     return map;
   }, {} as { [id: number]: ProductData });
 
+  if (cartItems.length === 0) {
+    return <EmptyCart />;
+  }
+
   function CartTotal() {
     let total = 0;
 
     cartItems.forEach(cartItem => {
-      total += productMap[cartItem.id].new_price * cartItem.quantity;
+      const product = productMap[cartItem.id];
+      if (product) {
+        const price = product.new_price ?? product.new_price ?? 0;
+        total += price * cartItem.quantity;
+      }
     });
 
     return (
@@ -44,7 +53,7 @@ export const CartFullSize = () => {
       
       <div className='flex justify-end '>
         <Link href="/checkout">
-          <ButtonSquareRed label='Checkout' onclick={() => window.scrollTo(0, 0)} />
+          <ButtonSquareRed label='Checkout' onClick={() => window.scrollTo(0, 0)} />
         </Link>
       </div>
     </div>
@@ -52,6 +61,7 @@ export const CartFullSize = () => {
 };
 
 const CartLineItem = ({ product, cartItem }: { product: ProductData; cartItem: CartItem }) => {
+  const price = product.new_price ?? product.old_price ?? 1000;
   return (
     <div className='grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-5 m-auto py-8 w-full border border-y-1 border-x-0 border-gray-200'>
       <div className="cart-item flex items-center justify-center">
@@ -68,7 +78,7 @@ const CartLineItem = ({ product, cartItem }: { product: ProductData; cartItem: C
         </Link>
       </div>
       <div className="cart-item flex flex-col items-center">
-        <p>{`$${product.new_price.toFixed(2)}`}</p>
+        <p>{`$${price.toFixed(2)}`}</p>
         <CartQuantityButtons cartItem={cartItem} />
       </div>
     </div>
@@ -84,6 +94,6 @@ const RemoveItemButton = ({ cartItem }: { cartItem: CartItem }) => {
   }
 
   return (
-    <ButtonInput onclick={removeCartItem} label='X' />
+    <ButtonInput onClick={removeCartItem} label='X' />
   );
 };

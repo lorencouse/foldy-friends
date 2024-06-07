@@ -16,12 +16,11 @@ export const MiniCartButtons = ({setShowMiniCart}:{setShowMiniCart: (showMiniCar
     
   return (
     <div className="min-cart-buttons flex flex-row gap-x-4 justify-center items-center">
-        <button onClick={() => handleNavigation('/cart')}>
-          <ButtonSquareRed label='Cart' />
-        </button>
-        <button onClick={() => handleNavigation('/checkout')}>
-          <ButtonSquareRed label='Checkout' />
-        </button>
+        
+          <ButtonSquareRed label='Cart' onClick={() => handleNavigation('/cart')} />
+     
+          <ButtonSquareRed label='Checkout' onClick={() => handleNavigation('/cart')} />
+       
     </div>
   )
 }

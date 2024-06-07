@@ -10,7 +10,7 @@ export const Collections = ( props:{header: string, productData:ProductData[] } 
         <div className="popular-items flex flex-row justify-around items-center flex-wrap  ">
             { props.productData.map( (product, key) => {
                 return (
-                <Item key={key} id={product.id} name={product.name} category={product.category} image={product.image} old_price={product.old_price} new_price={product.new_price} />
+                <Item key={key} id={product.id} name={product.name} category={product.category}  old_price={product.old_price} new_price={product.new_price} />
                 )
             } ) }
         </div>
