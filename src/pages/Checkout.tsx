@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CheckoutInfo } from '../Components/Checkout/CheckoutInfo'
+import { CheckoutInfo } from '../components/Checkout/CheckoutInfo';
 import { ButtonSquareRed } from '../components/BannerButton';
 import MiniCart from '../components/Navbar/MiniCart';
 import { useShopContext } from '../context/ShopContext';
@@ -37,10 +37,10 @@ const Checkout = () => {
           
           
            
-          <MiniCart />
+          <MiniCart showMiniCart={true} setShowMiniCart={() => {}} />
 
           <div className="flex place-order-button w-full items-center justify-end ">
-            <ButtonSquareRed label='Place Order' onclick={() => {}} />
+            <ButtonSquareRed label='Place Order' onClick={() => {}} />
           </div>
         </div>
 

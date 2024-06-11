@@ -6,19 +6,19 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await signUp(email, password);
-      alert('Signup successful! Please check your email for a confirmation link.');
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await signUp(email, password);
+  //     alert('Signup successful! Please check your email for a confirmation link.');
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
 
   return (
     <div>
-      <h1>Sign Up</h1>
+      {/* <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -34,7 +34,7 @@ const SignUp = () => {
         />
         <button type="submit">Sign Up</button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p>{error}</p>} */}
     </div>
   );
 };

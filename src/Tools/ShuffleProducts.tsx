@@ -13,6 +13,13 @@
   };
 
   export function filterProductPrice( products: ProductData[], min:number, max:number ) {
-    return products.filter( p => p.new_price >= min && p.new_price <= max );
+
+    return products.filter( p => {
+      const price =  p.new_price ?? p.old_price ?? 0;
+      return price >= min && price <= max; }
+
+
+     );
+
   }
 
