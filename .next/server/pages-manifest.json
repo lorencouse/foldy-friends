@@ -1,1 +1,8 @@
-{"/_app":"pages/_app.js","/api/orders/[id]":"pages/api/orders/[id].js","/api/orders":"pages/api/orders.js","/account":"pages/account.html","/api/products":"pages/api/products.js","/api/profiles/[id]":"pages/api/profiles/[id].js","/api/profiles":"pages/api/profiles.js","/api/reviews/[id]":"pages/api/reviews/[id].js","/api/reviews":"pages/api/reviews.js","/api/upload":"pages/api/upload.js","/api/products/[id]":"pages/api/products/[id].js","/_error":"pages/_error.js","/_document":"pages/_document.js","/":"pages/index.html","/checkout":"pages/checkout.html","/cart":"pages/cart.html","/sign-in":"pages/sign-in.html","/create-product":"pages/create-product.html","/product/[productId]":"pages/product/[productId].html","/shop":"pages/shop.html","/category/[category]":"pages/category/[category].html","/sign-up":"pages/sign-up.html","/404":"pages/404.html"}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/category/[category]": "pages/category/[category].js",
+  "/": "pages/index.js",
+  "/product/[productId]": "pages/product/[productId].js"
+}
