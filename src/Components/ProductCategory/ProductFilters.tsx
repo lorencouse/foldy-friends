@@ -15,12 +15,13 @@ const PriceFilter = ({ label, min, max, value, onchange }: {
   value: number;
   onchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
-  <div className="flex items-center">
-    <p className="font-bold text-lg mx-4">{label}</p>
+  <div className="flex items-center text-lg">
+    <p className="font-bold ">{label}</p>
     <div className="relative">
-      <span className="absolute left-2 top-1/2 transform -translate-y-1/2 font-bold">$</span>
+      <span className="absolute left-4 top-1/2 transform -translate-y-1/2 font-bold">$</span>
       <input
-        className="w-20 h-10 p-2 pl-6 border rounded capitalize font-bold bg-gray-100"
+        // className="w-20 h-10 p-2 pl-6 border rounded capitalize font-bold bg-gray-100"
+        className="input input-bordered text-end px-3"
         type="number"
         min={min}
         max={max}
@@ -146,12 +147,25 @@ export const SortBy = ( { filteredProducts, setFilteredProducts}:{  filteredProd
 
 
   return (
-        <select name="sort-price" id="sort-price" onChange={handleSortPrice} className="mx-6 p-2 border rounded capitalize font-bold bg-gray-100">
-          <option value="">Sort Price</option>
-          <option value="low">Price: Low to High</option>
-          <option value="high">Price: High to Low</option>
-        </select>
-  )
+    <div className=" dropdown dropdown-hover  mx-6">
+      <div tabIndex={0} role="button" className="btn m-1 capitalize font-bold bg-gray-100">
+        Sort Price
+      </div>
+      <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+        <li>
+          <button className="capitalize font-bold" onClick={() => handleSortPrice({ target: { value: 'low' } })}>
+            Price: Low to High
+          </button>
+        </li>
+        <li>
+          <button className="capitalize font-bold" onClick={() => handleSortPrice({ target: { value: 'high' } })}>
+            Price: High to Low
+          </button>
+        </li>
+      </ul>
+    </div>
+  );
+
 }
 
 

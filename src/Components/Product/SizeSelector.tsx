@@ -9,8 +9,8 @@ export const SizeSelector = ( {sizes, currentSize, setCurrentSize}:{sizes:string
         <div className="sizes flex flex-row justify-start uppercase ">
          
             {sizes.map( (s) => <div onClick={ () => setCurrentSize(s) } 
-            className={`px-6 py-4 m-2 w-auto bg-gray-100 hover:bg-gray-50 pointer cursor-pointer click:bg-gray-300 
-            ${ s === currentSize ? " outline outline-1 bg-gray-50 " : ""} `}>{s}</div> )}
+            className={`px-6 py-4 m-2 w-auto text-base-content bg-base-200 hover:text-info-content hover:bg-neutral-content pointer cursor-pointer click:bg-base-300 
+            ${ s === currentSize ? " outline outline-1 bg-base-100 " : ""} `}>{s}</div> )}
           
         </div>
         

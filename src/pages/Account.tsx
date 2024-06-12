@@ -1,105 +1,135 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabaseClient'
+import { useState, useEffect } from 'react';
+import { useRouter } from "next/router";
+import useAuth from "../hooks/useAuth";
+import { signOut } from "firebase/auth";
+import { auth } from "../lib/firebaseConfig";
+import { InputBox } from '../components/Input/InputBox';
+import { ButtonSquareRed } from '../components/BannerButton';
+import { AddressInfo } from '../types';
 
-export default function Account() {
-  // const [loading, setLoading] = useState(true)
-  // const [username, setUsername] = useState(null)
-  // const [website, setWebsite] = useState(null)
-  // const [avatar_url, setAvatarUrl] = useState(null)
+const Account = () => {
+  const [username, setUsername] = useState('');
+  const [addBillingInfo, setAddBillingInfo] = useState(false);
+  const [shippingInfo, setShippingInfo] = useState<AddressInfo>({
+    name: '',
+    address_1: '',
+    address_2: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: ''
+  });
+  const [billingInfo, setBillingInfo] = useState<AddressInfo>({
+    name: '',
+    address_1: '',
+    address_2: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: ''
+  });
 
-  // useEffect(() => {
-  //   let ignore = false
-  //   async function getProfile() {
-  //     setLoading(true)
-  //     const { user } = session
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
-  //     const { data, error } = await supabase
-  //       .from('profiles')
-  //       .select(`username, website, avatar_url`)
-  //       .eq('id', user)
-  //       .single()
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/sign-in");
+    }
+  }, [user, loading, router]);
 
-  //     if (!ignore) {
-  //       if (error) {
-  //         console.warn(error)
-  //       } else if (data) {
-  //         setUsername(data.username)
-  //         setWebsite(data.website)
-  //         setAvatarUrl(data.avatar_url)
-  //       }
-  //     }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-  //     setLoading(false)
-  //   }
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      router.push("/sign-in");
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
 
-  //   getProfile()
+  const handleInputChange = (e, setState) => {
+    const { name, value } = e.target;
+    setState(prevState => ({ ...prevState, [name]: value }));
+  };
 
-  //   return () => {
-  //     ignore = true
-  //   }
-  // }, [session])
-
-  // async function updateProfile(event, avatarUrl) {
-  //   event.preventDefault()
-
-  //   setLoading(true)
-  //   const { user } = session
-
-  //   const updates = {
-  //     id: user,
-  //     username,
-  //     website,
-  //     avatar_url: avatarUrl,
-  //     updated_at: new Date(),
-  //   }
-
-  //   const { error } = await supabase.from('profiles').upsert(updates)
-
-  //   if (error) {
-  //     alert(error.message)
-  //   } else {
-  //     setAvatarUrl(avatarUrl)
-  //   }
-  //   setLoading(false)
-  // }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Handle the form submission logic here
+    // e.g., update user profile in Firebase or your database
+  };
 
   return (
-    <form  className="form-widget">
-      {/* <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="username">Name</label>
-        <input
-          id="username"
-          type="text"
-          required
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          type="url"
-          value={website || ''}
-          onChange={(e) => setWebsite(e.target.value)}
-        />
-      </div>
+    <div className="profile-page bg-base-100 min-h-screen">
+      <div className="user-profile max-w-7xl m-auto">
+        <div className="customer-info flex flex-row flex-wrap gap-8">
+          <div className="shipping-info min-w-96 m-auto">
+            <div className='flex flex-col'>
+              <h1>Account</h1>
+              <label className='ml-2 mt-4 font-semibold' htmlFor="email">Email:</label>
+              <InputBox
+                type="text"
+                placeholder="Email"
+                value={user.email}
+                name="email"
+                onChange={() => {}}
+                disabled
+              />
+            </div>
+            <h2 className='text-left'>Shipping Info</h2>
+            {Object.keys(shippingInfo).map((key) => (
+              <div key={key} className='flex flex-col'>
+                <label className='ml-2 mt-4 font-semibold' htmlFor={`shipping_${key}`}>{`${key.replace('_', ' ')}:`}</label>
+                <InputBox
+                  type="text"
+                  placeholder={key.replace('_', ' ')}
+                  value={shippingInfo[key]}
+                  name={key}
+                  onChange={(e) => handleInputChange(e, setShippingInfo)}
+                />
+              </div>
+            ))}
 
-      <div>
-        <button className="button block primary" type="submit" disabled={loading}>
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
+          <div className="flex" onClick={() => setAddBillingInfo(!addBillingInfo)}>
+            <input type="checkbox" className="checkbox" checked={addBillingInfo}   />
+            <label className="label cursor-pointer">Seperate Billing Info</label>
+          </div>
 
-      <div>
-        <button className="button block" type="button" onClick={() => supabase.auth.signOut()}>
-          Sign Out
-        </button>
-      </div> */}
-    </form>
-  )
-}
+            {!addBillingInfo && (
+              <div className='flex flex-row gap-4 m-auto'>
+                <ButtonSquareRed label='Update' onClick={handleSubmit} />
+                <ButtonSquareRed label='Sign Out' onClick={handleSignOut} />
+              </div>
+            )}
+          </div>
+          {addBillingInfo && (
+            <div className="billing-info min-w-96 m-auto">
+              <h2 className='text-left'>Billing Info</h2>
+              {Object.keys(billingInfo).map((key) => (
+                <div key={key} className='flex flex-col'>
+                  <label className='ml-2 mt-4 font-semibold' htmlFor={`billing_${key}`}>{`${key.replace('_', ' ')}:`}</label>
+                  <InputBox
+                    type="text"
+                    placeholder={key.replace('_', ' ')}
+                    value={billingInfo[key]}
+                    name={key}
+                    onChange={(e) => handleInputChange(e, setBillingInfo)}
+                  />
+                </div>
+              ))}
+              <div className='flex flex-row gap-4 m-auto'>
+                <ButtonSquareRed label='Update' onClick={handleSubmit} />
+                <ButtonSquareRed label='Sign Out' onClick={handleSignOut} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Account;

@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Subscribe = () => {
   return (
-    <div className='banner-background flex flex-col justify-center items-center' >
+    <div className='flex flex-col justify-center items-center bg-gradient-to-t from-base-100 to-secondary-content' >
         <div className="subscribe-box my-12 ">
             <p className="banner-heading">Get in on Exclusive Offers</p>
             <form action="submit">

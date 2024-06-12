@@ -8,8 +8,8 @@ const AccountPage = () => {
   //  const session = useAuth()
 
   return (
-    <SignIn />
-    // <Account key={ session.user } session={session} />
+    // <SignIn />
+    <Account />
   )
 }
 

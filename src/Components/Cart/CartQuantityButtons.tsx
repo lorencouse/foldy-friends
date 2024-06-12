@@ -42,7 +42,7 @@ export const CartQuantityButtons = ({cartItem}:{cartItem:CartItem}) => {
 
         <ButtonInput onClick={decrementQuantity} label='-' />
 
-        <p className="w-6 h-6 text-center m-3 outline outline-1 rounded-lg font-semibold ">{cartItem.quantity}</p>
+        <p className="w-6 h-6 text-center text-base-content m-3 outline outline-1 rounded-lg font-semibold ">{cartItem.quantity}</p>
 
         <ButtonInput onClick={incrementQuantity}  label='+' />
         

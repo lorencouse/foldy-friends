@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ButtonInput, ButtonSquareRed } from '../BannerButton';
 import { CartQuantityButtons } from '../Cart/CartQuantityButtons';
 import { EmptyCart } from './EmptyCart';
+import { checkSvg } from '../svgPaths';
 
 export const CartFullSize = () => {
   const { allProducts, cartItems } = useShopContext();
@@ -53,7 +54,7 @@ export const CartFullSize = () => {
       
       <div className='flex justify-end '>
         <Link href="/checkout">
-          <ButtonSquareRed label='Checkout' onClick={() => window.scrollTo(0, 0)} />
+          <ButtonSquareRed label='Checkout' d={checkSvg} onClick={() => window.scrollTo(0, 0)} />
         </Link>
       </div>
     </div>
@@ -74,7 +75,7 @@ const CartLineItem = ({ product, cartItem }: { product: ProductData; cartItem: C
       </div>
       <div className="cart-item flex flex-col items-start justify-center">
         <Link href={`/product/${product.id}`}>
-          <p className='pb-2'>{`${product.name} - `} <span className='font-semibold'>{`Size: ${cartItem.size.toUpperCase()}`}</span></p>
+          <p className='pb-2 text-base-content '>{`${product.name} - `} <span className='font-semibold'>{`Size: ${cartItem.size.toUpperCase()}`}</span></p>
         </Link>
       </div>
       <div className="cart-item flex flex-col items-center">

@@ -6,12 +6,6 @@ export interface ProductData {
     old_price: number;
 }
 
-export interface ReviewData {
-    id: number;
-    title: string;
-    content: string;
-    rating: number;
-}
 
 export interface CartItem {
     id: number;
@@ -19,12 +13,11 @@ export interface CartItem {
     size: string;
 }
 
-export interface LinkInfo {
-    title: string, 
-    url: string
-}
+// export interface LinkInfo {
+//     title: string, 
+//     url: string
+// }
 
-// Supabase Datatypes
 
 export interface ProductInfo {
   id: number;
@@ -49,25 +42,23 @@ export interface ProductVariation {
     size: string;
     quantity: number;
 }
-
-export interface AddressInfo {
-        name: string;
-        address_1: string;
-        address_2: string;
-        city: string;
-        state: string;
-        zip: string;
-        country: string;
-}
-
-export interface CustomerOrder {
+export interface ProductReview {
     id: number;
     created_at: Date;
-    customer_id: number;
-    shipping_info: AddressInfo;
-    billing_info: AddressInfo;
-    products: ProductVariation[];
-};
+    product_id: number;
+    user_id: number;
+    title: string; 
+    content: string;
+    rating: number;
+}
+
+export interface ReviewData {
+    id: number;
+    title: string;
+    content: string;
+    rating: number;
+}
+
 
 export interface UserProfile {
     id: number;
@@ -79,12 +70,23 @@ export interface UserProfile {
     username: string;
 }
 
-export interface ProductReview {
+export interface AddressInfo {
+        name: string;
+        address_1: string;
+        address_2: string;
+        city: string;
+        state: string;
+        zip: string;
+        country: string;
+}
+
+
+export interface CustomerOrder {
     id: number;
     created_at: Date;
-    product_id: number;
-    user_id: number;
-    title: string; 
-    content: string;
-    rating: number;
-}
+    customer_id: number;
+    shipping_info: AddressInfo;
+    billing_info: AddressInfo;
+    products: ProductVariation[];
+};
+

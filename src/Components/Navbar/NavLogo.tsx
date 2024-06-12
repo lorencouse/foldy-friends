@@ -10,7 +10,7 @@ export function NavLogo() {
       <Link href='/' legacyBehavior>
         <img src='/Assets/foldy-friends-logo-192x192.png' alt="Foldy Friends Logo" className='h-16 w-16' />
       </Link>
-      <p className='text-3xl text-gray-700 items-center px-4 select-none'>Foldy Friends</p>
+      <p className='text-3xl items-center px-4 select-none'>Foldy Friends</p>
     </div>
   );
 }

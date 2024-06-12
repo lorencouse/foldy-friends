@@ -3,7 +3,7 @@ import { ButtonRoundRed } from '../BannerButton'
 
 export const Hero = () => {
   return (
-    <div className='flex flex-row flex-wrap justify-around min-h-screen banner-background'>
+    <div className='flex flex-row flex-wrap justify-around min-h-screen bg-gradient-to-t from-base-100 to-secondary-content'>
         <div className="flex flex-col items-center justify-center text-left mt-10">
             <div className='flex flex-col font-semibold' >
                 <p>New Arrivals</p>

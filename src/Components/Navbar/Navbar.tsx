@@ -7,6 +7,7 @@ import { NavLink } from './NavLink';
 import { NavLogo } from './NavLogo';
 import MiniCart from './MiniCart';
 import { MiniCartButtons } from './MiniCartButtons';
+import ThemeSwitcher from '../ThemeSwitcher';
 
 const Navbar = () => {
   const { setActiveCategory, activeCategory, cartCount } = useShopContext();
@@ -56,14 +57,14 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="navbar flex flex-col lg:flex-row justify-between p-4 shadow-md sticky top-0 left-0 bg-white z-50">
+    <div className="navbar flex flex-col lg:flex-row justify-between p-4 shadow-md sticky top-0 left-0 bg-base-100 text-primary-content z-50">
       <div className="flex justify-between items-center w-full lg:w-auto">
         <NavLogo />
         <div className="flex items-center gap-5 lg:hidden">
           <div className="cart-icon relative">
             <NavBarCartIcon />
           </div>
-          <div className="hamburger h-8 w-8 outline outline-2 rounded-md flex flex-col justify-around items-center p-2 bg-white hover:bg-gray-100 outline-gray-300 text-gray-500" onClick={toggleMenu}>
+          <div className="hamburger h-8 w-8 outline outline-2 rounded-md flex flex-col justify-around items-center p-2 bg-base-100 hover:bg-base-200 outline-base-200 text-base-300" onClick={toggleMenu}>
             <hr />
             <hr />
             <hr />
@@ -87,28 +88,33 @@ const Navbar = () => {
           <Link href="/account" >
             <button 
               onClick={() => setActiveCategory('login')} 
-              className={`border-2 w-28 lg:my-0 my-8 mx-8 h-10 rounded-md cursor-pointer bg-white hover:bg-gray-100 ${activeCategory === "login" ? "border-red-500 text-red-500 " : "border-gray-300 text-gray-500"}`}>
+              className={`border-2 w-28 lg:my-0 my-8 mx-8 h-10 rounded-md cursor-pointer bg-base-100 hover:border-base-content hover:text-base-content ${activeCategory === "login" ? "border-error text-error " : "border-base-200 text-base-300"}`}>
               Login
             </button>
           </Link>
+          
         </div>
       )}
 
       {cartCount > 0 && (
         <div className="nav-cart hidden lg:flex items-center gap-5 ml-auto" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          <div className="cart-icon relative">
+          <div className="cart-icon relative mr-6">
             <NavBarCartIcon />
           </div>
           {showMiniCart && (
-            <div className="absolute my-0 right-0 top-24 px-4 bg-white border border-gray-200 shadow-lg max-w-md " onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <div className="absolute my-0 right-0 top-24 px-4 bg-base-100 border border-base-200 shadow-lg max-w-md " onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
               <div className="w-full overflow-y-auto max-h-96 no-scrollbar"> 
                 <MiniCart showMiniCart={showMiniCart} setShowMiniCart={setShowMiniCart} />
+                
               </div>
               <MiniCartButtons setShowMiniCart={setShowMiniCart} />
             </div>
           )}
         </div>
       )}
+        <ThemeSwitcher />
+      
+
     </div>
   );
 }

@@ -5,6 +5,7 @@ import MiniCart from '../components/Navbar/MiniCart';
 import { useShopContext } from '../context/ShopContext';
 import { EmptyCart } from '../components/Cart/EmptyCart';
 import { Collections } from '../components/ProductCategory/Collections';
+import { lockSvg } from '../components/svgPaths';
 
 
 
@@ -40,7 +41,7 @@ const Checkout = () => {
           <MiniCart showMiniCart={true} setShowMiniCart={() => {}} />
 
           <div className="flex place-order-button w-full items-center justify-end ">
-            <ButtonSquareRed label='Place Order' onClick={() => {}} />
+            <ButtonSquareRed d={lockSvg} label='Place Order' onClick={() => {}} />
           </div>
         </div>
 

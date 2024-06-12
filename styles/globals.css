@@ -1,8 +1,20 @@
+/* styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles */
+body {
+  @apply bg-base-100;
+}
+
+html.light body {
+  background-color: #ffffff; /* Light mode background */
+}
+
+html.dark body {
+  background-color: #000000; /* Dark mode background */
+}
+
 .App {
   text-align: left;
 }
@@ -19,7 +31,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -31,6 +42,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+h1, h2, h3 {
+  @apply text-base-content;
 }
 
 h1 {
@@ -53,29 +68,35 @@ h3 {
   padding: 15px 5px;
 }
 
+p {
+  @apply text-base-content;
+}
+
 .collections-heading {
   text-align: center;
 }
 
 .banner-heading {
   font-size: 3.5rem;
-  color: #333;
   line-height: 4.5rem;
   text-align: center;
 }
 
 .banner-sub-text {
-  color: #555;
   font-weight: 200;
   padding: 15px;
 }
 
-.banner-background {
-  background-image: linear-gradient(#fbcfe8, white);
-}
-
 .cart-labels {
   font-weight: 700;
+}
+
+label {
+  text-transform: capitalize;
+}
+
+::placeholder {
+  text-transform: capitalize;
 }
 
 hr {
