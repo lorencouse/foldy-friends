@@ -61,7 +61,7 @@ export interface ReviewData {
 
 
 export interface UserProfile {
-    id: number;
+    id: string;
     created_at: Date;
     shipping_info: AddressInfo;
     billing_info: AddressInfo;

@@ -87,7 +87,7 @@ const Navbar = () => {
       </div>
 
       {showMenu && (
-        <div onClick={handleMobileMenuClick} className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full">
+        <div onClick={handleMobileMenuClick} className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full lg:w-auto ">
           <ul className='nav-menu flex flex-col lg:flex-row items-center mx-12 gap-4 xl:gap-16'>
             {links.map(link => (
               <NavLink 

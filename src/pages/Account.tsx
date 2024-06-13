@@ -2,13 +2,17 @@ import { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import useAuth from "../hooks/useAuth";
 import { signOut } from "firebase/auth";
-import { auth } from "../lib/firebaseConfig";
-import { InputBox } from '../components/Input/InputBox';
-import { ButtonSquareRed } from '../components/BannerButton';
+import { auth, db } from "../lib/firebaseConfig"; // Adjust the import based on your project structure
+import { doc, updateDoc } from "firebase/firestore";
+
 import { AddressInfo } from '../types';
+import { EditProfileFields } from '../components/Account/EditProfileFields';
+import { ButtonSquareRed } from '../components/BannerButton';
 
 const Account = () => {
-  const [addBillingInfo, setAddBillingInfo] = useState(false);
+
+  const [editProfile, setEditProfile] = useState(false);
+
   const [shippingInfo, setShippingInfo] = useState<AddressInfo>({
     name: '',
     address_1: '',
@@ -18,6 +22,7 @@ const Account = () => {
     zip: '',
     country: ''
   });
+
   const [billingInfo, setBillingInfo] = useState<AddressInfo>({
     name: '',
     address_1: '',
@@ -50,82 +55,35 @@ const Account = () => {
     }
   };
 
-  const handleInputChange = (e, setState) => {
-    const { name, value } = e.target;
-    setState(prevState => ({ ...prevState, [name]: value }));
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Handle the form submission logic here
-    // e.g., update user profile in Firebase or your database
-  };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!user) return;
+
+  //   const userRef = doc(db, "users", user.uid);
+
+  //   try {
+  //     await updateDoc(userRef, {
+  //       shipping_info: shippingInfo,
+  //       billing_info: addBillingInfo ? billingInfo : shippingInfo,
+  //     });
+  //     alert("Profile updated successfully");
+  //   } catch (error) {
+  //     console.error("Error updating profile: ", error);
+  //     alert("Failed to update profile");
+  //   }
+  // };
+
+
 
   return (
     <div className="profile-page bg-base-100 min-h-screen">
       <div className="user-profile max-w-7xl m-auto">
-        <div className="customer-info flex flex-row flex-wrap gap-8">
-          <div className="shipping-info min-w-96 m-auto">
-            <div className='flex flex-col'>
-              <h1>Account</h1>
-              <label className='ml-2 mt-4 font-semibold' htmlFor="email">Email:</label>
-              <InputBox
-                type="text"
-                placeholder="Email"
-                value={user.email}
-                name="email"
-                onChange={() => {}}
-                disabled
-              />
-            </div>
-            <h2 className='text-left'>Shipping Info</h2>
-            {Object.keys(shippingInfo).map((key) => (
-              <div key={key} className='flex flex-col'>
-                <label className='ml-2 mt-4 font-semibold' htmlFor={`shipping_${key}`}>{`${key.replace('_', ' ')}:`}</label>
-                <InputBox
-                  type="text"
-                  placeholder={key.replace('_', ' ')}
-                  value={shippingInfo[key]}
-                  name={key}
-                  onChange={(e) => handleInputChange(e, setShippingInfo)}
-                />
-              </div>
-            ))}
-
-          <div className="flex" onClick={() => setAddBillingInfo(!addBillingInfo)}>
-            <input type="checkbox" className="checkbox" checked={addBillingInfo}   />
-            <label className="label cursor-pointer">Seperate Billing Info</label>
-          </div>
-
-            {!addBillingInfo && (
-              <div className='flex flex-row gap-4 m-auto'>
-                <ButtonSquareRed label='Update' onClick={handleSubmit} />
-                <ButtonSquareRed label='Sign Out' onClick={handleSignOut} />
-              </div>
-            )}
-          </div>
-          {addBillingInfo && (
-            <div className="billing-info min-w-96 m-auto">
-              <h2 className='text-left'>Billing Info</h2>
-              {Object.keys(billingInfo).map((key) => (
-                <div key={key} className='flex flex-col'>
-                  <label className='ml-2 mt-4 font-semibold' htmlFor={`billing_${key}`}>{`${key.replace('_', ' ')}:`}</label>
-                  <InputBox
-                    type="text"
-                    placeholder={key.replace('_', ' ')}
-                    value={billingInfo[key]}
-                    name={key}
-                    onChange={(e) => handleInputChange(e, setBillingInfo)}
-                  />
-                </div>
-              ))}
-              <div className='flex flex-row gap-4 m-auto'>
-                <ButtonSquareRed label='Update' onClick={handleSubmit} />
-                <ButtonSquareRed label='Sign Out' onClick={handleSignOut} />
-              </div>
-            </div>
-          )}
-        </div>
+        <h1>Account</h1>
+        { editProfile &&   <EditProfileFields billingInfo={billingInfo} setBillingInfo={setBillingInfo} setShippingInfo={setShippingInfo} shippingInfo={shippingInfo} /> }
+        <ButtonSquareRed label='Edit Profile' onClick={ () => setEditProfile(!editProfile) } />
+        <ButtonSquareRed label='Sign Out' onClick={handleSignOut} />
       </div>
     </div>
   );
