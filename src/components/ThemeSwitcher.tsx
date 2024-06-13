@@ -1,6 +1,6 @@
-// components/ThemeSwitcher.js
+
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
@@ -32,3 +32,5 @@ const ThemeSwitcher = () => {
 };
 
 export default ThemeSwitcher;
+
+

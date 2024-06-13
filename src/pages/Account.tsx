@@ -8,7 +8,6 @@ import { ButtonSquareRed } from '../components/BannerButton';
 import { AddressInfo } from '../types';
 
 const Account = () => {
-  const [username, setUsername] = useState('');
   const [addBillingInfo, setAddBillingInfo] = useState(false);
   const [shippingInfo, setShippingInfo] = useState<AddressInfo>({
     name: '',
