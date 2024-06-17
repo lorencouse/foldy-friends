@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { ButtonSquareRed } from '../../BannerButton'
 import { CreateStarRating } from './StarRating'
 import { ProductReview } from '../../../types'
+import { UpdateSvg } from '../../svgPaths'
 
 export const WriteReviewBox = ( {productId}:{productId:number} ) => {
 
@@ -50,7 +51,7 @@ export const WriteReviewBox = ( {productId}:{productId:number} ) => {
         <CreateStarRating rating={rating} setRating={setRating} />
         </div>
         <input type="text" placeholder='Review content...' value={review.content} name="content" onChange={handleOnChange} className='w-full min-h-72 border border-gray-300 rounded-md p-2' />
-        <ButtonSquareRed label='Submit' onClick={createReview} />
+        <ButtonSquareRed label='Submit' icon={UpdateSvg} onClick={createReview} />
     </div>
   )
 }

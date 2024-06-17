@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ButtonInput, ButtonSquareRed } from '../BannerButton';
 import { CartQuantityButtons } from '../Cart/CartQuantityButtons';
 import { EmptyCart } from './EmptyCart';
-import { checkSvg } from '../svgPaths';
+import { CheckSvg } from '../svgPaths';
 
 export const CartFullSize = () => {
   const { allProducts, cartItems } = useShopContext();
@@ -54,7 +54,7 @@ export const CartFullSize = () => {
       
       <div className='flex justify-end '>
         <Link href="/checkout">
-          <ButtonSquareRed label='Checkout' d={checkSvg} onClick={() => window.scrollTo(0, 0)} />
+          <ButtonSquareRed label='Checkout' icon={CheckSvg} onClick={() => window.scrollTo(0, 0)} />
         </Link>
       </div>
     </div>

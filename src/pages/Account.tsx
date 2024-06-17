@@ -8,6 +8,7 @@ import { AddressInfo } from '../types';
 import { EditProfileFields } from '../components/Account/EditProfileFields';
 import { ButtonSquareRed } from '../components/BannerButton';
 import { UserDetails } from '../components/Account/UserDetails';
+import { DeleteSvg, SignOutSvg, EditSvg } from '../components/svgPaths';
 
 const Account = () => {
   const { user, loading } = useAuth();
@@ -87,18 +88,14 @@ const Account = () => {
     const currentUser = auth.currentUser;
     if (currentUser) {
       try {
-        // Re-authenticate the user before deleting
         const credential = EmailAuthProvider.credential(currentUser.email, prompt("Please enter your password to confirm"));
         await reauthenticateWithCredential(currentUser, credential);
 
-        // Delete user document from Firestore
         const userDocRef = doc(db, 'users', currentUser.uid);
         await deleteDoc(userDocRef);
 
-        // Delete user from Firebase Authentication
         await deleteUser(currentUser);
 
-        // Clear local storage and navigate to sign-in page
         router.push("/sign-in");
       } catch (error: any) {
         setError(error.message);
@@ -112,7 +109,8 @@ const Account = () => {
         <h1>Account</h1>
         
 
-        {editProfile ? (
+        {editProfile ? 
+          <>
           <EditProfileFields 
             billingInfo={billingInfo} 
             setBillingInfo={setBillingInfo} 
@@ -120,12 +118,21 @@ const Account = () => {
             shippingInfo={shippingInfo} 
             setEditProfile={setEditProfile} 
           />
-        ) :         
+          </>
+         : 
+        <>        
         <UserDetails shippingInfo={shippingInfo} billingInfo={billingInfo} />
+        <ButtonSquareRed label="Edit Profile" icon={EditSvg} onClick={() => setEditProfile(!editProfile)} />
+        </>
         }
-        <ButtonSquareRed label='Edit Profile' onClick={() => setEditProfile(!editProfile)} />
-        <ButtonSquareRed label='Sign Out' onClick={handleSignOut} />
-        <ButtonSquareRed label='Delete' onClick={handleDeleteAccount} />
+
+      <div className="flex flex-row gap-4 justify-between mx-4">
+      <ButtonSquareRed label="Sign Out" icon={SignOutSvg} onClick={handleSignOut} />
+      <ButtonSquareRed label="Delete" icon={DeleteSvg} onClick={handleDeleteAccount} />
+
+      </div>
+
+
       </div>
     </div>
   );

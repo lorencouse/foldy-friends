@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { InputBox } from '../../Input/InputBox';
 import { ButtonSquareRed } from '../../BannerButton';
-import { supabase } from '../../../lib/supabaseClient';
 import { ProductInfo } from '../../../types';
 
 const CreateProduct = () => {

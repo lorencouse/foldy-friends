@@ -5,7 +5,7 @@ import MiniCart from '../components/Navbar/MiniCart';
 import { useShopContext } from '../context/ShopContext';
 import { EmptyCart } from '../components/Cart/EmptyCart';
 import { Collections } from '../components/ProductCategory/Collections';
-import { lockSvg } from '../components/svgPaths';
+import { LockSvg } from '../components/svgPaths';
 import useAuth from '../hooks/useAuth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from "../lib/firebaseConfig";
@@ -80,7 +80,7 @@ const Checkout = () => {
             )}
             <MiniCart showMiniCart={true} setShowMiniCart={() => {}} />
             <div className="flex place-order-button w-full items-center justify-end">
-              <ButtonSquareRed d={lockSvg} label='Place Order' onClick={() => {}} />
+              <ButtonSquareRed icon={LockSvg} label='Place Order' onClick={() => {}} />
             </div>
           </div>
         </div>

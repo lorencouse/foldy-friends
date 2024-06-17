@@ -4,6 +4,7 @@ import { InputBox } from '../components/Input/InputBox';
 import { ButtonSquareRed } from '../components/BannerButton';
 import { auth } from '../lib/firebaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { SignInSvg } from '../components/svgPaths';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -71,9 +72,9 @@ const SignIn = () => {
           )}
           <div className="sign-in-up-buttons">
             {signUpPage ? (
-              <ButtonSquareRed label="Sign Up" onClick={handleSignUp} />
+              <ButtonSquareRed label="Sign Up" icon={SignInSvg} onClick={handleSignUp} />
             ) : (
-              <ButtonSquareRed label="Sign In" onClick={handleSignIn} />
+              <ButtonSquareRed label="Sign In" icon={SignInSvg} onClick={handleSignIn} />
             )}
           </div>
         </div>

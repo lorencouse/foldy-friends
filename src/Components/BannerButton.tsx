@@ -18,28 +18,28 @@ export const ButtonRoundBlack = (props:{label: string, url: string}) => {
 }
 
 interface ButtonSquareRedProps {
-  label: string;
-  d: string;
   onClick: () => void;
+  label: string;
+  icon: React.ReactNode;
 }
 
-export const ButtonSquareRed: React.FC<ButtonSquareRedProps> = (props) => {
+export const ButtonSquareRed: React.FC<ButtonSquareRedProps> = ({ onClick, label, icon }) => {
   return (
     <button
-      // className='w-44 bg-red-600 p-3 text-white hover:bg-red-500 my-10 font-semibold'
-      className="btn w-44 bg-red-600 p-3 text-white hover:bg-red-500 my-4"
-      onClick={props.onClick}
+      className="btn w-44 bg-red-600 p-3 text-white hover:bg-red-500 my-4 flex items-center justify-center gap-2"
+      onClick={onClick}
     >
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" 
-      strokeLinejoin="round" strokeWidth="2" 
-      d={props.d} /></svg>
 
+      {label}
       
-
-      {props.label} 
+      <span className='h-5 w-5'>
+        {icon}
+      </span>
+      
+      
     </button>
   );
-}
+};
 
 export const ButtonInput = (props:{label: string, onClick: () => void}) => {
   return (

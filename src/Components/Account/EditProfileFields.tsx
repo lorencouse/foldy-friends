@@ -7,6 +7,7 @@ import { auth, db } from '../../lib/firebaseConfig';
 import { doc, setDoc } from "firebase/firestore";
 import { updateProfile, updateEmail } from "firebase/auth";
 import { AddressInputFields } from './AddressInputFields';
+import { UpdateSvg, CancelSvg } from '../svgPaths';
 
 interface EditProfileFieldsProps {
   shippingInfo: AddressInfo;
@@ -68,7 +69,13 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
     <div className='flex flex-row flex-wrap md:grid md:grid-cols-2 justify-around'>
       <div className="shipping-info flex flex-col">
         <div className='flex flex-col'>
-          <label className='ml-2 mt-4 font-semibold' htmlFor="email">Email:</label>
+
+        </div>
+        <h2 className='text-left'>Shipping Info</h2>
+
+        <AddressInputFields addressInfo={shippingInfo} setAddressInfo={setShippingInfo} />
+
+        <label className='ml-2 mt-4 font-semibold' htmlFor="email">Email:</label>
           <InputBox
             type="text"
             placeholder="Email"
@@ -77,10 +84,6 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
             onChange={() => {}}
             disabled
           />
-        </div>
-        <h2 className='text-left'>Shipping Info</h2>
-
-        <AddressInputFields addressInfo={shippingInfo} setAddressInfo={setShippingInfo} />
 
         <div className="flex" onClick={() => setAddBillingInfo(!addBillingInfo)}>
           <input type="checkbox" className="checkbox" checked={addBillingInfo} readOnly />
@@ -89,7 +92,9 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
 
         {!addBillingInfo && (
           <div className='flex flex-row gap-4 m-auto'>
-            <ButtonSquareRed label='Update' onClick={handleSaveProfile} />
+            <ButtonSquareRed label='Update' icon={UpdateSvg} onClick={handleSaveProfile} />
+            <ButtonSquareRed label='Cancel' icon={CancelSvg} onClick={ () => setEditProfile(false)} />
+
           </div>
         )}
       </div>
@@ -99,8 +104,10 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
 
           <AddressInputFields addressInfo={billingInfo} setAddressInfo={setBillingInfo} />
             
-          <div className='flex flex-row gap-4 m-auto'>
-            <ButtonSquareRed label='Update' onClick={handleSaveProfile} />
+          <div className='flex flex-col sm:flex-row flex-wrap gap-4 m-auto'>
+            <ButtonSquareRed label='Update' icon={UpdateSvg} onClick={handleSaveProfile} />
+            <ButtonSquareRed label='Cancel' icon={CancelSvg} onClick={ () => setEditProfile(false)} />
+
           </div>
         </div>
       )}

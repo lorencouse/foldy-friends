@@ -4,6 +4,6 @@
   "/_document": "pages/_document.js",
   "/sign-in": "pages/sign-in.js",
   "/category/[category]": "pages/category/[category].js",
-  "/checkout": "pages/checkout.js",
-  "/account": "pages/account.js"
+  "/account": "pages/account.js",
+  "/product/[productId]": "pages/product/[productId].js"
 }
