@@ -2,7 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/account": "pages/account.js",
-  "/sign-in": "pages/sign-in.js"
+  "/sign-in": "pages/sign-in.js",
+  "/category/[category]": "pages/category/[category].js",
+  "/checkout": "pages/checkout.js",
+  "/account": "pages/account.js"
 }

@@ -4,14 +4,16 @@ import { ButtonSquareRed } from '../BannerButton';
 import { AddressInfo } from '../types';
 import useAuth from '../../hooks/useAuth';
 import { auth, db } from '../../lib/firebaseConfig';
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { updateProfile, updateEmail } from "firebase/auth";
+import { AddressInputFields } from './AddressInputFields';
 
 interface EditProfileFieldsProps {
   shippingInfo: AddressInfo;
   setShippingInfo: (info: AddressInfo) => void;
   billingInfo: AddressInfo;
   setBillingInfo: (info: AddressInfo) => void;
+  setEditProfile: (edit: boolean) => void;
 }
 
 export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
@@ -19,46 +21,42 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
   setShippingInfo,
   billingInfo,
   setBillingInfo,
+  setEditProfile,
 }) => {
   const [addBillingInfo, setAddBillingInfo] = useState(false);
   const { user, loading } = useAuth();
   const [error, setError] = useState<string | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setState: React.Dispatch<React.SetStateAction<AddressInfo>>) => {
-    const { name, value } = e.target;
-    setState(prevState => ({ ...prevState, [name]: value }));
-  };
-
   const handleSaveProfile = async () => {
     const currentUser = auth.currentUser;
+
     if (!currentUser) return;
 
     try {
-      // Ensure user data
-      const { displayName, photoURL, email } = currentUser;
       const userDocRef = doc(db, 'users', currentUser.uid);
       const updatedUserData = {
         id: currentUser.uid,
         created_at: new Date(),
         shipping_info: shippingInfo,
-        billing_info: addBillingInfo ? billingInfo : shippingInfo,
-        photo_url: photoURL || '',
+        billing_info: billingInfo,
+        photo_url: currentUser.photoURL || '',
         order_history: [],
       };
 
       await setDoc(userDocRef, updatedUserData, { merge: true });
 
-      if (email) {
-        await updateEmail(currentUser, email);
+      if (currentUser.email) {
+        await updateEmail(currentUser, currentUser.email);
       }
 
-      if (displayName || photoURL) {
+      if (currentUser.displayName || currentUser.photoURL) {
         await updateProfile(currentUser, {
-          displayName,
-          photoURL,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
         });
       }
 
+      setEditProfile(false);
       console.log('Profile updated successfully');
     } catch (error: any) {
       console.error("Error updating profile: ", error);
@@ -81,18 +79,8 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
           />
         </div>
         <h2 className='text-left'>Shipping Info</h2>
-        {Object.keys(shippingInfo).map((key) => (
-          <div key={key} className='flex flex-col'>
-            <label className='ml-2 mt-4 font-semibold' htmlFor={`shipping_${key}`}>{`${key.replace('_', ' ')}:`}</label>
-            <InputBox
-              type="text"
-              placeholder={key.replace('_', ' ')}
-              value={shippingInfo[key]}
-              name={key}
-              onChange={(e) => handleInputChange(e, setShippingInfo)}
-            />
-          </div>
-        ))}
+
+        <AddressInputFields addressInfo={shippingInfo} setAddressInfo={setShippingInfo} />
 
         <div className="flex" onClick={() => setAddBillingInfo(!addBillingInfo)}>
           <input type="checkbox" className="checkbox" checked={addBillingInfo} readOnly />
@@ -108,18 +96,9 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
       {addBillingInfo && (
         <div className="billing-info flex flex-col justify-around">
           <h2 className='text-left'>Billing Info</h2>
-          {Object.keys(billingInfo).map((key) => (
-            <div key={key} className='flex flex-col'>
-              <label className='ml-2 mt-4 font-semibold' htmlFor={`billing_${key}`}>{`${key.replace('_', ' ')}:`}</label>
-              <InputBox
-                type="text"
-                placeholder={key.replace('_', ' ')}
-                value={billingInfo[key]}
-                name={key}
-                onChange={(e) => handleInputChange(e, setBillingInfo)}
-              />
-            </div>
-          ))}
+
+          <AddressInputFields addressInfo={billingInfo} setAddressInfo={setBillingInfo} />
+            
           <div className='flex flex-row gap-4 m-auto'>
             <ButtonSquareRed label='Update' onClick={handleSaveProfile} />
           </div>
