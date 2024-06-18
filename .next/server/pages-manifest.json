@@ -2,8 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/sign-in": "pages/sign-in.js",
-  "/category/[category]": "pages/category/[category].js",
-  "/account": "pages/account.js",
-  "/product/[productId]": "pages/product/[productId].js"
+  "/": "pages/index.js",
+  "/create-product": "pages/create-product.js"
 }

@@ -12,6 +12,11 @@
   ],
   "rootMainFiles": [],
   "pages": {
+    "/": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/index.js"
+    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -22,20 +27,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/account": [
+    "/create-product": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/account.js"
-    ],
-    "/product/[productId]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/product/[productId].js"
-    ],
-    "/sign-in": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/sign-in.js"
+      "static/chunks/pages/create-product.js"
     ]
   },
   "ampFirstPages": []

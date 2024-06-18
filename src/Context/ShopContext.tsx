@@ -1,7 +1,14 @@
 // src/Context/ShopContext.tsx
-import React, { createContext, ReactNode, useState, Dispatch, SetStateAction, useContext } from 'react';
-import allProducts from '../data/allProducts';
-import { CartItem, ProductData } from '../types';
+import React, {
+  createContext,
+  ReactNode,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useContext,
+} from "react";
+import allProducts from "../data/allProducts";
+import { CartItem, ProductData } from "../types";
 
 interface ShopContextType {
   allProducts: ProductData[];
@@ -19,24 +26,32 @@ interface ShopContextProviderProps {
 
 const ShopContext = createContext<ShopContextType | null>(null);
 
-export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) => {
+export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
+  children,
+}) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartCount, setCartCount] = useState(0);
   const [activeCategory, setActiveCategory] = useState("Shop");
 
-  const contextVal: ShopContextType = { allProducts, cartItems, setCartItems, cartCount, setCartCount, activeCategory, setActiveCategory };
+  const contextVal: ShopContextType = {
+    allProducts,
+    cartItems,
+    setCartItems,
+    cartCount,
+    setCartCount,
+    activeCategory,
+    setActiveCategory,
+  };
 
   return (
-    <ShopContext.Provider value={contextVal}>
-      {children}
-    </ShopContext.Provider>
+    <ShopContext.Provider value={contextVal}>{children}</ShopContext.Provider>
   );
 };
 
 export const useShopContext = () => {
   const context = useContext(ShopContext);
   if (!context) {
-    throw new Error('useShopContext must be used within a ShopContextProvider');
+    throw new Error("useShopContext must be used within a ShopContextProvider");
   }
   return context;
 };

@@ -13,14 +13,11 @@ export interface CartItem {
     size: string;
 }
 
-// export interface LinkInfo {
-//     title: string, 
-//     url: string
-// }
-
+export interface ProductAttributes {
+  [atribute: string]: string[];
+}
 
 export interface ProductInfo {
-  id: number;
   name: string;
   description: string;
   full_price: number;
@@ -37,13 +34,15 @@ export interface ProductInfo {
   sku: string;
 }
 
+
+
 export interface ProductVariation {
     product_id: number;
     size: string;
     quantity: number;
 }
 export interface ProductReview {
-    id: number;
+    product_id: number;
     created_at: Date;
     product_id: number;
     user_id: number;
