@@ -33,7 +33,8 @@ export const Footer = () => {
     { title: "Returns", url: "/returns" },
     { title: "About", url: "/about" },
     { title: "Contact", url: "/contact" },
-    { title: "Create Product", url: "/create-product" },
+    { title: "Create", url: "/admin/create-product" },
+    { title: "All", url: "/admin/all-products" },
   ];
 
   return (

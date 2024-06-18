@@ -1,0 +1,64 @@
+import React, { useEffect, useState } from "react";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import Link from "next/link";
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  full_price: number;
+  sale_price: number;
+  images: string[];
+  sizes: string[];
+  categories: string[];
+  tags: string[];
+  sku: string;
+}
+
+const AllProducts = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const db = getFirestore();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const productsCollection = collection(db, "products");
+        const productSnapshot = await getDocs(productsCollection);
+        const productList = productSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Product[];
+        setProducts(productList);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, [db]);
+
+  return (
+    <div>
+      <h1>All Products</h1>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id} className=" m-8 border-b-2 p-5">
+            <div className="prouct flex flex-row">
+              <div>
+                <img src={product.images[0]} alt={product.name} width="100" />
+              </div>
+              <Link href={`/admin/edit-product/${product.id}`}>
+                <p className=" text-base-content m-4 text-semibold link">
+                  {product.name}
+                </p>
+              </Link>
+            </div>
+            <p>Product ID: {product.id}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default AllProducts;

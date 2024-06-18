@@ -7,7 +7,7 @@ export const ProductImages = ( {images, alt}:{images:string[], alt:string} ) => 
         <div className="product-images flex flex-row justify-start item m-3">
 
             <div className="image-gallery flex flex-col">
-                { images.map( (image, i) => <img src={image} alt={alt} onClick={ currentImg => setCurrentImg(i) }  className={` w-20 m-1 hover:opacity-80 hover:scale-105 ${i === currentImg ? "opacity-80 scale-105" : ""}`}  /> )}
+                { images.map( (image, i) => <img key={i} src={image} alt={alt} onClick={ currentImg => setCurrentImg(i) }  className={` w-20 m-1 hover:opacity-80 hover:scale-105 ${i === currentImg ? "opacity-80 scale-105" : ""}`}  /> )}
             </div>
 
             <div className="product-image mx-2">
