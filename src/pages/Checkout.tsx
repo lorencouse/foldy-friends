@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CheckoutInfo } from "../components/Checkout/CheckoutInfo";
 import { ButtonSquareRed } from "../components/BannerButton";
-import MiniCart from "../components/Navbar/MiniCart";
 import { useShopContext } from "../context/ShopContext";
 import { EmptyCart } from "../components/Cart/EmptyCart";
 import { Collections } from "../components/ProductCategory/Collections";
@@ -10,6 +9,7 @@ import useAuth from "../hooks/useAuth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../lib/firebaseConfig";
 import { AddressInfo } from "../types";
+import { CartFullSize } from "../components/Cart/CartFullSize";
 
 const Checkout = () => {
   const [billing, setBilling] = useState<boolean>(false);
@@ -89,7 +89,7 @@ const Checkout = () => {
                 />
               </div>
             )}
-            <MiniCart showMiniCart={true} setShowMiniCart={() => {}} />
+            <CartFullSize />
             <div className="flex place-order-button w-full items-center justify-end">
               <ButtonSquareRed
                 icon={LockSvg}

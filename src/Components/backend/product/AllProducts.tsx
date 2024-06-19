@@ -57,7 +57,7 @@ const AllProducts = () => {
                   </p>
                 </Link>
                 <p className="">Price: ${product.sale_price}</p>
-                <p className="">Categories: {product.categories.join(", ")}</p>
+                <p className="">Categories: {product.category}</p>
                 <p className="">Tags: {product.tags.join(", ")}</p>
                 <p>Product ID: {product.id}</p>
               </div>

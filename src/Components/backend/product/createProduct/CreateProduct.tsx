@@ -65,7 +65,7 @@ const CreateProduct = ({ existingProduct }) => {
         await updateDoc(productRef, {
           ...productInfo,
           images: imageUrls,
-          sizes: selectedVariations,
+          variations: selectedVariations,
           categories: selectedCategories,
           tags: selectedTags,
           updated_at: new Date(),
@@ -78,7 +78,7 @@ const CreateProduct = ({ existingProduct }) => {
           full_price: productInfo.full_price - 0.03,
           sale_price: productInfo.sale_price - 0.03,
           images: imageUrls,
-          sizes: selectedVariations,
+          variations: selectedVariations,
           categories: selectedCategories,
           tags: selectedTags,
           created_at: new Date(),

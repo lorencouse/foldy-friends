@@ -5,11 +5,11 @@ import { useShopContext } from "../../context/ShopContext";
 import { NavBarCartIcon } from "./CartIcon";
 import { NavLink } from "./NavLink";
 import { NavLogo } from "./NavLogo";
-import MiniCart from "./MiniCart";
 import { MiniCartButtons } from "./MiniCartButtons";
 import ThemeSwitcher from "../ThemeSwitcher";
 import useAuth from "../../hooks/useAuth";
 import { ProfileIcon } from "./ProfileIcon";
+import { CartFullSize } from "../Cart/CartFullSize";
 
 const Navbar = () => {
   const { setActiveCategory, activeCategory, cartCount } = useShopContext();
@@ -137,15 +137,12 @@ const Navbar = () => {
           </div>
           {showMiniCart && (
             <div
-              className="absolute my-0 right-0 top-24 px-4 bg-base-100 border border-base-200 shadow-lg max-w-md "
+              className="absolute my-0 right-0 top-24 px-4 bg-base-100 border border-base-200 shadow-lg max-w-xl "
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
               <div className="w-full overflow-y-auto max-h-96 no-scrollbar">
-                <MiniCart
-                  showMiniCart={showMiniCart}
-                  setShowMiniCart={setShowMiniCart}
-                />
+              <CartFullSize />
               </div>
               <MiniCartButtons setShowMiniCart={setShowMiniCart} />
             </div>

@@ -9,7 +9,7 @@
 export interface CartItem {
   id: number;
   quantity: number;
-  size: string;
+  variation?: string;
 }
 
 export interface ProductAttributes {
@@ -23,7 +23,7 @@ export interface ProductData {
   full_price: number;
   sale_price?: number;
   images: string[];
-  sizes: string[];
+  variations: string[];
   category: string;
   tags: string[];
   reviews: ProductReview[];
@@ -36,7 +36,7 @@ export interface ProductData {
 
 export interface ProductVariation {
   product_id: number;
-  size: string;
+  variation?: string;
   quantity: number;
 }
 export interface ProductReview {

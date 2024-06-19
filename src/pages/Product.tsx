@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useShopContext } from "../context/ShopContext";
 import { Prices } from "../components/Product/Prices";
-import { SizeSelector } from "../components/Product/SizeSelector";
+import { VariationSelector } from "../components/Product/SizeSelector";
 import { ProductImages } from "../components/Product/ProductImages";
 import { Breadcrumbs } from "../components/Product/Breadcrumbs";
 import { Collections } from "../components/ProductCategory/Collections";
@@ -16,7 +16,7 @@ const Product = () => {
   const router = useRouter();
   const { productId } = router.query;
   const { allProducts } = useShopContext();
-  const [currentSize, setCurrentSize] = useState<string>("m");
+  const [currentVariation, setCurrentVariation] = useState<string>("m");
 
   const product = allProducts.find((i) => i.id === productId);
 
@@ -47,12 +47,15 @@ const Product = () => {
           <h1>{product.name}</h1>
           <StarRatingAverage id={product.id} />
           <Prices oldPrice={product.full_price} newPrice={product.sale_price} />
-          {/* <SizeSelector
-            currentSize={currentSize}
-            setCurrentSize={setCurrentSize}
-            sizes={sizes}
-          /> */}
-          <AddToCartButton id={product.id} size={currentSize} />
+          {product.variations && (
+            <VariationSelector
+              currentVariation={currentVariation}
+              setCurrentVariation={setCurrentVariation}
+              variations={product.variations}
+            />
+          )}
+
+          <AddToCartButton id={product.id} size={currentVariation} />
           {product.category && (
             <>
               <p className=" capitalize ">
