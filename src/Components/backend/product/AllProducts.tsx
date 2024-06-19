@@ -40,20 +40,28 @@ const AllProducts = () => {
   return (
     <div>
       <h1>All Products</h1>
+      <Link href={`/admin/create-product`}>
+        <p className="m-4 text-xl "> + Create New Product</p>
+      </Link>
       <ul>
         {products.map((product) => (
           <li key={product.id} className=" m-8 border-b-2 p-5">
             <div className="prouct flex flex-row">
               <div>
-                <img src={product.images[0]} alt={product.name} width="100" />
+                <img src={product.images[0]} alt={product.name} width="150" />
               </div>
-              <Link href={`/admin/edit-product/${product.id}`}>
-                <p className=" text-base-content m-4 text-semibold link">
-                  {product.name}
-                </p>
-              </Link>
+              <div className="flex flex-col m-4">
+                <Link href={`/admin/edit-product/${product.id}`}>
+                  <p className=" text-base-content text-semibold link">
+                    {product.name}
+                  </p>
+                </Link>
+                <p className="">Price: ${product.sale_price}</p>
+                <p className="">Categories: {product.categories.join(", ")}</p>
+                <p className="">Tags: {product.tags.join(", ")}</p>
+                <p>Product ID: {product.id}</p>
+              </div>
             </div>
-            <p>Product ID: {product.id}</p>
           </li>
         ))}
       </ul>

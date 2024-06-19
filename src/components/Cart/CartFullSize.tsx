@@ -29,7 +29,7 @@ export const CartFullSize = () => {
     cartItems.forEach((cartItem) => {
       const product = productMap[cartItem.id];
       if (product) {
-        const price = product.new_price ?? product.new_price ?? 0;
+        const price = product.sale_price ?? product.sale_price ?? 0;
         total += price * cartItem.quantity;
       }
     });
@@ -82,7 +82,7 @@ const CartLineItem = ({
   product: ProductData;
   cartItem: CartItem;
 }) => {
-  const price = product.new_price ?? product.old_price ?? 1000;
+  const price = product.sale_price ?? product.full_price ?? 1000;
   return (
     <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-5 m-auto py-8 w-full border border-y-1 border-x-0 border-gray-200">
       <div className="cart-item flex items-center justify-center">

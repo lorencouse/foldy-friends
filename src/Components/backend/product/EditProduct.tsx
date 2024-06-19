@@ -7,4 +7,5 @@ const EditProduct = ({ productId }: { productId: string }) => {
   </div>);
 };
 
+
 export default EditProduct;

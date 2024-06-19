@@ -27,7 +27,7 @@ const MiniCart = ({
     cartItems.forEach((cartItem) => {
       const product = productMap[cartItem.id];
       if (product) {
-        const price = product.new_price ?? product.old_price;
+        const price = product.sale_price ?? product.full_price;
         total += price * cartItem.quantity;
       }
     });
@@ -67,7 +67,7 @@ const MiniCartItem = ({
   product: ProductData;
   cartItem: CartItem;
 }) => {
-  const price = product.new_price ?? product.old_price ?? 1000;
+  const price = product.sale_price ?? product.full_price ?? 1000;
   return (
     <div className="mini-cart-item">
       <div className="grid grid-cols-[auto_2fr_auto] lg:gap-12 gap-5 m-auto py-8 w-full border border-y-1 border-x-0 border-base-200">

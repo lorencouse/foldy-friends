@@ -1,9 +1,9 @@
-export interface ProductData {
+export interface OldProductData {
   id: number;
   name: string;
   category: string;
-  new_price?: number;
-  old_price: number;
+  sale_price?: number;
+  full_price: number;
 }
 
 export interface CartItem {
@@ -16,15 +16,15 @@ export interface ProductAttributes {
   [atribute: string]: string[];
 }
 
-export interface ProductInfo {
+export interface NewProductData {
   id: string;
   name: string;
   description: string;
   full_price: number;
-  sale_price: number;
+  sale_price?: number;
   images: string[];
   sizes: string[];
-  categories: string[];
+  category: string;
   tags: string[];
   reviews: ProductReview[];
   created_at: Date;

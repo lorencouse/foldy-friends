@@ -12,9 +12,9 @@ const Home = () => {
     <div className='flex flex-col justify-between' >
       <Hero />
       <div className='lg:mx-16 md:mx-12'>
-      <Collections header='Womens Top Sellers' productData={womensTopSellers} />
+      {/* <Collections header='Womens Top Sellers' productData={womensTopSellers} /> */}
       <Offers />
-      <Collections header='New Items' productData={newItems} />
+      {/* <Collections header='New Items' productData={newItems} /> */}
       <Subscribe />
       </div>
 
