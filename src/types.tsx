@@ -1,10 +1,10 @@
-export interface OldProductData {
-  id: number;
-  name: string;
-  category: string;
-  sale_price?: number;
-  full_price: number;
-}
+// export interface OldProductData {
+//   id: number;
+//   name: string;
+//   category: string;
+//   sale_price?: number;
+//   full_price: number;
+// }
 
 export interface CartItem {
   id: number;
@@ -16,7 +16,7 @@ export interface ProductAttributes {
   [atribute: string]: string[];
 }
 
-export interface NewProductData {
+export interface ProductData {
   id: string;
   name: string;
   description: string;

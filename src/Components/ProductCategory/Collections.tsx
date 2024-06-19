@@ -14,12 +14,7 @@ export const Collections = (props: {
         {props.productData.map((product, key) => {
           return (
             <Item
-              key={key}
-              id={product.id}
-              name={product.name}
-              category={product.category}
-              full_price={product.full_price}
-              sale_price={product.sale_price}
+              productData={product}
             />
           );
         })}

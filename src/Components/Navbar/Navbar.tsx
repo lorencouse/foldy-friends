@@ -38,9 +38,9 @@ const Navbar = () => {
   const links = [
     { title: "Home", url: "/" },
     { title: "Shop", url: "/shop" },
-    { title: "Men", url: "/category/men" },
-    { title: "Women", url: "/category/women" },
-    { title: "Kids", url: "/category/kids" },
+    { title: "Paper", url: "/category/paper" },
+    { title: "Accessories", url: "/category/accessories" },
+    { title: "Kits", url: "/category/kits" },
   ];
 
   useEffect(() => {

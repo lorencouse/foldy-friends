@@ -4,10 +4,10 @@ export const Prices = ({ oldPrice, newPrice }: { oldPrice?: number; newPrice?: n
   return (
     <div className="prices flex flex-row my-3">
       <div className="sale-price font-bold text-error">
-        {newPrice !== undefined ? `$${newPrice.toFixed(2)}` : 'N/A'}
+        {newPrice !== undefined ? `$${newPrice}` : 'N/A'}
       </div>
       <div className="retail-price mx-3 font-extralight line-through">
-        {oldPrice !== undefined ? `$${oldPrice.toFixed(2)}` : 'N/A'}
+        {oldPrice !== undefined ? `$${oldPrice}` : 'N/A'}
       </div>
     </div>
   );

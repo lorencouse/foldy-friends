@@ -36,7 +36,7 @@ const MiniCart = ({
       <div className="cart-total mt-4">
         <p>
           <span className="font-semibold">Total: </span>
-          {`$${total.toFixed(2)}`}
+          {`$${total}`}
         </p>
       </div>
     );
@@ -74,7 +74,7 @@ const MiniCartItem = ({
         <div className="cart-item">
           <Link href={`/product/${product.id}`}>
             <img
-              src={`/Assets/product_${product.id}.png`}
+              src={product.images[0]}
               alt={product.name}
               className="max-h-24"
             />
@@ -89,7 +89,7 @@ const MiniCartItem = ({
           </Link>
         </div>
         <div className="cart-item flex flex-col items-center justify-center">
-          <p className="mt-4">{`$${price.toFixed(2)}`}</p>
+          <p className="mt-4">{`$${price}`}</p>
           <CartQuantityButtons cartItem={cartItem} />
         </div>
       </div>

@@ -18,18 +18,18 @@ export const emptyProduct = {
 
 export const productVariations = ["Red", "Blue", "Purple", "Green", "Yellow", "Black", "White"];
 export const productCategories = [
-  "Paper",
-  "Accessories",
-  "Crafting Supplies",
-  "Kits",
-  "Books"
+  "paper",
+  "accessories",
+  "crafting supplies",
+  "kits",
+  "books"
 ];
 export const productTags = [
-  "Supplies",
-  "Scissors",
-  "Knives and Blades",
-  "Animals",
-  "Pens",
-  "Markers",
-  "Staples",
+  "supplies",
+  "scissors",
+  "knives and blades",
+  "animals",
+  "pens",
+  "markers",
+  "staples",
 ];

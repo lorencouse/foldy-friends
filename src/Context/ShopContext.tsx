@@ -6,8 +6,10 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect
 } from "react";
-import allProducts from "../data/allProducts";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+// import allProducts from "../data/allProducts";
 import { CartItem, ProductData } from "../types";
 
 interface ShopContextType {
@@ -29,9 +31,26 @@ const ShopContext = createContext<ShopContextType | null>(null);
 export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
   children,
 }) => {
+  const [allProducts, setAllProducts] = useState<ProductData[]>([]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartCount, setCartCount] = useState(0);
   const [activeCategory, setActiveCategory] = useState("Shop");
+
+  useEffect(() => {
+      const fetchProducts = async () => {
+        const db = getFirestore();
+        const productsCollection = collection(db, "products");
+        const productSnapshot = await getDocs(productsCollection);
+        const productList = productSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as ProductData[];
+        setAllProducts(productList);
+        console.log("Fetched products: ", productList); // Log fetched products
+      };
+
+      fetchProducts();
+    }, []);
 
   const contextVal: ShopContextType = {
     allProducts,

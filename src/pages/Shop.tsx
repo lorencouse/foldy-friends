@@ -7,7 +7,6 @@ import {
 } from "../tools/ShuffleProducts";
 import { useShopContext } from "../context/ShopContext";
 import Link from "next/link";
-import { ProductData } from "../types";
 import { AllProductFilters } from "../components/ProductCategory/ProductFilters";
 
 const Shop = () => {
@@ -64,7 +63,7 @@ const Shop = () => {
           setFilteredProducts={setFilteredProducts}
         />
 
-        <Collections productData={filteredProducts} header="" />
+        <Collections productData={allProducts} header="" />
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ const Category = () => {
     if (category && allProducts.length > 0) {
       const categoryProducts = filterProductCategory(
         allProducts,
-        category as string,
+        category
       );
       setFilteredProducts(categoryProducts);
     }
