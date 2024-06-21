@@ -1,26 +1,26 @@
 import React from "react";
 import Link from "next/link";
+import { useShopContext } from "../../context/ShopContext";
 
 export function NavLink({
   url,
   label,
-  activeCategory,
-  setActiveCategory,
 }: {
   url: string;
   label: string;
-  activeCategory: string;
-  setActiveCategory: (active: string) => void;
+
 }) {
+
+  const { setActiveCategory, activeCategory } = useShopContext();
   return (
     <div className="flex flex-col items-center text-base-content">
       <li
-        className="active:bg-transparent"
-        onClick={() => setActiveCategory(label.toLowerCase())}
+        className="active:bg-transparent capitalize"
+        onClick={() => setActiveCategory(label)}
       >
         <Link href={url}>{label}</Link>
       </li>
-      {activeCategory === label.toLowerCase() && <hr />}
+      {activeCategory === label && <hr />}
     </div>
   );
 }

@@ -36,11 +36,11 @@ const Navbar = () => {
   };
 
   const links = [
-    { title: "Home", url: "/" },
-    { title: "Shop", url: "/shop" },
-    { title: "Paper", url: "/category/paper" },
-    { title: "Tools", url: "/category/tools" },
-    { title: "Kits", url: "/category/kits" },
+    { title: "home", url: "/" },
+    { title: "shop", url: "/shop" },
+    { title: "paper", url: "/category/paper" },
+    { title: "tools", url: "/category/tools" },
+    { title: "kits", url: "/category/kits" },
   ];
 
   useEffect(() => {
@@ -95,24 +95,18 @@ const Navbar = () => {
           onClick={handleMobileMenuClick}
           className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full lg:w-auto "
         >
-          <ul className="nav-menu flex flex-col lg:flex-row items-center mx-12 gap-4 xl:gap-16">
-            {links.map((link) => (
-              <NavLink
-                key={link.title}
-                url={link.url}
-                label={link.title}
-                activeCategory={activeCategory}
-                setActiveCategory={setActiveCategory}
-              />
+          <ul className="nav-menu flex flex-col lg:flex-row items-center ml-10 gap-4 xl:gap-16">
+            {links.map((link, key) => (
+              <NavLink key={key} url={link.url} label={link.title} />
             ))}
           </ul>
 
-          <div className="flex lg:flex-row justify-between lg:justify-normal gap-4 mx-3 flex-row-reverse w-full lg:w-28">
+          <div className="flex lg:flex-row justify-between lg:justify-normal gap-4 mx-3 flex-row-reverse max-w-52">
             {!user ? (
               <Link href="/sign-in">
                 <button
                   onClick={() => setActiveCategory("login")}
-                  className={`border-2 w-28 lg:my-0 my-8 mx-8 h-10 rounded-md cursor-pointer bg-base-100 hover:border-base-content hover:text-base-content ${activeCategory === "login" ? "border-error text-error " : "border-base-200 text-base-300"}`}
+                  className={`border-2 w-28 lg:my-0 my-8 mx-8 h-10 rounded-md cursor-pointer bg-base-100 font-medium hover:border-base-content hover:text-base-content ${activeCategory === "login" ? "border-error text-error " : "border-base-300 text-base-300"}`}
                 >
                   Sign In
                 </button>
@@ -121,7 +115,7 @@ const Navbar = () => {
               <ProfileIcon />
             )}
 
-            {showMenu && <ThemeSwitcher />}
+            <ThemeSwitcher />
           </div>
         </div>
       )}
@@ -142,7 +136,7 @@ const Navbar = () => {
               onMouseLeave={handleMouseLeave}
             >
               <div className="w-full overflow-y-auto max-h-96 no-scrollbar">
-              <CartFullSize />
+                <CartFullSize />
               </div>
               <MiniCartButtons setShowMiniCart={setShowMiniCart} />
             </div>
