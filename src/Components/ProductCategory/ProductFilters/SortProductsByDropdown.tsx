@@ -1,58 +1,27 @@
 import React from "react";
-import { ProductData } from "../../types";
 
 const SortProductsByDropdown = ({
-  filteredProducts,
-  setFilteredProducts,
+  setSort,
+  sort
 }: {
-  filteredProducts: ProductData[];
-  setFilteredProducts: (products: ProductData[]) => void;
+  setSort: (sort: string) => void;
+  sort: string;
 }) => {
-  const handleSortProducts = (sort: string) => {
-    let sortedProducts = [...filteredProducts];
-
-    if (sort === "low") {
-      sortedProducts.sort(
-        (p1, p2) =>
-          (p1.sale_price ?? p1.full_price ?? 0) -
-          (p2.sale_price ?? p2.full_price ?? 0),
-      );
-    } else if (sort === "high") {
-      sortedProducts.sort(
-        (p1, p2) =>
-          (p2.sale_price ?? p2.full_price ?? 0) -
-          (p1.sale_price ?? p1.full_price ?? 0),
-      );
-    } else if (sort === "newest") {
-      sortedProducts.sort(
-        (p1, p2) => (p2.created_at ?? 0) - (p1.created_at ?? 0),
-      );
-    } else if (sort === "oldest") {
-      sortedProducts.sort(
-        (p1, p2) => (p1.created_at ?? 0) - (p2.created_at ?? 0),
-      );
-    }
-
-    setFilteredProducts(sortedProducts);
+  const handleSortChange = (sort: string) => {
+    setSort(sort);
   };
 
   return (
     <div className="dropdown dropdown-hover mx-6">
-      <div
-        tabIndex={0}
-        role="button"
-        className="btn m-1 capitalize font-bold bg-gray-100"
-      >
-        Sort Price
-      </div>
+      <summary className="m-1 btn bg-base-100 w-56 capitalize">Sort By{`: ${sort}`}</summary>
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box"
       >
         <li>
           <button
             className="capitalize font-bold"
-            onClick={() => handleSortProducts("low")}
+            onClick={() => handleSortChange("lowest")}
           >
             Price: Low to High
           </button>
@@ -60,7 +29,7 @@ const SortProductsByDropdown = ({
         <li>
           <button
             className="capitalize font-bold"
-            onClick={() => handleSortProducts("high")}
+            onClick={() => handleSortChange("highest")}
           >
             Price: High to Low
           </button>
@@ -68,7 +37,7 @@ const SortProductsByDropdown = ({
         <li>
           <button
             className="capitalize font-bold"
-            onClick={() => handleSortProducts("newest")}
+            onClick={() => handleSortChange("newest")}
           >
             Date: Newest to Oldest
           </button>
@@ -76,7 +45,7 @@ const SortProductsByDropdown = ({
         <li>
           <button
             className="capitalize font-bold"
-            onClick={() => handleSortProducts("oldest")}
+            onClick={() => handleSortChange("oldest")}
           >
             Date: Oldest to Newest
           </button>

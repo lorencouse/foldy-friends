@@ -14,7 +14,7 @@ export const Collections = (props: {
         {props.productData.map((product, key) => {
           return (
             <Item
-              productData={product}
+              productData={product} key={key}
             />
           );
         })}

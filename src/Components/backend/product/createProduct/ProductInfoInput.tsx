@@ -1,6 +1,10 @@
 import React from "react";
 import { InputBox } from "../../../Input/InputBox";
 import { ProductInfo } from "../../../../types";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export const ProductInfoInput = ({
   productInfo,
@@ -16,6 +20,14 @@ export const ProductInfoInput = ({
       [name]: value,
     }));
   };
+
+    const handleDescriptionChange = (value: string) => {
+      setProductInfo((prevInfo) => ({
+        ...prevInfo,
+        description: value,
+      }));
+    };
+
   return (
     <div className="flex flex-col">
       <InputBox
@@ -26,14 +38,16 @@ export const ProductInfoInput = ({
         name="name"
       />
 
-      <textarea
-        type="text"
-        placeholder="Description"
-        value={productInfo.description}
-        onChange={handleInputChange}
-        name="description"
-        className="max-w-96 h-96 border border-gray-300 rounded-md m-2"
-      />
+
+      <div className="flex flex-col ">
+        <label className="ml-2 mt-4 font-semibold">Description: </label>
+        <ReactQuill
+          value={productInfo.description}
+          onChange={handleDescriptionChange}
+          className="mb-4"
+        />
+      </div>
+
       <InputBox
         type="text"
         placeholder="SKU"

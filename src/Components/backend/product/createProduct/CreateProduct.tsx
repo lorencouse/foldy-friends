@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ButtonSquareRed } from "../../../BannerButton";
 import { ProductInfo } from "../../../../types";
+
 import {
   getFirestore,
   collection,

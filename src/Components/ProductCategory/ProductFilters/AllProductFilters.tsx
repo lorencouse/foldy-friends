@@ -1,106 +1,56 @@
-import React, { useState } from "react";
-import { ProductData } from "../../types";
-import {
-  filterProductCategory,
-  filterProductPrice,
-} from "../../../tools/ProductFilterFunctions";
+import React, { useEffect, useState } from "react";
 import PriceFiltersMinMax from "./PriceFilters";
-import { SortProductsByDropdown } from "./SortProductsByDropdown";
+import SortProductsByDropdown from "./SortProductsByDropdown";
+import {
+  filterProductPrice,
+  sortProducts,
+  filterProductCategory,
+  filterProductTag
+} from "../../../tools/ProductFilterFunctions";
+import { ProductData } from "../../../types";
+import Category from "../../../pages/Category";
 
 const AllProductFilters = ({
-  categories,
-  products,
-  filteredProducts,
+  allProducts,
   setFilteredProducts,
+  isCategory,
+  category
 }: {
-  categories: string[];
-  products: ProductData[];
-  filteredProducts: ProductData[];
+  allProducts: ProductData[];
   setFilteredProducts: (products: ProductData[]) => void;
+  isCategory?: boolean;
+  category?: string;
 }) => {
-  const [priceFilter, setPriceFilter] = useState<{ min: number; max: number }>({
+  const [priceRange, setPriceRange] = useState<{ min: number; max: number }>({
     min: 0,
     max: 100,
   });
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [sort, setSort] = useState<string>("");
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newCategory = e.target.value;
-    setSelectedCategory(newCategory);
-    applyFilters(priceFilter, newCategory);
-  };
+  useEffect(() => {
 
-  const handleMinPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const min = Number(e.target.value);
-    setPriceFilter((p) => {
-      const newFilter = { ...p, min };
-      applyFilters(newFilter, selectedCategory);
-      return newFilter;
-    });
-  };
+    if (allProducts.length === 0) return;
 
-  const handleMaxPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const max = Number(e.target.value);
-    setPriceFilter((p) => {
-      const newFilter = { ...p, max };
-      applyFilters(newFilter, selectedCategory);
-      return newFilter;
-    });
-  };
+    let products = allProducts;
 
-  const applyFilters = (
-    priceFilter: { min: number; max: number },
-    category: string,
-  ) => {
-    let filteredProducts = products;
-    if (category !== "all") {
-      filteredProducts = filterProductCategory(filteredProducts, category);
+    if (category) {
+      if (isCategory) {
+        products = filterProductCategory(products, category);
+      } else {
+        products = filterProductTag(products, category);
+      }
     }
-    filteredProducts = filterProductPrice(
-      filteredProducts,
-      priceFilter.min,
-      priceFilter.max,
-    );
-    setFilteredProducts(filteredProducts);
-  };
+
+    products = filterProductPrice(products, priceRange.min, priceRange.max);
+    products = sortProducts(products, sort);
+
+    setFilteredProducts(products);
+  }, [allProducts, priceRange, sort, category, setFilteredProducts]);
 
   return (
-    <div className="sort-by flex justify-center items-center gap-4">
-      <p className="font-bold text-lg">Sort By:</p>
-      <select
-        name="categories"
-        id="categories"
-        onChange={handleCategoryChange}
-        className="p-2 border rounded capitalize font-bold bg-gray-100"
-      >
-        <option value="all">All Categories</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}
-          </option>
-        ))}
-      </select>
-      <div className="price-filters flex flex-row items-center">
-        <PriceFilter
-          label="Price:"
-          min={1}
-          max={priceFilter.max - 1}
-          value={priceFilter.min}
-          onchange={handleMinPrice}
-        />
-        <PriceFilter
-          label="- "
-          min={priceFilter.min + 1}
-          max={200}
-          value={priceFilter.max}
-          onchange={handleMaxPrice}
-        />
-
-        <SortProductsByDropdown
-          filteredProducts={filteredProducts}
-          setFilteredProducts={setFilteredProducts}
-        />
-      </div>
+    <div className="price-filters flex flex-row flex-wrap justify-center items-center">
+      <PriceFiltersMinMax setPriceRange={setPriceRange} priceRange={priceRange} />
+      <SortProductsByDropdown setSort={setSort} sort={sort} />
     </div>
   );
 };

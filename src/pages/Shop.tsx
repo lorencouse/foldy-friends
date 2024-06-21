@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { CategoryCard } from "../components/ProductCategory/CategoryCard";
 import { Collections } from "../components/ProductCategory/Collections";
 import {
@@ -9,11 +9,12 @@ import { useShopContext } from "../context/ShopContext";
 import Link from "next/link";
 import AllProductFilters from "../components/ProductCategory/ProductFilters/AllProductFilters";
 import { productCategories as categories } from "../data/constants";
+import { ProductData } from "../types";
+
 
 const Shop = () => {
   const { setActiveCategory, allProducts } = useShopContext();
-  const [filteredProducts, setFilteredProducts] =
-    useState<ProductData[]>(allProducts);
+  const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
 
   const topSellers = useMemo(() => {
     return categories.map((category) => ({
@@ -24,6 +25,7 @@ const Shop = () => {
       ),
     }));
   }, [allProducts, categories]);
+
 
   return (
     <div className="shop-container">
@@ -40,13 +42,13 @@ const Shop = () => {
             <Collections productData={products} header={category} />
             <Link href={`/category/${category}`}>
               <p
-                className="capitalize underline text-lg font-semibold hover:text-red-500 border border-b-1 border-t-0 pb-16"
+                className="capitalize underline text-lg font-semibold hover:text-red-500 border border-b-1 border-t-0 pb-16 text-center"
                 onClick={() => {
                   setActiveCategory(category);
                   window.scrollTo(0, 0);
                 }}
               >
-                View All {`${category}'s Ware`}
+                View All {`${category}`}
               </p>
             </Link>
           </React.Fragment>
@@ -55,15 +57,14 @@ const Shop = () => {
 
       <div className="all-products ">
         <h2 className="my-10 text-5xl font-semibold">All Products</h2>
-{/* 
-        <AllProductFilters
-          categories={categories}
-          products={allProducts}
-          filteredProducts={filteredProducts}
-          setFilteredProducts={setFilteredProducts}
-        /> */}
 
-        <Collections productData={allProducts} header="" />
+        <div className="flex justify-end items-end w-full ">
+          <AllProductFilters
+            allProducts={allProducts}
+            setFilteredProducts={setFilteredProducts}
+          />
+        </div>
+        <Collections productData={filteredProducts} header="" />
       </div>
     </div>
   );
