@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useShopContext } from "../context/ShopContext";
 import { Prices } from "../components/Product/Prices";
-import { VariationSelector } from "../components/Product/SizeSelector";
+import { VariationSelector } from "../components/Product/VariantSelector";
 import { ProductImages } from "../components/Product/ProductImages";
 import { Breadcrumbs } from "../components/Product/Breadcrumbs";
 import { Collections } from "../components/ProductCategory/Collections";
 import { StarRatingAverage } from "../components/Product/Reviews/StarRating";
 import { DescriptionBox } from "../components/Product/DescriptionBox";
-import { shuffleProducts } from "../tools/ShuffleProducts";
+import { shuffleProducts } from "../tools/ProductFilterFunctions";
 import { AddToCartButton } from "../components/Product/AddToCartButton";
 
 const Product = () => {
@@ -50,6 +50,7 @@ const Product = () => {
           {product.variations && (
             <VariationSelector
               currentVariation={currentVariation}
+              heading="Variant"
               setCurrentVariation={setCurrentVariation}
               variations={product.variations}
             />
@@ -64,11 +65,15 @@ const Product = () => {
                   {product.category}
                 </Link>{" "}
               </p>
-              <p className=" capitalize ">
+              <p className=" capitalize flex flex-row">
                 <span className="font-bold">Tags:</span>{" "}
-                <Link href={`/category/${product.category}`}>
-                  {product.category}
-                </Link>{" "}
+                {product.tags.map((tag) => (
+                  <div className="tag ml-1">
+                    <Link key={tag} href={`/tag/${tag}`}>
+                      {tag}
+                    </Link>
+                  </div>
+                ))}
               </p>
             </>
           )}

@@ -20,9 +20,11 @@ import { ProductInfoInput } from "./productInfoInput";
 import {
   emptyProduct,
   productCategories,
+  productTags,
   productVariations,
 } from "../../../../data/constants";
 import Link from "next/link";
+import { VariationSelector } from "../../../Product/VariantSelector";
 
 const CreateProduct = ({ existingProduct }) => {
   const [productInfo, setProductInfo] = useState<ProductInfo>(emptyProduct);
@@ -30,20 +32,45 @@ const CreateProduct = ({ existingProduct }) => {
   useEffect(() => {
     if (existingProduct) {
       setProductInfo(existingProduct);
-      setSelectedCategories(existingProduct.categories || []);
+      setSelectedCategory(existingProduct.category || "");
       setSelectedTags(existingProduct.tags || []);
-      setSelectedVariations(existingProduct.sizes || []);
+      setSelectedVariations(existingProduct.variations || []);
     }
   }, [existingProduct]);
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedVariations, setSelectedVariations] = useState<string[]>([]);
   const [images, setImages] = useState<FileList | null>(null);
 
   const handleSaveProduct = async () => {
-    const imageUrls: string[] = [...productInfo.images]; 
+    const imageUrls: string[] = [...productInfo.images];
     const storage = getStorage();
+
+    const resizeImage = (file: File, height: number): Promise<Blob> => {
+      return new Promise((resolve, reject) => {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.onload = () => {
+          const aspectRatio = img.width / img.height;
+          const canvas = document.createElement("canvas");
+          canvas.height = height;
+          canvas.width = height * aspectRatio;
+          const ctx = canvas.getContext("2d");
+          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob((blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error("Canvas is empty"));
+            }
+          }, file.type);
+        };
+        img.onerror = (err) => {
+          reject(err);
+        };
+      });
+    };
 
     if (images) {
       for (let i = 0; i < images.length; i++) {
@@ -51,7 +78,11 @@ const CreateProduct = ({ existingProduct }) => {
         const filename = `${Date.now()}-${productInfo.name}-${i + 1}`;
         const storageRef = ref(storage, `product-images/${filename}`);
 
-        await uploadBytes(storageRef, file);
+        // Resize the image
+        const resizedImageBlob = await resizeImage(file, 500);
+
+        // Upload the resized image
+        await uploadBytes(storageRef, resizedImageBlob);
         const url = await getDownloadURL(storageRef);
         imageUrls.push(url);
       }
@@ -64,9 +95,13 @@ const CreateProduct = ({ existingProduct }) => {
         const productRef = doc(db, "products", existingProduct.id);
         await updateDoc(productRef, {
           ...productInfo,
+          name: productInfo.name,
+          description: productInfo.description,
+          full_price: productInfo.full_price,
+          sale_price: productInfo.sale_price,
           images: imageUrls,
           variations: selectedVariations,
-          categories: selectedCategories,
+          category: selectedCategory,
           tags: selectedTags,
           updated_at: new Date(),
         });
@@ -75,11 +110,11 @@ const CreateProduct = ({ existingProduct }) => {
         // Create new product
         const docRef = await addDoc(collection(db, "products"), {
           ...productInfo,
-          full_price: productInfo.full_price - 0.03,
+          full_price: productInfo.full_price - 0.01,
           sale_price: productInfo.sale_price - 0.03,
           images: imageUrls,
           variations: selectedVariations,
-          categories: selectedCategories,
+          category: selectedCategory,
           tags: selectedTags,
           created_at: new Date(),
           updated_at: new Date(),
@@ -92,7 +127,7 @@ const CreateProduct = ({ existingProduct }) => {
         alert("Product created successfully!");
         // Reset form fields
         setProductInfo(emptyProduct);
-        setSelectedCategories([]);
+        setSelectedCategory("");
         setSelectedTags([]);
         setSelectedVariations([]);
         setImages(null);
@@ -140,30 +175,20 @@ const CreateProduct = ({ existingProduct }) => {
     <div className="flex flex-col max-w-7xl mx-auto my-6">
       <h1>{existingProduct ? "Edit Product" : "Create New Product"}</h1>
       {existingProduct && (
-        <Link href={`/admin/create-product`}>
-          <p className="m-4 text-xl "> + Create New Product</p>
-        </Link>
+        <div className="flex flex-row flex-wrap">
+          <Link href={`/admin/create-product`}>
+            <p className="m-4 text-xl "> + Create New Product</p>
+          </Link>
+          <Link href={`/product/${existingProduct.id}`}>
+            <p className="m-4 text-xl "> → View Product</p>
+          </Link>
+        </div>
       )}
       <Link href="/admin/all-products">
         <p className="m-4 text-xl "> ← Back to All Products</p>
       </Link>
 
-      <div className="customer-information flex flex-col">
-        <ProductInfoInput
-          productInfo={productInfo}
-          setProductInfo={setProductInfo}
-        />
-
-        <div className="flex flex-col">
-          <label className="ml-2 mt-4 font-semibold">Images: </label>
-          <input
-            type="file"
-            multiple
-            onChange={handleImageChange}
-            className="max-w-96 border border-gray-300 rounded-md mb-2 p-2"
-          />
-        </div>
-
+      <div className="create-product-information flex flex-col">
         {productInfo.images.length > 0 && (
           <div className="flex flex-col">
             <label className="ml-2 mt-4 font-semibold">Current Images: </label>
@@ -188,6 +213,20 @@ const CreateProduct = ({ existingProduct }) => {
             </div>
           </div>
         )}
+        <ProductInfoInput
+          productInfo={productInfo}
+          setProductInfo={setProductInfo}
+        />
+
+        <div className="flex flex-col">
+          <label className="ml-2 mt-4 font-semibold">Images: </label>
+          <input
+            type="file"
+            multiple
+            onChange={handleImageChange}
+            className="max-w-96 border border-gray-300 rounded-md mb-2 p-2"
+          />
+        </div>
 
         <AttributeSelector
           attributes={productVariations}
@@ -195,14 +234,14 @@ const CreateProduct = ({ existingProduct }) => {
           selectedAttributes={selectedVariations}
           setSelectedAttributes={setSelectedVariations}
         />
-        <AttributeSelector
-          attributes={productCategories}
-          heading="Categories"
-          selectedAttributes={selectedCategories}
-          setSelectedAttributes={setSelectedCategories}
+        <VariationSelector
+          variations={productCategories}
+          heading="Category"
+          currentVariation={selectedCategory}
+          setCurrentVariation={setSelectedCategory}
         />
         <AttributeSelector
-          attributes={productCategories}
+          attributes={productTags}
           heading="Tags"
           selectedAttributes={selectedTags}
           setSelectedAttributes={setSelectedTags}

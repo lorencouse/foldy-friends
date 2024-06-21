@@ -19,16 +19,19 @@ export const emptyProduct = {
 export const productVariations = ["Red", "Blue", "Purple", "Green", "Yellow", "Black", "White"];
 export const productCategories = [
   "paper",
-  "accessories",
-  "crafting supplies",
+  "tools",
+
   "kits",
-  "books"
+  // "crafting supplies",
+  // "books",
 ];
 export const productTags = [
   "supplies",
   "scissors",
   "knives and blades",
   "animals",
+  "masks",
+  "models",
   "pens",
   "markers",
   "staples",

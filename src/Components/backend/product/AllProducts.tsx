@@ -47,9 +47,11 @@ const AllProducts = () => {
         {products.map((product) => (
           <li key={product.id} className=" m-8 border-b-2 p-5">
             <div className="prouct flex flex-row">
-              <div>
-                <img src={product.images[0]} alt={product.name} width="150" />
-              </div>
+              <Link href={`/admin/edit-product/${product.id}`}>
+                <div>
+                  <img src={product.images[0]} alt={product.name} width="150" />
+                </div>
+              </Link>
               <div className="flex flex-col m-4">
                 <Link href={`/admin/edit-product/${product.id}`}>
                   <p className=" text-base-content text-semibold link">
@@ -61,6 +63,9 @@ const AllProducts = () => {
                 <p className="">Tags: {product.tags.join(", ")}</p>
                 <p>Product ID: {product.id}</p>
               </div>
+              <Link href={`/product/${product.id}`}>
+                <p className="m-4 text-xl "> → View Product</p>
+              </Link>
             </div>
           </li>
         ))}

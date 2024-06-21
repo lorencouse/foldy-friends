@@ -1,29 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import { Collections } from "../components/ProductCategory/Collections";
 import { useShopContext } from "../context/ShopContext";
 import { ButtonRoundBlack } from "../components/BannerButton";
-import {
-  PriceFilters,
-  SortBy,
-} from "../components/ProductCategory/ProductFilters";
+import PriceFiltersMinMax from "../components/ProductCategory/ProductFilters/PriceFilters";
+import SortProductsByDropdown from "../components/ProductCategory/ProductFilters/SortProductsByDropdown";
 import { ProductData } from "../types";
-import { filterProductCategory } from "../tools/ShuffleProducts";
+import {
+  filterProductCategory,
+  filterProductTag,
+} from "../tools/ProductFilterFunctions";
 
-const Category = () => {
-  const router = useRouter();
-  const { category } = router.query;
+const Category = ({
+  category,
+  isCategory,
+}: {
+  category: string;
+  isCategory: boolean;
+}) => {
   const { allProducts } = useShopContext();
   const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
 
   useEffect(() => {
-    if (category && allProducts.length > 0) {
-      const categoryProducts = filterProductCategory(
-        allProducts,
-        category
-      );
+    if (!category) return;
+    if (allProducts.length === 0) return;
+
+    if (isCategory) {
+      const categoryProducts = filterProductCategory(allProducts, category);
       setFilteredProducts(categoryProducts);
+    } else {
+      const tagProducts = filterProductTag(allProducts, category);
+      setFilteredProducts(tagProducts);
     }
   }, [category, allProducts]);
 
@@ -34,7 +41,7 @@ const Category = () => {
       <Image
         src={`/Assets/banner_${category}.png`}
         alt={`${category} banner`}
-        width={1200} // Set appropriate width and height
+        width={1200}
         height={400}
         priority={true}
       />
@@ -45,12 +52,13 @@ const Category = () => {
         </p>
 
         <div className="flex justify-end items-end w-full md:w-96">
-          <PriceFilters
+          <PriceFiltersMinMax
             products={filteredProducts}
             setFilteredProducts={setFilteredProducts}
           />
-          <SortBy
-            filteredProducts={filteredProducts}
+
+          <SortProductsByDropdown
+            products={filteredProducts}
             setFilteredProducts={setFilteredProducts}
           />
         </div>

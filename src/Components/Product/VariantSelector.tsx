@@ -1,9 +1,11 @@
 export const VariationSelector = ({
   variations,
+  heading,
   currentVariation,
   setCurrentVariation,
 }: {
   variations: string[];
+  heading: string;
   currentVariation: string;
   setCurrentVariation: (newSize: string) => void;
 }) => {
@@ -14,8 +16,8 @@ export const VariationSelector = ({
   return (
     
     <div className="flex flex-col mt-5">
-      <p className="font-semibold m-1">Select Variant</p>
-      <div className="variations flex flex-row justify-start uppercase ">
+      <p className="font-semibold m-1">Select {heading}</p>
+      <div className="variations flex flex-row justify-start capitalize ">
         {variations.map((s) => (
           <div
             key={s}

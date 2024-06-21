@@ -4,16 +4,16 @@ import { Collections } from "../components/ProductCategory/Collections";
 import {
   filterProductCategory,
   shuffleProducts,
-} from "../tools/ShuffleProducts";
+} from "../tools/ProductFilterFunctions";
 import { useShopContext } from "../context/ShopContext";
 import Link from "next/link";
-import { AllProductFilters } from "../components/ProductCategory/ProductFilters";
+import AllProductFilters from "../components/ProductCategory/ProductFilters/AllProductFilters";
+import { productCategories as categories } from "../data/constants";
 
 const Shop = () => {
   const { setActiveCategory, allProducts } = useShopContext();
   const [filteredProducts, setFilteredProducts] =
     useState<ProductData[]>(allProducts);
-  const categories = useMemo(() => ["men", "women", "kids"], []);
 
   const topSellers = useMemo(() => {
     return categories.map((category) => ({
@@ -55,13 +55,13 @@ const Shop = () => {
 
       <div className="all-products ">
         <h2 className="my-10 text-5xl font-semibold">All Products</h2>
-
+{/* 
         <AllProductFilters
           categories={categories}
           products={allProducts}
           filteredProducts={filteredProducts}
           setFilteredProducts={setFilteredProducts}
-        />
+        /> */}
 
         <Collections productData={allProducts} header="" />
       </div>

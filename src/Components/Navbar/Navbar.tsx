@@ -39,7 +39,7 @@ const Navbar = () => {
     { title: "Home", url: "/" },
     { title: "Shop", url: "/shop" },
     { title: "Paper", url: "/category/paper" },
-    { title: "Accessories", url: "/category/accessories" },
+    { title: "Tools", url: "/category/tools" },
     { title: "Kits", url: "/category/kits" },
   ];
 

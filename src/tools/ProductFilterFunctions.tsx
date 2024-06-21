@@ -15,6 +15,13 @@ export function filterProductCategory(
   return products.filter((p) => p.category === category);
 }
 
+export function filterProductTag(
+  products: ProductData[],
+  tag: string,
+) {
+  return products.filter((p) => p.tags.includes(tag));
+}
+
 export function filterProductPrice(
   products: ProductData[],
   min: number,
