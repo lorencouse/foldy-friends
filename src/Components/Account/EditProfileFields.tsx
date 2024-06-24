@@ -98,7 +98,7 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
             checked={addBillingInfo}
             readOnly
           />
-          <label className="label cursor-pointer">Separate Billing Info</label>
+          <label className="label cursor-pointer">Edit Billing Info</label>
         </div>
 
         {!addBillingInfo && (

@@ -130,6 +130,15 @@ const Account = () => {
           </>
         ) : (
           <>
+            <div className="flex flex-col gap-7">
+              <p>Welcome back {shippingInfo.name}</p>
+
+              <img
+                src="/assets/profile-photo.jpg"
+                alt="profile photo"
+                className="rounded-full max-h-32 max-w-32"
+              />
+            </div>
             <UserDetails
               shippingInfo={shippingInfo}
               billingInfo={billingInfo}

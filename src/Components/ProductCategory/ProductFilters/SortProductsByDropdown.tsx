@@ -24,7 +24,7 @@ const SortProductsByDropdown = ({
             onClick={() => handleSortChange("lowest")}
           >
             Price: Low to High
-          </button>
+                 </button>
         </li>
         <li>
           <button

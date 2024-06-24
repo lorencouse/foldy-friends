@@ -10,6 +10,8 @@ import Link from "next/link";
 import AllProductFilters from "../components/ProductCategory/ProductFilters/AllProductFilters";
 import { productCategories as categories } from "../data/constants";
 import { ProductData } from "../types";
+import Category from "./Category";
+import { ShopHero } from "../components/shop/ShopHero";
 
 
 const Shop = () => {
@@ -29,6 +31,7 @@ const Shop = () => {
 
   return (
     <div className="shop-container">
+      <ShopHero />
       <h2 className="my-8">Explore All Categories</h2>
       <div className="categories flex flex-row justify-around border border-b-1 border-t-0 my-8">
         {categories.map((category) => (
@@ -55,17 +58,10 @@ const Shop = () => {
         ))}
       </div>
 
-      <div className="all-products ">
-        <h2 className="my-10 text-5xl font-semibold">All Products</h2>
+      <h2 className="my-10 text-5xl font-semibold">All Products</h2>
 
-        <div className="flex justify-end items-end w-full ">
-          <AllProductFilters
-            allProducts={allProducts}
-            setFilteredProducts={setFilteredProducts}
-          />
-        </div>
-        <Collections productData={filteredProducts} header="" />
-      </div>
+      <Category />
+
     </div>
   );
 };

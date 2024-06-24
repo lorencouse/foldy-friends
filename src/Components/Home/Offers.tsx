@@ -4,18 +4,18 @@ import { ButtonRoundRed } from "../BannerButton";
 export const Offers = () => {
   return (
     <div className="flex flex-row flex-wrap lg:w-10/12 m-auto justify-around items-center bg-gradient-to-t from-base-100 to-secondary-content">
-      <div className="offers-left justify-start items-start text-left p-10 mt-10">
+      <div className="offers-left flex flex-col justify-center items-center p-10 mt-10 w-full lg:w-1/2">
         <p className="banner-heading">
-          New Arrivals <br />
-          Just For You
+          Find the <br />
+          Perfect Gift
         </p>
         <p className="banner-sub-text">
           Great prices on our best selling items
         </p>
         <ButtonRoundRed label="Shop Now" url="/shop" />
       </div>
-      <div className="offers-right items-baseline ">
-        <img src="/Assets/exclusive_image.png" alt="" />
+      <div className="offers-right items-center w-full lg:w-1/2">
+        <img src="/assets/homePage/happy-couple-folding-origami.webp" alt="" />
       </div>
     </div>
   );
