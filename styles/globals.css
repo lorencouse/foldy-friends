@@ -5,14 +5,7 @@
 
 body {
   @apply bg-base-100;
-}
-
-html.light body {
-  background-color: #ffffff; /* Light mode background */
-}
-
-html.dark body {
-  background-color: #000000; /* Dark mode background */
+  font-family: var(--quicksand-font), sans-serif;
 }
 
 .App {
@@ -40,12 +33,9 @@ html.dark body {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 h1, h2, h3 {
   @apply text-base-content;
+  font-family: var(--baloo2-font);
 }
 
 h1 {
@@ -60,7 +50,6 @@ h2 {
   font-weight: 600;
   margin: 10px 0;
   text-align: center;
-
 }
 
 h3 {
@@ -70,6 +59,8 @@ h3 {
 
 p {
   @apply text-base-content;
+  font-weight: 500;
+
 }
 
 .collections-heading {
@@ -79,6 +70,7 @@ p {
 .banner-heading {
   font-size: 3.5rem;
   line-height: 4.5rem;
+  font-weight: 700;
   text-align: center;
 }
 
@@ -99,14 +91,6 @@ label {
   text-transform: capitalize;
 }
 
-hr {
-  border: none;
-  width: 80%;
-  height: 3px;
-  border-radius: 10px;
-  background: red;
-}
-
 input {
   padding: 8px;
   margin: 8px;
@@ -116,6 +100,14 @@ input {
 
 select option {
   text-transform: capitalize;
+}
+
+img {
+  border-radius: 20px;
+}
+
+.clip-custom-shape {
+  clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
 @keyframes App-logo-spin {

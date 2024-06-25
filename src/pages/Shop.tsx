@@ -42,6 +42,7 @@ const Shop = () => {
       <div className="top-sellers">
         {topSellers.map(({ category, products }) => (
           <React.Fragment key={category}>
+            <img src={`/assets/categories/${category}-banner.png`} alt="" />
             <Collections productData={products} header={category} />
             <Link href={`/category/${category}`}>
               <p
@@ -58,9 +59,10 @@ const Shop = () => {
         ))}
       </div>
 
-      <h2 className="my-10 text-5xl font-semibold">All Products</h2>
+      <h2 className="my-10 text-5xl font-semibold">All Crafting Supplies</h2>
+      {/* <img src="/assets/categories/all-supplies-banner-2.png" alt="" /> */}
 
-      <Category />
+      <Category category="all-products" />
 
     </div>
   );

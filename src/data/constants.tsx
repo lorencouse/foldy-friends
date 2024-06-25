@@ -20,7 +20,6 @@ export const productVariations = ["Red", "Blue", "Purple", "Green", "Yellow", "B
 export const productCategories = [
   "paper",
   "tools",
-
   "kits",
   // "crafting supplies",
   // "books",

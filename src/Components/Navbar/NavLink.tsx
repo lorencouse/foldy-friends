@@ -20,7 +20,7 @@ export function NavLink({
       >
         <Link href={url}>{label}</Link>
       </li>
-      {activeCategory === label && <hr />}
+      {activeCategory === label && <hr className="bg-primary w-4/5 h-1 rounded-lg " />}
     </div>
   );
 }

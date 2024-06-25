@@ -17,7 +17,7 @@ export const Item = ({ productData, key }: { productData: ProductData, key: numb
       : undefined;
   return (
     <div
-      className="transition ease-in-out hover:scale-105 hover:shadow-lg pl-2 my-3 w-72 text-left m-auto"
+      className="transition ease-in-out hover:scale-105 hover:shadow-lg pl-2 my-3 w-72 text-left m-auto rounded-2xl"
       onClick={() => setActiveCategory(productData.category)} key={key}
     >
       <Link href={`/product/${productData.id}`}>
@@ -33,7 +33,7 @@ export const Item = ({ productData, key }: { productData: ProductData, key: numb
           />
         </div>
         <button
-          className="btn min-w-12 mr-4 bg-red-600 hover:bg-red-400 text-white"
+          className="btn min-w-12 mr-4 bg-error hover:bg-red-400 text-white rounded-2xl"
           onClick={() => {
             handleAddToCart(productData.id, variant);
             setButtonText("✓ Added");

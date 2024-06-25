@@ -29,20 +29,20 @@ import { VariationSelector } from "../../../Product/VariantSelector";
 
 const CreateProduct = ({ existingProduct }) => {
   const [productInfo, setProductInfo] = useState<ProductInfo>(emptyProduct);
-
-  useEffect(() => {
-    if (existingProduct) {
-      setProductInfo(existingProduct);
-      setSelectedCategory(existingProduct.category || "");
-      setSelectedTags(existingProduct.tags || []);
-      setSelectedVariations(existingProduct.variations || []);
-    }
-  }, [existingProduct]);
-
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedVariations, setSelectedVariations] = useState<string[]>([]);
   const [images, setImages] = useState<FileList | null>(null);
+
+  useEffect(() => {
+    if (existingProduct) {
+      console.log("Loading existing product:", existingProduct);
+      setProductInfo(existingProduct);
+      setSelectedCategory(existingProduct.category);
+      setSelectedTags(existingProduct.tags);
+      setSelectedVariations(existingProduct.variations);
+    }
+  }, [existingProduct]);
 
   const handleSaveProduct = async () => {
     const imageUrls: string[] = [...productInfo.images];

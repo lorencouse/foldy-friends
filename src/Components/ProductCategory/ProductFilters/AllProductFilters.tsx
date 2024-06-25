@@ -30,10 +30,11 @@ const AllProductFilters = ({
   useEffect(() => {
 
     if (allProducts.length === 0) return;
+    
 
     let products = allProducts;
 
-    if (category) {
+    if (category !== "all-products") {
       if (isCategory) {
         products = filterProductCategory(products, category);
       } else {

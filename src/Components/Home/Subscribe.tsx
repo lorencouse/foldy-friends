@@ -2,9 +2,9 @@ import React from "react";
 
 export const Subscribe = () => {
   return (
-    <div className="flex flex-col justify-center items-center bg-gradient-to-t from-base-100 to-secondary-content">
-      <div className="subscribe-box my-12 ">
-        <p className="banner-heading">Get in on Exclusive Offers</p>
+    <div className="flex flex-col justify-center items-center bg-secondary pt-12">
+      <div className="subscribe-box my-12 text-center ">
+        <p className="banner-heading text-base-100">Get in on Exclusive Offers!</p>
         <form action="submit">
           <input
             type="email"
@@ -16,7 +16,7 @@ export const Subscribe = () => {
             Subscribe
           </button>
         </form>
-        <p className="banner-sub-text">
+        <p className="banner-sub-text text-base-100 text-xl">
           Subscribe to stay up to date on our newest sales and hottest items
         </p>
       </div>

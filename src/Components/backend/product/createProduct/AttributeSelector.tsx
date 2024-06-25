@@ -13,10 +13,15 @@ const AttributeSelector: React.FC<AttributeSelectorProps> = ({
   selectedAttributes = [],
   setSelectedAttributes,
 }) => {
+  const normalize = (str: string) => str.toLowerCase();
+
   const handleChange = (attribute: string) => {
+    const normalizedAttribute = normalize(attribute);
     setSelectedAttributes((prevSelectedAttributes) =>
-      prevSelectedAttributes.includes(attribute)
-        ? prevSelectedAttributes.filter((s) => s !== attribute)
+      prevSelectedAttributes.map(normalize).includes(normalizedAttribute)
+        ? prevSelectedAttributes.filter(
+            (s) => normalize(s) !== normalizedAttribute,
+          )
         : [...prevSelectedAttributes, attribute],
     );
   };
@@ -34,7 +39,9 @@ const AttributeSelector: React.FC<AttributeSelectorProps> = ({
             <input
               type="checkbox"
               id={attribute}
-              checked={selectedAttributes.includes(attribute)}
+              checked={selectedAttributes
+                .map(normalize)
+                .includes(normalize(attribute))}
               onChange={() => handleChange(attribute)}
               className="mr-2"
             />
@@ -42,6 +49,7 @@ const AttributeSelector: React.FC<AttributeSelectorProps> = ({
           </label>
         ))}
       </div>
+      <button onClick={() => setSelectedAttributes([])}>Clear All </button>
     </div>
   );
 };

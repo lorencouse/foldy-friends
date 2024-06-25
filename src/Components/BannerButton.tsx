@@ -8,7 +8,7 @@ export const ButtonRoundRed = (props: { label: string; url: string }) => {
         onClick={() => {
           window.scrollTo(0, 0);
         }}
-        className="rounded-full w-48 bg-red-600 p-3 text-white hover:bg-red-500 my-10"
+        className="rounded-full w-48 bg-error p-3 text-white hover:bg-red-500 my-10"
       >
         {props.label}
       </button>
@@ -39,7 +39,7 @@ export const ButtonSquareRed: React.FC<ButtonSquareRedProps> = ({
 }) => {
   return (
     <button
-      className="btn w-44 bg-red-600 p-3 text-white hover:bg-red-500 my-4 flex items-center justify-center gap-2"
+      className="btn w-44 bg-error p-3 text-white hover:bg-red-500 my-4 flex items-center justify-center gap-2 rounded-2xl "
       onClick={onClick}
     >
       {label}

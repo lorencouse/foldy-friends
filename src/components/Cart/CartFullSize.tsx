@@ -81,7 +81,7 @@ const CartLineItem = ({
   console.log("Product:", product); // Log product
 
   return (
-    <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-0 m-auto py-8 w-full border border-y-1 border-x-0 border-gray-200">
+    <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-0 m-auto py-8 w-full border border-y-1 border-x-0 border-base-200">
       <div className="cart-item flex items-center justify-center">
         <RemoveItemButton cartItem={cartItem} />
       </div>

@@ -16,7 +16,14 @@ const Category = ({
   const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
 
   return (
-    <div className="lg:w-11/12 m-auto">
+    <div className="lg:w-11/12 m-auto pt-6">
+      <div className="border-b-4 pb-6 border-base-content border-dashed ">
+        <img
+          src={`/assets/categories/${category}-banner.png`}
+          alt={`${category} banner`}
+          
+        />
+      </div>
       <div className="sort-by flex flex-row flex-wrap justify-between items-center m-3">
         {filteredProducts.length > 0 && (
           <p className="my-5">

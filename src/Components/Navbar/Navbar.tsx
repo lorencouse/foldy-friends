@@ -131,7 +131,7 @@ const Navbar = () => {
           </div>
           {showMiniCart && (
             <div
-              className="absolute my-0 right-0 top-24 px-4 bg-base-100 border border-base-200 shadow-lg max-w-xl "
+              className="absolute my-0 right-0 top-24 px-4 bg-base-100/30 backdrop-blur-2xl shadow-lg max-w-xl rounded-b-2xl "
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
