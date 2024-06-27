@@ -18,23 +18,23 @@ export const Footer = () => {
   ];
 
   return (
-    <div className="footer w-full p-1">
-      <div className="footer-components flex flex-row flex-wrap m-5 justify-around">
-        <NavLogo />
-        <ul className="nav-menu flex flex-row flex-wrap  gap-10 m-auto p-5">
-          {links.map((link, key) => (
-            <NavLink
-              url={link.url}
-              label={link.title}
-              key={key}
-            />
-          ))}
-        </ul>
-        <SocialIcons />
-      </div>
-      <hr className="h-0 outline outline-1 outline-gray-400  m-auto" />
-      <div className="copyright my-12">
-        <p>Foldy Friends Inc. 2024 - All Rights Reserved</p>
+    <div className="footer-stitch border-dashed border-t-2 border-base-content mt-14 ">
+      <div className="footer w-full p-1 bg-primary shadow-top flex flex-col ">
+        <div className="footer-components flex flex-row flex-wrap lg:justify-between justify-center lg:m-5 w-full">
+          <NavLogo />
+          <ul className="nav-menu flex flex-row flex-wrap gap-7 m-7 justify-center items-center">
+            {links.map((link, key) => (
+              <NavLink url={link.url} label={link.title} key={key} />
+            ))}
+          </ul>
+          <SocialIcons />
+        </div>
+
+        <div className="copyright w-full flex justify-center mb-5">
+          <p className="text-white text-center">
+            Foldy Friends Inc. 2024 - All Rights Reserved
+          </p>
+        </div>
       </div>
     </div>
   );

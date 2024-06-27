@@ -10,6 +10,8 @@ import ThemeSwitcher from "../ThemeSwitcher";
 import useAuth from "../../hooks/useAuth";
 import { ProfileIcon } from "./ProfileIcon";
 import { CartFullSize } from "../Cart/CartFullSize";
+import { SignInButton } from "./SignInButton";
+import { HamburderLine } from "./HamburderLine";
 
 const Navbar = () => {
   const { setActiveCategory, activeCategory, cartCount } = useShopContext();
@@ -68,7 +70,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar flex flex-col lg:flex-row justify-between p-4 shadow-md sticky top-0 left-0 bg-base-100 text-primary-content z-50">
+    <div className="flex flex-col lg:flex-row justify-between p-4 shadow-lg bg-primary text-base-100 z-50 ">
       <div className="flex justify-between items-center w-full lg:w-auto">
         <NavLogo />
 
@@ -80,12 +82,14 @@ const Navbar = () => {
           )}
 
           <div
-            className="hamburger h-8 w-8 outline outline-2 rounded-md flex flex-col justify-around items-center p-2 bg-base-100 hover:bg-base-200 outline-base-200 text-base-300"
+            className="hamburger h-8 w-8 outline outline-2 outline-white rounded-md flex flex-col justify-around items-center p-2  hover:bg-base-200 "
             onClick={toggleMenu}
           >
-            <hr />
-            <hr />
-            <hr />
+            <HamburderLine />
+            <HamburderLine />
+            <HamburderLine />
+
+         
           </div>
         </div>
       </div>
@@ -102,18 +106,7 @@ const Navbar = () => {
           </ul>
 
           <div className="flex lg:flex-row justify-between lg:justify-normal gap-4 mx-3 flex-row-reverse max-w-52">
-            {!user ? (
-              <Link href="/sign-in">
-                <button
-                  onClick={() => setActiveCategory("login")}
-                  className={`border-2 w-28 lg:my-0 my-8 mx-8 h-10 rounded-md cursor-pointer bg-base-100 font-medium hover:border-base-content hover:text-base-content ${activeCategory === "login" ? "border-error text-error " : "border-base-300 text-base-300"}`}
-                >
-                  Sign In
-                </button>
-              </Link>
-            ) : (
-              <ProfileIcon />
-            )}
+            {!user ? <SignInButton /> : <ProfileIcon />}
 
             <ThemeSwitcher />
           </div>

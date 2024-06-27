@@ -8,7 +8,7 @@ export const ShopHero = () => {
           <p className="underline font-semibold text-xl my-3 text-base-content">
             New Arrivals!
           </p>
-          <p className="banner-heading text-base-100">
+          <p className="banner-heading text-white">
             Get Crafting <br /> Get Createive
           </p>
         </div>

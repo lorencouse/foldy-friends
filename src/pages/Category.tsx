@@ -17,7 +17,7 @@ const Category = ({
 
   return (
     <div className="lg:w-11/12 m-auto pt-6">
-      <div className="border-b-4 pb-6 border-base-content border-dashed ">
+      <div className="border-b-2 pb-6 border-base-content border-dashed ">
         <img
           src={`/assets/categories/${category}-banner.png`}
           alt={`${category} banner`}

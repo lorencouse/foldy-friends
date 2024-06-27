@@ -8,7 +8,7 @@ export function NavBarCartIcon() {
 
   return (
     <div
-      className="nav-cart-icon h-full min-w-6 flex flex-col items-center"
+      className="nav-cart-icon h-full min-w-6 flex flex-col items-center drop-shadow-md"
       onClick={() => setActiveCategory("cart")}
     >
       <Link href="/cart" legacyBehavior>

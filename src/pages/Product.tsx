@@ -38,7 +38,7 @@ const Product = () => {
   }
 
   return (
-    <div className="lg:mx-16 md:mx-12">
+    <div className="lg:mx-16 md:mx-12 my-8">
       <div className="flex flex-row flex-wrap">
         <ProductImages images={product.images} alt={product.name} />
 
@@ -66,16 +66,24 @@ const Product = () => {
             <>
               <p className=" capitalize ">
                 <span className="font-bold">Categories:</span>{" "}
-                <Link href={`/category/${product.category}`}>
-                  {product.category}
+                
+                <Link
+                  href={`/category/${product.category}`}
+                  className="badge badge-primary badge-outline cursor-pointer "
+                >
+                  <span className="text-base-content cursor-pointer">{product.category}</span>
                 </Link>{" "}
               </p>
               <p className=" capitalize flex flex-row">
                 <span className="font-bold">Tags:</span>{" "}
                 {product.tags.map((tag) => (
-                  <div className="tag ml-1">
-                    <Link key={tag} href={`/tag/${tag}`}>
-                      {tag}
+                  <div className="tag ml-1 cursor-pointer">
+                    <Link
+                      key={tag}
+                      href={`/tag/${tag}`}
+                      className="badge badge-secondary badge-outline"
+                    >
+                      <span className="text-base-content">{tag}</span>
                     </Link>
                   </div>
                 ))}

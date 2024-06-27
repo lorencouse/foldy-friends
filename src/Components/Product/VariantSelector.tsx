@@ -15,13 +15,13 @@ export const VariationSelector = ({
 
   // Define a mapping of variation names to Tailwind CSS background color classes
   const variationColorMap: { [key: string]: string } = {
-    red: "bg-red-400",
-    blue: "bg-blue-400",
-    green: "bg-green-400",
-    yellow: "bg-yellow-400",
-    purple: "bg-purple-400",
-    white: "bg-white",
-    black: "bg-black",
+    red: "bg-red-400 text-white",
+    blue: "bg-blue-400 text-white",
+    green: "bg-green-400 text-white",
+    yellow: "bg-yellow-400 text-black",
+    purple: "bg-purple-400 text-white",
+    white: "bg-white text-black text-white",
+    black: "bg-black text-white",
   };
 
   const getBgColorClass = (variation: string) => {
@@ -36,8 +36,8 @@ export const VariationSelector = ({
           <div
             key={s}
             onClick={() => setCurrentVariation(s)}
-            className={`px-6 py-4 m-2 w-auto text-base-content outline  outline-base-content ${getBgColorClass(s)} text-white rounded-lg cursor-pointer
-            ${s === currentVariation ? "outline-3" : "hover:opacity-80 outline-1"} `}
+            className={`px-6 py-4 m-2 w-auto text-base-content  ${getBgColorClass(s)} rounded-lg cursor-pointer shadow-md
+            ${s === currentVariation ? "outline-3 outline-base-content" : "hover:opacity-80 outline-1 outline-base-300"}  outline  `}
           >
             {s}
           </div>

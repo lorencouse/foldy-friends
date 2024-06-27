@@ -1,4 +1,3 @@
-// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -17,8 +16,12 @@ module.exports = {
         16: "16px",
         20: "20px", // Custom border width
       },
-      clipPath: {
-        "custom-shape": "polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%)", // Adjust the values as needed
+      colors: {
+        "primary-focus": "#0087f2",
+        "secondary-focus": "#ff5e57",
+      },
+      boxShadow: {
+        top: "0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)",
       },
     },
   },
@@ -27,7 +30,8 @@ module.exports = {
     themes: [
       {
         light: {
-          primary: "#0fbcf9",
+          primary: "#1f96f4",
+          "primary-focus": "#0087f2",
           secondary: "#f53b57",
           "secondary-focus": "#ff5e57",
           accent: "#0be881",
@@ -42,8 +46,9 @@ module.exports = {
           error: "#ff3f34",
         },
         dark: {
-          primary: "#0D47A1",
-          secondary: "#6200EA",
+          primary: "#1f96f4",
+          "primary-focus": "#0087f2",
+          secondary: "#f53b57",
           "secondary-focus": "#ff5e57",
           accent: "#00E5FF",
           neutral: "#263238",
