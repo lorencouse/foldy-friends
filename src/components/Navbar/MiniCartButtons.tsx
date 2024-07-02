@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { ButtonSquareRed } from "../BannerButton";
 import { CartWhiteSvg, CheckSvg } from "../svgPaths";
+import { useShopContext } from "../../context/ShopContext";
 
 export const MiniCartButtons = ({
   setShowMiniCart,
@@ -16,6 +17,8 @@ export const MiniCartButtons = ({
     window.scrollTo(0, 0);
   };
 
+  const { activeCategory, setActiveCategory } = useShopContext();
+
   return (
     <div className="min-cart-buttons flex flex-row gap-x-4 justify-center items-center ">
       {" "}
@@ -23,12 +26,18 @@ export const MiniCartButtons = ({
       <ButtonSquareRed
         label="Cart"
         icon={CartWhiteSvg}
-        onClick={() => handleNavigation("/cart")}
+        onClick={() => {
+          handleNavigation("/cart");
+          setActiveCategory("cart");
+        }}
       />
       <ButtonSquareRed
         label="Checkout"
         icon={CheckSvg}
-        onClick={() => handleNavigation("/checkout")}
+        onClick={() => {
+          handleNavigation("/checkout");
+          setActiveCategory("");
+        }}
       />
     </div>
   );

@@ -20,18 +20,7 @@ const Navbar = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const { user } = useAuth();
 
-  const handleMouseEnter = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-    setShowMiniCart(true);
-  };
 
-  const handleMouseLeave = () => {
-    timerRef.current = setTimeout(() => {
-      setShowMiniCart(false);
-    }, 1000);
-  };
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -66,18 +55,23 @@ const Navbar = () => {
   const handleMobileMenuClick = () => {
     if (window.matchMedia("(max-width: 1024px)").matches) {
       setShowMenu(false);
+      
+    } else {
+      setShowMiniCart(false);
     }
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-between p-4 shadow-lg bg-primary text-base-100 z-50 ">
+    <div className="flex flex-col lg:flex-row justify-between p-4 shadow-lg bg-primary text-base-100 z-50">
       <div className="flex justify-between items-center w-full lg:w-auto">
         <NavLogo />
 
         <div className="flex items-center gap-5 lg:hidden">
           {cartCount > 0 && (
             <div className="cart-icon relative">
-              <NavBarCartIcon />
+              <Link href="/cart">
+              <NavBarCartIcon setShowMiniCart={setShowMiniCart} showMiniCart={showMiniCart}/>
+              </Link>
             </div>
           )}
 
@@ -88,25 +82,25 @@ const Navbar = () => {
             <HamburderLine />
             <HamburderLine />
             <HamburderLine />
-
-         
           </div>
         </div>
       </div>
 
       {showMenu && (
         <div
-          onClick={handleMobileMenuClick}
           className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full lg:w-auto "
+          
         >
-          <ul className="nav-menu flex flex-col lg:flex-row items-center ml-10 gap-4 xl:gap-16">
+          <ul className="nav-menu flex flex-col lg:flex-row items-center ml-10 gap-4 xl:gap-16 lg:w-auto w-full" onClick={handleMobileMenuClick}>
             {links.map((link, key) => (
               <NavLink key={key} url={link.url} label={link.title} />
             ))}
           </ul>
 
           <div className="flex lg:flex-row justify-between lg:justify-normal gap-4 mx-3 flex-row-reverse max-w-52">
-            {!user ? <SignInButton /> : <ProfileIcon />}
+            <div onClick={handleMobileMenuClick}>
+              {!user ? <SignInButton /> : <ProfileIcon />}
+            </div>
 
             <ThemeSwitcher />
           </div>
@@ -114,20 +108,15 @@ const Navbar = () => {
       )}
 
       {cartCount > 0 && (
-        <div
-          className="nav-cart hidden lg:flex items-center gap-5 ml-auto"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
+        <div className="nav-cart hidden lg:flex items-center gap-5 ml-auto z-20">
           <div className="cart-icon relative mr-6">
-            <NavBarCartIcon />
+            <NavBarCartIcon
+              setShowMiniCart={setShowMiniCart}
+              showMiniCart={showMiniCart}
+            />
           </div>
           {showMiniCart && (
-            <div
-              className="absolute my-0 right-0 top-24 px-4 bg-base-100/30 backdrop-blur-2xl shadow-lg max-w-xl rounded-b-2xl "
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
+            <div className="absolute my-0 right-0 top-28 border-1 px-4 bg-base-100 shadow-lg max-w-xl rounded-b-2xl ">
               <div className="w-full overflow-y-auto max-h-96 no-scrollbar">
                 <CartFullSize />
               </div>

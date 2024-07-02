@@ -23,8 +23,10 @@ export const ProductImages = ({
         ))}
       </div>
 
-      <div className="product-image mx-2 ">
+      <div className="product-image mx-4 paper">
+        <div class="tape-section"></div>
         <img className="w-96 " src={images[currentImg]} alt={alt} />
+        <div class="tape-section"></div>
       </div>
     </div>
   );

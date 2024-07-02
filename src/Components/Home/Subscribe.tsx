@@ -4,7 +4,7 @@ export const Subscribe = () => {
   return (
     <div className="flex flex-col justify-center items-center bg-secondary pt-12 my-10 rounded-2xl">
       <div className="subscribe-box my-12 text-center ">
-        <p className="banner-heading text-white">Get in on Exclusive Offers!</p>
+        <p className="banner-heading text-white px-6">Get in on Exclusive Offers!</p>
         <form action="submit">
           <input
             type="email"

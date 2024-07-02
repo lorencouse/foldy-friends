@@ -43,7 +43,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="login-container bg-primary-focus h-screen flex">
+    <div className="login-container bg-accent h-screen flex">
       <div className="bg-base-100 rounded-lg shadow-2xl m-auto flex flex-col align-center justify-center items-left text-left p-20">
         <h1>{signUpPage ? "Sign Up" : "Sign In"}</h1>
         <div className="sign-in-info flex flex-col justify-between mt-4">

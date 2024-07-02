@@ -38,7 +38,7 @@ const Product = () => {
   }
 
   return (
-    <div className="lg:mx-16 md:mx-12 my-8">
+    <div className="lg:mx-16 md:mx-12 my-8 ">
       <div className="flex flex-row flex-wrap">
         <ProductImages images={product.images} alt={product.name} />
 
@@ -49,7 +49,7 @@ const Product = () => {
               - Edit Product -
             </p>
           </Link>
-          <h1>{product.name}</h1>
+          <h1 className="leading-tight">{product.name}</h1>
           <StarRatingAverage id={product.id} />
           <Prices oldPrice={product.full_price} newPrice={product.sale_price} />
           {product.variations && (
@@ -63,21 +63,22 @@ const Product = () => {
 
           <AddToCartButton id={product.id} size={currentVariation} />
           {product.category && (
-            <>
-              <p className=" capitalize ">
+            <div>
+              <p className=" capitalize my-2">
                 <span className="font-bold">Categories:</span>{" "}
-                
                 <Link
                   href={`/category/${product.category}`}
-                  className="badge badge-primary badge-outline cursor-pointer "
+                  className="badge badge-primary badge-outline cursor-pointer hover:scale-105 duration-200 "
                 >
-                  <span className="text-base-content cursor-pointer">{product.category}</span>
+                  <span className="text-base-content cursor-pointer">
+                    {product.category}
+                  </span>
                 </Link>{" "}
               </p>
               <p className=" capitalize flex flex-row">
                 <span className="font-bold">Tags:</span>{" "}
                 {product.tags.map((tag) => (
-                  <div className="tag ml-1 cursor-pointer">
+                  <div className="tag ml-1 cursor-pointer hover:scale-105 duration-200">
                     <Link
                       key={tag}
                       href={`/tag/${tag}`}
@@ -88,7 +89,7 @@ const Product = () => {
                   </div>
                 ))}
               </p>
-            </>
+            </div>
           )}
         </div>
       </div>

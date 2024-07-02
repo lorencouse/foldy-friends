@@ -4,6 +4,7 @@ import { ProductData } from "../types";
 import { Collections } from "../components/ProductCategory/Collections";
 import { ButtonRoundBlack } from "../components/BannerButton";
 import AllProductFilters from "../components/ProductCategory/ProductFilters/AllProductFilters";
+import { CategoryBanner } from "../components/ProductCategory/CategoryBanner";
 
 const Category = ({
   category,
@@ -16,15 +17,15 @@ const Category = ({
   const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
 
   return (
-    <div className="lg:w-11/12 m-auto pt-6">
-      <div className="border-b-2 pb-6 border-base-content border-dashed ">
+    <div className="lg:w-11/12 m-auto pt-6  ">
+      <div className=" pb-6  ">
         <img
           src={`/assets/categories/${category}-banner.png`}
           alt={`${category} banner`}
-          
         />
       </div>
-      <div className="sort-by flex flex-row flex-wrap justify-between items-center m-3">
+      <div className="top-tape"></div>
+      <div className="sort-by flex flex-row flex-wrap justify-between items-center m-3 ">
         {filteredProducts.length > 0 && (
           <p className="my-5">
             <span className="font-extrabold">

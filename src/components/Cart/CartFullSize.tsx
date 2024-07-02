@@ -7,6 +7,7 @@ import { ButtonInput, ButtonSquareRed } from "../BannerButton";
 import { CartQuantityButtons } from "../Cart/CartQuantityButtons";
 import { EmptyCart } from "./EmptyCart";
 import { CheckSvg } from "../svgPaths";
+import { useCartContext } from "../../context/CartContext";
 
 export const CartFullSize = () => {
   const { allProducts, cartItems } = useShopContext();
@@ -76,16 +77,17 @@ const CartLineItem = ({
   cartItem: CartItem;
 }) => {
   const price = product.sale_price ?? product.full_price ?? 1000;
-
-  console.log("Cart Item:", cartItem); // Log cart item
-  console.log("Product:", product); // Log product
+  const { setActiveCategory } = useShopContext();
 
   return (
     <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-0 m-auto py-8 w-full border border-y-1 border-x-0 border-base-200">
       <div className="cart-item flex items-center justify-center">
         <RemoveItemButton cartItem={cartItem} />
       </div>
-      <div className="flex cart-item justify-center items-center">
+      <div
+        className="flex cart-item justify-center items-center"
+        onClick={() => setActiveCategory(product.category)}
+      >
         <Link href={`/product/${product.id}`}>
           <img
             src={product.images[0]}
@@ -94,7 +96,10 @@ const CartLineItem = ({
           />
         </Link>
       </div>
-      <div className="cart-item flex items-start justify-center">
+      <div
+        className="cart-item flex items-start justify-center"
+        onClick={() => setActiveCategory(product.category)}
+      >
         <Link href={`/product/${product.id}`}>
           <p className="pb-2 text-base-content">
             {product.name}
