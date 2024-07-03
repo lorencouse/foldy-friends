@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useShopContext } from "../context/ShopContext";
@@ -17,10 +17,21 @@ const Product = () => {
   const router = useRouter();
   const { productId } = router.query;
   const { allProducts, setShowMiniCart } = useShopContext();
-  const product = allProducts.find((i) => i.id === productId);
+  const [product, setProduct] = useState(null);
+  const [currentVariation, setCurrentVariation] = useState("");
 
-  const initialVariation = product?.variations?.[0] || "";
-  const [currentVariation, setCurrentVariation] = useState(initialVariation);
+  useEffect(() => {
+    if (productId && allProducts.length > 0) {
+      const foundProduct = findProduct(productId);
+      setProduct(foundProduct);
+    }
+  }, [productId, allProducts]);
+
+  const findProduct = (id) => {
+    const product = allProducts.find((p) => p.id === id);
+    setCurrentVariation(product?.variations?.[0] || "");
+    return product;
+  };
 
   const relatedProducts = useMemo(() => {
     return shuffleProducts(

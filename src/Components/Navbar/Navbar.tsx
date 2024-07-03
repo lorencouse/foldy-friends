@@ -70,7 +70,10 @@ const Navbar = () => {
           {cartCount > 0 && (
             <div className="cart-icon relative">
               <Link href="/cart">
-              <NavBarCartIcon setShowMiniCart={setShowMiniCart} showMiniCart={showMiniCart}/>
+                <NavBarCartIcon
+                  setShowMiniCart={setShowMiniCart}
+                  showMiniCart={showMiniCart}
+                />
               </Link>
             </div>
           )}
@@ -87,17 +90,17 @@ const Navbar = () => {
       </div>
 
       {showMenu && (
-        <div
-          className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full lg:w-auto "
-          
-        >
-          <ul className="nav-menu flex flex-col lg:flex-row items-center ml-10 gap-4 xl:gap-16 lg:w-auto w-full" onClick={handleMobileMenuClick}>
+        <div className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full lg:w-auto ">
+          <ul
+            className="nav-menu flex flex-col lg:flex-row items-center lg:ml-10  xl:gap-16 lg:gap-10 gap-8 lg:w-auto w-full"
+            onClick={handleMobileMenuClick}
+          >
             {links.map((link, key) => (
               <NavLink key={key} url={link.url} label={link.title} />
             ))}
           </ul>
 
-          <div className="flex lg:flex-row justify-between lg:justify-normal gap-4 mx-3 flex-row-reverse max-w-52">
+          <div className="flex items-center lg:flex-row lg:w-auto w-full justify-between lg:justify-normal gap-4 lg:mt-0 mt-6 flex-row-reverse">
             <div onClick={handleMobileMenuClick}>
               {!user ? <SignInButton /> : <ProfileIcon />}
             </div>

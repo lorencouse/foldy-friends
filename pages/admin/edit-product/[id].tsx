@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import CreateProduct from "../../../src/components/backend/product/createProduct/CreateProduct";
+import { LoadingScreen } from "../../../src/components/Product/LoadingScreen";
 
 const EditProductPage = () => {
   const [existingProduct, setExistingProduct] = useState(null);
@@ -33,7 +34,7 @@ const EditProductPage = () => {
   }, [id, db]);
 
   if (!existingProduct) {
-    return <div>Loading...</div>;
+    return <LoadingScreen />;
   }
 
   return <CreateProduct existingProduct={existingProduct} />;
