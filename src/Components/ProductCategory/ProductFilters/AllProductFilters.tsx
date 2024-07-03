@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import PriceFiltersMinMax from "./PriceFilters";
 import SortProductsByDropdown from "./SortProductsByDropdown";
 import {
@@ -23,17 +23,14 @@ const AllProductFilters = ({
 }) => {
   const [priceRange, setPriceRange] = useState<{ min: number; max: number }>({
     min: 0,
-    max: 100,
+    max: 60,
   });
   const [sort, setSort] = useState<string>("");
 
-  useEffect(() => {
-
-    if (allProducts.length === 0) return;
-    
+  const filteredProducts = useMemo(() => {
+    if (!allProducts || allProducts.length === 0) return [];
 
     let products = allProducts;
-
     if (category !== "all-products") {
       if (isCategory) {
         products = filterProductCategory(products, category);
@@ -41,12 +38,14 @@ const AllProductFilters = ({
         products = filterProductTag(products, category);
       }
     }
-
     products = filterProductPrice(products, priceRange.min, priceRange.max);
     products = sortProducts(products, sort);
+    return products;
+  }, [allProducts, category, isCategory, priceRange, sort]);
 
-    setFilteredProducts(products);
-  }, [allProducts, priceRange, sort, category, setFilteredProducts]);
+  useEffect(() => {
+    setFilteredProducts(filteredProducts);
+  }, [filteredProducts, setFilteredProducts]);
 
   return (
     <div className="price-filters flex flex-row flex-wrap justify-center items-center">

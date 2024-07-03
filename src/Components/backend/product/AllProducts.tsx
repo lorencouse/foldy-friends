@@ -1,50 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
-
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  full_price: number;
-  sale_price: number;
-  images: string[];
-  sizes: string[];
-  categories: string[];
-  tags: string[];
-  sku: string;
-}
+import AllProductFilters from "../../ProductCategory/ProductFilters/AllProductFilters";
+import { Product } from "../../../../types";
+import { useShopContext } from "../../../context/ShopContext";
+import { LoadingScreen } from "../../Product/LoadingScreen";
+import { VariationSelector } from "../../Product/VariantSelector";
+import { productCategories } from "../../../data/constants";
 
 const AllProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const db = getFirestore();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const productsCollection = collection(db, "products");
-        const productSnapshot = await getDocs(productsCollection);
-        const productList = productSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Product[];
-        setProducts(productList);
-      } catch (error) {
-        console.error("Error fetching products:", error);
+  const { allProducts } = useShopContext();
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [ category, setCategory ] = useState("all-products");
+  
+    useEffect(() => {
+      if (allProducts && allProducts.length > 0) {
+        setFilteredProducts(allProducts);
       }
-    };
-
-    fetchProducts();
-  }, [db]);
+    }, [allProducts]);
 
   return (
-    <div>
+    <div className="lg:mx-16 md:mx-12 my-8 ">
       <h1>All Products</h1>
       <Link href={`/admin/create-product`}>
         <p className="m-4 text-xl "> + Create New Product</p>
       </Link>
+      <div className="flex flex-row items-end justify-start gap-12">
+
+      <VariationSelector variations={productCategories} heading="Category" currentVariation={category} setCurrentVariation={setCategory} />
+      <AllProductFilters
+        allProducts={allProducts}
+        setFilteredProducts={setFilteredProducts}
+        category={category}
+        isCategory={true}
+        />
+        </div>
       <ul>
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <li key={product.id} className=" m-8 border-b-2 p-5">
             <div className="prouct flex flex-row">
               <Link href={`/admin/edit-product/${product.id}`}>
