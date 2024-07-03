@@ -38,11 +38,13 @@ export const CartFullSize = () => {
       }
     });
 
+    
+
     return (
       <div className="cart-total mt-4">
         <p>
           <span className="font-semibold">Total: </span>
-          {`$${total}`}
+          {`$${total.toFixed(2)}`}
         </p>
       </div>
     );
@@ -52,7 +54,7 @@ export const CartFullSize = () => {
     <div className="cart-container flex flex-col lg:m-auto sm:mx-3 xs: mx-3 max-w-4xl text-left">
       <h1>Cart</h1>
       <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-5 w-full text-center"></div>
-      {cartItems.map((cartItem) => {
+      {[...cartItems].reverse().map((cartItem)  => {
         const product = productMap[cartItem.id];
         return product ? (
           <CartLineItem
@@ -77,7 +79,12 @@ const CartLineItem = ({
   cartItem: CartItem;
 }) => {
   const price = product.sale_price ?? product.full_price ?? 1000;
-  const { setActiveCategory } = useShopContext();
+  const { setActiveCategory, setShowMiniCart } = useShopContext();
+
+  const handleMobileMenuClick = () => {
+    setShowMiniCart(false);
+    setActiveCategory(product.category);
+  };
 
   return (
     <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-0 m-auto py-8 w-full border border-y-1 border-x-0 border-base-200">
@@ -86,7 +93,7 @@ const CartLineItem = ({
       </div>
       <div
         className="flex cart-item justify-center items-center"
-        onClick={() => setActiveCategory(product.category)}
+        onClick={() => handleMobileMenuClick()}
       >
         <Link href={`/product/${product.id}`}>
           <img
@@ -98,10 +105,10 @@ const CartLineItem = ({
       </div>
       <div
         className="cart-item flex items-start justify-center"
-        onClick={() => setActiveCategory(product.category)}
+        onClick={() => handleMobileMenuClick()}
       >
         <Link href={`/product/${product.id}`}>
-          <p className="pb-2 text-base-content">
+          <p className="p-2 text-base-content">
             {product.name}
             {cartItem.variation ? (
               <span className="font-semibold uppercase">{` - ${cartItem.variation}`}</span>

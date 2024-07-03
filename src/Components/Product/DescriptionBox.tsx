@@ -5,7 +5,7 @@ export const DescriptionBox = ({ description, id }) => {
   const [descriptionBox, setDescriptionBox] = useState(true);
 
   return (
-    <div className="mb-16">
+    <div className="my-16 md:mx-0 mx-4">
       <div className="flex flex-row justify-between">
         <div className="description-box-buttons flex flex-row items-start">
           <button
@@ -24,7 +24,7 @@ export const DescriptionBox = ({ description, id }) => {
         <img
           src="/assets/dog-mascot-inverted-grey.png"
           alt=""
-          className="w-20 h-20 absolute right-36  z-10 -translate-y-6 "
+          className="w-20 h-20 absolute md:right-36 right-6  z-10 -translate-y-6 "
         />
       </div>
 

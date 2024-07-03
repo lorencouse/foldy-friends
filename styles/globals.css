@@ -134,7 +134,7 @@ img {
   border-radius: 10px;
 }
 
-.paper-heading:after {
+.paper-heading:after, .hero:after, .category-banner:after, .promo-box:after {
   content: "";
   display: block;
   position: absolute;
@@ -147,7 +147,7 @@ img {
   transform: rotate(135deg);
 }
 
-.paper-heading:before {
+.paper-heading:before, .promo-box:before {
   content: "";
   display: block;
   position: absolute;

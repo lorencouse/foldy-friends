@@ -8,43 +8,57 @@ import { useAddToCart } from "../../hooks/UseAddToCart";
 import MiniAddToCartButton from "./miniAddToCartButton";
 import { CartSvg } from "../svgPaths";
 
-export const Item = ({ productData, key }: { productData: ProductData, key: number; }) => {
+export const Item = ({
+  productData,
+  itemIndex,
+}: {
+  productData: ProductData;
+  itemIndex: number;
+}) => {
   const { setActiveCategory } = useShopContext();
   const handleAddToCart = useAddToCart();
-  const [buttonText, setButtonText] = useState<string>("+");
+  const [buttonText, setButtonText] = useState<string>("+ Add to Cart");
   const variant =
     productData.variations && productData.variations.length > 0
       ? productData.variations[0]
       : undefined;
   return (
-    <div
-      className="transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 w-72 text-left m-auto rounded-2xl bg-global-noise bg-repeat"
-      onClick={() => setActiveCategory(productData.category)}
-      key={key}
-    >
-      <Link href={`/product/${productData.id}`}>
-        <img src={productData.images[0]} alt={productData.name} />
-        <p className="capitalize m-4 text-lg font-semibold ">
-          {productData.name}
-        </p>
-      </Link>
-      <div className="flex flex-row justify-between items-center pl-6 my-2">
-        <div className="flex flex-col">
-          <StarRatingAverage id={productData.id} />
+    <div className=" transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 w-72 text-left rounded-2xl bg-global-noise bg-repeat">
+      <div
+        onClick={() => {
+          setActiveCategory(productData.category);
+          window.scrollTo(0, 0);
+        }}
+      >
+        <Link href={`/product/${productData.id}`}>
+          <img
+            src={productData.images[0]}
+            alt={productData.name}
+            className="product-card-image paper"
+          />
+          <p className="capitalize mx-4 text-lg font-semibold truncate">
+            {productData.name}
+          </p>
+        </Link>
+      </div>
+      <div className="flex flex-col mx-4">
+        <div className="flex flex-row justify-between">
           <Prices
             oldPrice={productData.full_price}
             newPrice={productData.sale_price}
           />
+          <StarRatingAverage id={productData.id} />
         </div>
+
         <button
-          className="min-w-12 mr-4 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer  hover:-translate-y-1 duration-200 text-white rounded-2xl"
+          className="min-w-12 mb-4 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer  hover:-translate-y-1 duration-200 text-white rounded-2xl"
           onClick={() => {
             handleAddToCart(productData.id, variant);
             setButtonText("✓ Added");
-            setTimeout(() => setButtonText("+"), 1000);
+            setTimeout(() => setButtonText("+ Add to Cart"), 1000);
           }}
         >
-          {buttonText}
+          <span>{buttonText}</span>
         </button>
       </div>
     </div>

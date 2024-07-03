@@ -18,6 +18,8 @@ interface ShopContextType {
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   cartCount: number;
   setCartCount: Dispatch<SetStateAction<number>>;
+  showMiniCart: boolean;
+  setShowMiniCart: Dispatch<SetStateAction<boolean>>;
   activeCategory: string;
   setActiveCategory: Dispatch<SetStateAction<string>>;
 }
@@ -35,6 +37,8 @@ export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartCount, setCartCount] = useState(0);
   const [activeCategory, setActiveCategory] = useState("Shop");
+    const [showMiniCart, setShowMiniCart] = useState<boolean>(false);
+
 
   useEffect(() => {
       const fetchProducts = async () => {
@@ -58,6 +62,8 @@ export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
     setCartItems,
     cartCount,
     setCartCount,
+    showMiniCart, setShowMiniCart,
+    
     activeCategory,
     setActiveCategory,
   };

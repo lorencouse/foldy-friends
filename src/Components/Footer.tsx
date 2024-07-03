@@ -19,7 +19,7 @@ export const Footer = () => {
 
   return (
     <div className="footer-stitch paper">
-      <div class="tape-section"></div>
+      <div className="tape-section"></div>
       <div className="footer w-full p-1 bg-primary shadow-top flex flex-col ">
         <div className="footer-components flex flex-row flex-wrap lg:justify-between justify-center lg:m-5 w-full">
           <NavLogo />

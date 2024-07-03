@@ -7,6 +7,7 @@
 // }
 
 export interface CartItem {
+  key: string;
   id: number;
   quantity: number;
   variation?: string;

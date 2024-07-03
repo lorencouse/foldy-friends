@@ -13,18 +13,14 @@ const Category = ({
   category?: string;
   isCategory?: boolean;
 }) => {
-  const { allProducts } = useShopContext();
+  const { allProducts, setShowMiniCart } = useShopContext();
   const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
 
   return (
-    <div className="lg:w-11/12 m-auto pt-6  ">
-      <div className=" pb-6  ">
-        <img
-          src={`/assets/categories/${category}-banner.png`}
-          alt={`${category} banner`}
-        />
-      </div>
-      <div className="top-tape"></div>
+    <div className=" lg:w-11/12 m-auto pt-6  " onClick={() => setShowMiniCart(false)}>
+      <CategoryBanner category={category} />
+      
+      
       <div className="sort-by flex flex-row flex-wrap justify-between items-center m-3 ">
         {filteredProducts.length > 0 && (
           <p className="my-5">
@@ -43,7 +39,6 @@ const Category = ({
         />
       </div>
       <Collections header={category} productData={filteredProducts} />
-      {/* <ButtonRoundBlack label="Load More" url="" /> */}
     </div>
   );
 };

@@ -14,11 +14,11 @@ import { SignInButton } from "./SignInButton";
 import { HamburderLine } from "./HamburderLine";
 
 const Navbar = () => {
-  const { setActiveCategory, activeCategory, cartCount } = useShopContext();
+  const { setActiveCategory, activeCategory, cartCount, setShowMiniCart, showMiniCart } = useShopContext();
   const [showMenu, setShowMenu] = useState<boolean>(true);
-  const [showMiniCart, setShowMiniCart] = useState<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const { user } = useAuth();
+  
 
 
 
@@ -62,7 +62,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-between p-4 shadow-lg bg-primary text-base-100 z-50">
+    <div className="navbar flex flex-col lg:flex-row justify-between p-4 shadow-lg bg-primary text-base-100 z-50">
       <div className="flex justify-between items-center w-full lg:w-auto">
         <NavLogo />
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { ButtonSquareRed } from "../BannerButton";
-import { CartWhiteSvg, CheckSvg } from "../svgPaths";
+import { CartSvg, CheckSvg } from "../svgPaths";
 import { useShopContext } from "../../context/ShopContext";
 
 export const MiniCartButtons = ({
@@ -25,7 +25,7 @@ export const MiniCartButtons = ({
       {/* Ensure buttons have margin-top */}
       <ButtonSquareRed
         label="Cart"
-        icon={CartWhiteSvg}
+        icon={CartSvg}
         onClick={() => {
           handleNavigation("/cart");
           setActiveCategory("cart");

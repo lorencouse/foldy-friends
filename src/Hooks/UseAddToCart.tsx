@@ -5,17 +5,24 @@ export const useAddToCart = () => {
   const { cartItems, setCartItems, setCartCount } = useShopContext();
 
   const handleAddToCart = (productId: number, currentVariation: string) => {
-    const cartItem: CartItem = { id: productId, quantity: 1, variation: currentVariation };
+    const itemKey = `${productId}-${currentVariation}`;
 
-    if (!cartItems.some((item) => item.id === cartItem.id && item.variation === cartItem.variation)) {
+    const cartItem: CartItem = {
+      key: itemKey,
+      id: productId,
+      quantity: 1,
+      variation: currentVariation,
+    };
+
+    if (!cartItems.some((item) => item.key === itemKey)) {
       setCartItems((oldCartItems: CartItem[]) => [...oldCartItems, cartItem]);
     } else {
       setCartItems((oldCartItems: CartItem[]) =>
         oldCartItems.map((item: CartItem) =>
-          item.id === cartItem.id && item.variation === cartItem.variation
+          item.key === itemKey
             ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
+            : item,
+        ),
       );
     }
 

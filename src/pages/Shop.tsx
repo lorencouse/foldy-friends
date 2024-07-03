@@ -12,6 +12,7 @@ import { productCategories as categories } from "../data/constants";
 import { ProductData } from "../types";
 import Category from "./Category";
 import { ShopHero } from "../components/shop/ShopHero";
+import { CollectionHeading } from "../components/ProductCategory/CollectionHeading";
 
 
 const Shop = () => {
@@ -32,7 +33,7 @@ const Shop = () => {
   return (
     <div className="shop-container">
       <ShopHero />
-      <h2 className="my-8">Explore All Categories</h2>
+      <CollectionHeading header="Explore All Categories" />
       <div className="categories flex flex-row justify-around border border-b-1 border-t-0 my-8">
         {categories.map((category) => (
           <CategoryCard key={category} category={category} />
@@ -63,7 +64,6 @@ const Shop = () => {
       {/* <img src="/assets/categories/all-supplies-banner-2.png" alt="" /> */}
 
       <Category category="all-products" />
-
     </div>
   );
 };
