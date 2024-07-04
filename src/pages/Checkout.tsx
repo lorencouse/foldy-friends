@@ -10,12 +10,17 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../lib/firebaseConfig";
 import { AddressInfo } from "../types";
 import { CartFullSize } from "../components/Cart/CartFullSize";
+import { Alert } from "../components/Alert";
+import { useRouter } from "next/router";
 
 const Checkout = () => {
+  const router = useRouter();
   const [billing, setBilling] = useState<boolean>(false);
   const { cartCount, allProducts } = useShopContext();
   const { user, loading } = useAuth();
-  const [shippingInfo, setShippingInfo] = useState<AddressInfo>({
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const emptyAddress = {
     name: "",
     address_1: "",
     address_2: "",
@@ -23,17 +28,12 @@ const Checkout = () => {
     state: "",
     zip: "",
     country: "",
-  });
+    email: "",
+    phone: "",
+  };
+  const [shippingInfo, setShippingInfo] = useState<AddressInfo>(emptyAddress);
 
-  const [billingInfo, setBillingInfo] = useState<AddressInfo>({
-    name: "",
-    address_1: "",
-    address_2: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-  });
+  const [billingInfo, setBillingInfo] = useState<AddressInfo>(emptyAddress);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -60,54 +60,82 @@ const Checkout = () => {
     }
   }, [user]);
 
+  async function placeOrder() {
+    if (
+      shippingInfo.name === "" ||
+      shippingInfo.address_1 === "" ||
+      shippingInfo.city === "" ||
+      shippingInfo.state === "" ||
+      shippingInfo.zip === "" ||
+      shippingInfo.country === "" ||
+      shippingInfo.email === "" ||
+      shippingInfo.phone === ""
+    ) {
+      setAlertMessage("Please fill in all required fields");
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 2000);
+      return;
+    }
+    setAlertMessage("Order submitted!");
+    setShippingInfo(emptyAddress);
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+      router.push("/");
+    }, 2000);
+  }
+
   return (
-    <div className="checkout-container max-w-5xl m-auto">
-      <h1>Check Out</h1>
-      {cartCount > 0 ? (
-        <div className="flex flex-row flex-wrap md:grid md:grid-cols-2 justify-around">
-          <div className="checkout-left-col flex flex-col">
-            <CheckoutInfo
-              heading="Shipping Info"
-              addressInfo={shippingInfo}
-              setAddressInfo={setShippingInfo}
-            />
-            <div
-              className="billing-checkbox flex items-center font-semibold ml-2"
-              onClick={() => setBilling(!billing)}
-            >
-              <input type="checkbox" checked={billing} readOnly />
-              <label>Separate Billing Info</label>
+    <div className="flex justify-center my-12">
+      <div className="checkout-container max-w-5xl">
+        <h1>Check Out</h1>
+        {cartCount > 0 ? (
+          <div className="flex flex-row flex-wrap md:grid md:grid-cols-2 justify-around">
+            <div className="checkout-left-col flex flex-col">
+              <CheckoutInfo
+                heading="Shipping Info"
+                addressInfo={shippingInfo}
+                setAddressInfo={setShippingInfo}
+              />
+              <div
+                className="billing-checkbox flex items-center font-semibold ml-2"
+                onClick={() => setBilling(!billing)}
+              >
+                <input type="checkbox" checked={billing} readOnly />
+                <label>Separate Billing Info</label>
+              </div>
             </div>
-          </div>
-          <div className="checkout-right-col flex flex-col justify-around">
-            {billing && (
-              <div className="w-full mb-10">
-                <CheckoutInfo
-                  heading="Billing Info"
-                  addressInfo={billingInfo}
-                  setAddressInfo={setBillingInfo}
+            <div className="checkout-right-col flex flex-col justify-around">
+              {billing && (
+                <div className="w-full mb-10">
+                  <CheckoutInfo
+                    heading="Billing Info"
+                    addressInfo={billingInfo}
+                    setAddressInfo={setBillingInfo}
+                  />
+                </div>
+              )}
+              <CartFullSize />
+              <div className="flex flex-col place-order-button w-full items-center justify-end">
+                {showAlert && <Alert message={alertMessage} />}
+                <ButtonSquareRed
+                  icon={LockSvg}
+                  label="Place Order"
+                  onClick={() => placeOrder()}
                 />
               </div>
-            )}
-            <CartFullSize />
-            <div className="flex place-order-button w-full items-center justify-end">
-              <ButtonSquareRed
-                icon={LockSvg}
-                label="Place Order"
-                onClick={() => {}}
-              />
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="empty-cart">
-          <EmptyCart />
-          <Collections
-            productData={allProducts}
-            header="You Might Be Interested In..."
-          />
-        </div>
-      )}
+        ) : (
+          <div className="empty-cart">
+            <EmptyCart />
+            <Collections
+              productData={allProducts}
+              header="You Might Be Interested In..."
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

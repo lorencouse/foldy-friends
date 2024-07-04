@@ -9,15 +9,17 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-
-
+import { Alert } from "../components/Alert";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [signUpPage, setSignUpPage] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const router = useRouter();
 
@@ -25,41 +27,50 @@ const SignIn = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      showAlert(false);
       router.push("/account");
     } catch (err) {
-      setError(err.message);
+      setAlertMessage(err.message);
+      setShowAlert(true);
     }
   };
 
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    if (!agreeToTerms) {
+      setAlertMessage("You must agree to the terms of use and privacy policy.");
+      setShowAlert(true);
+      return;
+    }
+    if (password !== confirmPassword) {
+      
+      setAlertMessage("Passwords do not match.");
+      setShowAlert(true);
+      return;
+    }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const user = userCredential.user;
 
-const handleSignUp = async (e) => {
-  e.preventDefault();
-  if (!agreeToTerms) {
-    alert("You must agree to the terms of use and privacy policy.");
-    return;
-  }
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password,
-    );
-    const user = userCredential.user;
-
-    await setDoc(doc(db, "users", user.uid), {
-      email: user.email,
-      role: "user", 
-    });
-
-    router.push("/account");
-  } catch (err) {
-    setError(err.message);
-  }
-};
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        role: "user",
+      });
+      setShowAlert(false);
+      router.push("/account");
+    } catch (err) {
+      setAlertMessage(err.message);
+      setShowAlert(true);
+    }
+  };
 
   return (
-    <div className="login-container bg-accent h-screen flex justify-center">
-      <div className="bg-base-100 rounded-lg shadow-2xl m-10 flex flex-col align-center justify-center items-left text-left p-20">
+    <div className="login-container bg-accent flex justify-center items-center">
+      <div className="bg-base-100 rounded-lg shadow-2xl lg:m-20 m-10 flex flex-col align-center justify-center items-left text-left p-20 ">
         <h1>{signUpPage ? "Sign Up" : "Sign In"}</h1>
         <div className="sign-in-info flex flex-col justify-between mt-4">
           <InputBox
@@ -77,17 +88,28 @@ const handleSignUp = async (e) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           {signUpPage && (
-            <div className="flex flex-row justify-between items-center">
-              <input
-                type="checkbox"
-                checked={agreeToTerms}
-                onChange={() => setAgreeToTerms(!agreeToTerms)}
+            <div className="flex flex-col">
+              <InputBox
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                name="confirmPassword"
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              <p className="p-3 text-wrap text-gray-600">
-                I agree to the terms of use and privacy policy.
-              </p>
+              <div className="flex flex-row justify-start items-center">
+                <input
+                  type="checkbox"
+                  checked={agreeToTerms}
+                  onChange={() => setAgreeToTerms(!agreeToTerms)}
+                />
+                <p className="p-3 text-wrap text-gray-600">
+                  I agree to the terms of use and privacy policy.
+                </p>
+              </div>
             </div>
           )}
+          {showAlert && <Alert message={alertMessage} />}
+
           <div className="sign-in-up-buttons">
             {signUpPage ? (
               <ButtonSquareRed
@@ -110,7 +132,10 @@ const handleSignUp = async (e) => {
             {!signUpPage ? "Don't have an account?" : ""}
             <span
               className="font-bold text-red-500 cursor-pointer ml-2"
-              onClick={() => setSignUpPage(!signUpPage)}
+              onClick={() => {
+                setSignUpPage(!signUpPage);
+                setShowAlert(false);
+              }}
             >
               {signUpPage ? "Back to Sign In Page" : "Sign Up Here"}
             </span>

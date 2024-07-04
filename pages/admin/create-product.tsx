@@ -1,8 +1,5 @@
 import React from "react";
 import CreateProduct from "../../src/components/backend/product/createProduct/CreateProduct";
+import AdminRoute from "../../src/components/AdminRoute";
 
-const CreateProductPage = () => {
-  return <CreateProduct />;
-};
-
-export default CreateProductPage;
+export default AdminRoute(CreateProduct);

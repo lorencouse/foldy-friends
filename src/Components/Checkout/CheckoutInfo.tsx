@@ -12,8 +12,15 @@ export const CheckoutInfo = ({
   addressInfo: AddressInfo;
   setAddressInfo: (address: AddressInfo) => void;
 }) => {
-  const [email, setEmail] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
+
+
+    const handleInputChange = (
+      e: React.ChangeEvent<HTMLInputElement>,
+      setState: React.Dispatch<React.SetStateAction<AddressInfo>>,
+    ) => {
+      const { name, value } = e.target;
+      setState((prevState) => ({ ...prevState, [name]: value }));
+    };
 
   return (
     <div className="mx-2">
@@ -22,20 +29,6 @@ export const CheckoutInfo = ({
         <AddressInputFields
           addressInfo={addressInfo}
           setAddressInfo={setAddressInfo}
-        />
-        <InputBox
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          name="email"
-        />
-        <InputBox
-          type="tel"
-          placeholder="Phone Number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          name="tel"
         />
       </div>
     </div>

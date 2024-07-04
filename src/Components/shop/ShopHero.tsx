@@ -2,10 +2,10 @@ import React from "react";
 
 export const ShopHero = () => {
   return (
-    <div className="flex flex-wrap justify-between  bg-warning mb-24">
+    <div className="flex flex-wrap justify-between  bg-base-300 mb-24">
       <div className="flex flex-col w-full lg:w-1/2 items-center justify-center text-left   ">
         <div className="flex flex-col text-center m-20 bg-base-100/20 backdrop-blur-2xl lg:p-20 p-10 rounded-3xl border-10 border-base-100  ">
-          <p className="underline font-semibold text-2xl my-3 text-neutral">
+          <p className="underline font-semibold text-2xl my-3 text-white">
             - New Arrivals! -
           </p>
           <p className="banner-heading text-white">

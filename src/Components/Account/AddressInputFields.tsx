@@ -17,6 +17,8 @@ export const AddressInputFields = ({
     "state",
     "zip",
     "country",
+    "email",
+    "phone",
   ];
 
   const handleInputChange = (

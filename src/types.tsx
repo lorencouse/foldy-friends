@@ -75,6 +75,8 @@ export interface AddressInfo {
   state: string;
   zip: string;
   country: string;
+  email: string;
+  phone: string;
 }
 
 export interface CustomerOrder {

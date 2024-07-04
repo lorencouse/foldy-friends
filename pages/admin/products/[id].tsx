@@ -3,9 +3,6 @@ import { useRouter } from "next/router";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import CreateProduct from "../../../src/components/backend/product/createProduct/CreateProduct";
 import { LoadingScreen } from "../../../src/components/Product/LoadingScreen";
-import AdminRoute from "../../../src/components/AdminRoute";
-
-
 
 const EditProductPage = () => {
   const [existingProduct, setExistingProduct] = useState(null);
@@ -43,4 +40,4 @@ const EditProductPage = () => {
   return <CreateProduct existingProduct={existingProduct} />;
 };
 
-export default AdminRoute(EditProductPage);
+export default EditProductPage;
