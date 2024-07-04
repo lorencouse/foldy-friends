@@ -4,17 +4,24 @@ import { LinkInfo } from "../types";
 import { NavLogo } from "./Navbar/NavLogo";
 import SocialIcons from "./SocialIcons";
 import { NavLink } from "./Navbar/NavLink";
+import useAuth from "../hooks/useAuth";
+import { useUserRole } from "../hooks/useUserRole";
 
 export const Footer = () => {
   const [active, setActive] = useState("Shop");
+  const adminId = process.env.ADMIN_ID;
+  const userRole = useUserRole();
 
   const links: LinkInfo[] = [
     { title: "shop", url: "/shop" },
     { title: "returns", url: "/returns" },
     { title: "about", url: "/about" },
     { title: "contact", url: "/contact" },
+    ...(userRole === "admin" ? [
     { title: "create", url: "/admin/create-product" },
     { title: "all", url: "/admin/all-products" },
+    ] : []),
+
   ];
 
   return (

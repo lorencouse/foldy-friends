@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { InputBox } from "../components/Input/InputBox";
 import { ButtonSquareRed } from "../components/BannerButton";
-import { auth } from "../lib/firebaseConfig";
+import { SignInSvg } from "../components/svgPaths";
+import { auth, db } from "../lib/firebaseConfig";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { SignInSvg } from "../components/svgPaths";
+import { doc, setDoc } from "firebase/firestore";
+
+
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -28,19 +31,31 @@ const SignIn = () => {
     }
   };
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    if (!agreeToTerms) {
-      alert("You must agree to the terms of use and privacy policy.");
-      return;
-    }
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.push("/account");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+
+const handleSignUp = async (e) => {
+  e.preventDefault();
+  if (!agreeToTerms) {
+    alert("You must agree to the terms of use and privacy policy.");
+    return;
+  }
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    const user = userCredential.user;
+
+    await setDoc(doc(db, "users", user.uid), {
+      email: user.email,
+      role: "user", 
+    });
+
+    router.push("/account");
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
   return (
     <div className="login-container bg-accent h-screen flex justify-center">

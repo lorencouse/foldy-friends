@@ -19,7 +19,7 @@ const Account = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [error, setError] = useState("");
-
+  
   const [editProfile, setEditProfile] = useState(false);
   const [shippingInfo, setShippingInfo] = useState<AddressInfo>({
     name: "",

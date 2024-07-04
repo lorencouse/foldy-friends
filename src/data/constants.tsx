@@ -16,7 +16,16 @@ export const emptyProduct = {
   sku: "",
 };
 
-export const productVariations = ["Red", "Blue", "Purple", "Green", "Yellow", "Black", "White"];
+export const productVariations = [
+  "Red",
+  "Blue",
+  "Green",
+  "Yellow",
+  "Purple",
+  "Pink",
+  "Black",
+  "White",
+];
 export const productCategories = [
   "paper",
   "tools",
@@ -27,6 +36,8 @@ export const productCategories = [
 export const productTags = [
   "supplies",
   "scissors",
+  "glue",
+  "tape",
   "knives and blades",
   "animals",
   "masks",
