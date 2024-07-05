@@ -73,11 +73,13 @@ export const CreateStarRating = ( {rating, setRating}:{rating:number, setRating:
 };
 
 
-export const StarRatingAverage = (props:{id:number}) => {
+export const StarRatingAverage = (props:{id:string}) => {
 
-      const reviews: ProductReview[] = reviewData.filter(
-        (review) => review.id === props.id,
-      );
+      // const reviews: ProductReview[] = reviewData.filter(
+      //   (review) => review.id === props.id,
+      // );
+
+      const reviews: ProductReview[] = [];
 
         let totalRatings = 0;
         let reviewCount = reviews.length;

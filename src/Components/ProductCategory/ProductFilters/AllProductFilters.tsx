@@ -30,7 +30,7 @@ const AllProductFilters = ({
     if (!allProducts || allProducts.length === 0) return [];
 
     let products = allProducts;
-    if (category !== "all-products") {
+    if (category && category !== "all-products") {
       if (isCategory) {
         products = filterProductCategory(products, category);
       } else {

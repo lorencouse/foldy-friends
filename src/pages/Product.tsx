@@ -12,18 +12,19 @@ import { DescriptionBox } from "../components/Product/DescriptionBox";
 import { shuffleProducts } from "../tools/ProductFilterFunctions";
 import { AddToCartButton } from "../components/Product/AddToCartButton";
 import { LoadingScreen } from "../components/Product/LoadingScreen";
+import { ProductInfo } from "../types";
 
 
 const Product = ({ id }: { id: string }) => {
   const { allProducts, setShowMiniCart } = useShopContext();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<ProductInfo | null>(null);
   const [currentVariation, setCurrentVariation] = useState("");
 
   const findProduct = useCallback(
     (id: string) => {
       const product = allProducts.find((p) => p.id === id);
       setCurrentVariation(product?.variations?.[0] || "");
-      return product;
+      return product || null;
     },
     [allProducts],
   );

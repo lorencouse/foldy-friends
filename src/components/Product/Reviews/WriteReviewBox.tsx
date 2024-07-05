@@ -5,7 +5,7 @@ import { ProductReview } from "../../../types";
 import { UpdateSvg } from "../../svgPaths";
 import { Alert } from "../../Alert";
 
-export const WriteReviewBox = ({ productId }: { productId: number }) => {
+export const WriteReviewBox = ({ productId }: { productId: string }) => {
   const emptyReview: ProductReview = {
     id: "",
     created_at: new Date(),
@@ -36,10 +36,10 @@ export const WriteReviewBox = ({ productId }: { productId: number }) => {
     setTimeout(() => setShowAlert(false), 2000);
   }
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setReview((oldReview) => ({
+    setReview((oldReview: ProductReview) => ({
       ...oldReview,
       [name]: value,
     }));
@@ -61,7 +61,7 @@ export const WriteReviewBox = ({ productId }: { productId: number }) => {
         <CreateStarRating rating={rating} setRating={setRating} />
       </div>
       <textarea
-        type="text"
+        
         placeholder="Review content..."
         value={review.content}
         name="content"

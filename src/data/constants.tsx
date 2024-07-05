@@ -1,3 +1,5 @@
+import { ProductInfo, AddressInfo } from "../types";
+
 export const emptyProduct: ProductInfo = {
   id: "",
   name: "",
@@ -14,6 +16,18 @@ export const emptyProduct: ProductInfo = {
   sold_to_date: 0,
   stock: 0,
   sku: "",
+};
+
+export const emptyAddress: AddressInfo = {
+  name: "",
+  address_1: "",
+  address_2: "",
+  city: "",
+  state: "",
+  zip: "",
+  country: "",
+  email: "",
+  phone: "",
 };
 
 export const productVariations = [

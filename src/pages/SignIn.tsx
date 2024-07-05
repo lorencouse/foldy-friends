@@ -22,19 +22,24 @@ const SignIn = () => {
 
   const router = useRouter();
 
-  const handleSignIn = async (e) => {
+  const handleSignIn = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      showAlert(false);
-      router.push("/account");
-    } catch (err) {
+      if (auth.currentUser) {
+        setShowAlert(false);
+        router.push("/account");
+      } else {
+        setAlertMessage("Authentication failed. Please try again.");
+        setShowAlert(true);
+      }
+    } catch (err: any) {
       setAlertMessage(err.message);
       setShowAlert(true);
     }
   };
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!agreeToTerms) {
       setAlertMessage("You must agree to the terms of use and privacy policy.");
@@ -42,7 +47,6 @@ const SignIn = () => {
       return;
     }
     if (password !== confirmPassword) {
-      
       setAlertMessage("Passwords do not match.");
       setShowAlert(true);
       return;
@@ -59,17 +63,30 @@ const SignIn = () => {
         email: user.email,
         role: "user",
       });
-      setShowAlert(false);
-      router.push("/account");
-    } catch (err) {
+      if (auth.currentUser) {
+        setShowAlert(false);
+        router.push("/account");
+      } else {
+        setAlertMessage("Account creation failed. Please try again.");
+        setShowAlert(true);
+      }
+    } catch (err: any) {
       setAlertMessage(err.message);
       setShowAlert(true);
     }
   };
 
+  const handleSignInClick = () => {
+    handleSignIn({ preventDefault: () => {} } as React.SyntheticEvent);
+  };
+
+  const handleSignUpClick = () => {
+    handleSignUp({ preventDefault: () => {} } as React.SyntheticEvent);
+  };
+
   return (
     <div className="login-container bg-accent flex justify-center items-center">
-      <div className="bg-base-100 rounded-lg shadow-2xl lg:m-20 m-10 flex flex-col align-center justify-center items-left text-left p-20 ">
+      <div className="bg-base-100 rounded-lg shadow-2xl lg:m-20 m-10 flex flex-col align-center justify-center items-left text-left p-20">
         <h1>{signUpPage ? "Sign Up" : "Sign In"}</h1>
         <div className="sign-in-info flex flex-col justify-between mt-4">
           <InputBox
@@ -114,13 +131,13 @@ const SignIn = () => {
               <ButtonSquareRed
                 label="Sign Up"
                 icon={SignInSvg}
-                onClick={handleSignUp}
+                onClick={handleSignUpClick}
               />
             ) : (
               <ButtonSquareRed
                 label="Sign In"
                 icon={SignInSvg}
-                onClick={handleSignIn}
+                onClick={handleSignInClick}
               />
             )}
           </div>

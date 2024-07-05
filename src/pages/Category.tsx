@@ -20,7 +20,7 @@ const Category = ({
       className=" lg:w-11/12 m-auto pt-6  "
       onClick={() => setShowMiniCart(false)}
     >
-      <CategoryBanner category={category} />
+      { category && <CategoryBanner category={category} /> }
 
       <div className="sort-by flex flex-row flex-wrap justify-between items-center m-3 ">
         {filteredProducts.length > 0 && (
@@ -39,7 +39,8 @@ const Category = ({
           category={category}
         />
       </div>
-      <Collections header={category} productData={filteredProducts} />
+        { category && <Collections header={category} productData={filteredProducts} /> }
+      
     </div>
   );
 };

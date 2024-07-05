@@ -1,13 +1,14 @@
 import React from "react";
 import { StarRating } from "./StarRating";
 import { ProductReview } from "../../../types";
-import { reviewData } from "../../../data/reviewData";
 import { WriteReviewBox } from "./WriteReviewBox";
 
-export const ReviewsBox = (props: { id: number }) => {
-  const reviews: ProductReview[] = reviewData.filter(
-    (review) => review.id === props.id,
-  );
+export const ReviewsBox = (props: { id: string }) => {
+  // const reviews: ProductReview[] = reviewData.filter(
+  //   (review) => review.id === props.id,
+  // );
+
+  const reviews: ProductReview[] = [];
 
   return (
     <div className="review-box flex flex-col">

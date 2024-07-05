@@ -3,7 +3,7 @@ import { ReviewsBox } from "./Reviews/ReviewsBox";
 
 interface DescriptionBoxProps {
   description: string;
-  id: number;
+  id: string;
 }
 
 export const DescriptionBox: React.FC<DescriptionBoxProps> = ({

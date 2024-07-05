@@ -34,7 +34,6 @@ export function filterProductPrice(
   });
 }
 
-// Sorts products based on specified criteria
 export function sortProducts(
   products: ProductInfo[],
   sort: string,
@@ -56,11 +55,13 @@ export function sortProducts(
       );
     case "newest":
       return sortedProducts.sort(
-        (p1, p2) => (p2.created_at ?? 0) - (p1.created_at ?? 0),
+        (p1, p2) =>
+          (p2.created_at?.getTime() ?? 0) - (p1.created_at?.getTime() ?? 0),
       );
     case "oldest":
       return sortedProducts.sort(
-        (p1, p2) => (p1.created_at ?? 0) - (p2.created_at ?? 0),
+        (p1, p2) =>
+          (p1.created_at?.getTime() ?? 0) - (p2.created_at?.getTime() ?? 0),
       );
     default:
       return products;

@@ -16,40 +16,24 @@ import { UserDetails } from "../components/Account/UserDetails";
 import { DeleteSvg, SignOutSvg, EditSvg } from "../components/svgPaths";
 import { LoadingScreen } from "../components/Product/LoadingScreen";
 import { UserData } from "../types";
+import { emptyAddress } from "../data/constants";
 
 const Account = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [error, setError] = useState("");
-  
-  const [editProfile, setEditProfile] = useState(false);
-  const [shippingInfo, setShippingInfo] = useState<AddressInfo>({
-    name: "",
-    address_1: "",
-    address_2: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-  });
 
-  const [billingInfo, setBillingInfo] = useState<AddressInfo>({
-    name: "",
-    address_1: "",
-    address_2: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-  });
+  const [editProfile, setEditProfile] = useState(false);
+  const [shippingInfo, setShippingInfo] = useState<AddressInfo>(emptyAddress);
+  const [billingInfo, setBillingInfo] = useState<AddressInfo>(emptyAddress);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (user) {
-        const userDocRef = doc(db, "users", user.uid);
+        const userDocRef = doc(db, "users", user.id);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-          const userData:UserData = userDoc.data();
+          const userData: UserData = userDoc.data() as UserData;
           console.log(userData);
           setShippingInfo(userData.shipping_info || shippingInfo);
           setBillingInfo(userData.billing_info || billingInfo);
@@ -76,7 +60,7 @@ const Account = () => {
   }, [user, loading, router]);
 
   if (loading) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
 
   const handleSignOut = async () => {
@@ -98,8 +82,8 @@ const Account = () => {
     if (currentUser) {
       try {
         const credential = EmailAuthProvider.credential(
-          currentUser.email,
-          prompt("Please enter your password to confirm"),
+          currentUser.email!,
+          prompt("Please enter your password to confirm")!,
         );
         await reauthenticateWithCredential(currentUser, credential);
 

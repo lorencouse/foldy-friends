@@ -13,6 +13,7 @@ import { CartFullSize } from "../components/Cart/CartFullSize";
 import { Alert } from "../components/Alert";
 import { useRouter } from "next/router";
 import { LoadingScreen } from "../components/Product/LoadingScreen";
+import { emptyAddress } from "../data/constants";
 
 const Checkout = () => {
   const router = useRouter();
@@ -21,17 +22,7 @@ const Checkout = () => {
   const { user, loading } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const emptyAddress = {
-    name: "",
-    address_1: "",
-    address_2: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-    email: "",
-    phone: "",
-  };
+
   const [shippingInfo, setShippingInfo] = useState<AddressInfo>(emptyAddress);
 
   const [billingInfo, setBillingInfo] = useState<AddressInfo>(emptyAddress);
@@ -39,7 +30,7 @@ const Checkout = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (user) {
-        const userDocRef = doc(db, "users", user.uid);
+        const userDocRef = doc(db, "users", user.id);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           const userData = userDoc.data();

@@ -4,14 +4,14 @@ import { CartItem } from '../types';
 export const useAddToCart = () => {
   const { cartItems, setCartItems, setCartCount } = useShopContext();
 
-  const handleAddToCart = (productId: number, currentVariation: string) => {
+  const handleAddToCart = (productId: string, currentVariation?: string) => {
     const itemKey = `${productId}-${currentVariation}`;
 
     const cartItem: CartItem = {
       key: itemKey,
       id: productId,
       quantity: 1,
-      variation: currentVariation,
+      variation: currentVariation ?? "",
     };
 
     if (!cartItems.some((item) => item.key === itemKey)) {

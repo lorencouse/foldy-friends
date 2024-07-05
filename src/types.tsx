@@ -8,6 +8,13 @@ export interface UserData {
   order_history: CustomerOrder[];
   username: string;
 }
+
+export interface FirebaseUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
+}
 export interface AddressInfo {
   name: string;
   address_1: string;
