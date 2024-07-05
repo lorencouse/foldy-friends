@@ -22,18 +22,16 @@
     "react": "latest",
     "react-dom": "latest",
     "react-quill": "^2.0.0",
-    "react-scripts": "^5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^4.2.1"
   },
   "scripts": {
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "dev": "next dev",
     "lint": "next lint",
-    "predeploy": "npm run build",
     "export": "next export",
-    "deploy": "gh-pages -d .next -r git@github.com:couselm/foldy-friends.git"
+    "deploy": "npm run build && firebase deploy"
   },
   "eslintConfig": {
     "extends": [
@@ -66,5 +64,5 @@
     "tailwindcss": "^3.4.4",
     "typescript-eslint": "^7.15.0"
   },
-  "homepage": "https://couselm.github.io/foldy-friends"
+  "homepage": "https://your-firebase-hosting-url"
 }
