@@ -27,13 +27,13 @@
     "web-vitals": "^4.2.1"
   },
   "scripts": {
-    "dev": "next dev",
-    "predeploy": "npm run build",
     "build": "next build",
-    "export": "next export",
-    "deploy": "gh-pages -d .next -r git@github.com:couselm/foldy-friends.git",
     "start": "next start",
-    "lint": "next lint"
+    "dev": "next dev",
+    "lint": "next lint",
+    "predeploy": "npm run build",
+    "export": "next export",
+    "deploy": "gh-pages -d .next -r git@github.com:couselm/foldy-friends.git"
   },
   "eslintConfig": {
     "extends": [
