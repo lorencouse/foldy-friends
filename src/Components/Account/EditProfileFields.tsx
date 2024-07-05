@@ -1,6 +1,5 @@
 // src/components/Account/EditProfileFields.tsx
 import React, { useState } from "react";
-import { InputBox } from "../Input/InputBox";
 import { ButtonSquareRed } from "../BannerButton";
 import { AddressInfo } from "../../types";
 import useAuth from "../../hooks/useAuth";

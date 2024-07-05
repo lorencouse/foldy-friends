@@ -1,40 +1,45 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 import { ProductReview } from "../../../types";
-import { reviewData } from '../../../data/reviewData'
-
-
 
 const renderStars = (rating: number) => {
-  const starIcon = "/Assets/star_icon.png"
-  const starIconGray = "/Assets/star_dull_icon.png"
-    const stars = [];
-    for (let i = 0; i < rating; i++) {
-        stars.push(<img key={i} src={starIcon} alt="Full Star" className='h-4 w-4' />);
-    }
-    for (let i = rating; i < 5; i++) {
-        stars.push(<img key={i} src={starIconGray} alt="Gray Star" className='h-4 w-4' />);
-    }
-    return stars;
+  const starIcon = "/Assets/star_icon.png";
+  const starIconGray = "/Assets/star_dull_icon.png";
+  const stars = [];
+  for (let i = 0; i < rating; i++) {
+    stars.push(
+      <img key={i} src={starIcon} alt="Full Star" className="h-4 w-4" />,
+    );
+  }
+  for (let i = rating; i < 5; i++) {
+    stars.push(
+      <img key={i} src={starIconGray} alt="Gray Star" className="h-4 w-4" />,
+    );
+  }
+  return stars;
 };
-
 
 export const StarRating = (props: { rating: number }) => {
-    return (
-        <div className="rating flex flex-row items-center">
-            <div className='flex flex-row w-22'>{renderStars(props.rating)}</div>
-        </div>
-    );
+  return (
+    <div className="rating flex flex-row items-center">
+      <div className="flex flex-row w-22">{renderStars(props.rating)}</div>
+    </div>
+  );
 };
 
-export const CreateStarRating = ( {rating, setRating}:{rating:number, setRating:(rating: number) => void  }  ) => {
-  
+export const CreateStarRating = ({
+  rating,
+  setRating,
+}: {
+  rating: number;
+  setRating: (rating: number) => void;
+}) => {
   const [isRatingSelected, setIsRatingSelected] = useState(false);
-  const [originalRating, setOriginalRating] = useState(0); 
-  const starIcon = "/Assets/star_icon.png"
-  const starIconGray = "/Assets/star_dull_icon.png"
+  const [originalRating, setOriginalRating] = useState(0);
+  const starIcon = "/Assets/star_icon.png";
+  const starIconGray = "/Assets/star_dull_icon.png";
 
-  const handleMouseOver = (index:number) => {
+  const handleMouseOver = (index: number) => {
     setIsRatingSelected(false);
     setRating(index);
   };
@@ -43,10 +48,10 @@ export const CreateStarRating = ( {rating, setRating}:{rating:number, setRating:
     setRating(isRatingSelected ? rating : originalRating);
   };
 
-  const handleClick = (index:number) => {
+  const handleClick = (index: number) => {
     setRating(index);
     setOriginalRating(index);
-    setIsRatingSelected(true); 
+    setIsRatingSelected(true);
   };
 
   const stars = [];
@@ -60,42 +65,42 @@ export const CreateStarRating = ( {rating, setRating}:{rating:number, setRating:
         onMouseOver={() => handleMouseOver(i)}
         onMouseOut={handleMouseOut}
         onClick={() => handleClick(i)}
-      />
+      />,
     );
   }
 
-    return (
-        <div className="rating flex flex-row items-center m-4">
-            <p className='font-bold'>Rating: </p>
-            <div className='flex flex-row w-22 mx-3'>{stars}</div>
-        </div>
-    );
+  return (
+    <div className="rating flex flex-row items-center m-4">
+      <p className="font-bold">Rating: </p>
+      <div className="flex flex-row w-22 mx-3">{stars}</div>
+    </div>
+  );
 };
 
+export const StarRatingAverage = (props: { id: string }) => {
+  // const reviews: ProductReview[] = reviewData.filter(
+  //   (review) => review.id === props.id,
+  // );
 
-export const StarRatingAverage = (props:{id:string}) => {
+  const reviews: ProductReview[] = [];
 
-      // const reviews: ProductReview[] = reviewData.filter(
-      //   (review) => review.id === props.id,
-      // );
+  let totalRatings = 0;
+  let reviewCount = reviews.length;
 
-      const reviews: ProductReview[] = [];
+  if (reviews) {
+    reviews.forEach((review) => {
+      totalRatings += review.rating;
+    });
+  }
 
-        let totalRatings = 0;
-        let reviewCount = reviews.length;
+  const averageRating = reviewCount > 0 ? totalRatings / reviewCount : 0;
 
-        if (reviews) {
-            reviews.forEach(review => {
-                totalRatings += review.rating;
-            });
-        }
-
-        const averageRating = reviewCount > 0 ? totalRatings / reviewCount : 0;
-
-    return (
-        <div className="rating flex flex-row items-center">
-            <div className='flex flex-row w-22'>{renderStars(Math.round(averageRating))}</div>
-            <p className="review-count mx-1">{`(${reviewCount})`}</p>
-        </div>
-    )
-}
+  return (
+    <div className="rating flex flex-row items-center">
+      <div className="flex flex-row w-22">
+        {renderStars(Math.round(averageRating))}
+      </div>
+      <p className="review-count mx-1">{`(${reviewCount})`}</p>
+    </div>
+  );
+};
