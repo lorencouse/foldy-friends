@@ -17,7 +17,7 @@ export const MiniCartButtons = ({
     window.scrollTo(0, 0);
   };
 
-  const { activeCategory, setActiveCategory } = useShopContext();
+  const { setActiveCategory } = useShopContext();
 
   return (
     <div className="min-cart-buttons flex flex-row gap-x-4 justify-center items-center ">

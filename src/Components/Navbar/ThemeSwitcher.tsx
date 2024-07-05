@@ -1,9 +1,10 @@
-import { useTheme } from "next-themes";
-import { useEffect } from "react";
-import { MoonSvg, SunSvg } from "./svgPaths";
+import React, { useEffect } from "react";
+import { MoonSvg, SunSvg } from "../svgPaths";
+import { useTheme } from '../../hooks/useTheme';
 
 const ThemeSwitcher = () => {
-  const { theme, setTheme } = useTheme();
+    const { theme, toggleTheme } = useTheme();
+
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -18,13 +19,10 @@ const ThemeSwitcher = () => {
         <input
           type="checkbox"
           className="theme-controller"
-          onClick={() => {
-            setTheme(theme === "light" ? "dark" : "light");
-            console.log(theme);
-          }}
+          onClick={() => toggleTheme()}
         />
-      {SunSvg}
-      {MoonSvg}
+        {SunSvg}
+        {MoonSvg}
       </label>
     </div>
   );

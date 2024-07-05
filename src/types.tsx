@@ -1,20 +1,23 @@
-// export interface OldProductData {
-//   id: number;
-//   name: string;
-//   category: string;
-//   sale_price?: number;
-//   full_price: number;
-// }
-
-export interface CartItem {
-  key: string;
-  id: number;
-  quantity: number;
-  variation?: string;
+export interface UserData {
+  id: string;
+  email: string | null; 
+  created_at: Date;
+  shipping_info: AddressInfo;
+  billing_info: AddressInfo;
+  photo_url: string;
+  order_history: CustomerOrder[];
+  username: string;
 }
-
-export interface ProductAttributes {
-  [atribute: string]: string[];
+export interface AddressInfo {
+  name: string;
+  address_1: string;
+  address_2: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  email: string;
+  phone: string;
 }
 
 export interface ProductData {
@@ -36,53 +39,31 @@ export interface ProductData {
 }
 
 export interface ProductVariation {
-  product_id: number;
+  product_id: string;
   variation?: string;
   quantity: number;
 }
 export interface ProductReview {
-  product_id: number;
-  created_at: Date;
-  product_id: number;
-  user_id: number;
-  title: string;
-  content: string;
-  rating: number;
-}
-
-export interface ReviewData {
-  id: number;
-  title: string;
-  content: string;
-  rating: number;
-}
-
-export interface UserProfile {
   id: string;
   created_at: Date;
-  shipping_info: AddressInfo;
-  billing_info: AddressInfo;
-  photo_url: string;
-  order_history: CustomerOrder[];
-  username: string;
+  product_id: string;
+  user_id: string;
+  title: string;
+  content: string;
+  rating: number;
 }
 
-export interface AddressInfo {
-  name: string;
-  address_1: string;
-  address_2: string;
-  city: string;
-  state: string;
-  zip: string;
-  country: string;
-  email: string;
-  phone: string;
+export interface CartItem {
+  key: string;
+  id: string;
+  quantity: number;
+  variation?: string;
 }
 
 export interface CustomerOrder {
-  id: number;
+  id: string;
   created_at: Date;
-  customer_id: number;
+  customer_id: string;
   shipping_info: AddressInfo;
   billing_info: AddressInfo;
   products: ProductVariation[];

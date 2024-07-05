@@ -3,11 +3,9 @@ import React from "react";
 import { CartItem, ProductData } from "../../types";
 import { useShopContext } from "../../context/ShopContext";
 import Link from "next/link";
-import { ButtonInput, ButtonSquareRed } from "../BannerButton";
+import { ButtonInput } from "../BannerButton";
 import { CartQuantityButtons } from "../Cart/CartQuantityButtons";
 import { EmptyCart } from "./EmptyCart";
-import { CheckSvg } from "../svgPaths";
-import { useCartContext } from "../../context/CartContext";
 
 export const CartFullSize = () => {
   const { allProducts, cartItems } = useShopContext();
@@ -99,7 +97,7 @@ const CartLineItem = ({
           <img
             src={product.images[0]}
             alt={product.name}
-            className="max-h-24"
+            className="max-h-24 gallery-image"
           />
         </Link>
       </div>

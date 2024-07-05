@@ -8,7 +8,6 @@ import {
   filterProductTag
 } from "../../../tools/ProductFilterFunctions";
 import { ProductData } from "../../../types";
-import Category from "../../../pages/Category";
 
 const AllProductFilters = ({
   allProducts,

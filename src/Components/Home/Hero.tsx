@@ -14,9 +14,9 @@ export const Hero = () => {
         <ButtonRoundRed label="Shop Now" url="/shop" />
       </div>
       <div className="w-full lg:w-1/2 flex items-center justify-center ">
-        <div className="hero paper border-20 border-base-100 bg-base-100 lg:rounded-tl-3xl">
+        <div className="hero paper border-20 border-base-100 bg-base-100 ">
           <img
-            className="w-full  "
+            className="w-full rounded-2xl "
             src="/assets/homePage/happy-kids-folding-origami-1024.webp"
             alt="Hero Model"
           />

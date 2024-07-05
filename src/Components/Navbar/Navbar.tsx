@@ -1,12 +1,12 @@
 // src/Components/Navbar/Navbar.tsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useShopContext } from "../../context/ShopContext";
 import { NavBarCartIcon } from "./CartIcon";
 import { NavLink } from "./NavLink";
 import { NavLogo } from "./NavLogo";
 import { MiniCartButtons } from "./MiniCartButtons";
-import ThemeSwitcher from "../ThemeSwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 import useAuth from "../../hooks/useAuth";
 import { ProfileIcon } from "./ProfileIcon";
 import { CartFullSize } from "../Cart/CartFullSize";
@@ -14,13 +14,9 @@ import { SignInButton } from "./SignInButton";
 import { HamburderLine } from "./HamburderLine";
 
 const Navbar = () => {
-  const { setActiveCategory, activeCategory, cartCount, setShowMiniCart, showMiniCart } = useShopContext();
+  const { cartCount, setShowMiniCart, showMiniCart } = useShopContext();
   const [showMenu, setShowMenu] = useState<boolean>(true);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const { user } = useAuth();
-  
-
-
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -55,7 +51,6 @@ const Navbar = () => {
   const handleMobileMenuClick = () => {
     if (window.matchMedia("(max-width: 1024px)").matches) {
       setShowMenu(false);
-      
     } else {
       setShowMiniCart(false);
     }

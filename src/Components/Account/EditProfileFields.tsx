@@ -1,19 +1,21 @@
+// src/components/Account/EditProfileFields.tsx
 import React, { useState } from "react";
 import { InputBox } from "../Input/InputBox";
 import { ButtonSquareRed } from "../BannerButton";
-import { AddressInfo } from "../types";
+import { AddressInfo } from "../../types";
 import useAuth from "../../hooks/useAuth";
 import { auth, db } from "../../lib/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 import { updateProfile, updateEmail } from "firebase/auth";
 import { AddressInputFields } from "./AddressInputFields";
 import { UpdateSvg, CancelSvg } from "../svgPaths";
+import { LoadingScreen } from "../Product/LoadingScreen";
 
 interface EditProfileFieldsProps {
   shippingInfo: AddressInfo;
-  setShippingInfo: (info: AddressInfo) => void;
+  setShippingInfo: React.Dispatch<React.SetStateAction<AddressInfo>>;
   billingInfo: AddressInfo;
-  setBillingInfo: (info: AddressInfo) => void;
+  setBillingInfo: React.Dispatch<React.SetStateAction<AddressInfo>>;
   setEditProfile: (edit: boolean) => void;
 }
 
@@ -26,7 +28,6 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
 }) => {
   const [addBillingInfo, setAddBillingInfo] = useState(false);
   const { user, loading } = useAuth();
-  const [error, setError] = useState<string | null>(null);
 
   const handleSaveProfile = async () => {
     const currentUser = auth.currentUser;
@@ -61,9 +62,12 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
       console.log("Profile updated successfully");
     } catch (error: any) {
       console.error("Error updating profile: ", error);
-      setError(error.message);
     }
   };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="flex flex-row flex-wrap md:grid md:grid-cols-2 justify-around">
@@ -76,17 +80,7 @@ export const EditProfileFields: React.FC<EditProfileFieldsProps> = ({
           setAddressInfo={setShippingInfo}
         />
 
-        <label className="ml-2 mt-4 font-semibold" htmlFor="email">
-          Email:
-        </label>
-        <InputBox
-          type="text"
-          placeholder="Email"
-          value={user?.email || ""}
-          name="email"
-          onChange={() => {}}
-          disabled
-        />
+        <p>Email: {user?.email || ""}</p>
 
         <div
           className="flex"

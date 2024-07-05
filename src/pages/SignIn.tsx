@@ -15,7 +15,6 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [signUpPage, setSignUpPage] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -126,7 +125,6 @@ const SignIn = () => {
             )}
           </div>
         </div>
-        {error && <p className="text-red-500">{error}</p>}
         <div>
           <p>
             {!signUpPage ? "Don't have an account?" : ""}

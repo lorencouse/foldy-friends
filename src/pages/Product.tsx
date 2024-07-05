@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { useRouter } from "next/router";
+// src/pages/Product.tsx
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useShopContext } from "../context/ShopContext";
 import { Prices } from "../components/Product/Prices";
@@ -13,25 +13,27 @@ import { shuffleProducts } from "../tools/ProductFilterFunctions";
 import { AddToCartButton } from "../components/Product/AddToCartButton";
 import { LoadingScreen } from "../components/Product/LoadingScreen";
 
-const Product = () => {
-  const router = useRouter();
-  const { productId } = router.query;
+
+const Product = ({ id }: { id: string }) => {
   const { allProducts, setShowMiniCart } = useShopContext();
   const [product, setProduct] = useState(null);
   const [currentVariation, setCurrentVariation] = useState("");
 
+  const findProduct = useCallback(
+    (id: string) => {
+      const product = allProducts.find((p) => p.id === id);
+      setCurrentVariation(product?.variations?.[0] || "");
+      return product;
+    },
+    [allProducts],
+  );
+
   useEffect(() => {
-    if (productId && allProducts.length > 0) {
-      const foundProduct = findProduct(productId);
+    if (id && allProducts.length > 0) {
+      const foundProduct = findProduct(id);
       setProduct(foundProduct);
     }
-  }, [productId, allProducts]);
-
-  const findProduct = (id) => {
-    const product = allProducts.find((p) => p.id === id);
-    setCurrentVariation(product?.variations?.[0] || "");
-    return product;
-  };
+  }, [id, allProducts, findProduct]);
 
   const relatedProducts = useMemo(() => {
     return shuffleProducts(
@@ -57,7 +59,7 @@ const Product = () => {
         <div className="product-info lg:w-6/12 text-left p-5">
           <Breadcrumbs category={product.category} name={product.name} />
           <Link href={`/admin/edit-product/${product.id}`}>
-            <p className=" text-base-content text-semibold link mt-4 font-bold">
+            <p className="text-base-content text-semibold link mt-4 font-bold">
               - Edit Product -
             </p>
           </Link>

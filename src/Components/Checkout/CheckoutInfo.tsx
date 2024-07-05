@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { InputBox } from "../Input/InputBox";
+import React from "react";
 import { AddressInfo } from "../../types";
 import { AddressInputFields } from "../Account/AddressInputFields";
 
@@ -13,14 +12,6 @@ export const CheckoutInfo = ({
   setAddressInfo: (address: AddressInfo) => void;
 }) => {
 
-
-    const handleInputChange = (
-      e: React.ChangeEvent<HTMLInputElement>,
-      setState: React.Dispatch<React.SetStateAction<AddressInfo>>,
-    ) => {
-      const { name, value } = e.target;
-      setState((prevState) => ({ ...prevState, [name]: value }));
-    };
 
   return (
     <div className="mx-2">

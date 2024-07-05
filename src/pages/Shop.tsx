@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import { CategoryCard } from "../components/ProductCategory/CategoryCard";
 import { Collections } from "../components/ProductCategory/Collections";
 import {
@@ -7,17 +7,15 @@ import {
 } from "../tools/ProductFilterFunctions";
 import { useShopContext } from "../context/ShopContext";
 import Link from "next/link";
-import AllProductFilters from "../components/ProductCategory/ProductFilters/AllProductFilters";
 import { productCategories as categories } from "../data/constants";
-import { ProductData } from "../types";
 import Category from "./Category";
 import { ShopHero } from "../components/shop/ShopHero";
 import { CollectionHeading } from "../components/ProductCategory/CollectionHeading";
+import { CategoryBanner } from "../components/ProductCategory/CategoryBanner";
 
 
 const Shop = () => {
   const { setActiveCategory, allProducts } = useShopContext();
-  const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
 
   const topSellers = useMemo(() => {
     return categories.map((category) => ({
@@ -27,7 +25,7 @@ const Shop = () => {
         4,
       ),
     }));
-  }, [allProducts, categories]);
+  }, [allProducts]);
 
 
   return (
@@ -43,7 +41,7 @@ const Shop = () => {
       <div className="top-sellers">
         {topSellers.map(({ category, products }) => (
           <React.Fragment key={category}>
-            <img src={`/assets/categories/${category}-banner.png`} alt="" />
+            <CategoryBanner category={category} />
             <Collections productData={products} header={category} />
             <Link href={`/category/${category}`}>
               <p
@@ -61,7 +59,6 @@ const Shop = () => {
       </div>
 
       <h2 className="my-10 text-5xl font-semibold">All Crafting Supplies</h2>
-      {/* <img src="/assets/categories/all-supplies-banner-2.png" alt="" /> */}
 
       <Category category="all-products" />
     </div>

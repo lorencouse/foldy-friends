@@ -1,6 +1,7 @@
+// pages/_app.tsx
 import "../styles/globals.css";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import React, { ReactNode } from "react";
+// import { ThemeProvider } from "next-themes";
+import React from "react";
 import Navbar from "../src/components/Navbar/Navbar";
 import { Footer } from "../src/components/Footer";
 import { ShopContextProvider } from "../src/context/ShopContext";
@@ -22,20 +23,10 @@ const quicksand = Quicksand({
   subsets: ["latin"],
 });
 
-interface ThemeProviderWrapperProps {
-  children: ReactNode;
-  [key: string]: any;
-}
-
-const ThemeProviderWrapper: React.FC<ThemeProviderWrapperProps> = ({
-  children,
-  ...props
-}) => <NextThemesProvider {...props}>{children}</NextThemesProvider>;
-
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ShopContextProvider>
-      <ThemeProviderWrapper attribute="class" defaultTheme="light">
+      {/* <ThemeProvider attribute="class" defaultTheme="light"> */}
         <style jsx global>{`
           :root {
             --comfortaa-font: ${comfortaa.style.fontFamily};
@@ -46,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Navbar />
         <Component {...pageProps} />
         <Footer />
-      </ThemeProviderWrapper>
+      {/* </ThemeProvider> */}
     </ShopContextProvider>
   );
 }

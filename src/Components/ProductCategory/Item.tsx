@@ -5,8 +5,6 @@ import { Prices } from "../Product/Prices";
 import { useShopContext } from "../../context/ShopContext";
 import { StarRatingAverage } from "../Product/Reviews/StarRating";
 import { useAddToCart } from "../../hooks/UseAddToCart";
-import MiniAddToCartButton from "./miniAddToCartButton";
-import { CartSvg } from "../svgPaths";
 
 export const Item = ({
   productData,
@@ -34,7 +32,7 @@ export const Item = ({
           <img
             src={productData.images[0]}
             alt={productData.name}
-            className="product-card-image paper"
+            className="product-card-image paper mb-5"
           />
           <p className="capitalize mx-4 text-lg font-semibold truncate">
             {productData.name}
@@ -51,7 +49,7 @@ export const Item = ({
         </div>
 
         <button
-          className="min-w-12 mb-4 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer  hover:-translate-y-1 duration-200 text-white rounded-2xl"
+          className="min-w-12 mb-6 mt-2 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer  hover:-translate-y-1 duration-200 text-white rounded-2xl"
           onClick={() => {
             handleAddToCart(productData.id, variant);
             setButtonText("✓ Added");

@@ -1,15 +1,11 @@
-import React, { useState } from "react";
-import Link from "next/link";
+import React from "react";
 import { LinkInfo } from "../types";
 import { NavLogo } from "./Navbar/NavLogo";
 import SocialIcons from "./SocialIcons";
 import { NavLink } from "./Navbar/NavLink";
-import useAuth from "../hooks/useAuth";
 import { useUserRole } from "../hooks/useUserRole";
 
 export const Footer = () => {
-  const [active, setActive] = useState("Shop");
-  const adminId = process.env.ADMIN_ID;
   const userRole = useUserRole();
 
   const links: LinkInfo[] = [

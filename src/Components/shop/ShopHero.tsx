@@ -13,10 +13,10 @@ export const ShopHero = () => {
           </p>
         </div>
       </div>
-      <div className="w-full lg:w-1/2 flex justify-center items-center bg-base-100">
+      <div className="w-full lg:w-1/2 flex justify-center items-center bg-base-100 ">
         <div className="border-20 border-base-100 hero paper ">
           <img
-            className="w-full"
+            className="w-full rounded-2xl"
             src="/assets/shopPage/kids-crafting-origami.webp"
             alt="Hero Model"
           />

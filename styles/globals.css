@@ -31,6 +31,17 @@ body {
   }
 }
 
+.product-image img, .product-card-image, .gallery-image {
+  border: 1px solid;
+  border-radius: 20px;
+  @apply border-base-200;
+}
+
+.product-card-image {
+  border-radius: 20px 20px 0 0px;
+  
+}
+
 .App-header {
   min-height: 100vh;
   display: flex;
@@ -110,9 +121,7 @@ select option {
   text-transform: capitalize;
 }
 
-img {
-  border-radius: 20px;
-}
+
 
 .clip-custom-shape {
   clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);

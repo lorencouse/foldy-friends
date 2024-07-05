@@ -14,6 +14,8 @@ import { EditProfileFields } from "../components/Account/EditProfileFields";
 import { ButtonSquareRed } from "../components/BannerButton";
 import { UserDetails } from "../components/Account/UserDetails";
 import { DeleteSvg, SignOutSvg, EditSvg } from "../components/svgPaths";
+import { LoadingScreen } from "../components/Product/LoadingScreen";
+import { UserData } from "../types";
 
 const Account = () => {
   const { user, loading } = useAuth();
@@ -47,7 +49,7 @@ const Account = () => {
         const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-          const userData = userDoc.data();
+          const userData:UserData = userDoc.data();
           console.log(userData);
           setShippingInfo(userData.shipping_info || shippingInfo);
           setBillingInfo(userData.billing_info || billingInfo);
@@ -74,7 +76,7 @@ const Account = () => {
   }, [user, loading, router]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingScreen />
   }
 
   const handleSignOut = async () => {
@@ -135,7 +137,7 @@ const Account = () => {
 
               <img
                 src="/assets/profile-photo.jpg"
-                alt="profile photo"
+                alt="user profile avatar"
                 className="rounded-full max-h-32 max-w-32"
               />
             </div>

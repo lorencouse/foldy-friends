@@ -18,7 +18,7 @@ export const ProductImages = ({
             src={image}
             alt={alt}
             onClick={() => setCurrentImg(i)}
-            className={`w-20 m-1 rounded-lg hover:opacity-80 hover:scale-105 ${i === currentImg ? "opacity-80 scale-105" : ""}`}
+            className={`gallery-image w-20 m-1 rounded-lg hover:opacity-80 hover:scale-105 ${i === currentImg ? "opacity-80 scale-105" : ""}`}
           />
         ))}
       </div>

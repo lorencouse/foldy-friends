@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import AllProductFilters from "../../ProductCategory/ProductFilters/AllProductFilters";
-import { Product } from "../../../../types";
+import { ProductData } from "../../../types";
 import { useShopContext } from "../../../context/ShopContext";
 import { LoadingScreen } from "../../Product/LoadingScreen";
 import { VariationSelector } from "../../Product/VariantSelector";
@@ -9,7 +9,7 @@ import { productCategories } from "../../../data/constants";
 
 const AllProducts = () => {
   const { allProducts } = useShopContext();
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
   const [ category, setCategory ] = useState("all-products");
   
     useEffect(() => {
@@ -17,6 +17,10 @@ const AllProducts = () => {
         setFilteredProducts(allProducts);
       }
     }, [allProducts]);
+
+    if (!allProducts || allProducts.length === 0) {
+      return <LoadingScreen />;
+    }
 
   return (
     <div className="lg:mx-16 md:mx-12 my-8 ">

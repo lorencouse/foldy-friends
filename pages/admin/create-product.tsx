@@ -1,4 +1,3 @@
-import React from "react";
 import CreateProduct from "../../src/components/backend/product/createProduct/CreateProduct";
 import AdminRoute from "../../src/components/AdminRoute";
 

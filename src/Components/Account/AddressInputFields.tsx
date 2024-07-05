@@ -1,32 +1,40 @@
+// src/components/Account/AddressInputFields.tsx
 import React from "react";
 import { InputBox } from "../Input/InputBox";
 import { AddressInfo } from "../../types";
 
-export const AddressInputFields = ({
+const addressKeys: (keyof AddressInfo)[] = [
+  "name",
+  "address_1",
+  "address_2",
+  "city",
+  "state",
+  "zip",
+  "country",
+  "email",
+  "phone",
+];
+
+interface AddressInputFieldsProps {
+  addressInfo: AddressInfo;
+  setAddressInfo: React.Dispatch<React.SetStateAction<AddressInfo>>;
+}
+
+export const AddressInputFields: React.FC<AddressInputFieldsProps> = ({
   addressInfo,
   setAddressInfo,
-}: {
-  addressInfo: AddressInfo;
-  setAddressInfo: (address: AddressInfo) => void;
 }) => {
-  const addressKeys = [
-    "name",
-    "address_1",
-    "address_2",
-    "city",
-    "state",
-    "zip",
-    "country",
-    "email",
-    "phone",
-  ];
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<AddressInfo>>,
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setState((prevState) => ({ ...prevState, [name]: value }));
+    setAddressInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+  type InputType = "text" | "email" | "tel";
+
+  const getInputType = (key: string): InputType => {
+    if (key === "email") return "email";
+    if (key === "phone") return "tel";
+    return "text";
   };
 
   return (
@@ -36,13 +44,15 @@ export const AddressInputFields = ({
           <label
             className="ml-2 mt-4 font-semibold"
             htmlFor={`shipping_${key}`}
-          >{`${key.replace("_", " ")}:`}</label>
+          >
+            {key.replace("_", " ")}:
+          </label>
           <InputBox
-            type="text"
+            type={getInputType(key)}
             placeholder={key.replace("_", " ")}
-            value={addressInfo[key as keyof AddressInfo] || ""}
+            value={addressInfo[key] || ""}
             name={key}
-            onChange={(e) => handleInputChange(e, setAddressInfo)}
+            onChange={handleInputChange}
           />
         </div>
       ))}

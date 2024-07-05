@@ -12,6 +12,7 @@ import { AddressInfo } from "../types";
 import { CartFullSize } from "../components/Cart/CartFullSize";
 import { Alert } from "../components/Alert";
 import { useRouter } from "next/router";
+import { LoadingScreen } from "../components/Product/LoadingScreen";
 
 const Checkout = () => {
   const router = useRouter();
@@ -83,6 +84,10 @@ const Checkout = () => {
       setShowAlert(false);
       router.push("/");
     }, 2000);
+  }
+
+  if (loading) {
+    return <LoadingScreen />
   }
 
   return (

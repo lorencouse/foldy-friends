@@ -7,7 +7,7 @@ export const ProfileIcon = () => {
       <div className="btn btn-ghost btn-circle avatar mx-2">
         <div className="w-10 rounded-full ">
           <img
-            alt="profile Photo"
+            alt="user profile avatar"
             src="/assets/profile-photo.jpg"
             className=""
           />

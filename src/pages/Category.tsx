@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useShopContext } from "../context/ShopContext";
 import { ProductData } from "../types";
 import { Collections } from "../components/ProductCategory/Collections";
-import { ButtonRoundBlack } from "../components/BannerButton";
 import AllProductFilters from "../components/ProductCategory/ProductFilters/AllProductFilters";
 import { CategoryBanner } from "../components/ProductCategory/CategoryBanner";
 

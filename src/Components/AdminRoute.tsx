@@ -1,11 +1,16 @@
-// src/components/AdminRoute.js
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { useUserRole } from "../hooks/useUserRole";
+import { LoadingScreen } from "../components/Product/LoadingScreen";
+import { ComponentType } from "react";
 
-const AdminRoute = (WrappedComponent) => {
-  return (props) => {
+type WrappedComponentProps = { [key: string]: any };
+
+const AdminRoute = <P extends WrappedComponentProps>(
+  WrappedComponent: ComponentType<P>,
+) => {
+  const AdminRouteComponent: React.FC<P> = (props) => {
     const router = useRouter();
     const { user, loading } = useAuth();
     const userRole = useUserRole();
@@ -16,14 +21,16 @@ const AdminRoute = (WrappedComponent) => {
           router.push("/sign-in");
         }
       }
-    }, [user, loading, userRole]);
+    }, [user, loading, userRole, router]);
 
     if (loading || !user || userRole !== "admin") {
-      return <p>Loading...</p>; // or any loading indicator
+      return <LoadingScreen />;
     }
 
     return <WrappedComponent {...props} />;
   };
+
+  return AdminRouteComponent;
 };
 
 export default AdminRoute;
