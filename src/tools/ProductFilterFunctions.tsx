@@ -1,7 +1,7 @@
-import { ProductData } from "../types";
+import { ProductInfo } from "../types";
 
 // Shuffles products array and returns a specified number of products
-export const shuffleProducts = (array: ProductData[], number: number) => {
+export const shuffleProducts = (array: ProductInfo[], number: number) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -11,20 +11,20 @@ export const shuffleProducts = (array: ProductData[], number: number) => {
 
 // Filters products by category
 export function filterProductCategory(
-  products: ProductData[],
+  products: ProductInfo[],
   category: string,
 ) {
   return products.filter((p) => p.category === category);
 }
 
 // Filters products by tag
-export function filterProductTag(products: ProductData[], tag: string) {
+export function filterProductTag(products: ProductInfo[], tag: string) {
   return products.filter((p) => p.tags.includes(tag));
 }
 
 // Filters products by price range
 export function filterProductPrice(
-  products: ProductData[],
+  products: ProductInfo[],
   min: number,
   max: number,
 ) {
@@ -36,9 +36,9 @@ export function filterProductPrice(
 
 // Sorts products based on specified criteria
 export function sortProducts(
-  products: ProductData[],
+  products: ProductInfo[],
   sort: string,
-): ProductData[] {
+): ProductInfo[] {
   const sortedProducts = [...products];
 
   switch (sort) {

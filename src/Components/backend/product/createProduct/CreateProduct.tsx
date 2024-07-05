@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ButtonSquareRed } from "../../../BannerButton";
 import { ProductInfo } from "../../../../types";
+import { CheckSvg } from "../../../svgPaths";
 
 import {
   getFirestore,
@@ -17,7 +18,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import AttributeSelector from "./AttributeSelector";
-import { ProductInfoInput } from "./productInfoInput";
+import { ProductInfoInput } from "./ProductInfoInput";
 import {
   emptyProduct,
   productCategories,
@@ -27,7 +28,11 @@ import {
 import Link from "next/link";
 import { VariationSelector } from "../../../Product/VariantSelector";
 
-const CreateProduct = ({ existingProduct }) => {
+const CreateProduct = ({
+  existingProduct,
+}: {
+  existingProduct?: ProductInfo;
+}) => {
   const [productInfo, setProductInfo] = useState<ProductInfo>(emptyProduct);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -111,8 +116,14 @@ const CreateProduct = ({ existingProduct }) => {
         // Create new product
         const docRef = await addDoc(collection(db, "products"), {
           ...productInfo,
-          full_price: productInfo.full_price - 0.01,
-          sale_price: productInfo.sale_price - 0.03,
+          full_price:
+            productInfo.full_price !== undefined
+              ? productInfo.full_price - 0.01
+              : null,
+          sale_price:
+            productInfo.sale_price !== undefined
+              ? productInfo.sale_price - 0.03
+              : null,
           images: imageUrls,
           variations: selectedVariations,
           category: selectedCategory,
@@ -141,12 +152,25 @@ const CreateProduct = ({ existingProduct }) => {
   const handleDeleteImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const index = parseInt(e.currentTarget.dataset.index || "0", 10);
     const imageUrl = productInfo.images[index];
+
+    if (!imageUrl) {
+      console.error("Image URL not found");
+      return;
+    }
+
     const imageName = decodeURIComponent(
-      imageUrl.split("/").pop().split("?")[0],
+      imageUrl.split("/").pop()?.split("?")[0] || "",
     );
+
+    if (!imageName) {
+      console.error("Invalid image name");
+      return;
+    }
+
     const storage = getStorage();
     const imageRef = ref(storage, `${imageName}`);
     console.log(imageName);
+
     try {
       await deleteObject(imageRef);
       const updatedImages = productInfo.images.filter((_, i) => i !== index);
@@ -166,9 +190,15 @@ const CreateProduct = ({ existingProduct }) => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImages((prevImages) =>
-        prevImages ? [...prevImages, ...e.target.files] : e.target.files,
-      );
+      const fileArray = Array.from(e.target.files);
+      setImages((prevImages) => {
+        const newFiles = prevImages
+          ? Array.from(prevImages).concat(fileArray)
+          : fileArray;
+        const dataTransfer = new DataTransfer();
+        newFiles.forEach((file) => dataTransfer.items.add(file));
+        return dataTransfer.files;
+      });
     }
   };
 
@@ -251,6 +281,7 @@ const CreateProduct = ({ existingProduct }) => {
         <ButtonSquareRed
           label={existingProduct ? "Update Product" : "Create Product"}
           onClick={handleSaveProduct}
+          icon={CheckSvg}
         />
       </div>
     </div>

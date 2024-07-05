@@ -7,10 +7,10 @@ import { Alert } from "../../Alert";
 
 export const WriteReviewBox = ({ productId }: { productId: number }) => {
   const emptyReview: ProductReview = {
-    id: 1,
+    id: "",
     created_at: new Date(),
-    product_id: productId,
-    user_id: 0,
+    product_id: productId.toString(),
+    user_id: "",
     title: "",
     content: "",
     rating: 0,
@@ -58,7 +58,6 @@ export const WriteReviewBox = ({ productId }: { productId: number }) => {
           onChange={handleOnChange}
           className="w-96 border border-gray-300 rounded-md mb-8 p-2"
         />
-        {/* <InputBox type='text' placeholder='Title...' /> */}
         <CreateStarRating rating={rating} setRating={setRating} />
       </div>
       <textarea

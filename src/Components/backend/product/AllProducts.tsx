@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import AllProductFilters from "../../ProductCategory/ProductFilters/AllProductFilters";
-import { ProductData } from "../../../types";
+import { ProductInfo } from "../../../types";
 import { useShopContext } from "../../../context/ShopContext";
 import { LoadingScreen } from "../../Product/LoadingScreen";
 import { VariationSelector } from "../../Product/VariantSelector";
@@ -9,18 +9,18 @@ import { productCategories } from "../../../data/constants";
 
 const AllProducts = () => {
   const { allProducts } = useShopContext();
-  const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
-  const [ category, setCategory ] = useState("all-products");
-  
-    useEffect(() => {
-      if (allProducts && allProducts.length > 0) {
-        setFilteredProducts(allProducts);
-      }
-    }, [allProducts]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductInfo[]>([]);
+  const [category, setCategory] = useState("all-products");
 
-    if (!allProducts || allProducts.length === 0) {
-      return <LoadingScreen />;
+  useEffect(() => {
+    if (allProducts && allProducts.length > 0) {
+      setFilteredProducts(allProducts);
     }
+  }, [allProducts]);
+
+  if (!allProducts || allProducts.length === 0) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="lg:mx-16 md:mx-12 my-8 ">
@@ -29,15 +29,19 @@ const AllProducts = () => {
         <p className="m-4 text-xl "> + Create New Product</p>
       </Link>
       <div className="flex flex-row items-end justify-start gap-12">
-
-      <VariationSelector variations={productCategories} heading="Category" currentVariation={category} setCurrentVariation={setCategory} />
-      <AllProductFilters
-        allProducts={allProducts}
-        setFilteredProducts={setFilteredProducts}
-        category={category}
-        isCategory={true}
+        <VariationSelector
+          variations={productCategories}
+          heading="Category"
+          currentVariation={category}
+          setCurrentVariation={setCategory}
         />
-        </div>
+        <AllProductFilters
+          allProducts={allProducts}
+          setFilteredProducts={setFilteredProducts}
+          category={category}
+          isCategory={true}
+        />
+      </div>
       <ul>
         {filteredProducts.map((product) => (
           <li key={product.id} className=" m-8 border-b-2 p-5">

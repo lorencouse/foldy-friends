@@ -8,7 +8,7 @@ export const AddToCartButton = ({id, size}:{id:number, size:string}) => {
   const handleAddToCart = useAddToCart();
   const { setShowMiniCart } = useShopContext();
   const [buttonText, setButtonText] = useState<string>("Add to Cart");
-  const [svg, setSvg] = useState<string>(AddToCartSvg)
+  const [svg, setSvg] = useState<React.ReactNode>(AddToCartSvg)
 
   const handleClick = () => {
     handleAddToCart(id, size);

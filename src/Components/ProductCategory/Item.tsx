@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProductData } from "../../types";
+import { ProductInfo } from "../../types";
 import Link from "next/link";
 import { Prices } from "../Product/Prices";
 import { useShopContext } from "../../context/ShopContext";
@@ -10,7 +10,7 @@ export const Item = ({
   productData,
   itemIndex,
 }: {
-  productData: ProductData;
+  productData: ProductInfo;
   itemIndex: number;
 }) => {
   const { setActiveCategory } = useShopContext();

@@ -1,12 +1,12 @@
-export const emptyProduct = {
+export const emptyProduct: ProductInfo = {
   id: "",
   name: "",
   description: "",
-  full_price: "",
-  sale_price: "",
+  full_price: 0,
+  sale_price: 0,
   images: [],
-  colors: [],
-  category: '',
+  variations: [],
+  category: "",
   tags: [],
   reviews: [],
   created_at: new Date(),

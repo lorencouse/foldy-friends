@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { ReviewData } from '../../../types';
+import { ProductReview } from "../../../types";
 import { reviewData } from '../../../data/reviewData'
 
 
@@ -75,7 +75,9 @@ export const CreateStarRating = ( {rating, setRating}:{rating:number, setRating:
 
 export const StarRatingAverage = (props:{id:number}) => {
 
-      const reviews: ReviewData[] = reviewData.filter(review => review.id === props.id);
+      const reviews: ProductReview[] = reviewData.filter(
+        (review) => review.id === props.id,
+      );
 
         let totalRatings = 0;
         let reviewCount = reviews.length;
@@ -95,23 +97,3 @@ export const StarRatingAverage = (props:{id:number}) => {
         </div>
     )
 }
-
-// export const StarRatingCount = (props: { reviews: ReviewData[] }) => {
-//     let totalRatings = 0;
-//     let reviewCount = props.reviews.length;
-
-//     if (props.reviews) {
-//         props.reviews.forEach(review => {
-//             totalRatings += review.rating;
-//         });
-//     }
-
-//     const averageRating = reviewCount > 0 ? totalRatings / reviewCount : 0;
-
-//     return (
-//         <div className="rating flex flex-row items-center">
-//             <div className='flex flex-row w-22'>{renderStars(Math.round(averageRating))}</div>
-//             <p className="review-count mx-1">{`(${reviewCount})`}</p>
-//         </div>
-//     );
-// };

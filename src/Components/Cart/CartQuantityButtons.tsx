@@ -17,7 +17,7 @@ export const CartQuantityButtons = ({ cartItem }: { cartItem: CartItem }) => {
   function incrementQuantity() {
     setCartItems((oldCartItems) =>
       oldCartItems.map((item) =>
-        item.id === cartItem.id && item.size === cartItem.size
+        item.id === cartItem.id && item.variation === cartItem.variation
           ? { ...item, quantity: item.quantity + 1 }
           : item,
       ),
@@ -30,7 +30,7 @@ export const CartQuantityButtons = ({ cartItem }: { cartItem: CartItem }) => {
     if (cartItem.quantity > 1) {
       setCartItems((oldCartItems) =>
         oldCartItems.map((item) =>
-          item.id === cartItem.id && item.size === cartItem.size
+          item.id === cartItem.id && item.variation === cartItem.variation
             ? { ...item, quantity: item.quantity - 1 }
             : item,
         ),

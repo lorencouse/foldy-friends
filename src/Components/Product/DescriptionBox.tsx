@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { ReviewsBox } from "./Reviews/ReviewsBox";
 
-export const DescriptionBox = ({ description, id }) => {
+interface DescriptionBoxProps {
+  description: string;
+  id: number;
+}
+
+export const DescriptionBox: React.FC<DescriptionBoxProps> = ({
+  description,
+  id,
+}) => {
   const [descriptionBox, setDescriptionBox] = useState(true);
 
   return (
@@ -10,7 +18,7 @@ export const DescriptionBox = ({ description, id }) => {
         <div className="description-box-buttons flex flex-row items-start">
           <button
             onClick={() => setDescriptionBox(true)}
-            className={`p-3 ${descriptionBox ? "bg-base-200 font-semibold" : "bg-base-100"} border-t border-l  border-base-300 w-32 rounded-tl-xl `}
+            className={`p-3 ${descriptionBox ? "bg-base-200 font-semibold" : "bg-base-100"} border-t border-l  border-base-300 w-32 rounded-tl-xl`}
           >
             Description
           </button>
@@ -30,7 +38,7 @@ export const DescriptionBox = ({ description, id }) => {
 
       <div className="description-text-box p-10 border border-1 border-base-300 text-left rounded-b-xl rounded-tr-xl">
         {descriptionBox ? (
-          <div dangerouslySetInnerHTML={{ __html: description }} />
+          <div dangerouslySetInnerHTML={{ __html: description || "" }} />
         ) : (
           <ReviewsBox id={id} />
         )}

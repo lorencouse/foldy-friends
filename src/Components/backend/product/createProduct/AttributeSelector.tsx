@@ -4,7 +4,7 @@ interface AttributeSelectorProps {
   heading: string;
   attributes: string[];
   selectedAttributes: string[];
-  setSelectedAttributes: (attributes: string[]) => void;
+  setSelectedAttributes: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const AttributeSelector: React.FC<AttributeSelectorProps> = ({
@@ -17,13 +17,15 @@ const AttributeSelector: React.FC<AttributeSelectorProps> = ({
 
   const handleChange = (attribute: string) => {
     const normalizedAttribute = normalize(attribute);
-    setSelectedAttributes((prevSelectedAttributes) =>
-      prevSelectedAttributes.map(normalize).includes(normalizedAttribute)
-        ? prevSelectedAttributes.filter(
-            (s) => normalize(s) !== normalizedAttribute,
-          )
-        : [...prevSelectedAttributes, attribute],
-    );
+    setSelectedAttributes((prevSelectedAttributes) => {
+      if (prevSelectedAttributes.map(normalize).includes(normalizedAttribute)) {
+        return prevSelectedAttributes.filter(
+          (s) => normalize(s) !== normalizedAttribute,
+        );
+      } else {
+        return [...prevSelectedAttributes, attribute];
+      }
+    });
   };
 
   return (
@@ -49,7 +51,7 @@ const AttributeSelector: React.FC<AttributeSelectorProps> = ({
           </label>
         ))}
       </div>
-      <button onClick={() => setSelectedAttributes([])}>Clear All </button>
+      <button onClick={() => setSelectedAttributes([])}>Clear All</button>
     </div>
   );
 };

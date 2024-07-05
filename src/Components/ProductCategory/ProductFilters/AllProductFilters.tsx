@@ -5,18 +5,18 @@ import {
   filterProductPrice,
   sortProducts,
   filterProductCategory,
-  filterProductTag
+  filterProductTag,
 } from "../../../tools/ProductFilterFunctions";
-import { ProductData } from "../../../types";
+import { ProductInfo } from "../../../types";
 
 const AllProductFilters = ({
   allProducts,
   setFilteredProducts,
   isCategory,
-  category
+  category,
 }: {
-  allProducts: ProductData[];
-  setFilteredProducts: (products: ProductData[]) => void;
+  allProducts: ProductInfo[];
+  setFilteredProducts: (products: ProductInfo[]) => void;
   isCategory?: boolean;
   category?: string;
 }) => {
@@ -48,7 +48,10 @@ const AllProductFilters = ({
 
   return (
     <div className="price-filters flex flex-row flex-wrap justify-center items-center">
-      <PriceFiltersMinMax setPriceRange={setPriceRange} priceRange={priceRange} />
+      <PriceFiltersMinMax
+        setPriceRange={setPriceRange}
+        priceRange={priceRange}
+      />
       <SortProductsByDropdown setSort={setSort} sort={sort} />
     </div>
   );

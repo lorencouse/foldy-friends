@@ -11,11 +11,11 @@ export const ProductInfoInput = ({
   setProductInfo,
 }: {
   productInfo: ProductInfo;
-  setProductInfo: (ProductInfo) => void;
+  setProductInfo: React.Dispatch<React.SetStateAction<ProductInfo>>;
 }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setProductInfo((prevInfo) => ({
+    setProductInfo((prevInfo: ProductInfo) => ({
       ...prevInfo,
       [name]: value,
     }));
@@ -70,7 +70,7 @@ export const ProductInfoInput = ({
         <InputBox
           type="number"
           placeholder="Sale Price"
-          value={productInfo.sale_price}
+          value={productInfo.sale_price ?? 0}
           onChange={handleInputChange}
           name="sale_price"
         />

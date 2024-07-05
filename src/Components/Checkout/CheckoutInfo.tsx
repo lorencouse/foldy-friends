@@ -9,7 +9,7 @@ export const CheckoutInfo = ({
 }: {
   heading: string;
   addressInfo: AddressInfo;
-  setAddressInfo: (address: AddressInfo) => void;
+  setAddressInfo: React.Dispatch<React.SetStateAction<AddressInfo>>;
 }) => {
 
 

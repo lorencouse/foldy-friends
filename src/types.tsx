@@ -1,6 +1,6 @@
 export interface UserData {
   id: string;
-  email: string | null; 
+  email: string | null;
   created_at: Date;
   shipping_info: AddressInfo;
   billing_info: AddressInfo;
@@ -20,7 +20,7 @@ export interface AddressInfo {
   phone: string;
 }
 
-export interface ProductData {
+export interface ProductInfo {
   id: string;
   name: string;
   description: string;

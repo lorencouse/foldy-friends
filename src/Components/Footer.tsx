@@ -1,5 +1,4 @@
 import React from "react";
-import { LinkInfo } from "../types";
 import { NavLogo } from "./Navbar/NavLogo";
 import SocialIcons from "./SocialIcons";
 import { NavLink } from "./Navbar/NavLink";
@@ -8,7 +7,7 @@ import { useUserRole } from "../hooks/useUserRole";
 export const Footer = () => {
   const userRole = useUserRole();
 
-  const links: LinkInfo[] = [
+  const links = [
     { title: "shop", url: "/shop" },
     { title: "returns", url: "/returns" },
     { title: "about", url: "/about" },

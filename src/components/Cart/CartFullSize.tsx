@@ -1,6 +1,6 @@
 // src/Components/.tsx
 import React from "react";
-import { CartItem, ProductData } from "../../types";
+import { CartItem, ProductInfo } from "../../types";
 import { useShopContext } from "../../context/ShopContext";
 import Link from "next/link";
 import { ButtonInput } from "../BannerButton";
@@ -10,13 +10,13 @@ import { EmptyCart } from "./EmptyCart";
 export const CartFullSize = () => {
   const { allProducts, cartItems } = useShopContext();
 
-  const productMap = allProducts.reduce(
-    (map, product) => {
-      map[product.id] = product;
-      return map;
-    },
-    {} as { [id: number]: ProductData },
-  );
+const productMap = allProducts.reduce(
+  (map, product: ProductInfo) => {
+    map[product.id] = product;
+    return map;
+  },
+  {} as { [id: string]: ProductInfo },
+);
 
   console.log("Cart Items:", cartItems); // Log cart items
   console.log("Product Map:", productMap); // Log product map
@@ -36,8 +36,6 @@ export const CartFullSize = () => {
       }
     });
 
-    
-
     return (
       <div className="cart-total mt-4">
         <p>
@@ -52,7 +50,7 @@ export const CartFullSize = () => {
     <div className="cart-container flex flex-col lg:m-auto sm:mx-3 xs: mx-3 max-w-4xl text-left">
       <h1>Cart</h1>
       <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-5 w-full text-center"></div>
-      {[...cartItems].reverse().map((cartItem)  => {
+      {[...cartItems].reverse().map((cartItem) => {
         const product = productMap[cartItem.id];
         return product ? (
           <CartLineItem
@@ -73,7 +71,7 @@ const CartLineItem = ({
   product,
   cartItem,
 }: {
-  product: ProductData;
+  product: ProductInfo;
   cartItem: CartItem;
 }) => {
   const price = product.sale_price ?? product.full_price ?? 1000;
@@ -124,7 +122,6 @@ const CartLineItem = ({
     </div>
   );
 };
-
 
 const RemoveItemButton = ({ cartItem }: { cartItem: CartItem }) => {
   const { setCartItems, setCartCount } = useShopContext();

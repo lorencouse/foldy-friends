@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useShopContext } from "../context/ShopContext";
-import { ProductData } from "../types";
+import { ProductInfo } from "../types";
 import { Collections } from "../components/ProductCategory/Collections";
 import AllProductFilters from "../components/ProductCategory/ProductFilters/AllProductFilters";
 import { CategoryBanner } from "../components/ProductCategory/CategoryBanner";
@@ -13,13 +13,15 @@ const Category = ({
   isCategory?: boolean;
 }) => {
   const { allProducts, setShowMiniCart } = useShopContext();
-  const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductInfo[]>([]);
 
   return (
-    <div className=" lg:w-11/12 m-auto pt-6  " onClick={() => setShowMiniCart(false)}>
+    <div
+      className=" lg:w-11/12 m-auto pt-6  "
+      onClick={() => setShowMiniCart(false)}
+    >
       <CategoryBanner category={category} />
-      
-      
+
       <div className="sort-by flex flex-row flex-wrap justify-between items-center m-3 ">
         {filteredProducts.length > 0 && (
           <p className="my-5">

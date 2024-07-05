@@ -6,14 +6,14 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect
+  useEffect,
 } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 // import allProducts from "../data/allProducts";
-import { CartItem, ProductData } from "../types";
+import { CartItem, ProductInfo } from "../types";
 
 interface ShopContextType {
-  allProducts: ProductData[];
+  allProducts: ProductInfo[];
   cartItems: CartItem[];
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   cartCount: number;
@@ -33,28 +33,27 @@ const ShopContext = createContext<ShopContextType | null>(null);
 export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
   children,
 }) => {
-  const [allProducts, setAllProducts] = useState<ProductData[]>([]);
+  const [allProducts, setAllProducts] = useState<ProductInfo[]>([]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartCount, setCartCount] = useState(0);
   const [activeCategory, setActiveCategory] = useState("Shop");
-    const [showMiniCart, setShowMiniCart] = useState<boolean>(false);
-
+  const [showMiniCart, setShowMiniCart] = useState<boolean>(false);
 
   useEffect(() => {
-      const fetchProducts = async () => {
-        const db = getFirestore();
-        const productsCollection = collection(db, "products");
-        const productSnapshot = await getDocs(productsCollection);
-        const productList = productSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as ProductData[];
-        setAllProducts(productList);
-        console.log("Fetched products: ", productList); // Log fetched products
-      };
+    const fetchProducts = async () => {
+      const db = getFirestore();
+      const productsCollection = collection(db, "products");
+      const productSnapshot = await getDocs(productsCollection);
+      const productList = productSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as ProductInfo[];
+      setAllProducts(productList);
+      console.log("Fetched products: ", productList); // Log fetched products
+    };
 
-      fetchProducts();
-    }, []);
+    fetchProducts();
+  }, []);
 
   const contextVal: ShopContextType = {
     allProducts,
@@ -62,8 +61,9 @@ export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
     setCartItems,
     cartCount,
     setCartCount,
-    showMiniCart, setShowMiniCart,
-    
+    showMiniCart,
+    setShowMiniCart,
+
     activeCategory,
     setActiveCategory,
   };
