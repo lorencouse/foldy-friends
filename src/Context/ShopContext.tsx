@@ -38,6 +38,7 @@ export const ShopContextProvider: React.FC<ShopContextProviderProps> = ({
   const [cartCount, setCartCount] = useState(0);
   const [activeCategory, setActiveCategory] = useState("Shop");
   const [showMiniCart, setShowMiniCart] = useState<boolean>(false);
+  
 
   useEffect(() => {
     const fetchProducts = async () => {

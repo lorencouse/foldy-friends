@@ -100,8 +100,8 @@ const Account = () => {
   };
 
   return (
-    <div className="profile-page bg-base-100 min-h-screen">
-      <div className="user-profile max-w-7xl m-auto">
+    <div className="profile-page bg-base-100 min-h-screen flex justify-start">
+      <div className="user-profile max-w-7xl md:mx-20 mx-5 my-10">
         <h1>Account</h1>
 
         {editProfile ? (
@@ -116,15 +116,7 @@ const Account = () => {
           </>
         ) : (
           <>
-            <div className="flex flex-col gap-7">
-              <p>Welcome back {shippingInfo.name}</p>
 
-              <img
-                src="/assets/profile-photo.jpg"
-                alt="user profile avatar"
-                className="rounded-full max-h-32 max-w-32"
-              />
-            </div>
             <UserDetails
               shippingInfo={shippingInfo}
               billingInfo={billingInfo}

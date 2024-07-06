@@ -21,7 +21,7 @@ export const Item = ({
       ? productData.variations[0]
       : undefined;
   return (
-    <div className=" transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 w-72 text-left rounded-2xl bg-global-noise bg-repeat">
+    <div className="transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 md:mx-1 mx-0 w-auto text-left rounded-2xl">
       <div
         onClick={() => {
           setActiveCategory(productData.category);
@@ -32,7 +32,7 @@ export const Item = ({
           <img
             src={productData.images[0]}
             alt={productData.name}
-            className="product-card-image paper mb-5"
+            className="product-card-image paper mb-5 w-full h-auto"
           />
           <p className="capitalize mx-4 text-lg font-semibold truncate">
             {productData.name}
@@ -40,7 +40,7 @@ export const Item = ({
         </Link>
       </div>
       <div className="flex flex-col mx-4">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row flex-wrap md:justify-between justify-center">
           <Prices
             oldPrice={productData.full_price}
             newPrice={productData.sale_price}
@@ -49,7 +49,7 @@ export const Item = ({
         </div>
 
         <button
-          className="min-w-12 mb-6 mt-2 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer  hover:-translate-y-1 duration-200 text-white rounded-2xl"
+          className="min-w-12 mb-6 mt-2 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer hover:-translate-y-1 duration-200 text-white rounded-2xl"
           onClick={() => {
             handleAddToCart(productData.id, variant);
             setButtonText("✓ Added");

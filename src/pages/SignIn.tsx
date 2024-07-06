@@ -85,8 +85,8 @@ const SignIn = () => {
   };
 
   return (
-    <div className="login-container bg-accent flex justify-center items-center">
-      <div className="bg-base-100 rounded-lg shadow-2xl lg:m-20 m-10 flex flex-col align-center justify-center items-left text-left p-20">
+    <div className="login-container bg-accent flex justify-center items-center" onKeyDown={(e) => e.key === "Enter" && signUpPage ? handleSignUpClick() : handleSignInClick()} >
+      <div className="bg-base-100 rounded-lg shadow-2xl lg:m-20 m-10 flex flex-col align-center justify-center items-left text-left lg:p-20 p-12">
         <h1>{signUpPage ? "Sign Up" : "Sign In"}</h1>
         <div className="sign-in-info flex flex-col justify-between mt-4">
           <InputBox

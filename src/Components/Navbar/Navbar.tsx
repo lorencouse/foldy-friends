@@ -1,8 +1,7 @@
-// src/Components/Navbar/Navbar.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useShopContext } from "../../context/ShopContext";
-import { NavBarCartIcon } from "./CartIcon";
+import { CartIconMobile, NavBarCartIcon } from "./CartIcon";
 import { NavLink } from "./NavLink";
 import { NavLogo } from "./NavLogo";
 import { MiniCartButtons } from "./MiniCartButtons";
@@ -17,10 +16,32 @@ const Navbar = () => {
   const { cartCount, setShowMiniCart, showMiniCart } = useShopContext();
   const [showMenu, setShowMenu] = useState<boolean>(true);
   const { user } = useAuth();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const cartRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target as Node) &&
+      window.innerWidth < 1024
+    ) {
+      setShowMenu(false);
+    }
+    if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
+      setShowMiniCart(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const links = [
     { title: "home", url: "/" },
@@ -51,8 +72,6 @@ const Navbar = () => {
   const handleMobileMenuClick = () => {
     if (window.matchMedia("(max-width: 1024px)").matches) {
       setShowMenu(false);
-    } else {
-      setShowMiniCart(false);
     }
   };
 
@@ -62,16 +81,7 @@ const Navbar = () => {
         <NavLogo />
 
         <div className="flex items-center gap-5 lg:hidden">
-          {cartCount > 0 && (
-            <div className="cart-icon relative">
-              <Link href="/cart">
-                <NavBarCartIcon
-                  setShowMiniCart={setShowMiniCart}
-                  showMiniCart={showMiniCart}
-                />
-              </Link>
-            </div>
-          )}
+          {cartCount > 0 && <CartIconMobile />}
 
           <div
             className="hamburger h-8 w-8 outline outline-2 outline-white rounded-md flex flex-col justify-around items-center p-2  hover:bg-base-200 "
@@ -85,7 +95,10 @@ const Navbar = () => {
       </div>
 
       {showMenu && (
-        <div className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full lg:w-auto ">
+        <div
+          ref={menuRef}
+          className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full lg:w-auto "
+        >
           <ul
             className="nav-menu flex flex-col lg:flex-row items-center lg:ml-10  xl:gap-16 lg:gap-10 gap-8 lg:w-auto w-full"
             onClick={handleMobileMenuClick}
@@ -106,19 +119,19 @@ const Navbar = () => {
       )}
 
       {cartCount > 0 && (
-        <div className="nav-cart hidden lg:flex items-center gap-5 ml-auto z-20">
+        <div
+          ref={cartRef}
+          className="nav-cart hidden lg:flex items-center gap-5 ml-auto z-20"
+        >
           <div className="cart-icon relative mr-6">
-            <NavBarCartIcon
-              setShowMiniCart={setShowMiniCart}
-              showMiniCart={showMiniCart}
-            />
+            <NavBarCartIcon />
           </div>
           {showMiniCart && (
-            <div className="absolute my-0 right-0 top-28 border-1 px-4 bg-base-100 shadow-lg max-w-xl rounded-b-2xl ">
+            <div className="absolute my-0 right-0 top-28 border-1 px-4 bg-base-100 shadow-lg max-w-xl rounded-b-2xl">
               <div className="w-full overflow-y-auto max-h-96 no-scrollbar">
                 <CartFullSize />
               </div>
-              <MiniCartButtons setShowMiniCart={setShowMiniCart} />
+              <MiniCartButtons />
             </div>
           )}
         </div>

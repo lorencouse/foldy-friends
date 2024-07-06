@@ -4,8 +4,6 @@
 @tailwind utilities;
 
 :root {
-  --pink: #ecb2ba;
-  --pink-dark: #c6939a;
   --tape-gray: #dbd8be;
   --tape-edge-gray: #b7b49d;
   --transparent: rgba(255, 255, 255, 0);
@@ -14,16 +12,25 @@
 body {
   @apply bg-base-100;
   font-family: var(--quicksand-font), sans-serif;
+  position: relative;
 }
 
-.App {
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* .App {
   text-align: left;
-}
+} */
 
-.App-logo {
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
+} */
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -42,7 +49,7 @@ body {
   
 }
 
-.App-header {
+/* .App-header {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -50,7 +57,7 @@ body {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
 h1, h2, h3 {
   @apply text-base-content;

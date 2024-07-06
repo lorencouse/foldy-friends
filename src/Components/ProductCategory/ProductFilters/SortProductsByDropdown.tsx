@@ -12,8 +12,8 @@ const SortProductsByDropdown = ({
   };
 
   return (
-    <div className="dropdown dropdown-hover mx-6">
-      <summary className="m-1 btn bg-base-100 w-56 capitalize">Sort By{`: ${sort}`}</summary>
+    <div className="dropdown mx-6">
+      <div tabIndex={0} role="button" className="m-1 btn bg-base-100 w-56 capitalize">Sort By{`: ${sort}`}</div>
       <ul
         tabIndex={0}
         className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box"

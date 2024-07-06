@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { ProductReview } from "../../../types";
 
 const renderStars = (rating: number) => {
-  const starIcon = "/Assets/star_icon.png";
-  const starIconGray = "/Assets/star_dull_icon.png";
+  const starIcon = "/assets/star_icon.png";
+  const starIconGray = "/assets/star_dull_icon.png";
   const stars = [];
   for (let i = 0; i < rating; i++) {
     stars.push(
@@ -36,8 +36,8 @@ export const CreateStarRating = ({
 }) => {
   const [isRatingSelected, setIsRatingSelected] = useState(false);
   const [originalRating, setOriginalRating] = useState(0);
-  const starIcon = "/Assets/star_icon.png";
-  const starIconGray = "/Assets/star_dull_icon.png";
+  const starIcon = "/assets/star_icon.png";
+  const starIconGray = "/assets/star_dull_icon.png";
 
   const handleMouseOver = (index: number) => {
     setIsRatingSelected(false);
@@ -78,9 +78,7 @@ export const CreateStarRating = ({
 };
 
 export const StarRatingAverage = (props: { id: string }) => {
-  // const reviews: ProductReview[] = reviewData.filter(
-  //   (review) => review.id === props.id,
-  // );
+
 
   const reviews: ProductReview[] = [];
 

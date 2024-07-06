@@ -28,8 +28,8 @@ export const Subscribe = () => {
   };
 
   return (
-    <div className="promo-box relative flex flex-col justify-center items-center bg-secondary pt-12 my-10 rounded-2xl">
-      <div className="subscribe-box my-12 text-center ">
+    <div className="promo-box relative flex flex-col justify-center items-center bg-secondary pt-12 my-10 mx-6 rounded-2xl">
+      <div className="subscribe-box my-12  text-center ">
         <p className="banner-heading text-white px-6">
           Get in on Exclusive Offers!
         </p>

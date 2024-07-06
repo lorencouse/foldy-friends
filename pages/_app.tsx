@@ -1,6 +1,4 @@
-// pages/_app.tsx
 import "../styles/globals.css";
-// import { ThemeProvider } from "next-themes";
 import React from "react";
 import Navbar from "../src/components/Navbar/Navbar";
 import { Footer } from "../src/components/Footer";
@@ -12,6 +10,8 @@ const comfortaa = Comfortaa({
   weight: ["400", "700"],
   subsets: ["latin"],
 });
+
+
 
 const baloo2 = Baloo_2({
   weight: ["400", "500", "600", "700", "800"],
@@ -26,7 +26,6 @@ const quicksand = Quicksand({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ShopContextProvider>
-      {/* <ThemeProvider attribute="class" defaultTheme="light"> */}
         <style jsx global>{`
           :root {
             --comfortaa-font: ${comfortaa.style.fontFamily};
@@ -37,7 +36,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Navbar />
         <Component {...pageProps} />
         <Footer />
-      {/* </ThemeProvider> */}
     </ShopContextProvider>
   );
 }

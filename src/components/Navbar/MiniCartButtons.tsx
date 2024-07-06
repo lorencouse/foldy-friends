@@ -4,11 +4,7 @@ import { ButtonSquareRed } from "../BannerButton";
 import { CartSvg, CheckSvg } from "../svgPaths";
 import { useShopContext } from "../../context/ShopContext";
 
-export const MiniCartButtons = ({
-  setShowMiniCart,
-}: {
-  setShowMiniCart: (showMiniCart: boolean) => void;
-}) => {
+export const MiniCartButtons = () => {
   const router = useRouter();
 
   const handleNavigation = (url: string) => {
@@ -17,7 +13,7 @@ export const MiniCartButtons = ({
     window.scrollTo(0, 0);
   };
 
-  const { setActiveCategory } = useShopContext();
+  const { setActiveCategory, setShowMiniCart } = useShopContext();
 
   return (
     <div className="min-cart-buttons flex flex-row gap-x-4 justify-center items-center ">

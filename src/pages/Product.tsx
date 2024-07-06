@@ -16,7 +16,7 @@ import { ProductInfo } from "../types";
 
 
 const Product = ({ id }: { id: string }) => {
-  const { allProducts, setShowMiniCart } = useShopContext();
+  const { allProducts } = useShopContext();
   const [product, setProduct] = useState<ProductInfo | null>(null);
   const [currentVariation, setCurrentVariation] = useState("");
 
@@ -52,7 +52,7 @@ const Product = ({ id }: { id: string }) => {
   return (
     <div
       className="lg:mx-16 md:mx-12 my-8 "
-      onClick={() => setShowMiniCart(false)}
+      
     >
       <div className="flex flex-row flex-wrap">
         <ProductImages images={product.images} alt={product.name} />

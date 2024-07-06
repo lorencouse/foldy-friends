@@ -40,6 +40,11 @@ export function sortProducts(
 ): ProductInfo[] {
   const sortedProducts = [...products];
 
+  const getValidDate = (date: any) => {
+    const parsedDate = new Date(date);
+    return isNaN(parsedDate.getTime()) ? null : parsedDate;
+  };
+
   switch (sort) {
     case "lowest":
       return sortedProducts.sort(
@@ -56,12 +61,14 @@ export function sortProducts(
     case "newest":
       return sortedProducts.sort(
         (p1, p2) =>
-          (p2.created_at?.getTime() ?? 0) - (p1.created_at?.getTime() ?? 0),
+          (getValidDate(p2.created_at)?.getTime() ?? 0) -
+          (getValidDate(p1.created_at)?.getTime() ?? 0),
       );
     case "oldest":
       return sortedProducts.sort(
         (p1, p2) =>
-          (p1.created_at?.getTime() ?? 0) - (p2.created_at?.getTime() ?? 0),
+          (getValidDate(p1.created_at)?.getTime() ?? 0) -
+          (getValidDate(p2.created_at)?.getTime() ?? 0),
       );
     default:
       return products;

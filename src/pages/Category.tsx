@@ -12,13 +12,12 @@ const Category = ({
   category?: string;
   isCategory?: boolean;
 }) => {
-  const { allProducts, setShowMiniCart } = useShopContext();
+  const { allProducts } = useShopContext();
   const [filteredProducts, setFilteredProducts] = useState<ProductInfo[]>([]);
 
   return (
     <div
       className=" lg:w-11/12 m-auto pt-6  "
-      onClick={() => setShowMiniCart(false)}
     >
       { category && <CategoryBanner category={category} /> }
 

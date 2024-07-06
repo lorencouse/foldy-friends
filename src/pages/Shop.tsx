@@ -32,7 +32,7 @@ const Shop = () => {
     <div className="shop-container">
       <ShopHero />
       <CollectionHeading header="Explore All Categories" />
-      <div className="categories flex flex-row justify-around border border-b-1 border-t-0 my-8">
+      <div className="categories flex flex-row flex-wrap justify-around border border-b-1 border-t-0 my-8">
         {categories.map((category) => (
           <CategoryCard key={category} category={category} />
         ))}
@@ -58,7 +58,7 @@ const Shop = () => {
         ))}
       </div>
 
-      <h2 className="my-10 text-5xl font-semibold">All Crafting Supplies</h2>
+      <CollectionHeading header="All Crafting Supplies" />
 
       <Category category="all-products" />
     </div>

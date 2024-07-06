@@ -12,7 +12,7 @@ export function NavLogo() {
         onClick={() => setActiveCategory("home")}
       >
         <img
-          src="/Assets/origami-cat-inverted.png"
+          src="/assets/origami-cat-inverted.png"
           alt="Foldy Friends Logo"
           className="h-20 w-20"
         />

@@ -7,7 +7,7 @@ import { ButtonInput } from "../BannerButton";
 import { CartQuantityButtons } from "../Cart/CartQuantityButtons";
 import { EmptyCart } from "./EmptyCart";
 
-export const CartFullSize = () => {
+export const CartFullSize = (  ) => {
   const { allProducts, cartItems } = useShopContext();
 
 const productMap = allProducts.reduce(
