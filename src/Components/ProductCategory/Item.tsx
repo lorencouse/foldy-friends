@@ -27,13 +27,16 @@ export const Item = ({
           setActiveCategory(productData.category);
           window.scrollTo(0, 0);
         }}
+        
       >
         <Link href={`/product/${productData.id}`}>
-          <img
-            src={productData.images[0]}
-            alt={productData.name}
-            className="product-card-image paper mb-5 w-full h-auto"
-          />
+          <div className="relative w-full" style={{ aspectRatio: "1" }}>
+            <img
+              src={productData.images[0]}
+              alt={productData.name}
+              className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
+            />
+          </div>
           <p className="capitalize mx-4 text-lg font-semibold truncate">
             {productData.name}
           </p>

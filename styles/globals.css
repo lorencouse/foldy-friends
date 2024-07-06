@@ -38,7 +38,7 @@ html, body {
   }
 }
 
-.product-image img, .product-card-image, .gallery-image {
+.product-image img, .product-card-image, .gallery-image-container {
   border: 1px solid;
   border-radius: 20px;
   @apply border-base-200;

@@ -50,13 +50,11 @@ const Product = ({ id }: { id: string }) => {
   }
 
   return (
-    <div
-      className="lg:mx-16 md:mx-12 my-8 "
-      
-    >
+    <div className="lg:mx-16 md:mx-12 my-8 ">
       <div className="flex flex-row flex-wrap">
-        <ProductImages images={product.images} alt={product.name} />
-
+        <div className="product-images lg:w-5/12 md:w-8/12 lg:mr-8 mx-3">
+          <ProductImages images={product.images} alt={product.name} />
+        </div>
         <div className="product-info lg:w-6/12 text-left p-5">
           <Breadcrumbs category={product.category} name={product.name} />
           <Link href={`/admin/edit-product/${product.id}`}>
@@ -112,7 +110,7 @@ const Product = ({ id }: { id: string }) => {
       </div>
 
       <DescriptionBox description={product.description} id={product.id} />
-      <div className="related-Products">
+      <div className="related-Products mt-20">
         <Collections productData={relatedProducts} header="Related Products" />
       </div>
     </div>

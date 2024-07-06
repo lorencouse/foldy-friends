@@ -10,22 +10,24 @@ export const ProductImages = ({
   const [currentImg, setCurrentImg] = useState<number>(0);
 
   return (
-    <div className="product-images flex flex-row justify-start items-start mb-3">
-      <div className="image-gallery flex flex-col max-h-96 overflow-scroll w-1/6">
+    <div className="product-images grid grid-cols-12 gap-3 mb-3">
+      <div className="image-gallery md:col-span-2 col-span-3 flex flex-col overflow-y-auto md:mx-0 mx-3">
         {images.map((image, i) => (
-          <img
+          <div
             key={i}
-            src={image}
-            alt={alt}
             onClick={() => setCurrentImg(i)}
-            className={`gallery-image max-w-20 h-auto m-1  hover:opacity-80 hover:scale-105 ${i === currentImg ? "opacity-80 scale-105" : ""}`}
-          />
+            className={`gallery-image-container aspect-square m-1 rounded-lg overflow-hidden relative cursor-pointer hover:opacity-80 hover:scale-105 ${
+              i === currentImg ? "opacity-80 scale-105" : ""
+            }`}
+          >
+            <img src={image} alt={alt} className="w-full h-full object-cover" />
+          </div>
         ))}
       </div>
 
-      <div className="product-image mx-3 paper md:w-5/6 w-9/12">
+      <div className="product-image md:col-span-10 col-span-9 paper">
         <div className="tape-section"></div>
-        <img className="w-96 " src={images[currentImg]} alt={alt} />
+        <img className="w-full h-auto" src={images[currentImg]} alt={alt} />
         <div className="tape-section"></div>
       </div>
     </div>
