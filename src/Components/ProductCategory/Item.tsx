@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { ProductInfo } from "../../types";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { Prices } from "../Product/Prices";
 import { useShopContext } from "../../context/ShopContext";
 import { StarRatingAverage } from "../Product/Reviews/StarRating";
 import { useAddToCart } from "../../hooks/UseAddToCart";
+
 
 export const Item = ({
   productData,
@@ -16,31 +17,39 @@ export const Item = ({
   const { setActiveCategory } = useShopContext();
   const handleAddToCart = useAddToCart();
   const [buttonText, setButtonText] = useState<string>("+ Add to Cart");
+  const router = useRouter();
   const variant =
     productData.variations && productData.variations.length > 0
       ? productData.variations[0]
       : undefined;
+  const [loaded, setLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setLoaded(true);
+  };
+
   return (
     <div className="transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 md:mx-1 mx-0 w-auto text-left rounded-2xl">
       <div
         onClick={() => {
+          router.push(`/product/${productData.id}`);
           setActiveCategory(productData.category);
-          window.scrollTo(0, 0);
         }}
-        
       >
-        <Link href={`/product/${productData.id}`}>
-          <div className="relative w-full" style={{ aspectRatio: "1" }}>
+        <div className="relative w-full" style={{ aspectRatio: "1" }}>
+          <div className="image-container">
             <img
               src={productData.images[0]}
               alt={productData.name}
-              className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
+              loading="lazy"
+              className={`absolute inset-0 w-full h-full object-cover rounded-t-2xl ${loaded ? "loaded" : "loading"}`}
+              onLoad={handleImageLoad}
             />
           </div>
-          <p className="capitalize mx-4 text-lg font-semibold truncate">
-            {productData.name}
-          </p>
-        </Link>
+        </div>
+        <p className="capitalize mx-4 text-lg font-semibold truncate">
+          {productData.name}
+        </p>
       </div>
       <div className="flex flex-col mx-4">
         <div className="flex flex-row flex-wrap md:justify-between justify-center">
@@ -50,7 +59,6 @@ export const Item = ({
           />
           <StarRatingAverage id={productData.id} />
         </div>
-
         <button
           className="min-w-12 mb-6 mt-2 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer hover:-translate-y-1 duration-200 text-white rounded-2xl"
           onClick={() => {

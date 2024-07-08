@@ -2,7 +2,7 @@ import React from "react";
 
 export const LoadingScreen = () => {
   return (
-    <div className="lg:mx-16 md:mx-12 mx-8 my-8 duration-200">
+    <div className="lg:mx-16 md:mx-12 mx-8 my-8 fade-in" >
       <div className="flex justify-center h-screen">
         <div className="flex w-full flex-col gap-4">
           <div className="flex flex-row w-full items-center gap-4">

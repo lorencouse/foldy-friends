@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 export const ProductImages = ({
   images,
   alt,
@@ -8,6 +9,15 @@ export const ProductImages = ({
   alt: string;
 }) => {
   const [currentImg, setCurrentImg] = useState<number>(0);
+  const [loaded, setLoaded] = useState<boolean[]>(images.map(() => false));
+
+  const handleImageLoad = (index: number) => {
+    setLoaded((prevLoaded) => {
+      const newLoaded = [...prevLoaded];
+      newLoaded[index] = true;
+      return newLoaded;
+    });
+  };
 
   return (
     <div className="product-images grid grid-cols-12 gap-3 mb-3">
@@ -20,14 +30,30 @@ export const ProductImages = ({
               i === currentImg ? "opacity-80 scale-105" : ""
             }`}
           >
-            <img src={image} alt={alt} className="w-full h-full object-cover" />
+            <div className="image-container">
+              <img
+                src={image}
+                alt={alt}
+                loading="lazy"
+                className={`w-full h-full object-cover ${loaded[i] ? "loaded" : "loading"}`}
+                onLoad={() => handleImageLoad(i)}
+              />
+            </div>
           </div>
         ))}
       </div>
 
       <div className="product-image md:col-span-10 col-span-9 paper">
         <div className="tape-section"></div>
-        <img className="w-full h-auto" src={images[currentImg]} alt={alt} />
+        <div className="image-container">
+          <img
+            className={`w-full h-auto ${loaded[currentImg] ? "loaded" : "loading"}`}
+            src={images[currentImg]}
+            alt={alt}
+            loading="lazy"
+            onLoad={() => handleImageLoad(currentImg)}
+          />
+        </div>
         <div className="tape-section"></div>
       </div>
     </div>

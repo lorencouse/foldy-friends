@@ -23,20 +23,13 @@ html, body {
 }
 
 
-/* .App {
-  text-align: left;
-} */
-
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-} */
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+/* Images */
 
 .product-image img, .product-card-image, .gallery-image-container {
   border: 1px solid;
@@ -49,15 +42,26 @@ html, body {
   
 }
 
-/* .App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} */
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image-container img {
+  transition: filter 0.5s ease-out;
+}
+
+.image-container img.loading {
+  filter: blur(10px);
+}
+
+.image-container img.loaded {
+  filter: blur(0);
+}
+
+/* Headings */
 
 h1, h2, h3 {
   @apply text-base-content;
@@ -133,6 +137,36 @@ select option {
 .clip-custom-shape {
   clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
+
+/*  */
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-out backwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
 
 
 /* Paper Heading */

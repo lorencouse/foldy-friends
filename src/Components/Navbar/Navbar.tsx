@@ -12,6 +12,7 @@ import { CartFullSize } from "../Cart/CartFullSize";
 import { SignInButton } from "./SignInButton";
 import { HamburderLine } from "./HamburderLine";
 
+
 const Navbar = () => {
   const { cartCount, setShowMiniCart, showMiniCart } = useShopContext();
   const [showMenu, setShowMenu] = useState<boolean>(true);
@@ -20,7 +21,8 @@ const Navbar = () => {
   const cartRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
-    setShowMenu(!showMenu);
+    showMenu ? setTimeout(() => setShowMenu(false), 1000) : setShowMenu(true);
+    
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -126,14 +128,18 @@ const Navbar = () => {
           <div className="cart-icon relative mr-6">
             <NavBarCartIcon />
           </div>
-          {showMiniCart && (
-            <div className="absolute my-0 right-0 top-28 border-1 px-4 bg-base-100 shadow-lg max-w-xl rounded-b-2xl">
-              <div className="w-full overflow-y-auto max-h-96 no-scrollbar">
-                <CartFullSize />
-              </div>
-              <MiniCartButtons />
-            </div>
-          )}
+          <div
+            className={`absolute my-0 right-0 top-28 border-1 px-4 bg-base-100 shadow-lg max-w-xl rounded-b-2xl transition-all duration-500 ${showMiniCart ? "fade-in" : "fade-out"}`}
+          >
+            {showMiniCart && (
+              <>
+                <div className="w-full overflow-y-auto max-h-96 no-scrollbar">
+                  <CartFullSize />
+                </div>
+                <MiniCartButtons />
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>
