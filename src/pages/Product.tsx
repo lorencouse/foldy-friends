@@ -13,16 +13,20 @@ import { shuffleProducts } from "../tools/ProductFilterFunctions";
 import { AddToCartButton } from "../components/Product/AddToCartButton";
 import { LoadingScreen } from "../components/Product/LoadingScreen";
 import { ProductInfo } from "../types";
-
+import { fetchProductById } from "../lib/productServices";
 
 const Product = ({ id }: { id: string }) => {
   const { allProducts } = useShopContext();
   const [product, setProduct] = useState<ProductInfo | null>(null);
   const [currentVariation, setCurrentVariation] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const findProduct = useCallback(
-    (id: string) => {
-      const product = allProducts.find((p) => p.id === id);
+    async (id: string) => {
+      let product = allProducts.find((p) => p.id === id);
+      if (!product) {
+        product = await fetchProductById(id);
+      }
       setCurrentVariation(product?.variations?.[0] || "");
       return product || null;
     },
@@ -30,11 +34,13 @@ const Product = ({ id }: { id: string }) => {
   );
 
   useEffect(() => {
-    if (id && allProducts.length > 0) {
-      const foundProduct = findProduct(id);
-      setProduct(foundProduct);
+    if (id) {
+      findProduct(id).then((foundProduct) => {
+        setProduct(foundProduct);
+        setLoading(false);
+      });
     }
-  }, [id, allProducts, findProduct]);
+  }, [id, findProduct]);
 
   const relatedProducts = useMemo(() => {
     return shuffleProducts(
@@ -45,12 +51,16 @@ const Product = ({ id }: { id: string }) => {
     );
   }, [allProducts, product?.category, product?.id]);
 
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   if (!product) {
     return <LoadingScreen />;
   }
 
   return (
-    <div className="lg:mx-16 md:mx-12 my-8 ">
+    <div className="lg:mx-16 md:mx-12 my-8">
       <div className="flex flex-row flex-wrap">
         <div className="product-images lg:w-5/12 md:w-8/12 lg:mr-8 mx-3">
           <ProductImages images={product.images} alt={product.name} />

@@ -1,41 +1,24 @@
+// src/lib/productServices.tsx
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "./firebaseConfig";
 import { ProductInfo } from "../types";
-import { db } from "../config/firebase-admin";
-import { Timestamp, FieldPath } from "firebase-admin/firestore";
 
-function convertTimestamps(data: any): any {
-  const converted = { ...data };
-  for (const [key, value] of Object.entries(converted)) {
-    if (value instanceof Timestamp) {
-      converted[key] = value.toDate().toISOString();
-    } else if (typeof value === "object" && value !== null) {
-      converted[key] = convertTimestamps(value);
+export const fetchProductById = async (
+  id: string,
+): Promise<ProductInfo | null> => {
+  try {
+    const productRef = doc(db, "products", id);
+    const productSnap = await getDoc(productRef);
+
+    if (!productSnap.exists()) {
+      console.error("No such document!");
+      return null;
     }
-  }
-  return converted;
-}
 
-export async function getProductById(id: string): Promise<ProductInfo | null> {
-  const doc = await db.collection("products").doc(id).get();
-  if (!doc.exists) {
+    const data = productSnap.data() as ProductInfo;
+    return data;
+  } catch (error) {
+    console.error("Error fetching product:", error);
     return null;
   }
-  const data = convertTimestamps(doc.data());
-  return { id: doc.id, ...data } as ProductInfo;
-}
-
-export async function getRelatedProducts(
-  category: string,
-  excludeId: string,
-): Promise<ProductInfo[]> {
-  const snapshot = await db
-    .collection("products")
-    .where("category", "==", category)
-    .where(FieldPath.documentId(), "!=", excludeId)
-    .limit(4)
-    .get();
-
-  return snapshot.docs.map((doc) => {
-    const data = convertTimestamps(doc.data());
-    return { id: doc.id, ...data } as ProductInfo;
-  });
-}
+};
