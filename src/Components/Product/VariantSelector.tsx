@@ -31,7 +31,7 @@ export const VariationSelector = ({
   return (
     <div className="flex flex-col mt-5">
       <p className="font-semibold my-4 ml-1 text-lg ">Select {heading}:</p>
-      <div className="variations flex flex-row justify-start capitalize font-medium ">
+      <div className="variations flex flex-row flex-wrap justify-start capitalize font-medium ">
         {variations.map((s) => (
           <div
             key={s}

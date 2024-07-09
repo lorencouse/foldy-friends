@@ -1,7 +1,6 @@
 // src/pages/Product.tsx
-import React, { useState, useMemo, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { useShopContext } from "../context/ShopContext";
 import { Prices } from "../components/Product/Prices";
 import { VariationSelector } from "../components/Product/VariantSelector";
 import { ProductImages } from "../components/Product/ProductImages";
@@ -9,58 +8,27 @@ import { Breadcrumbs } from "../components/Product/Breadcrumbs";
 import { Collections } from "../components/ProductCategory/Collections";
 import { StarRatingAverage } from "../components/Product/Reviews/StarRating";
 import { DescriptionBox } from "../components/Product/DescriptionBox";
-import { shuffleProducts } from "../tools/ProductFilterFunctions";
 import { AddToCartButton } from "../components/Product/AddToCartButton";
 import { LoadingScreen } from "../components/Product/LoadingScreen";
 import { ProductInfo } from "../types";
-import { fetchProductById } from "../lib/productServices";
 
-const Product = ({ id }: { id: string }) => {
-  const { allProducts } = useShopContext();
-  const [product, setProduct] = useState<ProductInfo | null>(null);
-  const [currentVariation, setCurrentVariation] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  const findProduct = useCallback(
-    async (id: string) => {
-      let product = allProducts.find((p) => p.id === id);
-      if (!product) {
-        product = await fetchProductById(id);
-      }
-      setCurrentVariation(product?.variations?.[0] || "");
-      return product || null;
-    },
-    [allProducts],
+const Product = ({
+  product,
+  relatedProducts,
+}: {
+  product: ProductInfo;
+  relatedProducts: ProductInfo[];
+}) => {
+  const [currentVariation, setCurrentVariation] = useState(
+    product.variations?.[0] || "",
   );
-
-  useEffect(() => {
-    if (id) {
-      findProduct(id).then((foundProduct) => {
-        setProduct(foundProduct);
-        setLoading(false);
-      });
-    }
-  }, [id, findProduct]);
-
-  const relatedProducts = useMemo(() => {
-    return shuffleProducts(
-      allProducts.filter(
-        (p) => p.category === product?.category && p.id !== product?.id,
-      ),
-      4,
-    );
-  }, [allProducts, product?.category, product?.id]);
-
-  if (loading) {
-    return <LoadingScreen />;
-  }
 
   if (!product) {
     return <LoadingScreen />;
   }
 
   return (
-    <div className="lg:mx-16 md:mx-12 my-8">
+    <div className="lg:mx-16 md:mx-12 my-8 fade-in">
       <div className="flex flex-row flex-wrap">
         <div className="product-images lg:w-5/12 md:w-8/12 lg:mr-8 mx-3">
           <ProductImages images={product.images} alt={product.name} />
@@ -83,7 +51,6 @@ const Product = ({ id }: { id: string }) => {
               variations={product.variations}
             />
           )}
-
           <AddToCartButton id={product.id} size={currentVariation} />
           {product.category && (
             <div>
