@@ -29,9 +29,7 @@ const fadeTransition = {
   exit: { opacity: 0, transition: { duration: 0.5 } },
 };
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <ShopContextProvider>
       <style jsx global>{`
@@ -42,16 +40,16 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
       `}</style>
       <Navbar />
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.div
-          key={router.route}
+          key={router.asPath}
           initial="initial"
           animate="animate"
           exit="exit"
           variants={fadeTransition}
           className="min-h-screen"
         >
-          <Component {...pageProps} />
+          <Component {...pageProps} key={router.asPath} />
         </motion.div>
       </AnimatePresence>
       <Footer />

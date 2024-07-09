@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ProductInfo } from "../../types";
 import { useRouter } from "next/router";
 import { Prices } from "../Product/Prices";
 import { useShopContext } from "../../context/ShopContext";
 import { StarRatingAverage } from "../Product/Reviews/StarRating";
 import { useAddToCart } from "../../hooks/UseAddToCart";
-
 
 export const Item = ({
   productData,
@@ -28,14 +27,15 @@ export const Item = ({
     setLoaded(true);
   };
 
+  const handleProductClick = async () => {
+    // Trigger page transition animation immediately
+    router.push(`/product/${productData.id}`);
+    setActiveCategory(productData.category);
+  };
+
   return (
     <div className="transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 md:mx-1 mx-0 w-auto text-left rounded-2xl">
-      <div
-        onClick={() => {
-          router.push(`/product/${productData.id}`);
-          setActiveCategory(productData.category);
-        }}
-      >
+      <div onClick={handleProductClick}>
         <div className="relative w-full" style={{ aspectRatio: "1" }}>
           <div className="image-container">
             <img

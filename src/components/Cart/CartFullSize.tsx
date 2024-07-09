@@ -2,21 +2,21 @@
 import React from "react";
 import { CartItem, ProductInfo } from "../../types";
 import { useShopContext } from "../../context/ShopContext";
-import Link from "next/link";
 import { ButtonInput } from "../BannerButton";
 import { CartQuantityButtons } from "../Cart/CartQuantityButtons";
 import { EmptyCart } from "./EmptyCart";
+import { useRouter } from "next/router";
 
-export const CartFullSize = (  ) => {
+export const CartFullSize = () => {
   const { allProducts, cartItems } = useShopContext();
 
-const productMap = allProducts.reduce(
-  (map, product: ProductInfo) => {
-    map[product.id] = product;
-    return map;
-  },
-  {} as { [id: string]: ProductInfo },
-);
+  const productMap = allProducts.reduce(
+    (map, product: ProductInfo) => {
+      map[product.id] = product;
+      return map;
+    },
+    {} as { [id: string]: ProductInfo },
+  );
 
   console.log("Cart Items:", cartItems); // Log cart items
   console.log("Product Map:", productMap); // Log product map
@@ -77,9 +77,12 @@ const CartLineItem = ({
   const price = product.sale_price ?? product.full_price ?? 1000;
   const { setActiveCategory, setShowMiniCart } = useShopContext();
 
+  const router = useRouter();
+
   const handleMobileMenuClick = () => {
-    setShowMiniCart(false);
+    router.push(`/product/${product.id}`);
     setActiveCategory(product.category);
+    setTimeout(() => setShowMiniCart(false), 400);
   };
 
   return (
@@ -91,28 +94,24 @@ const CartLineItem = ({
         className="flex cart-item justify-center items-center"
         onClick={() => handleMobileMenuClick()}
       >
-        <Link href={`/product/${product.id}`}>
-          <img
-            src={product.images[0]}
-            alt={product.name}
-            className="max-h-24 gallery-image"
-          />
-        </Link>
+        <img
+          src={product.images[0]}
+          alt={product.name}
+          className="max-h-24 gallery-image rounded-lg"
+        />
       </div>
       <div
         className="cart-item flex items-start justify-center"
         onClick={() => handleMobileMenuClick()}
       >
-        <Link href={`/product/${product.id}`}>
-          <p className="p-2 text-base-content">
-            {product.name}
-            {cartItem.variation ? (
-              <span className="font-semibold uppercase">{` - ${cartItem.variation}`}</span>
-            ) : (
-              ""
-            )}
-          </p>
-        </Link>
+        <p className="p-2 text-base-content">
+          {product.name}
+          {cartItem.variation ? (
+            <span className="font-semibold uppercase">{` - ${cartItem.variation}`}</span>
+          ) : (
+            ""
+          )}
+        </p>
       </div>
 
       <div className="cart-item flex flex-col items-center">
