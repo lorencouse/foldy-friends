@@ -5,11 +5,15 @@ export const Hero = () => {
   return (
     <div className=" flex flex-wrap justify-between  bg-gradient-to-t from-base-100 to-primary">
       <div className="flex flex-col w-full lg:w-1/2 items-center justify-center text-left md:mt-20 mt-5">
-        <div className="flex flex-col font-semibold text-center bg-base-100 rounded-2xl p-10 mx-10 ">
+        <div className="flex flex-col font-semibold text-center bg-base-100 rounded-2xl sm:p-20 p-5 mx-10 ">
           <p>New Arrivals</p>
-          <p className="md:text-6xl text-4xl">
-            Create New <br /> Amimal Firends
-          </p>
+          <span className="sm:text-6xl text-4xl sm:my-6 ">
+            Create New
+          </span>
+
+          <span className="sm:text-6xl text-4xl ">
+            Animal Friends
+          </span>
         </div>
         <ButtonRoundRed label="Shop Now" url="/shop" />
       </div>

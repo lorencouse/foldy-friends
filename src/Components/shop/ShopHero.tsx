@@ -5,12 +5,15 @@ export const ShopHero = () => {
     <div className="flex flex-wrap justify-between  bg-base-300 mb-24">
       <div className="flex flex-col w-full lg:w-1/2 items-center justify-center text-left   ">
         <div className="flex flex-col text-center md:m-20 m-5 bg-base-100/20 backdrop-blur-2xl lg:p-16 p-10 rounded-3xl border-10 border-base-100 ">
-          <p className="underline font-semibold text-2xl my-3 text-white">
+          <p className="underline font-semibold text-2xl my-3 text-white ">
             - New Arrivals! -
           </p>
-          <p className="md:text-6xl text-4xl text-white leading-snug">
-            Get Crafting <br /> Get Createive
-          </p>
+          <span className="md:text-6xl text-4xl text-white my-4">
+            Get Crafting 
+          </span>
+          <span className="md:text-6xl text-4xl text-white ">
+             Get Createive
+          </span>
         </div>
       </div>
       <div className="w-full lg:w-1/2 flex justify-center items-center bg-base-100 ">

@@ -6,11 +6,15 @@ export const Offers = () => {
     <div className=" flex flex-row flex-wrap-reverse xl:w-10/12 m-auto lg:justify-between justify-center items-center bg-gradient-to-t from-base-100 to-primary rounded-2xl">
       <div className="offers-left flex flex-col justify-center items-center p-10 mt-10 w-full lg:w-1/2">
         <div className="text-box-offers  bg-base-100 rounded-2xl flex flex-col  items-center p-10 mb-10 lg:mr-14">
-          <p className="md:text-6xl text-4xl font-bold text-center leading-snug">
-            Find the <br />
+          <p className="md:text-5xl text-2xl font-bold text-center">
+            Find the 
+            
+          </p>
+          <p className="md:text-5xl text-2xl font-bold text-center mt-4">
+           
             Perfect Gift!
           </p>
-          <p className="banner-sub-text text-lg font-bold text-center">
+          <p className="banner-sub-text text-lg font-bold text-center ">
             Great prices on our best selling items
           </p>
           <ButtonRoundRed label="Shop Now" url="/shop" />

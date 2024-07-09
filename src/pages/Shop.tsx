@@ -12,6 +12,7 @@ import Category from "./Category";
 import { ShopHero } from "../components/shop/ShopHero";
 import { CollectionHeading } from "../components/ProductCategory/CollectionHeading";
 import { CategoryBanner } from "../components/ProductCategory/CategoryBanner";
+import { ProductInfo } from "../types";
 
 const Shop = ( {products, topSellers}: {products: ProductInfo[], topSellers: {category: string, products: ProductInfo[]}[] } ) => {
   const { setActiveCategory } = useShopContext();

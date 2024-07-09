@@ -1,7 +1,7 @@
 import React from 'react';
 import Shop from '../src/pages/Shop'
 import { convertTimestamps } from '../src/tools/functions';
-import { db } from '../firebase';
+import { db } from '../src/lib/firebaseConfig';
 import { collection, getDocs, doc, query, where, limit } from 'firebase/firestore';
 import { ProductInfo } from '../src/types';
 import { shuffleProducts, filterProductCategory } from '../src/tools/ProductFilterFunctions';

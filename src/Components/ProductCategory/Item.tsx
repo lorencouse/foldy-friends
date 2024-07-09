@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ProductInfo } from "../../types";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { Prices } from "../Product/Prices";
 import { useShopContext } from "../../context/ShopContext";
 import { StarRatingAverage } from "../Product/Reviews/StarRating";
@@ -22,16 +23,26 @@ export const Item = ({
       ? productData.variations[0]
       : undefined;
   const [loaded, setLoaded] = useState(false);
+    const [showCartLink, setShowCartLink] = useState(false);
+
 
   const handleImageLoad = () => {
     setLoaded(true);
   };
 
   const handleProductClick = async () => {
-    // Trigger page transition animation immediately
     router.push(`/product/${productData.id}`);
     setActiveCategory(productData.category);
   };
+
+  const handleAddToCartClick = () => {
+      handleAddToCart(productData.id, variant);
+      setButtonText("✓ Added");
+      setShowCartLink(true);
+      setTimeout(() => { setButtonText("+ Add to Cart"); setShowCartLink(false) }, 2500);
+    };
+  
+
 
   return (
     <div className="transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 md:mx-1 mx-0 w-auto text-left rounded-2xl">
@@ -61,14 +72,17 @@ export const Item = ({
         </div>
         <button
           className="min-w-12 mb-6 mt-2 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer hover:-translate-y-1 duration-200 text-white rounded-2xl"
-          onClick={() => {
-            handleAddToCart(productData.id, variant);
-            setButtonText("✓ Added");
-            setTimeout(() => setButtonText("+ Add to Cart"), 1000);
-          }}
+          onClick={handleAddToCartClick}
         >
           <span>{buttonText}</span>
         </button>
+        {showCartLink && (
+          <Link href="/cart">
+            <p className="text-secondary text-xl mx-4 mb-6 hover:scale-105 duration-200 text-center">
+              See in Cart
+            </p>
+          </Link>
+        )}
       </div>
     </div>
   );
