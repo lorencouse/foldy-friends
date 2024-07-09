@@ -35,7 +35,7 @@ export const Item = ({
 
   return (
     <div className="transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 md:mx-1 mx-0 w-auto text-left rounded-2xl">
-      <div onClick={handleProductClick}>
+      <div onClick={handleProductClick} className="cursor-pointer">
         <div className="relative w-full" style={{ aspectRatio: "1" }}>
           <div className="image-container">
             <img

@@ -16,7 +16,7 @@ export async function getServerSideProps(context: any) {
 
   const productsQuery = query(
     collection(db, "products"),
-    where("tags", "array-contains", tag), // Use 'array-contains' for arrays
+    where("tags", "array-contains", tag), 
   );
   const productsSnapshot = await getDocs(productsQuery);
 

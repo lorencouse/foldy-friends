@@ -13,27 +13,21 @@ import { ShopHero } from "../components/shop/ShopHero";
 import { CollectionHeading } from "../components/ProductCategory/CollectionHeading";
 import { CategoryBanner } from "../components/ProductCategory/CategoryBanner";
 
-const Shop = () => {
-  const { setActiveCategory, allProducts } = useShopContext();
-
-  const topSellers = useMemo(() => {
-    return categories.map((category) => ({
-      category,
-      products: shuffleProducts(
-        filterProductCategory(allProducts, category),
-        4,
-      ),
-    }));
-  }, [allProducts]);
+const Shop = ( {products, topSellers}: {products: ProductInfo[], topSellers: {category: string, products: ProductInfo[]}[] } ) => {
+  const { setActiveCategory } = useShopContext();
 
   return (
     <div className="shop-container">
       <ShopHero />
-      <CollectionHeading header="Explore All Categories" />
-      <div className="categories flex flex-row flex-wrap justify-around border border-b-1 border-t-0 my-8">
-        {categories.map((category) => (
-          <CategoryCard key={category} category={category} />
-        ))}
+      <div className="capitalize relative md:mx-8 mx-2 my-16">
+        <CollectionHeading header="Explore All Categories" />
+        <div className="flex flex-wrap justify-center sm:justify-around items-center pt-5 mt-4">
+          {categories.map((category) => (
+            <div className="w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4" key={category}>
+              <CategoryCard key={category} category={category} />
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="top-sellers">
@@ -58,7 +52,7 @@ const Shop = () => {
 
       <CollectionHeading header="All Crafting Supplies" />
 
-      <Category products={allProducts} category="all-products" />
+      <Category products={products} category="all-products" />
     </div>
   );
 };

@@ -10,6 +10,11 @@ const PriceFiltersMinMax = ({
 
   return (
     <div className="price-filters flex flex-row items-center">
+      { (priceRange.min !== 0 || priceRange.max !== 60) && (
+        <p onClick={() => setPriceRange({ min: 0, max: 60 })} className="hover:scale-105 duration-200 cursor-pointer mr-4 text-secondary">
+          Reset
+        </p>
+      )}
       <PriceFilter
         label="Price:"
         min={1}
@@ -28,10 +33,6 @@ const PriceFiltersMinMax = ({
           setPriceRange({ ...priceRange, max: Number(e.target.value) })
         }
       />
-
-      {/* <button onClick={handlePriceChange} className="btn">
-        Apply
-      </button> */}
     </div>
   );
 };

@@ -8,7 +8,7 @@ export function NavLogo() {
   return (
     <Link href="/" legacyBehavior>
       <div
-        className="nav-logo flex flex-row items-center drop-shadow-md "
+        className="nav-logo flex flex-row items-center drop-shadow-md cursor-pointer"
         onClick={() => setActiveCategory("home")}
       >
         <img

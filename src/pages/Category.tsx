@@ -39,6 +39,14 @@ const Category = ({
       {category && (
         <Collections header={category} products={filteredProducts} />
       )}
+      {filteredProducts.length > 0 && (
+        <p className="mb-12">
+          <span className="font-extrabold">
+            Showing 1-{filteredProducts.length}
+          </span>{" "}
+          out of {filteredProducts.length} products
+        </p>
+      )}
     </div>
   );
 };

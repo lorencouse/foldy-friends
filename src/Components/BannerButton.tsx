@@ -8,7 +8,7 @@ export const ButtonRoundRed = (props: { label: string; url: string }) => {
         onClick={() => {
           window.scrollTo(0, 0);
         }}
-        className="rounded-full w-48 bg-secondary p-3 text-white hover:bg-red-500 hover:translate-y-[-2px] duration-200 my-10"
+        className="rounded-full w-48 bg-secondary p-3 text-white hover:bg-red-500 hover:translate-y-[-2px] duration-200 md:my-10 my-4"
       >
         {props.label}
       </button>

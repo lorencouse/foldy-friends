@@ -35,12 +35,7 @@ const Product = ({
         </div>
         <div className="product-info lg:w-6/12 text-left p-5">
           <Breadcrumbs category={product.category} name={product.name} />
-          {/* <Link href={`/admin/edit-product/${product.id}`}>
-            <p className="text-base-content text-semibold link mt-4 font-bold">
-              - Edit Product -
-            </p>
-          </Link> */}
-          <h1 className="leading-tight">{product.name}</h1>
+          <h1 className="md:text-5xl text-4xl">{product.name}</h1>
           <StarRatingAverage id={product.id} />
           <Prices oldPrice={product.full_price} newPrice={product.sale_price} />
           {product.variations && (

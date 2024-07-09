@@ -7,7 +7,7 @@ export const CategoryCard = (props:{category: string}) => {
     const { setActiveCategory } = useShopContext()
 
   return (
-    <div className=" transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 w-72 text-left rounded-2xl ">
+    <div className="transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 md:mx-1 mx-0 w-auto text-left rounded-2xl">
       <Link href={`/category/${props.category}`}>
         <div onClick={() => setActiveCategory(props.category)}>
           <img

@@ -1,71 +1,47 @@
-import { doc, getDoc, collection, getDocs, query, where, limit } from "firebase/firestore";
-import { db } from "../../src/lib/firebaseConfig";
-import { ProductInfo } from "../../src/types";
-import { shuffleProducts } from "../../src/tools/ProductFilterFunctions";
+import React from "react";
 import { useRouter } from "next/router";
+import Product from "../../src/pages/Product";
+import { ProductInfo } from "../../src/types";
+import {
+  getProductById,
+  getProductsFromCategory,
+  getAllProducts,
+} from "../../src/lib/api";
+import { shuffleProducts } from "../../src/tools/ProductFilterFunctions";
 import { LoadingScreen } from "../../src/components/Product/LoadingScreen";
-import Product from "../../src/pages/Product"
-import { convertTimestamps } from "../../src/tools/functions";
-
-
 
 export async function getStaticPaths() {
-  const productsQuery = collection(db, "products");
-  const productsSnapshot = await getDocs(productsQuery);
-
-  const paths = productsSnapshot.docs.map((doc) => ({
-    params: { id: doc.id },
+  const products = await getAllProducts();
+  const paths = products.map((product) => ({
+    params: { id: product.id },
   }));
 
   return {
     paths,
-    fallback: false, // Render on-demand if path not found
+    fallback: false,
   };
 }
-
 
 export async function getStaticProps(context: any) {
   const { id } = context.params;
 
-  const productDocRef = doc(db, "products", id);
-  const productPromise = getDoc(productDocRef);
-
-  const productDoc = await productPromise;
-  if (!productDoc.exists()) {
+  const product = await getProductById(id);
+  if (!product) {
     return {
       notFound: true,
     };
   }
 
-  const productData = productDoc.data();
-  const serializedProduct = convertTimestamps(productData);
-
-  const relatedProductsQuery = query(
-    collection(db, "products"),
-    where("category", "==", serializedProduct.category),
-    limit(10),
-  );
-  const relatedProductsPromise = getDocs(relatedProductsQuery);
-
-  const [relatedProductsSnapshot] = await Promise.all([relatedProductsPromise]);
-
-  const relatedProductList = relatedProductsSnapshot.docs.map((doc) => {
-    const data = doc.data();
-    return {
-      id: doc.id,
-      ...convertTimestamps(data),
-    };
-  }) as ProductInfo[];
-
+  const relatedProductsList = await getProductsFromCategory(product.category);
   const relatedProducts = shuffleProducts(
-    relatedProductList.filter((p) => p.id !== serializedProduct.id),
+    relatedProductsList.filter((p) => p.id !== product.id),
     4,
   );
 
   return {
     props: {
-      product: serializedProduct as ProductInfo,
-      relatedProducts: relatedProducts as ProductInfo[],
+      product,
+      relatedProducts,
     },
   };
 }

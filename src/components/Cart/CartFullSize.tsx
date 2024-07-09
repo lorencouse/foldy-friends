@@ -97,14 +97,14 @@ const CartLineItem = ({
         <img
           src={product.images[0]}
           alt={product.name}
-          className="max-h-24 gallery-image rounded-lg"
+          className="max-h-24 gallery-image rounded-lg cursor-pointer"
         />
       </div>
       <div
         className="cart-item flex items-start justify-center"
         onClick={() => handleMobileMenuClick()}
       >
-        <p className="p-2 text-base-content">
+        <p className="p-2 text-base-content cursor-pointer">
           {product.name}
           {cartItem.variation ? (
             <span className="font-semibold uppercase">{` - ${cartItem.variation}`}</span>

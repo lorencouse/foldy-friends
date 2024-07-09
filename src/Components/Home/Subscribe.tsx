@@ -29,8 +29,8 @@ export const Subscribe = () => {
 
   return (
     <div className="promo-box relative flex flex-col justify-center items-center bg-secondary pt-12 my-10 mx-6 rounded-2xl">
-      <div className="subscribe-box my-12  text-center ">
-        <p className="banner-heading text-white px-6">
+      <div className="subscribe-box mb-12  text-center ">
+        <p className="md:text-6xl text-4xl text-white px-6 leading-snug">
           Get in on Exclusive Offers!
         </p>
         {!isValid && (
@@ -55,8 +55,8 @@ export const Subscribe = () => {
         </button>
           </form>
 
-        <p className="banner-sub-text text-white text-xl">
-          Subscribe to stay up to date on our latest sales and hottest items
+        <p className="font-thin text-white text-xl mx-5">
+          Subscribe to stay up to date on our latest sales and newest items.
         </p>
       </div>
     </div>
