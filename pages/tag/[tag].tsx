@@ -1,12 +1,49 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Category from "../../src/pages/Category";
+import { ProductInfo } from "../../src/types";
+import {
+  query,
+  collection,
+  getDocs,
+  where
+} from "firebase/firestore";
+import { db } from "../../src/lib/firebaseConfig";
+import { convertTimestamps } from "../../src/tools/functions";
 
-const TagPage = () => {
-  const router = useRouter();
-  const { tag } = router.query;
+export async function getServerSideProps(context: any) {
+  const { tag } = context.params;
 
-  return <Category category={tag as string} isCategory={false} />;
+  const productsQuery = query(
+    collection(db, "products"),
+    where("tags", "array-contains", tag), // Use 'array-contains' for arrays
+  );
+  const productsSnapshot = await getDocs(productsQuery);
+
+  const relatedProductList = productsSnapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      ...convertTimestamps(data),
+    };
+  }) as ProductInfo[];
+
+  return {
+    props: {
+      tag: tag as string,
+      products: relatedProductList as ProductInfo[],
+    },
+  };
+}
+
+const TagPage = ({
+  products,
+  tag,
+}: {
+  products: ProductInfo[];
+  tag: string;
+}) => {
+  return <Category products={products} category={tag} isCategory={false} />;
 };
 
 export default TagPage;

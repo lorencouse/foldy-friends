@@ -5,17 +5,9 @@ import { shuffleProducts } from "../../src/tools/ProductFilterFunctions";
 import { useRouter } from "next/router";
 import { LoadingScreen } from "../../src/components/Product/LoadingScreen";
 import Product from "../../src/pages/Product"
+import { convertTimestamps } from "../../src/tools/functions";
 
-const convertTimestamps = (data: any) => {
-  for (const key in data) {
-    if (data[key] instanceof Object && data[key].toDate) {
-      data[key] = data[key].toDate().toISOString();
-    } else if (typeof data[key] === "object") {
-      convertTimestamps(data[key]);
-    }
-  }
-  return data;
-};
+
 
 export async function getStaticPaths() {
   const productsQuery = collection(db, "products");

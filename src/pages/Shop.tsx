@@ -13,7 +13,6 @@ import { ShopHero } from "../components/shop/ShopHero";
 import { CollectionHeading } from "../components/ProductCategory/CollectionHeading";
 import { CategoryBanner } from "../components/ProductCategory/CategoryBanner";
 
-
 const Shop = () => {
   const { setActiveCategory, allProducts } = useShopContext();
 
@@ -26,7 +25,6 @@ const Shop = () => {
       ),
     }));
   }, [allProducts]);
-
 
   return (
     <div className="shop-container">
@@ -42,7 +40,7 @@ const Shop = () => {
         {topSellers.map(({ category, products }) => (
           <React.Fragment key={category}>
             <CategoryBanner category={category} />
-            <Collections productData={products} header={category} />
+            <Collections products={products} header={category} />
             <Link href={`/category/${category}`}>
               <p
                 className="capitalize underline text-lg font-semibold hover:text-red-500 border border-b-1 border-t-0 pb-16 text-center"
@@ -60,7 +58,7 @@ const Shop = () => {
 
       <CollectionHeading header="All Crafting Supplies" />
 
-      <Category category="all-products" />
+      <Category products={allProducts} category="all-products" />
     </div>
   );
 };

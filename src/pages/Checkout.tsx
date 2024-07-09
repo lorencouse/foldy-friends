@@ -78,7 +78,7 @@ const Checkout = () => {
   }
 
   if (loading) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
 
   return (
@@ -126,7 +126,7 @@ const Checkout = () => {
           <div className="empty-cart">
             <EmptyCart />
             <Collections
-              productData={allProducts}
+              products={allProducts}
               header="You Might Be Interested In..."
             />
           </div>

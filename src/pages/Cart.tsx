@@ -35,7 +35,7 @@ const Cart = () => {
         <EmptyCart />
       )}
       <Collections
-        productData={filteredProducts.slice(0, 8)}
+        products={filteredProducts.slice(0, 8)}
         header="You Might Be Interested In..."
       />
     </div>

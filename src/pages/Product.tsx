@@ -88,7 +88,7 @@ const Product = ({
 
       <DescriptionBox description={product.description} id={product.id} />
       <div className="related-Products mt-20">
-        <Collections productData={relatedProducts} header="Related Products" />
+        <Collections products={relatedProducts} header="Related Products" />
       </div>
     </div>
   );
