@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@stripe/react-stripe-js": "^2.7.3",
-    "@stripe/stripe-js": "^4.1.0",
-    "@supabase/auth-ui-react": "^0.4.7",
-    "@supabase/auth-ui-shared": "^0.1.8",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -15,13 +11,14 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
     "firebase": "^10.12.3",
     "framer-motion": "^11.2.13",
-    "next": "latest",
+    "next": "^14.2.4",
     "next-themes": "^0.3.0",
     "punycode": "^2.3.1",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-quill": "^2.0.0",
     "typescript": "^4.9.5",
     "web-vitals": "^4.2.1"
@@ -30,9 +27,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "export": "next export",
-    "deploy": "npm run build && firebase deploy"
+    "deploy": "vercel --prod"
   },
   "eslintConfig": {
     "extends": [
@@ -54,10 +51,16 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.12.10",
     "eslint-config-next": "^14.2.4",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "gh-pages": "^6.1.1",
     "globals": "^15.8.0",
     "postcss": "^8.4.39",
@@ -65,5 +68,5 @@
     "tailwindcss": "^3.4.4",
     "typescript-eslint": "^7.15.0"
   },
-  "homepage": "https://your-firebase-hosting-url"
+  "homepage": "https://foldy-friends.web.app"
 }

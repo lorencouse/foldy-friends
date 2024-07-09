@@ -17,7 +17,22 @@ const convertTimestamps = (data: any) => {
   return data;
 };
 
-export async function getServerSideProps(context: any) {
+export async function getStaticPaths() {
+  const productsQuery = collection(db, "products");
+  const productsSnapshot = await getDocs(productsQuery);
+
+  const paths = productsSnapshot.docs.map((doc) => ({
+    params: { id: doc.id },
+  }));
+
+  return {
+    paths,
+    fallback: false, // Render on-demand if path not found
+  };
+}
+
+
+export async function getStaticProps(context: any) {
   const { id } = context.params;
 
   const productDocRef = doc(db, "products", id);

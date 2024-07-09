@@ -1,13 +1,37 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
-import nextEslintConfig from "eslint-config-next";
+const globals = require("globals");
+const js = require("@eslint/js");
+const tseslint = require("@typescript-eslint/eslint-plugin");
+const tsParser = require("@typescript-eslint/parser");
+const pluginReact = require("eslint-plugin-react");
+const nextEslintConfig = require("eslint-config-next");
 
-export default [
-  { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReactConfig,
-  nextEslintConfig, 
-];
+module.exports = {
+  languageOptions: {
+    globals: globals.browser,
+    parser: tsParser,
+    ecmaVersion: 2020,
+    sourceType: "module",
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "next",
+    "next/core-web-vitals",
+    "react-app"
+  ],
+  plugins: ["react", "@typescript-eslint"],
+  rules: {
+    // Add your custom rules here
+  },
+};
