@@ -1,17 +1,22 @@
 import { useShopContext } from '../context/ShopContext';
 import { CartItem } from '../types';
+import { ProductInfo } from '../types';
 
 export const useAddToCart = () => {
   const { cartItems, setCartItems, setCartCount } = useShopContext();
 
-  const handleAddToCart = (productId: string, currentVariation?: string) => {
-    const itemKey = `${productId}-${currentVariation}`;
+  const handleAddToCart = (product: ProductInfo, variation?: string, currentVariation?: string) => {
+    const itemKey = `${product.id}-${variation}`;
 
     const cartItem: CartItem = {
       key: itemKey,
-      id: productId,
+      id: product.id,
+      name: product.name,
+      category: product.category,
+      price: product.sale_price ?? product.full_price ?? 100,
+      image: product.images?.[0] ?? "",
       quantity: 1,
-      variation: currentVariation ?? "",
+      variation: variation ?? "",
     };
 
     if (!cartItems.some((item) => item.key === itemKey)) {

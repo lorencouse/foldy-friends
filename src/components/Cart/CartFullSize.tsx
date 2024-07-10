@@ -8,18 +8,16 @@ import { EmptyCart } from "./EmptyCart";
 import { useRouter } from "next/router";
 
 export const CartFullSize = () => {
-  const { allProducts, cartItems } = useShopContext();
+  const {  cartItems } = useShopContext();
 
-  const productMap = allProducts.reduce(
-    (map, product: ProductInfo) => {
-      map[product.id] = product;
-      return map;
-    },
-    {} as { [id: string]: ProductInfo },
-  );
+  // const productMap = allProducts.reduce(
+  //   (map, product: ProductInfo) => {
+  //     map[product.id] = product;
+  //     return map;
+  //   },
+  //   {} as { [id: string]: ProductInfo },
+  // );
 
-  console.log("Cart Items:", cartItems); // Log cart items
-  console.log("Product Map:", productMap); // Log product map
 
   if (cartItems.length === 0) {
     return <EmptyCart />;
@@ -27,12 +25,10 @@ export const CartFullSize = () => {
 
   function CartTotal() {
     let total = 0;
-
     cartItems.forEach((cartItem) => {
-      const product = productMap[cartItem.id];
-      if (product) {
-        const price = product.sale_price ?? product.sale_price ?? 0;
-        total += price * cartItem.quantity;
+      if (cartItem) {
+        // const price = product.sale_price ?? product.sale_price ?? 0;
+        total += cartItem.price * cartItem.quantity;
       }
     });
 
@@ -51,11 +47,8 @@ export const CartFullSize = () => {
       <h1>Cart</h1>
       <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-5 w-full text-center"></div>
       {[...cartItems].reverse().map((cartItem) => {
-        const product = productMap[cartItem.id];
-        return product ? (
+        return cartItem ? (
           <CartLineItem
-            key={cartItem.id}
-            product={product}
             cartItem={cartItem}
           />
         ) : null;
@@ -68,44 +61,41 @@ export const CartFullSize = () => {
 };
 
 const CartLineItem = ({
-  product,
-  cartItem,
+  cartItem
 }: {
-  product: ProductInfo;
   cartItem: CartItem;
 }) => {
-  const price = product.sale_price ?? product.full_price ?? 1000;
   const { setActiveCategory, setShowMiniCart } = useShopContext();
 
   const router = useRouter();
 
   const handleMobileMenuClick = () => {
-    router.push(`/product/${product.id}`);
-    setActiveCategory(product.category);
+    router.push(`/product/${cartItem.id}`);
+    setActiveCategory(cartItem.category);
     setTimeout(() => setShowMiniCart(false), 400);
   };
 
   return (
-    <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-0 m-auto py-8 w-full border border-y-1 border-x-0 border-base-200">
+    <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-0 m-auto py-8 w-full border border-y-1 border-x-0 border-base-200" key={cartItem.key}>
       <div className="cart-item flex items-center justify-center">
         <RemoveItemButton cartItem={cartItem} />
       </div>
       <div
-        className="flex cart-item justify-center items-center"
+        className="flex cart-item justify-center items-center product-image m-3"
         onClick={() => handleMobileMenuClick()}
       >
         <img
-          src={product.images[0]}
-          alt={product.name}
-          className="max-h-24 gallery-image rounded-lg cursor-pointer"
+          src={cartItem.image}
+          alt={cartItem.name}
+          className=" max-h-24 gallery-image rounded-lg cursor-pointer "
         />
       </div>
       <div
-        className="cart-item flex items-start justify-center"
+        className="cart-item flex items-center justify-left"
         onClick={() => handleMobileMenuClick()}
       >
         <p className="p-2 text-base-content cursor-pointer">
-          {product.name}
+          {cartItem.name}
           {cartItem.variation ? (
             <span className="font-semibold uppercase">{` - ${cartItem.variation}`}</span>
           ) : (
@@ -115,7 +105,7 @@ const CartLineItem = ({
       </div>
 
       <div className="cart-item flex flex-col items-center">
-        <p>{`$${price}`}</p>
+        <p>{`$${cartItem.price}`}</p>
         <CartQuantityButtons cartItem={cartItem} />
       </div>
     </div>

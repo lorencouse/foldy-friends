@@ -82,9 +82,9 @@ const Checkout = () => {
   }
 
   return (
-    <div className="flex justify-center my-12">
+    <div className="flex justify-center sm:mt-6 mt-4 mb-12">
       <div className="checkout-container max-w-5xl">
-        <h1>Check Out</h1>
+        <h1 className="mx-4">Check Out</h1>
         {cartCount > 0 ? (
           <div className="flex flex-row flex-wrap md:grid md:grid-cols-2 justify-around">
             <div className="checkout-left-col flex flex-col">

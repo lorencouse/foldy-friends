@@ -8,13 +8,13 @@ import { ButtonSquareRed } from "../components/BannerButton";
 import { CheckSvg } from "../../src/components/svgPaths";
 
 const Cart = () => {
-  const { cartCount, allProducts, cartItems } = useShopContext();
+  const { cartCount, cartItems } = useShopContext();
 
-  const cartItemIds = cartItems.map((item) => item.id);
+  // const cartItemIds = cartItems.map((item) => item.id);
 
-  const filteredProducts = allProducts.filter(
-    (product) => !cartItemIds.includes(product.id),
-  );
+  // const filteredProducts = allProducts.filter(
+  //   (product) => !cartItemIds.includes(product.id),
+  // );
 
   return (
     <div className="cart-page-container max-w-7xl m-auto">
@@ -34,10 +34,10 @@ const Cart = () => {
       ) : (
         <EmptyCart />
       )}
-      <Collections
+      {/* <Collections
         products={filteredProducts.slice(0, 8)}
         header="You Might Be Interested In..."
-      />
+      /> */}
     </div>
   );
 };

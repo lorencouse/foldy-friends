@@ -3,16 +3,11 @@ import { Hero } from "../components/Home/Hero";
 import { Collections } from "../components/ProductCategory/Collections";
 import { Offers } from "../components/Home/Offers";
 import { Subscribe } from "../components/Home/Subscribe";
-import { useShopContext } from "../context/ShopContext";
-import {
-  filterProductTag,
-  sortProducts,
-} from "../tools/ProductFilterFunctions";
 
-const Home = () => {
-  const { allProducts } = useShopContext();
-  const newProducts = sortProducts(allProducts, "newest").slice(0, 8);
-  const modelProducts = filterProductTag(allProducts, "models").slice(0, 4);
+
+
+const Home = ( { newProducts, modelProducts }: { newProducts: ProductInfo[], modelProducts: ProductInfo[] } ) => {
+
 
   return (
     <div className="flex flex-col justify-between">

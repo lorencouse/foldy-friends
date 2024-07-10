@@ -36,7 +36,7 @@ export const Item = ({
   };
 
   const handleAddToCartClick = () => {
-      handleAddToCart(productData.id, variant);
+      handleAddToCart(productData, variant);
       setButtonText("✓ Added");
       setShowCartLink(true);
       setTimeout(() => { setButtonText("+ Add to Cart"); setShowCartLink(false) }, 2500);

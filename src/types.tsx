@@ -45,11 +45,11 @@ export interface ProductInfo {
   sku: string;
 }
 
-export interface ProductVariation {
-  product_id: string;
-  variation?: string;
-  quantity: number;
-}
+// export interface ProductVariation {
+//   product_id: string;
+//   variation?: string;
+//   quantity: number;
+// }
 export interface ProductReview {
   id: string;
   created_at: Date;
@@ -63,6 +63,10 @@ export interface ProductReview {
 export interface CartItem {
   key: string;
   id: string;
+  name: string;
+  category: string;
+  price: number;
+  image: string;
   quantity: number;
   variation?: string;
 }
@@ -73,5 +77,5 @@ export interface CustomerOrder {
   customer_id: string;
   shipping_info: AddressInfo;
   billing_info: AddressInfo;
-  products: ProductVariation[];
+  products: CartItem[];
 }

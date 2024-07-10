@@ -20,8 +20,8 @@ export const ProductImages = ({
   };
 
   return (
-    <div className="product-images grid grid-cols-12 gap-3 mb-3">
-      <div className="image-gallery md:col-span-2 col-span-3 flex flex-col overflow-y-auto md:mx-0 mx-3">
+    <div className="product-images grid grid-cols-12 sm:gap-3 mb-3">
+      <div className="image-gallery md:col-span-2 col-span-3 flex flex-col overflow-y-auto md:mx-0 mr-5">
         {images.map((image, i) => (
           <div
             key={i}
@@ -44,8 +44,8 @@ export const ProductImages = ({
       </div>
 
       <div className="product-image md:col-span-10 col-span-9 paper">
-        <div className="tape-section"></div>
-        <div className="image-container">
+        <div className="tape-section z-10"></div>
+        <div className="image-container ">
           <img
             className={`w-full h-auto ${loaded[currentImg] ? "loaded" : "loading"}`}
             src={images[currentImg]}
@@ -54,7 +54,7 @@ export const ProductImages = ({
             onLoad={() => handleImageLoad(currentImg)}
           />
         </div>
-        <div className="tape-section"></div>
+        <div className="tape-section "></div>
       </div>
     </div>
   );

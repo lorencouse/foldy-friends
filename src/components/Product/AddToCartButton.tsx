@@ -4,8 +4,9 @@ import { useAddToCart } from "../../hooks/UseAddToCart";
 import { AddToCartSvg, CheckSvg } from "../svgPaths";
 import { useShopContext } from "../../context/ShopContext";
 import Link from "next/link";
+import { ProductInfo } from "../../types";
 
-export const AddToCartButton = ({ id, size }: { id: string; size: string }) => {
+export const AddToCartButton = ({ product, variation }: { product: ProductInfo; variation: string }) => {
   const handleAddToCart = useAddToCart();
   const { setShowMiniCart } = useShopContext();
   const [buttonText, setButtonText] = useState<string>("Add to Cart");
@@ -13,7 +14,7 @@ export const AddToCartButton = ({ id, size }: { id: string; size: string }) => {
   const [showCartLink, setShowCartLink] = useState(false);
 
   const handleClick = () => {
-    handleAddToCart(id, size);
+    handleAddToCart(product, variation);
 
     setButtonText("Added");
     setShowCartLink(true);

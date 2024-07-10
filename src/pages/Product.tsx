@@ -46,7 +46,7 @@ const Product = ({
               variations={product.variations}
             />
           )}
-          <AddToCartButton id={product.id} size={currentVariation} />
+          <AddToCartButton product={product} variation={currentVariation} />
           {product.category && (
             <div>
               <div className="capitalize my-2">
