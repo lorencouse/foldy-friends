@@ -18,7 +18,7 @@ import { emptyAddress } from "../data/constants";
 const Checkout = () => {
   const router = useRouter();
   const [billing, setBilling] = useState<boolean>(false);
-  const { cartCount, allProducts } = useShopContext();
+  const { cartCount } = useShopContext();
   const { user, loading } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -125,10 +125,10 @@ const Checkout = () => {
         ) : (
           <div className="empty-cart">
             <EmptyCart />
-            <Collections
+            {/* <Collections
               products={allProducts}
               header="You Might Be Interested In..."
-            />
+            /> */}
           </div>
         )}
       </div>

@@ -7,18 +7,17 @@ import { LoadingScreen } from "../../Product/LoadingScreen";
 import { VariationSelector } from "../../Product/VariantSelector";
 import { productCategories } from "../../../data/constants";
 
-const AllProducts = () => {
-  const { allProducts } = useShopContext();
+const AllProducts = ({ products: products }: { products: ProductInfo[] }) => {
   const [filteredProducts, setFilteredProducts] = useState<ProductInfo[]>([]);
   const [category, setCategory] = useState("all-products");
 
   useEffect(() => {
-    if (allProducts && allProducts.length > 0) {
-      setFilteredProducts(allProducts);
+    if (products && products.length > 0) {
+      setFilteredProducts(products);
     }
-  }, [allProducts]);
+  }, [products]);
 
-  if (!allProducts || allProducts.length === 0) {
+  if (!products || products.length === 0) {
     return <LoadingScreen />;
   }
 
@@ -36,7 +35,7 @@ const AllProducts = () => {
           setCurrentVariation={setCategory}
         />
         <AllProductFilters
-          allProducts={allProducts}
+          allProducts={products}
           setFilteredProducts={setFilteredProducts}
           category={category}
           isCategory={true}

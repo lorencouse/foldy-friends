@@ -2,3 +2,4 @@ import CreateProduct from "../../src/components/backend/product/createProduct/Cr
 import AdminRoute from "../../src/components/AdminRoute";
 
 export default AdminRoute(CreateProduct);
+

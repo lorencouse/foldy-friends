@@ -6,7 +6,6 @@ import { ShopContextProvider } from "../src/context/ShopContext";
 import { Comfortaa, Baloo_2, Quicksand } from "next/font/google";
 import { AppProps } from "next/app";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRouter } from "next/router";
 
 const comfortaa = Comfortaa({
   weight: ["400", "700"],

@@ -28,11 +28,7 @@ import {
 import Link from "next/link";
 import { VariationSelector } from "../../../Product/VariantSelector";
 
-const CreateProduct = ({
-  existingProduct,
-}: {
-  existingProduct?: ProductInfo;
-}) => {
+const CreateProduct = ({ product: product }: { product?: ProductInfo }) => {
   const [productInfo, setProductInfo] = useState<ProductInfo>(emptyProduct);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -40,14 +36,14 @@ const CreateProduct = ({
   const [images, setImages] = useState<FileList | null>(null);
 
   useEffect(() => {
-    if (existingProduct) {
-      console.log("Loading existing product:", existingProduct);
-      setProductInfo(existingProduct);
-      setSelectedCategory(existingProduct.category);
-      setSelectedTags(existingProduct.tags);
-      setSelectedVariations(existingProduct.variations);
+    if (product) {
+      console.log("Loading existing product:", product);
+      setProductInfo(product);
+      setSelectedCategory(product.category);
+      setSelectedTags(product.tags);
+      setSelectedVariations(product.variations);
     }
-  }, [existingProduct]);
+  }, [product]);
 
   const handleSaveProduct = async () => {
     const imageUrls: string[] = [...productInfo.images];
@@ -96,9 +92,9 @@ const CreateProduct = ({
 
     const db = getFirestore();
     try {
-      if (existingProduct) {
+      if (product) {
         // Update existing product
-        const productRef = doc(db, "products", existingProduct.id);
+        const productRef = doc(db, "products", product.id);
         await updateDoc(productRef, {
           ...productInfo,
           name: productInfo.name,
@@ -204,13 +200,13 @@ const CreateProduct = ({
 
   return (
     <div className="flex flex-col max-w-7xl mx-auto my-6">
-      <h1>{existingProduct ? "Edit Product" : "Create New Product"}</h1>
-      {existingProduct && (
+      <h1>{product ? "Edit Product" : "Create New Product"}</h1>
+      {product && (
         <div className="flex flex-row flex-wrap">
           <Link href={`/admin/create-product`}>
             <p className="m-4 text-xl "> + Create New Product</p>
           </Link>
-          <Link href={`/product/${existingProduct.id}`}>
+          <Link href={`/product/${product.id}`}>
             <p className="m-4 text-xl "> → View Product</p>
           </Link>
         </div>
@@ -279,7 +275,7 @@ const CreateProduct = ({
         />
 
         <ButtonSquareRed
-          label={existingProduct ? "Update Product" : "Create Product"}
+          label={product ? "Update Product" : "Create Product"}
           onClick={handleSaveProduct}
           icon={CheckSvg}
         />

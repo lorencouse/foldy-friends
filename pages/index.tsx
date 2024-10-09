@@ -2,6 +2,7 @@ import React from 'react';
 import Home from '../src/pages/Home';
 import { getAllProducts } from '../src/lib/api';
 import { sortProducts, filterProductTag } from '../src/tools/ProductFilterFunctions';
+import { ProductInfo } from '../src/types';
 
 
 const HomePage = ( { newProducts, modelProducts }: { newProducts: ProductInfo[], modelProducts: ProductInfo[] } ) => {

@@ -5,44 +5,47 @@ import CreateProduct from "../../../src/components/backend/product/createProduct
 import { LoadingScreen } from "../../../src/components/Product/LoadingScreen";
 import AdminRoute from "../../../src/components/AdminRoute";
 import { ProductInfo } from "../../../src/types";
+import { getProductById, getAllProducts } from "../../../src/lib/api";
 
-const EditProductPage = () => {
-  const [existingProduct, setExistingProduct] = useState<ProductInfo | null>(
-    null,
-  );
-  const router = useRouter();
-  const { id } = router.query;
-  const db = getFirestore();
+const EditProductPage = ( { product }: { product: ProductInfo } ) => {
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      if (id) {
-        try {
-          const productDoc = doc(db, "products", id as string);
-          const productSnapshot = await getDoc(productDoc);
-          if (productSnapshot.exists()) {
-            const productData = productSnapshot.data();
-            setExistingProduct({
-              id: productSnapshot.id,
-              ...productData,
-            } as ProductInfo);
-          } else {
-            console.log("No such document!");
-          }
-        } catch (error) {
-          console.error("Error fetching product:", error);
-        }
-      }
-    };
 
-    fetchProduct();
-  }, [id, db]);
-
-  if (!existingProduct) {
+  if (!product) {
     return <LoadingScreen />;
   }
 
-  return <CreateProduct existingProduct={existingProduct} />;
+  return <CreateProduct product={product} />;
 };
 
 export default AdminRoute(EditProductPage);
+
+export async function getStaticPaths() {
+  const products = await getAllProducts();
+  const paths = products.map((product) => ({
+    params: { id: product.id },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps(context: any) {
+  const { id } = context.params;
+
+  const product = await getProductById(id);
+  if (!product) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      product,
+    },
+  };
+}
+
+

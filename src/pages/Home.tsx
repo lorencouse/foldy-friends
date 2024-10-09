@@ -3,6 +3,7 @@ import { Hero } from "../components/Home/Hero";
 import { Collections } from "../components/ProductCategory/Collections";
 import { Offers } from "../components/Home/Offers";
 import { Subscribe } from "../components/Home/Subscribe";
+import { ProductInfo } from "../types";
 
 
 
