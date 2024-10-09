@@ -33,6 +33,6 @@ foldy-friends-firebase-adminsdk-odeh9-73322e2a53.json
 functions/node_modules
 functions/.next
 
-
+public/package-lock.json
 
 .vercel
