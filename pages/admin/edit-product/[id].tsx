@@ -5,9 +5,9 @@ import AdminRoute from "../../../src/components/AdminRoute";
 import { ProductInfo } from "../../../src/types";
 import { getProductById, getAllProducts } from "../../../src/lib/api";
 
-const EditProductPage = ( { product }: { product: ProductInfo } ) => {
+export const runtime = "experimental-edge";
 
-
+const EditProductPage = ({ product }: { product: ProductInfo }) => {
   if (!product) {
     return <LoadingScreen />;
   }
@@ -45,5 +45,3 @@ export async function getStaticProps(context: any) {
     },
   };
 }
-
-
