@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useShopContext } from "../../context/ShopContext";
+import { useShopContext } from "@/context/ShopContext";
 import { CartIconMobile, NavBarCartIcon } from "./CartIcon";
 import { NavLink } from "./NavLink";
 import { NavLogo } from "./NavLogo";
 import { MiniCartButtons } from "./MiniCartButtons";
 import ThemeSwitcher from "./ThemeSwitcher";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 import { ProfileIcon } from "./ProfileIcon";
 import { CartFullSize } from "../Cart/CartFullSize";
 import { SignInButton } from "./SignInButton";
 import { HamburderLine } from "./HamburderLine";
-
 
 const Navbar = () => {
   const { cartCount, setShowMiniCart, showMiniCart } = useShopContext();
@@ -21,7 +20,6 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     showMenu ? setTimeout(() => setShowMenu(false), 1000) : setShowMenu(true);
-    
   };
 
   const handleClickOutside = (event: MouseEvent) => {
