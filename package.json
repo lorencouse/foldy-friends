@@ -26,8 +26,6 @@
     "ws": "^8.18.0"
   },
   "scripts": {
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
