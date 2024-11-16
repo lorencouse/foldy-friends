@@ -1,3 +1,4 @@
+
 // next.config.js
 module.exports = {
   // Target must be 'server' for SSR

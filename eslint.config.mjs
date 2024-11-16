@@ -26,11 +26,12 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:eslint-plugin-next-on-pages/recommended",
     "next",
     "next/core-web-vitals",
-    "react-app"
+    "react-app",
   ],
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "eslint-plugin-next-on-pages"],
   rules: {
     // Add your custom rules here
   },
