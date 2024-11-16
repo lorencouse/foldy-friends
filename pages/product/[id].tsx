@@ -10,7 +10,7 @@ import {
 import { shuffleProducts } from "../../src/tools/ProductFilterFunctions";
 import { LoadingScreen } from "../../src/components/Product/LoadingScreen";
 
-// export const runtime = "experimental-edge";
+export const runtime = "experimental-edge";
 
 
 export async function getStaticPaths() {

@@ -5,7 +5,7 @@ import { query, collection, getDocs, where } from "firebase/firestore";
 import { db } from "../../src/lib/firebaseConfig";
 import { convertTimestamps } from "../../src/tools/functions";
 
-// export const runtime = "experimental-edge";
+export const runtime = "experimental-edge";
 
 export async function getServerSideProps(context: any) {
   const { tag } = context.params;
