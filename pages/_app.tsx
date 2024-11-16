@@ -1,8 +1,8 @@
 import "../styles/globals.css";
 import React from "react";
-import { Footer } from "@/components/Footer";
-import Navbar from "@/components/Nav/Navbar";
-import { ShopContextProvider } from "@/context/ShopContext";
+import { Footer } from "../src/components/Footer";
+import Navbar from "../src/components/Nav/Navbar";
+import { ShopContextProvider } from "../src/context/ShopContext";
 import { Comfortaa, Baloo_2, Quicksand } from "next/font/google";
 import { AppProps } from "next/app";
 import { AnimatePresence, motion } from "framer-motion";
