@@ -1,7 +1,7 @@
 import React from "react";
-import { NavLogo } from "./Navbar/NavLogo";
+import { NavLogo } from "./Nav/NavLogo";
 import SocialIcons from "./SocialIcons";
-import { NavLink } from "./Navbar/NavLink";
+import { NavLink } from "./Nav/NavLink";
 import { useUserRole } from "../hooks/useUserRole";
 
 export const Footer = () => {
@@ -12,11 +12,12 @@ export const Footer = () => {
     { title: "returns", url: "/returns" },
     { title: "about", url: "/about" },
     { title: "contact", url: "/contact" },
-    ...(userRole === "admin" ? [
-    { title: "create", url: "/admin/create-product" },
-    { title: "all", url: "/admin/all-products" },
-    ] : []),
-
+    ...(userRole === "admin"
+      ? [
+          { title: "create", url: "/admin/create-product" },
+          { title: "all", url: "/admin/all-products" },
+        ]
+      : []),
   ];
 
   return (

@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import React from "react";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/components/Nav/Navbar";
 import { Footer } from "@/components/Footer";
 import { ShopContextProvider } from "@/context/ShopContext";
 import { Comfortaa, Baloo_2, Quicksand } from "next/font/google";
