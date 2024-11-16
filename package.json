@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.3.0",
     "cloudflare": "^3.5.0",
     "dotenv": "^16.4.5",
+    "edge-runtime": "^3.0.5",
     "firebase": "^10.12.3",
     "framer-motion": "^11.2.13",
     "next": "^14.2.4",
@@ -23,10 +24,14 @@
     "typescript": "^4.9.5",
     "vercel": "^39.0.2",
     "web-vitals": "^4.2.1",
-    "wrangler": "^3.87.0"
+    "wrangler": "^3.87.0",
+    "ws": "^8.18.0"
   },
   "scripts": {
-    "pages:build": "npx @cloudflare/next-on-pages",
+    "build:worker": "cloudflare",
+    "dev:worker": "wrangler dev --port 8771",
+    "preview:worker": "npm run build:worker && npm run dev:worker",
+    "deploy:worker": "npm run build:worker && wrangler deploy",
     "preview": "npm run pages:build && wrangler pages dev",
     "deploy": "npm run pages:build && wrangler pages deploy",
     "dev": "next dev",
