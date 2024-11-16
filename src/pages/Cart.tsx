@@ -1,20 +1,13 @@
 import React from "react";
 import { CartFullSize } from "../components/Cart/CartFullSize";
 import { useShopContext } from "../context/ShopContext";
-import { Collections } from "../components/ProductCategory/Collections";
 import { EmptyCart } from "../components/Cart/EmptyCart";
 import Link from "next/link";
 import { ButtonSquareRed } from "../components/BannerButton";
 import { CheckSvg } from "../../src/components/svgPaths";
 
 const Cart = () => {
-  const { cartCount, cartItems } = useShopContext();
-
-  // const cartItemIds = cartItems.map((item) => item.id);
-
-  // const filteredProducts = allProducts.filter(
-  //   (product) => !cartItemIds.includes(product.id),
-  // );
+  const { cartCount } = useShopContext();
 
   return (
     <div className="cart-page-container max-w-7xl m-auto">
@@ -34,10 +27,6 @@ const Cart = () => {
       ) : (
         <EmptyCart />
       )}
-      {/* <Collections
-        products={filteredProducts.slice(0, 8)}
-        header="You Might Be Interested In..."
-      /> */}
     </div>
   );
 };

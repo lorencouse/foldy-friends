@@ -1,6 +1,6 @@
 // src/Components/.tsx
 import React from "react";
-import { CartItem, ProductInfo } from "../../types";
+import { CartItem } from "../../types";
 import { useShopContext } from "../../context/ShopContext";
 import { ButtonInput } from "../BannerButton";
 import { CartQuantityButtons } from "../Cart/CartQuantityButtons";
@@ -8,7 +8,7 @@ import { EmptyCart } from "./EmptyCart";
 import { useRouter } from "next/router";
 
 export const CartFullSize = () => {
-  const {  cartItems } = useShopContext();
+  const { cartItems } = useShopContext();
 
   // const productMap = allProducts.reduce(
   //   (map, product: ProductInfo) => {
@@ -17,7 +17,6 @@ export const CartFullSize = () => {
   //   },
   //   {} as { [id: string]: ProductInfo },
   // );
-
 
   if (cartItems.length === 0) {
     return <EmptyCart />;
@@ -47,11 +46,7 @@ export const CartFullSize = () => {
       <h1>Cart</h1>
       <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-5 w-full text-center"></div>
       {[...cartItems].reverse().map((cartItem) => {
-        return cartItem ? (
-          <CartLineItem
-            cartItem={cartItem}
-          />
-        ) : null;
+        return cartItem ? <CartLineItem cartItem={cartItem} /> : null;
       })}
       <div className="flex justify-end">
         <CartTotal />
@@ -60,11 +55,7 @@ export const CartFullSize = () => {
   );
 };
 
-const CartLineItem = ({
-  cartItem
-}: {
-  cartItem: CartItem;
-}) => {
+const CartLineItem = ({ cartItem }: { cartItem: CartItem }) => {
   const { setActiveCategory, setShowMiniCart } = useShopContext();
 
   const router = useRouter();
@@ -76,7 +67,10 @@ const CartLineItem = ({
   };
 
   return (
-    <div className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-0 m-auto py-8 w-full border border-y-1 border-x-0 border-base-200" key={cartItem.key}>
+    <div
+      className="grid grid-cols-[auto_auto_2fr_auto] lg:gap-12 gap-0 m-auto py-8 w-full border border-y-1 border-x-0 border-base-200"
+      key={cartItem.key}
+    >
       <div className="cart-item flex items-center justify-center">
         <RemoveItemButton cartItem={cartItem} />
       </div>

@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import React from "react";
 import CreateProduct from "../../../src/components/backend/product/createProduct/CreateProduct";
 import { LoadingScreen } from "../../../src/components/Product/LoadingScreen";
 import AdminRoute from "../../../src/components/AdminRoute";

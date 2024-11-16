@@ -1,10 +1,6 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { CategoryCard } from "../components/ProductCategory/CategoryCard";
 import { Collections } from "../components/ProductCategory/Collections";
-import {
-  filterProductCategory,
-  shuffleProducts,
-} from "../tools/ProductFilterFunctions";
 import { useShopContext } from "../context/ShopContext";
 import Link from "next/link";
 import { productCategories as categories } from "../data/constants";
@@ -14,7 +10,13 @@ import { CollectionHeading } from "../components/ProductCategory/CollectionHeadi
 import { CategoryBanner } from "../components/ProductCategory/CategoryBanner";
 import { ProductInfo } from "../types";
 
-const Shop = ( {products, topSellers}: {products: ProductInfo[], topSellers: {category: string, products: ProductInfo[]}[] } ) => {
+const Shop = ({
+  products,
+  topSellers,
+}: {
+  products: ProductInfo[];
+  topSellers: { category: string; products: ProductInfo[] }[];
+}) => {
   const { setActiveCategory } = useShopContext();
 
   return (

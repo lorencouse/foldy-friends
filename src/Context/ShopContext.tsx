@@ -6,9 +6,8 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
 } from "react";
-import { CartItem, ProductInfo } from "../types";
+import { CartItem } from "../types";
 
 interface ShopContextType {
   cartItems: CartItem[];

@@ -1,13 +1,7 @@
 import React from "react";
-import { useRouter } from "next/router";
 import Category from "../../src/pages/Category";
 import { ProductInfo } from "../../src/types";
-import {
-  query,
-  collection,
-  getDocs,
-  where
-} from "firebase/firestore";
+import { query, collection, getDocs, where } from "firebase/firestore";
 import { db } from "../../src/lib/firebaseConfig";
 import { convertTimestamps } from "../../src/tools/functions";
 
@@ -16,7 +10,7 @@ export async function getServerSideProps(context: any) {
 
   const productsQuery = query(
     collection(db, "products"),
-    where("tags", "array-contains", tag), 
+    where("tags", "array-contains", tag),
   );
   const productsSnapshot = await getDocs(productsQuery);
 

@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import AllProductFilters from "../../ProductCategory/ProductFilters/AllProductFilters";
 import { ProductInfo } from "../../../types";
-import { useShopContext } from "../../../context/ShopContext";
 import { LoadingScreen } from "../../Product/LoadingScreen";
 import { VariationSelector } from "../../Product/VariantSelector";
 import { productCategories } from "../../../data/constants";
 
-const AllProducts = ({ products: products }: { products: ProductInfo[] }) => {
+const AllProducts = ({ products }: { products: ProductInfo[] }) => {
   const [filteredProducts, setFilteredProducts] = useState<ProductInfo[]>([]);
   const [category, setCategory] = useState("all-products");
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
 import { useShopContext } from "../../context/ShopContext";
 import { CartIconMobile, NavBarCartIcon } from "./CartIcon";
 import { NavLink } from "./NavLink";

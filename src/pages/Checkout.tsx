@@ -3,7 +3,6 @@ import { CheckoutInfo } from "../components/Checkout/CheckoutInfo";
 import { ButtonSquareRed } from "../components/BannerButton";
 import { useShopContext } from "../context/ShopContext";
 import { EmptyCart } from "../components/Cart/EmptyCart";
-import { Collections } from "../components/ProductCategory/Collections";
 import { LockSvg } from "../components/svgPaths";
 import useAuth from "../hooks/useAuth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -125,10 +124,6 @@ const Checkout = () => {
         ) : (
           <div className="empty-cart">
             <EmptyCart />
-            {/* <Collections
-              products={allProducts}
-              header="You Might Be Interested In..."
-            /> */}
           </div>
         )}
       </div>

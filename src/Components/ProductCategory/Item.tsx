@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ProductInfo } from "../../types";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -23,8 +23,7 @@ export const Item = ({
       ? productData.variations[0]
       : undefined;
   const [loaded, setLoaded] = useState(false);
-    const [showCartLink, setShowCartLink] = useState(false);
-
+  const [showCartLink, setShowCartLink] = useState(false);
 
   const handleImageLoad = () => {
     setLoaded(true);
@@ -36,13 +35,14 @@ export const Item = ({
   };
 
   const handleAddToCartClick = () => {
-      handleAddToCart(productData, variant);
-      setButtonText("✓ Added");
-      setShowCartLink(true);
-      setTimeout(() => { setButtonText("+ Add to Cart"); setShowCartLink(false) }, 2500);
-    };
-  
-
+    handleAddToCart(productData, variant);
+    setButtonText("✓ Added");
+    setShowCartLink(true);
+    setTimeout(() => {
+      setButtonText("+ Add to Cart");
+      setShowCartLink(false);
+    }, 2500);
+  };
 
   return (
     <div className="transition duration-200 ease-in-out hover:scale-105 shadow-lg my-3 md:mx-1 mx-0 w-auto text-left rounded-2xl">

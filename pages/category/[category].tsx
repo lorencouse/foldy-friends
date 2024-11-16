@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/router";
 import Category from "../../src/pages/Category";
 import { ProductInfo } from "../../src/types";
 import { query, collection, getDocs, where } from "firebase/firestore";
