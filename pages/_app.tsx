@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import React from "react";
-import { Footer } from "../src/components/Footer";
-import Navbar from "../src/components/Nav/Navbar";
+import { Footer } from "../src/components/footer";
+import Navbar from "../src/components/nav/navbar";
 import { ShopContextProvider } from "../src/context/ShopContext";
 import { Comfortaa, Baloo_2, Quicksand } from "next/font/google";
 import { AppProps } from "next/app";

@@ -1,7 +1,7 @@
 import React from "react";
-import { NavLogo } from "./Nav/NavLogo";
+import { NavLogo } from "./nav/NavLogo";
 import SocialIcons from "./SocialIcons";
-import { NavLink } from "./Nav/NavLink";
+import { NavLink } from "./nav/NavLink";
 import { useUserRole } from "../hooks/useUserRole";
 
 export const Footer = () => {

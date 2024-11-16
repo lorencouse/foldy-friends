@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useShopContext } from "@/context/ShopContext";
+import { useShopContext } from "../../../src/context/ShopContext";
 import { CartIconMobile, NavBarCartIcon } from "./CartIcon";
 import { NavLink } from "./NavLink";
 import { NavLogo } from "./NavLogo";
 import { MiniCartButtons } from "./MiniCartButtons";
 import ThemeSwitcher from "./ThemeSwitcher";
-import useAuth from "@/hooks/useAuth";
+import useAuth from "../../../src/hooks/useAuth";
 import { ProfileIcon } from "./ProfileIcon";
 import { CartFullSize } from "../Cart/CartFullSize";
 import { SignInButton } from "./SignInButton";
