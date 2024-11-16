@@ -1,8 +1,9 @@
 name = "foldy-friends"
-main = ".worker-next/index.mjs"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
-experimental_assets = { directory = ".worker-next/assets", binding = "ASSETS" }
+
+main = ".worker-next/index.mjs"
+assets = { directory = ".worker-next/assets", binding = "ASSETS" }
 
 [[kv_namespaces]]
 binding = "NEXT_CACHE_WORKERS_KV"

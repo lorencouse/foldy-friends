@@ -34,9 +34,6 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "export": "next export"
-    // "pages:build": "npx @cloudflare/next-on-pages",
-    // "preview": "npm run pages:build && wrangler pages dev",
-    // "deploy": "npm run pages:build && wrangler pages deploy"
   },
   "eslintConfig": {
     "extends": [
