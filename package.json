@@ -10,7 +10,6 @@
     "@types/node": "^20.14.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "cloudflare": "^3.5.0",
     "dotenv": "^16.4.5",
     "edge-runtime": "^3.0.5",
     "firebase": "^10.12.3",
@@ -24,14 +23,9 @@
     "typescript": "^4.9.5",
     "vercel": "^39.0.2",
     "web-vitals": "^4.2.1",
-    "wrangler": "^3.87.0",
     "ws": "^8.18.0"
   },
   "scripts": {
-    "build:worker": "cloudflare",
-    "dev:worker": "wrangler dev --port 8771",
-    "preview:worker": "npm run build:worker && npm run dev:worker",
-    "deploy:worker": "npm run build:worker && wrangler deploy",
     "preview": "npm run pages:build && wrangler pages dev",
     "deploy": "npm run pages:build && wrangler pages deploy",
     "dev": "next dev",
@@ -58,8 +52,6 @@
     ]
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.5",
-    "@opennextjs/cloudflare": "^0.2.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "autoprefixer": "^10.4.19",

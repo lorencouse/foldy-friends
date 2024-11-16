@@ -5,7 +5,7 @@ import AdminRoute from "../../../src/components/AdminRoute";
 import { ProductInfo } from "../../../src/types";
 import { getProductById, getAllProducts } from "../../../src/lib/api";
 
-export const runtime = "experimental-edge";
+// export const runtime = "experimental-edge";
 
 const EditProductPage = ({ product }: { product: ProductInfo }) => {
   if (!product) {
