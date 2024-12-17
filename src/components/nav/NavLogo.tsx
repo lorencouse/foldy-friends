@@ -14,7 +14,7 @@ export function NavLogo() {
         <img
           src="/assets/origami-cat-inverted.png"
           alt="Foldy Friends Logo"
-          className="h-20 w-20"
+          className="h-16 w-16"
         />
 
         <p className="text-3xl items-center px-4 select-none text-white ">

@@ -184,7 +184,7 @@ select option {
   border-radius: 10px;
 }
 
-.paper-heading:after, .hero:after, .category-banner:after, .promo-box:after {
+.paper-heading:after, .hero:after, .promo-box:after {
   content: "";
   display: block;
   position: absolute;

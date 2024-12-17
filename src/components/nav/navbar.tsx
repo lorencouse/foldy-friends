@@ -9,7 +9,7 @@ import useAuth from "../../../src/hooks/useAuth";
 import { ProfileIcon } from "./ProfileIcon";
 import { CartFullSize } from "../Cart/CartFullSize";
 import { SignInButton } from "./SignInButton";
-import { HamburderLine } from "./HamburderLine";
+import { HamburgerLine } from "./HamburgerLine";
 
 const Navbar = () => {
   const { cartCount, setShowMiniCart, showMiniCart } = useShopContext();
@@ -75,7 +75,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar flex flex-col lg:flex-row justify-between p-4 shadow-lg bg-primary text-base-100 z-50">
+    <div className="navbar flex flex-col lg:flex-row justify-between p-4 shadow-lg bg-primary text-base-100 z-50 h-20">
       <div className="flex justify-between items-center w-full lg:w-auto">
         <NavLogo />
 
@@ -86,9 +86,9 @@ const Navbar = () => {
             className="hamburger h-8 w-8 outline outline-2 outline-white rounded-md flex flex-col justify-around items-center p-2  hover:bg-base-200 "
             onClick={toggleMenu}
           >
-            <HamburderLine />
-            <HamburderLine />
-            <HamburderLine />
+            <HamburgerLine />
+            <HamburgerLine />
+            <HamburgerLine />
           </div>
         </div>
       </div>
@@ -99,7 +99,7 @@ const Navbar = () => {
           className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full lg:w-auto "
         >
           <ul
-            className="nav-menu flex flex-col lg:flex-row items-center lg:ml-10  xl:gap-16 lg:gap-10 gap-8 lg:w-auto w-full"
+            className="nav-menu flex flex-col lg:flex-row items-center lg:ml-10  xl:gap-12 lg:gap-8 gap-6 lg:w-auto w-full"
             onClick={handleMobileMenuClick}
           >
             {links.map((link, key) => (
