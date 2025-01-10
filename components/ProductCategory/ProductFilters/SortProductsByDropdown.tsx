@@ -1,65 +1,57 @@
 "use client";
 
-import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+interface SortProductsByDropdownProps {
+  setSort: (sort: string) => void;
+  sort: string;
+}
 
 const SortProductsByDropdown = ({
   setSort,
   sort,
-}: {
-  setSort: (sort: string) => void;
-  sort: string;
-}) => {
+}: SortProductsByDropdownProps) => {
   const handleSortChange = (sort: string) => {
     setSort(sort);
   };
 
   return (
-    <div className="dropdown mx-6">
-      <div
-        tabIndex={0}
-        role="button"
-        className="m-1 btn bg-base-100 w-56 capitalize"
-      >
+    <DropdownMenu>
+      <DropdownMenuTrigger className="m-1 btn bg-secondary text-background font-bold p-4 w-56 capitalize shadow-md rounded-2xl ">
         Sort By{`: ${sort}`}
-      </div>
-      <ul
-        tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box"
-      >
-        <li>
-          <button
-            className="capitalize font-bold"
-            onClick={() => handleSortChange("lowest")}
-          >
-            Price: Low to High
-          </button>
-        </li>
-        <li>
-          <button
-            className="capitalize font-bold"
-            onClick={() => handleSortChange("highest")}
-          >
-            Price: High to Low
-          </button>
-        </li>
-        <li>
-          <button
-            className="capitalize font-bold"
-            onClick={() => handleSortChange("newest")}
-          >
-            Date: Newest to Oldest
-          </button>
-        </li>
-        <li>
-          <button
-            className="capitalize font-bold"
-            onClick={() => handleSortChange("oldest")}
-          >
-            Date: Oldest to Newest
-          </button>
-        </li>
-      </ul>
-    </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56 bg-background text-foreground">
+        <DropdownMenuItem
+          onClick={() => handleSortChange("lowest")}
+          className="capitalize font-bold"
+        >
+          Price: Low to High
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handleSortChange("highest")}
+          className="capitalize font-bold"
+        >
+          Price: High to Low
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handleSortChange("newest")}
+          className="capitalize font-bold"
+        >
+          Date: Newest to Oldest
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handleSortChange("oldest")}
+          className="capitalize font-bold"
+        >
+          Date: Oldest to Newest
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

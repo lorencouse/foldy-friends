@@ -1,48 +1,38 @@
-"use client";
-
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { useShopContext } from "@/context/ShopContext";
-import { CartIconMobile, NavBarCartIcon } from "./CartIcon";
-import { NavLink } from "./NavLink";
-import { NavLogo } from "./NavLogo";
-import { MiniCartButtons } from "./MiniCartButtons";
-import ThemeSwitcher from "./ThemeSwitcher";
 import useAuth from "@/hooks/useAuth";
-import { ProfileIcon } from "./ProfileIcon";
 import { CartFullSize } from "../Cart/CartFullSize";
-import { SignInButton } from "./SignInButton";
-import { HamburgerLine } from "./HamburgerLine";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Menu, ShoppingCart } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import ThemeSwitcher from "./ThemeSwitcher";
+import { NavLogo } from "./NavLogo";
+import { ProfileIcon } from "./ProfileIcon";
+import { redirect } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { MiniCartButtons } from "./MiniCartButtons";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 const Navbar = () => {
-  const { cartCount, setShowMiniCart, showMiniCart } = useShopContext();
-  const [showMenu, setShowMenu] = useState<boolean>(true);
+  const { cartCount, activeCategory, setActiveCategory } = useShopContext();
   const { user } = useAuth();
-  const menuRef = useRef<HTMLDivElement>(null);
-  const cartRef = useRef<HTMLDivElement>(null);
-
-  const toggleMenu = () => {
-    showMenu ? setTimeout(() => setShowMenu(false), 1000) : setShowMenu(true);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      menuRef.current &&
-      !menuRef.current.contains(event.target as Node) &&
-      window.innerWidth < 1024
-    ) {
-      setShowMenu(false);
-    }
-    if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
-      setShowMiniCart(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const links = [
     { title: "home", url: "/" },
@@ -52,96 +42,135 @@ const Navbar = () => {
     { title: "kits", url: "/shop/category/kits" },
   ];
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.matchMedia("(min-width: 1024px)").matches) {
-        setShowMenu(true);
-      } else {
-        setShowMenu(false);
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const handleMobileMenuClick = () => {
-    if (window.matchMedia("(max-width: 1024px)").matches) {
-      setShowMenu(false);
-    }
+  const handleNavClick = (url: string, category: string) => {
+    setActiveCategory(category);
+    redirect(url);
   };
 
   return (
-    <div className="navbar flex flex-col lg:flex-row justify-between p-4 shadow-lg bg-primary text-base-100 z-50 h-20">
-      <div className="flex justify-between items-center w-full lg:w-auto">
-        <NavLogo />
+    <header className="md:fixed md:top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 bg-primary text-white py-2 shadow-lg">
+      <div className="container flex h-14 items-center bg-primary">
+        {/* Mobile Menu */}
+        <Sheet>
+          <SheetTrigger asChild className="lg:hidden mr-3 -ml-4">
+            <Button variant="ghost" size="icon">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <span className="lg:hidden">
+            <NavLogo />
+          </span>
+          <SheetContent side="left" className="bg-primary flex flex-col gap-4">
+            <NavLogo />
+            <nav className="flex flex-col gap-4">
+              {links.map((link) => (
+                <span
+                  onClick={() =>
+                    handleNavClick(link.url, link.title.toLowerCase())
+                  }
+                  key={link.title}
+                  className={`text-md text-white cursor-pointer transition-colors  hover:translate-x-3 ${activeCategory === link.title.toLowerCase() ? "text-2xl" : ""}`}
+                >
+                  {link.title}
+                </span>
+              ))}
+            </nav>
+          </SheetContent>
+        </Sheet>
 
-        <div className="flex items-center gap-5 lg:hidden">
-          {cartCount > 0 && <CartIconMobile />}
+        {/* Desktop Menu */}
+        <div className="mr-4 hidden lg:flex">
+          <NavigationMenu>
+            <NavigationMenuList className="flex gap-4">
+              <NavLogo />
+              {links.map((link) => (
+                <NavigationMenuItem key={link.title}>
+                  <span
+                    onClick={() =>
+                      handleNavClick(link.url, link.title.toLowerCase())
+                    }
+                    className={`text-md cursor-pointer font-medium transition-colors hover:text-gray-800 ${activeCategory === link.title ? "text-xl border-b-2 -top-4 hover:border-gray-800" : ""}`}
+                  >
+                    {link.title}
+                  </span>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
 
-          <div
-            className="hamburger h-8 w-8 outline outline-2 outline-white rounded-md flex flex-col justify-around items-center p-2  hover:bg-base-200 "
-            onClick={toggleMenu}
-          >
-            <HamburgerLine />
-            <HamburgerLine />
-            <HamburgerLine />
-          </div>
+        <div className="flex flex-1 items-center justify-end space-x-4">
+          {/* Theme Switcher */}
+
+          <ThemeSwitcher />
+
+          <Drawer>
+            <DrawerTrigger asChild>
+              <span className="relative cursor-pointer">
+                <span className="sr-only">Shopping cart</span>
+                <ShoppingCart className="h-5 w-5 mr-3" />
+                {cartCount > 0 && (
+                  <span className="absolute -right-2 -top-2 h-4 w-4 rounded-full bg-primary text-xs text-primary-foreground">
+                    {cartCount}
+                  </span>
+                )}
+              </span>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerClose>
+                <span className="cursor-pointer hover:opacity-90 ">
+                  X Close
+                </span>
+              </DrawerClose>
+
+              <div className="mx-auto w-full max-w-2xl max-h-[85vh] overflow-auto">
+                <div className="p-4 pb-0">
+                  <div className="flex items-center justify-center space-x-2">
+                    <CartFullSize />
+                  </div>
+                </div>
+                <DrawerFooter>
+                  <DrawerClose>
+                    <MiniCartButtons />
+                  </DrawerClose>
+                </DrawerFooter>
+              </div>
+            </DrawerContent>
+          </Drawer>
+
+          {/* User Profile */}
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  {/* Add profile icon */}
+                  <ProfileIcon />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="bg-background text-foreground"
+              >
+                <DropdownMenuItem onClick={() => redirect("/account")}>
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => signOut}>
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => redirect("/sign-in")}
+            >
+              Sign in
+            </Button>
+          )}
         </div>
       </div>
-
-      {showMenu && (
-        <div
-          ref={menuRef}
-          className="menu flex flex-col lg:flex-row lg:grow items-center justify-between mt-4 lg:mt-0 w-full lg:w-auto "
-        >
-          <ul
-            className="nav-menu flex flex-col lg:flex-row items-center lg:ml-10  xl:gap-12 lg:gap-8 gap-6 lg:w-auto w-full"
-            onClick={handleMobileMenuClick}
-          >
-            {links.map((link, key) => (
-              <NavLink key={key} url={link.url} label={link.title} />
-            ))}
-          </ul>
-
-          <div className="flex items-center lg:flex-row lg:w-auto w-full justify-between lg:justify-normal gap-4 lg:mt-0 mt-6 flex-row-reverse">
-            <div onClick={handleMobileMenuClick}>
-              {!user ? <SignInButton /> : <ProfileIcon />}
-            </div>
-
-            <ThemeSwitcher />
-          </div>
-        </div>
-      )}
-
-      {cartCount > 0 && (
-        <div
-          ref={cartRef}
-          className="nav-cart hidden lg:flex items-center gap-5 ml-auto z-20"
-        >
-          <div className="cart-icon relative mr-6">
-            <NavBarCartIcon />
-          </div>
-          <div
-            className={`absolute my-0 right-0 top-28 border-1 px-4 bg-base-100 shadow-lg max-w-xl rounded-b-2xl transition-all duration-500 ${showMiniCart ? "fade-in" : "fade-out"}`}
-          >
-            {showMiniCart && (
-              <>
-                <div className="w-full overflow-y-auto max-h-96 no-scrollbar">
-                  <CartFullSize />
-                </div>
-                <MiniCartButtons />
-              </>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+    </header>
   );
 };
 

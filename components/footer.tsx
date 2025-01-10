@@ -21,7 +21,7 @@ export const Footer = () => {
   ];
 
   return (
-    <div className="footer-stitch paper">
+    <div className="footer-stitch paper bottom-0">
       <div className="tape-section"></div>
       <div className="footer w-full p-1 bg-primary shadow-top flex flex-col ">
         <div className="footer-components flex flex-row flex-wrap lg:justify-between justify-center lg:m-5 w-full">
@@ -35,9 +35,9 @@ export const Footer = () => {
         </div>
 
         <div className="copyright w-full flex justify-center mb-5">
-            <p className="text-white text-center">
+          <p className="text-white text-center">
             Foldy Friends Inc. {new Date().getFullYear()} - All Rights Reserved
-            </p>
+          </p>
         </div>
       </div>
     </div>

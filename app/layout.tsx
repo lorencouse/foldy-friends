@@ -1,11 +1,12 @@
 "use client";
 
-import "@/styles/globals.css";
+import "@/styles/main.css";
 import React, { ReactNode } from "react";
 import Navbar from "@/components/nav/navbar";
 import { Footer } from "@/components/footer";
 import { ShopContextProvider } from "@/context/ShopContext";
 import { Comfortaa, Baloo_2, Quicksand } from "next/font/google";
+import { ThemeProvider } from "@/context/theme-provider";
 
 const comfortaa = Comfortaa({
   weight: ["400", "700"],
@@ -22,32 +23,29 @@ const quicksand = Quicksand({
   subsets: ["latin"],
 });
 
-const fadeTransition = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.3 } },
-  exit: { opacity: 0, transition: { duration: 0.3 } },
-};
-
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <html lang="en">
-      <body className="min-h-screen">
-        <ShopContextProvider>
-          <style jsx global>{`
-            :root {
-              --comfortaa-font: ${comfortaa.style.fontFamily};
-              --baloo2-font: ${baloo2.style.fontFamily};
-              --quicksand-font: ${quicksand.style.fontFamily};
-            }
-          `}</style>
-          <Navbar />
-          {children}
-          <Footer />
-        </ShopContextProvider>
+    <html
+      lang="en"
+      className={`${comfortaa.className} ${baloo2.className} ${quicksand.className}`}
+    >
+      <body className="min-h-screen flex flex-col bg-background text-foreground">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ShopContextProvider>
+            <Navbar />
+            <main className="min-h-[80vh] md:mt-16">{children}</main>
+            <Footer />
+          </ShopContextProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

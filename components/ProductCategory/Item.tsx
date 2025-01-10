@@ -18,7 +18,7 @@ export const Item = ({
   productData: Product;
   itemIndex: number;
 }) => {
-  const { setActiveCategory } = useShopContext();
+  const { setActiveCategory, setShowMiniCart } = useShopContext();
   const handleAddToCart = useAddToCart();
   const [buttonText, setButtonText] = useState<string>("+ Add to Cart");
   const variant =
@@ -41,6 +41,7 @@ export const Item = ({
     handleAddToCart(productData, variant);
     setButtonText("✓ Added");
     setShowCartLink(true);
+    setShowMiniCart(true);
     setTimeout(() => {
       setButtonText("+ Add to Cart");
       setShowCartLink(false);

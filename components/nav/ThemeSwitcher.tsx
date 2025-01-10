@@ -1,32 +1,46 @@
-import React, { useEffect } from "react";
-import { MoonSvg, SunSvg } from "../svgPaths";
-import { useTheme } from "../../hooks/useTheme";
+"use client";
 
-const ThemeSwitcher = () => {
-  const { theme, toggleTheme } = useTheme();
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    const localTheme = localStorage.getItem("theme");
-    const htmlElement = document.querySelector("html");
-    if (htmlElement) {
-      htmlElement.setAttribute("data-theme", localTheme || "light");
-    }
-  }, [theme]);
+import { Button } from "@/components/ui/button";
+
+export default function ThemeSwitcher() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // After mounting, we have access to the theme
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) {
+    // Render nothing on the server and until the theme is mounted
+    return null;
+  }
 
   return (
-    <div className="dark-mode-toggle flex items-center justify-center content-center mt-2 drop-shadow-md">
-      <label className="swap swap-rotate">
-        <input
-          type="checkbox"
-          className="theme-controller"
-          onClick={() => toggleTheme()}
-        />
-        {SunSvg}
-        {MoonSvg}
-      </label>
+    <div>
+      {theme === "dark" ? (
+        <Button
+          variant="ghost"
+          className="hover:bg-inherit hover:text-black border-zinc-900 "
+          size="icon"
+          onClick={() => setTheme("light")}
+        >
+          <Sun className="w-6 h-6" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      ) : (
+        <Button
+          variant="ghost"
+          size="icon"
+          className="hover:bg-inherit hover:text-black border-zinc-100 "
+          onClick={() => setTheme("dark")}
+        >
+          <Moon className="w-6 h-6" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      )}
     </div>
   );
-};
-
-export default ThemeSwitcher;
+}
