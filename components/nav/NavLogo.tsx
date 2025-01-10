@@ -21,7 +21,7 @@ export function NavLogo() {
         />
 
         <p className="md:text-3xl text-md items-center px-4 select-none text-white ">
-          Foldy Friends
+          foldy friends
         </p>
       </div>
     </Link>
