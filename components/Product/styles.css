@@ -5,14 +5,14 @@
   overflow: hidden;
 }
 
-.image-container img {
+.image-container {
   transition: filter 0.5s ease-out;
 }
 
-.image-container img.loading {
+.image-container .loading {
   filter: blur(10px);
 }
 
-.image-container img.loaded {
+.image-container .loaded {
   filter: blur(0);
 }
