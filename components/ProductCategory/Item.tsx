@@ -9,6 +9,7 @@ import { Prices } from "../Product/Prices";
 import { useShopContext } from "@/context/ShopContext";
 import { StarRatingAverage } from "../Product/Reviews/StarRating";
 import { useAddToCart } from "@/hooks/UseAddToCart";
+import Image from "next/image";
 
 export const Item = ({
   productData,
@@ -51,12 +52,14 @@ export const Item = ({
       <div onClick={handleProductClick} className="cursor-pointer">
         <div className="relative w-full" style={{ aspectRatio: "1" }}>
           <div className="image-container">
-            <img
+            <Image
               src={productData.images[0]}
               alt={productData.name}
               loading="lazy"
               className={`absolute inset-0 w-full h-full object-cover rounded-t-2xl ${loaded ? "loaded" : "loading"}`}
               onLoad={handleImageLoad}
+              height={500}
+              width={500}
             />
           </div>
         </div>

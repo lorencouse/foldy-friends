@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export const ShopHero = () => {
   return (
@@ -18,10 +19,12 @@ export const ShopHero = () => {
       </div>
       <div className="w-full lg:w-1/2 flex justify-center items-center bg-base-100 ">
         <div className="border-20 border-base-100 hero paper ">
-          <img
+          <Image
             className="w-full rounded-2xl"
             src="/assets/shopPage/kids-crafting-origami.webp"
-            alt="Hero Model"
+            alt="Kids Crafting Origami"
+            width={500}
+            height={500}
           />
         </div>
       </div>

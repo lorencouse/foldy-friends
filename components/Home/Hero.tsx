@@ -1,5 +1,6 @@
 import React from "react";
 import { ButtonRoundRed } from "../BannerButton";
+import Image from "next/image";
 
 export const Hero = () => {
   return (
@@ -15,10 +16,12 @@ export const Hero = () => {
       </div>
       <div className="w-full md:w-1/2 flex items-center justify-center ">
         <div className="hero paper border-20 border-base-100 bg-base-100 ">
-          <img
+          <Image
             className="w-full rounded-2xl "
             src="/assets/homePage/happy-kids-folding-origami-1024.webp"
             alt="Hero Model"
+            width={500}
+            height={500}
           />
         </div>
       </div>

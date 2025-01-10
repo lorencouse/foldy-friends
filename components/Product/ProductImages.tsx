@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Image from "next/image";
 
 export const ProductImages = ({
   images,
@@ -31,12 +31,14 @@ export const ProductImages = ({
             }`}
           >
             <div className="image-container">
-              <img
+              <Image
                 src={image}
                 alt={alt}
                 loading="lazy"
                 className={`w-full h-full object-cover ${loaded[i] ? "loaded" : "loading"}`}
                 onLoad={() => handleImageLoad(i)}
+                height={100}
+                width={100}
               />
             </div>
           </div>
@@ -46,12 +48,14 @@ export const ProductImages = ({
       <div className="product-image md:col-span-10 col-span-9 paper">
         <div className="tape-section z-10"></div>
         <div className="image-container ">
-          <img
+          <Image
             className={`w-full h-auto ${loaded[currentImg] ? "loaded" : "loading"}`}
             src={images[currentImg]}
             alt={alt}
             loading="lazy"
             onLoad={() => handleImageLoad(currentImg)}
+            height={500}
+            width={500}
           />
         </div>
         <div className="tape-section "></div>

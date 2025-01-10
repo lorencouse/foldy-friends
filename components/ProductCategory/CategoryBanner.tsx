@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export const CategoryBanner = ({ category }: { category: string }) => {
   return (
@@ -6,9 +7,11 @@ export const CategoryBanner = ({ category }: { category: string }) => {
       <div className="bg-primary/70 rounded-2xl max-w-3xl">
         <div className="tape-section max-w-3xl"></div>
 
-        <img
+        <Image
           src={`/assets/categories/${category}-banner.png`}
           alt={`${category} banner`}
+          width={1000}
+          height={200}
         />
         <div className="tape-section max-w-3xl"></div>
       </div>
