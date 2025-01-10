@@ -6,7 +6,6 @@ import Navbar from "@/components/nav/navbar";
 import { Footer } from "@/components/footer";
 import { ShopContextProvider } from "@/context/ShopContext";
 import { Comfortaa, Baloo_2, Quicksand } from "next/font/google";
-import { AnimatePresence, motion } from "framer-motion";
 
 const comfortaa = Comfortaa({
   weight: ["400", "700"],
@@ -46,16 +45,7 @@ const Layout = ({ children }: LayoutProps) => {
             }
           `}</style>
           <Navbar />
-          {/* <AnimatePresence exitBeforeEnter>
-            <motion.div
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={fadeTransition}
-            > */}
           {children}
-          {/* </motion.div>
-          </AnimatePresence> */}
           <Footer />
         </ShopContextProvider>
       </body>

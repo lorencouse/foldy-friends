@@ -54,7 +54,7 @@ const CartLineItem = ({ cartItem }: { cartItem: CartItem }) => {
   const { setActiveCategory, setShowMiniCart } = useShopContext();
 
   const handleMobileMenuClick = () => {
-    redirect(`/product/${cartItem.id}`);
+    redirect(`/shop/product/${cartItem.id}`);
     setActiveCategory(cartItem.category);
     setTimeout(() => setShowMiniCart(false), 400);
   };

@@ -9,7 +9,6 @@ import { LockSvg } from "@/components/svgPaths";
 import { AddressInfo, UserData } from "@/types";
 import { CartFullSize } from "@/components/Cart/CartFullSize";
 import { Alert } from "@/components/Alert";
-import { LoadingScreen } from "@/components/Product/LoadingScreen";
 import { emptyAddress } from "@/data/constants";
 import { redirect } from "next/navigation";
 
