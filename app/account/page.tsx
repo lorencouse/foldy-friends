@@ -8,7 +8,7 @@ const AccountPage = async () => {
   const user: UserData | null = await getUserProfile();
 
   if (!user) {
-    redirect("/sign-in");
+    redirect("/login");
   }
 
   return <Account user={user} />;

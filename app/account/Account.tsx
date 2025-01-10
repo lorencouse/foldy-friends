@@ -19,6 +19,7 @@ import { UserData } from "@/types";
 import { emptyAddress } from "@/data/constants";
 
 const Account = ({ user }: { user: UserData }) => {
+
   const [error, setError] = useState("");
 
   const [editProfile, setEditProfile] = useState(false);
@@ -39,6 +40,8 @@ const Account = ({ user }: { user: UserData }) => {
   };
 
   const handleDeleteAccount = async () => {
+    if (!auth.currentUser) return;
+
     const confirmDelete = window.confirm(
       "Are you sure you want to delete your account? This action cannot be undone.",
     );
@@ -46,19 +49,18 @@ const Account = ({ user }: { user: UserData }) => {
 
     const currentUser = auth.currentUser;
     if (currentUser) {
+      const userDocRef = doc(db, "users", currentUser.uid);
       try {
         const credential = EmailAuthProvider.credential(
           currentUser.email!,
           prompt("Please enter your password to confirm")!,
         );
         await reauthenticateWithCredential(currentUser, credential);
-
-        const userDocRef = doc(db, "users", currentUser.uid);
+        redirect("/sign-in");
+        await deleteDoc(userDocRef);
         await deleteDoc(userDocRef);
 
         await deleteUser(currentUser);
-
-        redirect("/sign-in");
       } catch (error: any) {
         setError(error.message);
       }
