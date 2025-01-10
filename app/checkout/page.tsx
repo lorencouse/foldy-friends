@@ -1,10 +1,11 @@
-import React from 'react';
-import Checkout from '../src/pages/Checkout'
+import React from "react";
+import Checkout from "./Checkout";
+import { UserData } from "@/types";
+import { getUserProfile } from "@/lib/actions";
 
-const CheckoutPage = () => {
-  return (
-    <Checkout />
-  )
-}
+const CheckoutPage = async () => {
+  const user: UserData | null = await getUserProfile();
+  return <Checkout user={user} />;
+};
 
 export default CheckoutPage;

@@ -1,7 +1,7 @@
 import React from "react";
 import Category from "../../category/[category]/Category";
 import { Product } from "@/types";
-import { getProductsFromTag } from "@/lib/api";
+import { getProductsFromTag } from "@/lib/actions";
 
 const TagPage = async ({ params }: { params: Promise<{ tag: string }> }) => {
   const tag = (await params).tag;

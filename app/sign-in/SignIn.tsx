@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Redirect } from "next";
+import { redirect } from "next/navigation";
 import { InputBox } from "@/components/Input/InputBox";
 import { ButtonSquareRed } from "@/components/BannerButton";
 import { SignInSvg } from "@/components/svgPaths";
@@ -29,7 +29,7 @@ const SignIn = () => {
       await signInWithEmailAndPassword(auth, email, password);
       if (auth.currentUser) {
         setShowAlert(false);
-        Redirect("/account");
+        redirect("/account");
       } else {
         setAlertMessage("Authentication failed. Please try again.");
         setShowAlert(true);
@@ -66,7 +66,7 @@ const SignIn = () => {
       });
       if (auth.currentUser) {
         setShowAlert(false);
-        Redirect("/account");
+        redirect("/account");
       } else {
         setAlertMessage("Account creation failed. Please try again.");
         setShowAlert(true);

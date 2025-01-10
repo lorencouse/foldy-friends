@@ -4,11 +4,11 @@ import React from "react";
 import { ButtonSquareRed } from "../BannerButton";
 import { CartSvg, CheckSvg } from "../svgPaths";
 import { useShopContext } from "../../context/ShopContext";
-import { Redirect } from "next";
+import { redirect } from "next/navigation";
 
 export const MiniCartButtons = () => {
   const handleNavigation = (url: string) => {
-    Redirect(url);
+    redirect(url);
     setShowMiniCart(false);
     window.scrollTo(0, 0);
   };

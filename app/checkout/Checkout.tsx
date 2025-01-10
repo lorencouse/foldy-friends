@@ -1,55 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { CheckoutInfo } from "../components/Checkout/CheckoutInfo";
-import { ButtonSquareRed } from "../components/BannerButton";
-import { useShopContext } from "../context/ShopContext";
-import { EmptyCart } from "../components/Cart/EmptyCart";
-import { LockSvg } from "../components/svgPaths";
-import useAuth from "../hooks/useAuth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "../lib/firebaseConfig";
-import { AddressInfo } from "../types";
-import { CartFullSize } from "../components/Cart/CartFullSize";
-import { Alert } from "../components/Alert";
-import { useRouter } from "next/router";
-import { LoadingScreen } from "../components/Product/LoadingScreen";
-import { emptyAddress } from "../data/constants";
+"use client";
 
-const Checkout = () => {
-  const router = useRouter();
+import React, { useState } from "react";
+import { CheckoutInfo } from "@/components/Checkout/CheckoutInfo";
+import { ButtonSquareRed } from "@/components/BannerButton";
+import { useShopContext } from "@/context/ShopContext";
+import { EmptyCart } from "@/components/Cart/EmptyCart";
+import { LockSvg } from "@/components/svgPaths";
+import { AddressInfo, UserData } from "@/types";
+import { CartFullSize } from "@/components/Cart/CartFullSize";
+import { Alert } from "@/components/Alert";
+import { LoadingScreen } from "@/components/Product/LoadingScreen";
+import { emptyAddress } from "@/data/constants";
+import { redirect } from "next/navigation";
+
+const Checkout = ({ user }: { user: UserData | null }) => {
   const [billing, setBilling] = useState<boolean>(false);
   const { cartCount } = useShopContext();
-  const { user, loading } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const [shippingInfo, setShippingInfo] = useState<AddressInfo>(emptyAddress);
+  const [shippingInfo, setShippingInfo] = useState<AddressInfo>(
+    user ? user.shipping_info : emptyAddress,
+  );
 
-  const [billingInfo, setBillingInfo] = useState<AddressInfo>(emptyAddress);
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (user) {
-        const userDocRef = doc(db, "users", user.id);
-        const userDoc = await getDoc(userDocRef);
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          setShippingInfo(userData.shipping_info || shippingInfo);
-          setBillingInfo(userData.billing_info || billingInfo);
-        } else {
-          const newUserProfile = {
-            email: auth.currentUser?.email,
-            shipping_info: shippingInfo,
-            billing_info: billingInfo,
-          };
-          await setDoc(userDocRef, newUserProfile);
-        }
-      }
-    };
-
-    if (user) {
-      fetchUserProfile();
-    }
-  }, [user]);
+  const [billingInfo, setBillingInfo] = useState<AddressInfo>(
+    user ? user.billing_info : emptyAddress,
+  );
 
   async function placeOrder() {
     if (
@@ -72,12 +48,8 @@ const Checkout = () => {
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
-      router.push("/");
+      redirect("/");
     }, 2000);
-  }
-
-  if (loading) {
-    return <LoadingScreen />;
   }
 
   return (

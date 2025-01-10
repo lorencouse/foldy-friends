@@ -45,6 +45,10 @@ export interface Product {
   sku: string;
 }
 
+export interface TopSellersProps {
+  category: string;
+  products: Product[];
+}
 // export interface ProductVariation {
 //   product_id: string;
 //   variation?: string;

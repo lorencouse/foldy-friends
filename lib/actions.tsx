@@ -9,8 +9,9 @@ import {
   limit,
 } from "firebase/firestore";
 import { db } from "./firebaseConfig";
-import { Product } from "@/types";
+import { Product, UserData } from "@/types";
 import { convertTimestamps } from "@/tools/functions";
+import { getAuth } from "firebase/auth";
 
 export const getProductById = async (id: string): Promise<Product | null> => {
   const productDocRef = doc(db, "products", id);
@@ -73,4 +74,19 @@ export const getAllProducts = async (): Promise<Product[]> => {
       ...convertTimestamps(data),
     };
   }) as Product[];
+};
+
+export const getUserProfile = async (): Promise<UserData | null> => {
+  const auth = await getAuth();
+  const user = auth.currentUser;
+  if (!user) {
+    return null;
+  }
+  const id = user.uid;
+  const userDocRef = doc(db, "users", id);
+  const userDoc = await getDoc(userDocRef);
+  if (!userDoc.exists()) {
+    return null;
+  }
+  return userDoc.data() as UserData;
 };

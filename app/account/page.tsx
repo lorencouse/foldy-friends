@@ -1,12 +1,17 @@
-import React from 'react'
-import Account from '../src/pages/Account'
+import React from "react";
+import Account from "./Account";
+import { getUserProfile } from "@/lib/actions";
+import { UserData } from "@/types";
+import { redirect } from "next/navigation";
 
+const AccountPage = async () => {
+  const user: UserData | null = await getUserProfile();
 
-const AccountPage = () => {
+  if (!user) {
+    redirect("/sign-in");
+  }
 
-  return (
-    <Account />
-  )
-}
+  return <Account user={user} />;
+};
 
 export default AccountPage;

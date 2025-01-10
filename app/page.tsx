@@ -2,7 +2,7 @@
 
 import React from "react";
 import Home from "./Home";
-import { getAllProducts } from "@/lib/api";
+import { getAllProducts } from "@/lib/actions";
 import { sortProducts, filterProductTag } from "@/tools/ProductFilterFunctions";
 import { Product } from "types";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import CreateProduct from "../../create-product/CreateProduct";
 import { LoadingScreen } from "@/components/Product/LoadingScreen";
+import { getProductById } from "@/lib/actions";
 import { Product } from "@/types";
-import { getProductById } from "@/lib/api";
 
 // export const runtime = "experimental-edge";
 
@@ -15,7 +15,7 @@ const EditProductPage = async ({
   if (!id) {
     return <LoadingScreen />;
   }
-  const product: Product = await getProductById(id);
+  const product: Product | null = await getProductById(id);
 
   return <CreateProduct product={product} />;
 };

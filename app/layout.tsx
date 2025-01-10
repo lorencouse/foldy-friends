@@ -1,7 +1,7 @@
 "use client";
 
-import "../styles/globals.css";
-import React from "react";
+import "@/styles/globals.css";
+import React, { ReactNode } from "react";
 import Navbar from "@/components/nav/navbar";
 import { Footer } from "@/components/footer";
 import { ShopContextProvider } from "@/context/ShopContext";
@@ -29,7 +29,11 @@ const fadeTransition = {
   exit: { opacity: 0, transition: { duration: 0.3 } },
 };
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout = ({ children }: LayoutProps) => {
   return (
     <html lang="en">
       <body className="min-h-screen">
@@ -42,7 +46,16 @@ const Layout = ({ children }) => {
             }
           `}</style>
           <Navbar />
-          <main>{children}</main>
+          {/* <AnimatePresence exitBeforeEnter>
+            <motion.div
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={fadeTransition}
+            > */}
+          {children}
+          {/* </motion.div>
+          </AnimatePresence> */}
           <Footer />
         </ShopContextProvider>
       </body>

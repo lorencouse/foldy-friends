@@ -30,7 +30,7 @@ import {
 import Link from "next/link";
 import { VariationSelector } from "@/components/Product/VariantSelector";
 
-const CreateProduct = ({ product }: { product?: Product }) => {
+const CreateProduct = ({ product }: { product: Product | null }) => {
   const [productInfo, setProductInfo] = useState<Product>(emptyProduct);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);

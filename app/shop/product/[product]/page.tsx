@@ -1,7 +1,7 @@
 import React from "react";
 import ProductLayout from "./ProductLayout";
 import { Product } from "@/types";
-import { getProductsFromCategory, getProductById } from "@/lib/api";
+import { getProductsFromCategory, getProductById } from "@/lib/actions";
 import { shuffleProducts } from "@/tools/ProductFilterFunctions";
 
 const ProductPage = async ({
@@ -15,7 +15,12 @@ const ProductPage = async ({
     return;
   }
 
-  const product: Product = await getProductById(productId);
+  const product: Product | null = await getProductById(productId);
+
+  if (!product) {
+    return;
+  }
+
   const relatedProductsList: Product[] = await getProductsFromCategory(
     product.category,
   );
@@ -24,13 +29,7 @@ const ProductPage = async ({
     4,
   );
 
-  return (
-    <ProductLayout
-      product={product}
-      relatedProducts={relatedProducts}
-      productId={productId}
-    />
-  );
+  return <ProductLayout product={product} relatedProducts={relatedProducts} />;
 };
 
 export default ProductPage;

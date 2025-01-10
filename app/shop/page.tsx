@@ -5,13 +5,13 @@ import {
   filterProductCategory,
 } from "@/tools/ProductFilterFunctions";
 import { productCategories as categories } from "@/data/constants";
-import { getAllProducts } from "@/lib/api";
-import { Product } from "@/types";
+import { getAllProducts } from "@/lib/actions";
+import { Product, TopSellersProps } from "@/types";
 
 const ShopPage = async () => {
   const products: Product[] = await getAllProducts();
 
-  const topSellers: Product[] = categories.map((category) => ({
+  const topSellers: TopSellersProps[] = categories.map((category) => ({
     category,
     products: shuffleProducts(filterProductCategory(products, category), 4),
   }));

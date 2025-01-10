@@ -6,18 +6,10 @@ import { useShopContext } from "../../context/ShopContext";
 import { ButtonInput } from "../BannerButton";
 import { CartQuantityButtons } from "../Cart/CartQuantityButtons";
 import { EmptyCart } from "./EmptyCart";
-import { Redirect } from "next";
+import { redirect } from "next/navigation";
 
 export const CartFullSize = () => {
   const { cartItems } = useShopContext();
-
-  // const productMap = allProducts.reduce(
-  //   (map, product: ProductInfo) => {
-  //     map[product.id] = product;
-  //     return map;
-  //   },
-  //   {} as { [id: string]: ProductInfo },
-  // );
 
   if (cartItems.length === 0) {
     return <EmptyCart />;

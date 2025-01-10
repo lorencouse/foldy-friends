@@ -1,7 +1,7 @@
 import React from "react";
 import Category from "./Category";
 import { Product } from "@/types";
-import { getProductsFromCategory } from "@/lib/api";
+import { getProductsFromCategory } from "@/lib/actions";
 
 const CategoryPage = async ({
   params,

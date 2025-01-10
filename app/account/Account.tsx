@@ -1,72 +1,38 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import useAuth from "../hooks/useAuth";
+"use client";
+
+import { useState } from "react";
+import { redirect } from "next/navigation";
 import {
   signOut,
   reauthenticateWithCredential,
   EmailAuthProvider,
   deleteUser,
 } from "firebase/auth";
-import { auth, db } from "../lib/firebaseConfig";
-import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
-import { AddressInfo } from "../types";
-import { EditProfileFields } from "../components/Account/EditProfileFields";
-import { ButtonSquareRed } from "../components/BannerButton";
-import { UserDetails } from "../components/Account/UserDetails";
-import { DeleteSvg, SignOutSvg, EditSvg } from "../components/svgPaths";
-import { LoadingScreen } from "../components/Product/LoadingScreen";
-import { UserData } from "../types";
-import { emptyAddress } from "../data/constants";
+import { auth, db } from "@/lib/firebaseConfig";
+import { doc, deleteDoc } from "firebase/firestore";
+import { AddressInfo } from "@/types";
+import { EditProfileFields } from "@/components/Account/EditProfileFields";
+import { ButtonSquareRed } from "@/components/BannerButton";
+import { UserDetails } from "@/components/Account/UserDetails";
+import { DeleteSvg, SignOutSvg, EditSvg } from "@/components/svgPaths";
+import { UserData } from "@/types";
+import { emptyAddress } from "@/data/constants";
 
-const Account = () => {
-  const { user, loading } = useAuth();
-  const router = useRouter();
+const Account = ({ user }: { user: UserData }) => {
   const [error, setError] = useState("");
 
   const [editProfile, setEditProfile] = useState(false);
-  const [shippingInfo, setShippingInfo] = useState<AddressInfo>(emptyAddress);
-  const [billingInfo, setBillingInfo] = useState<AddressInfo>(emptyAddress);
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (user) {
-        const userDocRef = doc(db, "users", user.id);
-        const userDoc = await getDoc(userDocRef);
-        if (userDoc.exists()) {
-          const userData: UserData = userDoc.data() as UserData;
-          console.log(userData);
-          setShippingInfo(userData.shipping_info || shippingInfo);
-          setBillingInfo(userData.billing_info || billingInfo);
-        } else {
-          const newUserProfile = {
-            email: auth.currentUser?.email,
-            shipping_info: shippingInfo,
-            billing_info: billingInfo,
-          };
-          await setDoc(userDocRef, newUserProfile);
-        }
-      }
-    };
-
-    if (user) {
-      fetchUserProfile();
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push("/sign-in");
-    }
-  }, [user, loading, router]);
-
-  if (loading) {
-    return <LoadingScreen />;
-  }
+  const [shippingInfo, setShippingInfo] = useState<AddressInfo>(
+    user?.shipping_info ? user.shipping_info : emptyAddress,
+  );
+  const [billingInfo, setBillingInfo] = useState<AddressInfo>(
+    user?.billing_info ? user.billing_info : emptyAddress,
+  );
 
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      router.push("/sign-in");
+      redirect("/sign-in");
     } catch (error) {
       console.error("Error signing out: ", error);
     }
@@ -92,7 +58,7 @@ const Account = () => {
 
         await deleteUser(currentUser);
 
-        router.push("/sign-in");
+        redirect("/sign-in");
       } catch (error: any) {
         setError(error.message);
       }
@@ -116,7 +82,6 @@ const Account = () => {
           </>
         ) : (
           <>
-
             <UserDetails
               shippingInfo={shippingInfo}
               billingInfo={billingInfo}
