@@ -2,6 +2,13 @@ import React from "react";
 import Category from "./Category";
 import { Product } from "@/types";
 import { getProductsFromCategory } from "@/lib/actions";
+import { productCategories } from "@/data/constants";
+
+export async function generateStaticParams() {
+  return productCategories.map((category) => ({
+    category,
+  }));
+}
 
 const CategoryPage = async ({
   params,

@@ -1,8 +1,20 @@
 import React from "react";
 import ProductLayout from "./ProductLayout";
 import { Product } from "@/types";
-import { getProductsFromCategory, getProductById } from "@/lib/actions";
+import {
+  getProductsFromCategory,
+  getProductById,
+  getAllProducts,
+} from "@/lib/actions";
 import { shuffleProducts } from "@/tools/ProductFilterFunctions";
+
+export async function generateStaticParams() {
+  const products = await getAllProducts();
+
+  return products.map((product) => ({
+    product: product.id,
+  }));
+}
 
 const ProductPage = async ({
   params,

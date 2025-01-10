@@ -8,6 +8,8 @@ import { productCategories as categories } from "@/data/constants";
 import { getAllProducts } from "@/lib/actions";
 import { Product, TopSellersProps } from "@/types";
 
+
+
 const ShopPage = async () => {
   const products: Product[] = await getAllProducts();
 
