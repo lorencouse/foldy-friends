@@ -37,23 +37,22 @@ export const Subscribe = () => {
           <p className="text-white mt-4">Please enter a valid email address.</p>
         )}
         <form onSubmit={handleSubmit}>
-
-        <input
-          type="email"
-          name=""
-          id=""
-          value={email}
-          className="py-3 rounded-full  border-base-300 w-11/12 md:3/4 mx-4 my-8 pl-6 shadow-lg"
-          onChange={handleChange}
+          <input
+            type="email"
+            name=""
+            id=""
+            value={email}
+            className="py-3 rounded-full bg-background border-base-300 w-11/12 md:3/4 mx-4 my-8 pl-6 shadow-lg"
+            onChange={handleChange}
           />
-        <button
-          type="submit"
-          className="rounded-full w-48 bg-base-content p-3 shadow-lg text-base-100 duration-200 hover:scale-105 my-5 -ml-52"
-          disabled={!isValid || email === ""}
+          <button
+            type="submit"
+            className="rounded-full w-48 bg-base-content p-3 shadow-lg text-base-100 duration-200 hover:scale-105 my-5 -ml-48"
+            disabled={!isValid || email === ""}
           >
-          Subscribe
-        </button>
-          </form>
+            Subscribe
+          </button>
+        </form>
 
         <p className="font-thin text-white text-xl mx-5">
           Subscribe to stay up to date on our latest sales and newest items.

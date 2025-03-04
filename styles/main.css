@@ -1,7 +1,94 @@
 /* styles/globals.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-comfortaa: Comfortaa, sans-serif;
+  --font-baloo2: Baloo 2, cursive;
+  --font-quicksand: Quicksand, sans-serif;
+
+  --border-width-10: 10px;
+  --border-width-12: 12px;
+  --border-width-14: 14px;
+  --border-width-16: 16px;
+  --border-width-20: 20px;
+
+  --shadow-top:
+    0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  --color-tape-gray: var(--tape-gray);
+  --color-tape-edge-gray: var(--tape-edge-gray);
+  --color-transparent: var(--transparent);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-neutral: var(--neutral);
+  --color-background: var(--background);
+  --color-base-100: var(--base-100);
+  --color-base-200: var(--base-200);
+  --color-base-300: var(--base-300);
+  --color-base-content: var(--base-content);
+  --color-foreground: var(--foreground);
+  --color-info: var(--info);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
 @layer base {
   :root {
     --tape-gray: #dbd8be;
@@ -227,6 +314,7 @@ select option {
   right: -65px;
   box-shadow: 0px 7px 6px -9px black;
   transform: rotate(135deg);
+  color: var(--background);
 }
 
 .paper-heading:before,
@@ -240,6 +328,8 @@ select option {
   left: -65px;
   box-shadow: 0px -7px 6px -9px black;
   transform: rotate(135deg);
+  color: var(--background);
+  z-index: 1;
 }
 
 .paper {

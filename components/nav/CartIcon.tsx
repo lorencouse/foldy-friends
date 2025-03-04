@@ -27,7 +27,7 @@ export function NavBarCartIcon() {
         {cartCount}
       </div>
       {activeCategory === "cart" && (
-        <hr className="bg-base-content w-4/5 h-1 rounded-lg border-none drop-shadow-sm" />
+        <hr className="bg-base-content w-4/5 h-1 rounded-lg border-none drop-shadow-xs" />
       )}
     </div>
   );
@@ -50,7 +50,7 @@ export const CartIconMobile = () => {
           )}
         </div>
         {activeCategory === "cart" && (
-          <hr className="bg-base-content w-4/5 h-1 rounded-lg border-none drop-shadow-sm mt-1" />
+          <hr className="bg-base-content w-4/5 h-1 rounded-lg border-none drop-shadow-xs mt-1" />
         )}
       </div>
     </Link>

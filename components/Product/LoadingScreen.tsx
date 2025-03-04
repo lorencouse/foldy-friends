@@ -7,7 +7,7 @@ export const LoadingScreen = () => {
         <div className="flex w-full flex-col gap-4">
           <div className="flex flex-row w-full items-center gap-4">
             <div className="skeleton h-72 w-72 shrink-0 rounded-2xl"></div>
-            <div className="flex flex-col gap-4 flex-grow">
+            <div className="flex flex-col gap-4 grow">
               <span className="loading loading-ring loading-lg"></span>
               <div className="skeleton h-4 w-full"></div>
               <div className="skeleton h-4 w-full"></div>

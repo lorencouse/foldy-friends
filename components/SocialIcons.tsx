@@ -54,7 +54,7 @@ function SocialIcon(props: {
     <a href={props.link} rel="noreferrer" target="_blank">
       <button
         type="button"
-        className="m-2 rounded-full px-3 py-3 text-xs font-medium text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+        className="m-2 rounded-full px-3 py-3 text-xs font-medium text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-hidden focus:ring-0 active:shadow-lg"
         style={{ backgroundColor: props.bgColor }}
       >
         <svg

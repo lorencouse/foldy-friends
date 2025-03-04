@@ -36,7 +36,7 @@ export const VariationSelector = ({
           <div
             key={s}
             onClick={() => setCurrentVariation(s)}
-            className={`px-6 py-4 m-2 w-auto text-base-content  ${getBgColorClass(s)} rounded-lg cursor-pointer shadow-md duration-200 hover:-translate-y-1 hover:opacity-80
+            className={`px-6 py-4 m-2 w-auto text-base-content rounded-xl  ${getBgColorClass(s)}  cursor-pointer shadow-md duration-200 hover:-translate-y-1 hover:opacity-80
             ${s === currentVariation ? "outline-3 outline-base-content" : " outline-1 outline-base-300"}  outline  `}
           >
             {s}

@@ -77,7 +77,7 @@ export const Item = ({
           <StarRatingAverage id={productData.id} />
         </div>
         <button
-          className="min-w-12 mb-6 mt-2 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer hover:-translate-y-1 duration-200 text-white rounded-2xl"
+          className="min-w-12 mb-6 mt-2 h-12 text-center p-3 bg-secondary shadow-md cursor-pointer hover:-translate-y-1 duration-200 text-white rounded-xl"
           onClick={handleAddToCartClick}
         >
           <span>{buttonText}</span>

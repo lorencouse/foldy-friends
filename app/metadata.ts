@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getURL } from "@/lib/utils"; // Assuming this is where getURL is defined
+import { getURL } from "next/dist/shared/lib/utils";
 
 const title = "foldy friends";
 const description = "Shop origami kits and supplies.";

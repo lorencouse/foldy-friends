@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const Hero = () => {
   return (
-    <div className=" flex flex-wrap justify-between  bg-gradient-to-t from-base-100 to-primary">
+    <div className=" flex flex-wrap justify-between  bg-linear-to-t from-base-100 to-primary">
       <div className="flex flex-col w-full md:w-1/2 items-center justify-center text-left md:mt-20 mt-5">
         <div className="flex flex-col font-semibold text-center bg-base-100 rounded-2xl sm:p-20 p-5 mx-10 ">
           <p className="sm:text-xl ">- Animal Models -</p>

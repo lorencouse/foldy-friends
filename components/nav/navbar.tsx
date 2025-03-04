@@ -48,7 +48,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="md:fixed md:top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 bg-primary text-white py-2 shadow-lg">
+    <header className="md:fixed md:top-0 z-50 w-full bg-background backdrop-blur-sm bg-primary text-white py-2 shadow-lg">
       <div className="container flex h-14 items-center bg-primary">
         {/* Mobile Menu */}
         <Sheet>

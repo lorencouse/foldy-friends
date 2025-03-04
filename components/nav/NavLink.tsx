@@ -21,7 +21,7 @@ export function NavLink({
         <Link href={url}>{label}</Link>
       </p>
       {activeCategory === label && (
-        <hr className="bg-base-content w-4/5 h-1 rounded-lg border-none drop-shadow-sm" />
+        <hr className="bg-base-content w-4/5 h-1 rounded-lg border-none drop-shadow-xs" />
       )}
     </div>
   );
