@@ -1,17 +1,9 @@
-// @ts-check
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'firebasestorage.googleapis.com',
-        port: '',
-        pathname: '/**'
-      }
-    ]
-  }
+  reactStrictMode: true,
+  // Add other configurations as needed
+  images: { unoptimized: true },
+  output: "export",
 };
 
 module.exports = nextConfig;
