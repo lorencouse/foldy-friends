@@ -59,61 +59,61 @@
     {
       "slug": "shop-banner-paper-table",
       "out": "images/child-choosing-origami-paper",
-      "note": "Shop banner: a wide, calm frame with room for type on the left. Generic loose paper only, never packs or products.",
+      "note": "Shop banner: a wide, calm frame with room for type on the left. Generic loose paper only, never packs or products. Shown in a taped photo frame on /shop, about 560px wide at most.",
       "aspect": "21:9",
       "size": "2K",
-      "width": 2400,
-      "height": 1029,
+      "width": 1600,
+      "height": 686,
       "prompt": "A wide, calm photograph across a long pale wooden table near a big window. On the right third of the frame a girl of about eight with dark brown skin and short natural hair in two puffs, wearing a soft blush pink sweatshirt, leans over the table and slides one sunshine yellow square of origami paper out of a loose fan of plain square sheets in sky blue, mint green, tomato red, blush pink and sunshine yellow, deciding which colour to fold next. Her other hand rests flat on the table beside a finished small sky blue jumping frog. The sheets are loose single squares lying fanned on the bare table: there are no packs, no boxes, no wrappers and no labels anywhere. The left half of the frame is mostly quiet tabletop and soft out-of-focus window light, with nothing in it but the edge of a mug. There is exactly one person in the picture."
     },
     {
       "slug": "moon-dreamers-bedtime",
       "out": "images/dad-and-daughter-folding-at-bedtime",
-      "note": "Moon Dreamers bedtime scene (fixed scene 3: exactly one child and one adult).",
+      "note": "Moon Dreamers bedtime scene (fixed scene 3: exactly one child and one adult). Shown as a taped photo in the home page Moon Dreamers panel, about 520px wide at most.",
       "aspect": "3:2",
       "size": "2K",
-      "width": 1920,
-      "height": 1280,
+      "width": 1200,
+      "height": 800,
       "prompt": "Evening, just before bed. A father in his forties with dark brown skin, a short greying beard and reading glasses pushed up on his head, wearing a soft navy sweatshirt, sits cross-legged on a living-room rug. His only child, a daughter of about five in star-print pyjamas with her hair in two uneven braids, sits on the rug tucked against his side, and both of them look down at a small sky blue paper boat she holds up in her two hands, her mouth open in a delighted laugh. His near arm is around her shoulders; his other hand holds a sheet of midnight blue origami paper resting on his knee. A few square sheets in sunshine yellow and mint green, a folded yellow paper star and a small crooked crane lie on the rug in front of them. The only light is a warm table lamp on a side table to the right, so the room behind them falls into soft dusk shadow with the edge of a sofa and a dark window. Warm, quiet and a little sleepy. There is exactly one child and exactly one adult in the picture, two people in total, and no other child anywhere."
     },
     {
       "slug": "fold-club-newsletter",
       "out": "images/girl-holding-up-paper-crane",
-      "note": "Fold Club newsletter: one child proudly showing a finished fold, square for a small slot.",
+      "note": "Fold Club newsletter: one child proudly showing a finished fold, square for a small slot. Shown about 300px wide beside the dog mascot.",
       "aspect": "1:1",
       "size": "1K",
-      "width": 1000,
-      "height": 1000,
+      "width": 800,
+      "height": 800,
       "prompt": "A girl of about eleven of South Asian descent, with long dark hair in a loose side plait and a few strands escaping, wearing a mint green hoodie, sits at a kitchen table and holds up a finished tomato red paper crane at chest height in her open palm, looking down at it with a proud, pleased half smile. The crane has a long neck, a pointed head, sharp creases and two spread wings, with a little of the white reverse showing at the wing tips. Her other hand rests on the table beside two loose square sheets of sunshine yellow and sky blue paper. Behind her, softly out of focus, a cream kitchen wall and a window with daylight. She is framed from the waist up in the centre of the square frame. There is exactly one person in the picture."
     },
     {
       "slug": "empty-state-small-hands",
       "out": "images/child-hands-folding-origami",
-      "note": "Empty state / close-up (fixed scene 4: small slender young child's hands, a clearly recognisable fox).",
+      "note": "Empty cart (fixed scene 4: small slender young child hands, a clearly recognisable fox). Shown about 240px wide beside the dog mascot.",
       "aspect": "4:3",
       "size": "1K",
-      "width": 1200,
-      "height": 900,
+      "width": 640,
+      "height": 480,
       "prompt": "A close-up looking down at a wooden table from just above, of the small, slender hands of a young child of about six making a fold in a square sheet of mint green origami paper. Only the hands, thin wrists and the turned-back cuffs of an oatmeal coloured jumper are in the frame. The hands are clearly a young child's: small, narrow and soft, with short slim fingers, smooth skin and tiny nails, much smaller than an adult's. The left hand holds the paper steady with its fingertips; the right index finger runs along a fresh diagonal crease, pressing it flat. Each hand has exactly four fingers and one thumb. The paper is solid mint green on top with the white reverse showing along the folded edge, and earlier crease lines are faintly visible across it. To the right, in sharp focus, sits one finished origami fox face in tomato red: a flat triangle with two pointed ears standing up at the top corners, a pointed snout at the bottom, and the white reverse showing as a pale stripe on each ear, unmistakably a fox. A few loose sheets of blush pink and sunshine yellow lie at the top right edge. Soft window light from the top left. No face is in the picture."
     },
     {
       "slug": "grandparent-floor-frog",
       "out": "images/grandmother-and-boy-folding-frogs",
-      "note": "Spare for a 'making' tile or the about page: a different family and age, a jumping frog.",
+      "note": "Redrawn after the first draw was rejected (too happy, odd stool pose, floating frog); the captain approved the redraw. Shown as a square taped photo in the /shop/kits banner, about 300px wide.",
       "aspect": "4:5",
       "size": "1K",
-      "width": 920,
-      "height": 1150,
-      "prompt": "On a living-room floor in afternoon daylight, a grandmother in her late sixties with short silver hair, light olive skin and reading glasses on a cord, wearing a teal cardigan, sits on a low footstool and leans forward, watching her grandson. The boy, about eight, with black hair sticking up at the crown and light brown skin, in a sunshine yellow t-shirt, kneels on the rug and presses the back of a small sky blue paper frog with one finger so that it is caught in mid-hop just above the rug. Both of them are laughing. Two other finished paper frogs in mint green and tomato red sit on the rug, and a few loose square sheets lie beside the stool. Behind them a cream wall, a houseplant and the arm of a sofa. Seen from low down at the boy's level. There are exactly two people in the picture."
+      "width": 720,
+      "height": 900,
+      "prompt": "A quiet afternoon on a living-room floor in soft window daylight. A grandmother in her late sixties with short silver hair, light olive skin and reading glasses on a cord around her neck, wearing a teal cardigan over a grey top and dark trousers, sits on the rug with her back resting against the front of a beige sofa, her legs folded comfortably to one side, the way an older person really sits on a floor. Her grandson, about eight, with black hair sticking up at the crown and light brown skin, in a faded sunshine yellow t-shirt, sits cross-legged on the rug facing her, slightly turned toward the camera. He is folding a sky blue paper frog in his lap with both hands on it, pressing a crease with his thumb, his eyes down and his lips pressed together in quiet concentration. She leans in a little to watch his hands, with a small, warm, closed-mouth smile, one hand resting on her knee. On the rug between them, sitting flat on the rug pile and each casting a small soft shadow, are two finished paper frogs in mint green and tomato red, and beside them two loose square sheets of sunshine yellow and blush pink paper. Behind them a cream wall and a houseplant in a pot. Seen from low down at the boy's eye level, about two metres away. Neither of them is laughing or looking at the camera. There are exactly two people in the picture."
     },
     {
       "slug": "classroom-folding-table",
       "out": "images/kids-folding-origami-classroom",
-      "note": "Spare: classroom or club setting, three children; a second wide hero option.",
+      "note": "Classroom or club setting, three children. Shown as a taped photo in the /shop/paper banner, about 560px wide at most.",
       "aspect": "3:2",
       "size": "2K",
-      "width": 1920,
-      "height": 1280,
+      "width": 1200,
+      "height": 800,
       "prompt": "In a bright primary school classroom with large windows, three children of about eight and nine sit side by side at a low shared table folding origami boats and cranes. Seen from the side and slightly in front at their eye level. On the left a boy with pale skin and red hair in a grey sweatshirt holds up a finished tomato red boat to show the girl beside him. In the middle a girl with brown skin and box braids tied back, in a sky blue cardigan, leans in to look at it, laughing, her own half-folded mint crane in her hands. On the right a boy of East Asian descent with a bowl cut, in a navy polo shirt, concentrates on a sunshine yellow sheet, pressing a crease with his thumbnail. Loose square sheets in all five colours are spread on the table. Behind them, softly out of focus, a cork board with children's colourful paintings that have no writing on them, and a shelf of plain trays. No adult is in the picture. There are exactly three people in the picture."
     }
   ]
