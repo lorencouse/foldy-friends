@@ -22,7 +22,7 @@
  * - A batch whose estimate is over --max-usd (default $0.50) is refused
  *   before anything is sent.
  * - Existing files are never redrawn without --force. A forced review redraw
- *   moves the old copy to <review>/_superseded/ first.
+ *   moves the old copy to <review>/_superseded/ when the new one arrives.
  * - The spend ledger is tools/.images-ledger.json (gitignored). It records
  *   the token counts Google returns, and prices them, so the spend is a fact.
  * - Output goes through sharp: WebP at the width and height the placement
@@ -175,6 +175,11 @@ async function writeWebp(buf, dest, width, height) {
 /** One finished picture, put where it belongs and recorded once. */
 async function deliver(job, buf, usage, ledger, batchName) {
   if (job.reviewFile) {
+    if (existsSync(job.reviewFile)) {
+      const kept = join(dirname(job.reviewFile), "_superseded", `${job.slug}-${stamp()}.jpeg`);
+      mkdirSync(dirname(kept), { recursive: true });
+      renameSync(job.reviewFile, kept);
+    }
     mkdirSync(dirname(job.reviewFile), { recursive: true });
     writeFileSync(job.reviewFile, buf);
   } else {
@@ -422,7 +427,6 @@ async function main() {
     throw new Error("name the slugs to draw (see tools/images.json); nothing draws by default");
 
   const jobs = [];
-  const superseded = [];
   for (const entry of manifest.images.filter((e) => wanted.includes(e.slug))) {
     const job = jobFor(entry, reviewDir);
     if (!review && !job.dest)
@@ -432,7 +436,6 @@ async function main() {
       console.log(`${entry.slug}: exists, skipped (--force to redraw)`);
       continue;
     }
-    if (review && existsSync(target)) superseded.push(job);
     jobs.push(job);
   }
 
@@ -474,13 +477,6 @@ async function main() {
     throw new Error("drawing goes through the Batch API only: add --batch to submit");
   if (!key) throw new Error("GEMINI_API_KEY not set (repo .env or the environment)");
 
-  // A forced review redraw keeps the frame it replaces, moved aside only once
-  // nothing can refuse the run.
-  for (const j of superseded) {
-    const kept = join(reviewDir, "_superseded", `${j.slug}-${stamp()}.jpeg`);
-    mkdirSync(dirname(kept), { recursive: true });
-    renameSync(j.reviewFile, kept);
-  }
   const { name, file } = await submit(key, jobs, reviewDir);
   if ((await collect(key, name, file, jobs, ledger)) && review) {
     console.log(
