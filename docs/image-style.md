@@ -88,7 +88,7 @@ size before approving anything:
     node tools/gen-images.mjs --dry-run --review --review-dir <dir> a b c d   # free: prices it
     node tools/gen-images.mjs --batch --review --review-dir <dir> a b c d     # draws + _contact-sheet.jpg
     node tools/gen-images.mjs --batch-collect --review-dir <dir>              # if the wait was cut short
-    node tools/gen-images.mjs --batch a b                                     # final: WebP into public/<out>.webp
+    node tools/gen-images.mjs --promote --review-dir <dir> a b                # approved draws -> public/<out>.webp, free
 
 - Nothing draws without the captain's approval for that batch: how many, what
   for, and the estimated cost. Draw a few, look, then decide; a test sheet
@@ -103,6 +103,8 @@ size before approving anything:
   $0.076 a picture worst case, not $0.050. The estimate uses the worst case,
   and the ledger records what Google actually counted.
 - `--max-usd` (default $0.50) refuses any batch whose estimate is over it.
+- Draw into a review dir, look at every frame, then `--promote` only the
+  approved ones; promoting costs nothing and never redraws.
 - Existing files are never redrawn without `--force`; a forced review redraw
   parks the old frame in `<review-dir>/_superseded/`.
 - Draw at the size the placement needs. `width` and `height` in the manifest
