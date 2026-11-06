@@ -60,6 +60,14 @@ CI runs all of these on every pull request.
   product page. Uploaded photos (served from `/media`, stored in `UPLOAD_DIR`)
   replace the drawings.
 - `lib/fold-level.ts`: reads a kit's fold level ("Difficulty 3 of 6") from its description.
+- `content/guides/*.mdx`: the origami how-to guides at `/guides`. Each file's YAML
+  frontmatter holds its title, SEO title and description, steps and the
+  catalogue slugs of the products it recommends (product pages link back from
+  these); the body is prose with `{props.steps}` where the steps go.
+  `lib/guides.ts` lists and validates them. The step diagrams are drawn in
+  `components/guides/diagrams/<slug>.ts`, one per step, from the fold-line and
+  arrow helpers in `lib/guides/`. To add a guide, write both files and add them
+  to the lists in `lib/guides.ts` and `components/guides/diagrams/index.ts`.
 
 ## Deploying (Coolify)
 
