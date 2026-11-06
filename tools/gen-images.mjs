@@ -351,8 +351,7 @@ async function main() {
   const args = process.argv.slice(2);
   const reviewDirFlag = argValue(args, "--review-dir");
   const maxUsd = Number(argValue(args, "--max-usd") ?? 0.5);
-  if (!Number.isFinite(maxUsd) || maxUsd < 0)
-    throw new Error("--max-usd needs a dollar amount like 0.5");
+  if (!Number.isFinite(maxUsd) || maxUsd < 0) throw new Error("--max-usd needs a dollar amount like 0.5");
   const flags = new Set(args.filter((a) => a.startsWith("--")));
   const wanted = args.filter((a) => !a.startsWith("--"));
   const review = flags.has("--review");
