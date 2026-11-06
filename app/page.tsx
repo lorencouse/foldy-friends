@@ -136,8 +136,8 @@ function Hero() {
           <figure className="absolute inset-[9%_9%_12%_10%] m-0 flex -rotate-2 flex-col rounded-[10px] bg-card p-3.5 pb-12 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)]">
             <div className="relative min-h-0 flex-1 overflow-hidden rounded-md">
               <Image
-                src="/images/happy-kids-folding-origami-1024.webp"
-                alt="Two children folding colourful origami at a table"
+                src="/images/kids-folding-origami-kitchen-table.webp"
+                alt="A brother and sister folding paper cranes at the kitchen table while their dad watches"
                 fill
                 priority
                 sizes="(min-width: 1024px) 40vw, 90vw"
@@ -330,11 +330,11 @@ function ForParents() {
         <figure className="relative m-0 rotate-[1.5deg] rounded-[10px] bg-card p-3.5 shadow-[0_24px_40px_-26px_rgba(31,42,68,.55)]">
           <div className="relative aspect-[4/3] overflow-hidden rounded-md">
             <Image
-              src="/images/boy-giving-mom-origami-dog.webp"
-              alt="A boy handing his mother an origami dog he folded"
+              src="/images/boy-handing-mom-origami-dog.webp"
+              alt="A boy handing his mother a red paper dog he folded"
               fill
               sizes="(min-width: 1024px) 45vw, 90vw"
-              className="object-cover object-[30%_40%]"
+              className="object-cover object-[25%_40%] md:object-[50%_40%]"
             />
           </div>
           <span
