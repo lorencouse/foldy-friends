@@ -184,7 +184,7 @@ export default function Home() {
             alt="A boy handing his mother a red paper dog he folded"
             fill
             sizes="100vw"
-            className="object-cover object-[50%_40%] lg:brightness-[0.6]"
+            className="object-cover object-[25%_40%] md:object-[50%_40%] lg:brightness-[0.6]"
           />
         </div>
         <div className="px-4 py-12 sm:px-8 lg:absolute lg:inset-y-0 lg:right-0 lg:flex lg:w-[42%] lg:flex-col lg:justify-end lg:px-0 lg:pr-[6%] lg:pb-[8svh]">
