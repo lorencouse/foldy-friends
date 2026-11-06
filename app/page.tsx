@@ -266,9 +266,27 @@ function MoonDreamers() {
               Meet the dreamers
             </Link>
           </div>
-          <div className="relative min-h-[300px] sm:min-h-[340px]">
-            <Moon fill="#F6B93B" sheen className="absolute top-0 right-0 w-[min(78%,340px)]" />
-            <ul className="absolute inset-x-0 bottom-0 grid grid-cols-4 gap-2 sm:gap-3">
+          <div className="relative flex flex-col gap-7 pt-4">
+            <Moon fill="#F6B93B" sheen className="absolute -top-3 -right-3 w-[min(46%,220px)]" />
+            <figure className="relative m-0 w-[84%] -rotate-2 rounded-[10px] bg-card p-2.5 pb-10 shadow-[0_24px_40px_-24px_rgba(0,0,0,.7)] sm:p-3 sm:pb-11">
+              <div className="relative aspect-[3/2] overflow-hidden rounded-md">
+                <Image
+                  src="/images/dad-and-daughter-folding-at-bedtime.webp"
+                  alt="A dad and his daughter in star pyjamas looking at the paper boat she folded, on the rug before bed"
+                  fill
+                  sizes="(min-width: 1024px) 480px, 85vw"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="absolute inset-x-0 bottom-3 text-center font-display text-lg leading-none font-bold text-ink-soft">
+                One more fold before bed
+              </figcaption>
+              <span
+                className="tape tape-strip -top-3 left-[36%] rotate-3"
+                style={{ backgroundColor: "var(--color-sky)" }}
+              />
+            </figure>
+            <ul className="relative grid grid-cols-4 gap-2 sm:gap-3">
               {DREAMERS.map(({ name, Animal }) => (
                 <li key={name} className="flex flex-col items-center gap-1.5">
                   <div className="flex aspect-square w-full items-center justify-center rounded-[18px] bg-midnight-2">
@@ -401,17 +419,34 @@ function FoldClub() {
               Email us to join
             </a>
           </div>
-          <div aria-hidden="true" className="relative w-[min(100%,240px)] justify-self-center">
-            <span className="absolute -top-1 -left-7 z-[2] -rotate-5 rounded-[16px_16px_16px_4px] border-2 border-ink bg-card px-4 py-2.5 font-display text-lg leading-none font-extrabold">
-              Let's fold!
-            </span>
-            <Image
-              src="/assets/dog-mascot.png"
-              alt=""
-              width={388}
-              height={378}
-              className="block w-full rotate-4 mix-blend-multiply"
-            />
+          <div className="relative w-[min(100%,400px)] justify-self-center pb-6">
+            <figure className="relative m-0 w-[70%] -rotate-2 rounded-[10px] bg-card p-2.5 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)] sm:p-3">
+              <div className="relative aspect-square overflow-hidden rounded-md">
+                <Image
+                  src="/images/girl-holding-up-paper-crane.webp"
+                  alt="A girl holding up a red paper crane she folded"
+                  fill
+                  sizes="(min-width: 768px) 280px, 65vw"
+                  className="object-cover"
+                />
+              </div>
+              <span
+                className="tape tape-strip -top-3 left-[34%] -rotate-4"
+                style={{ backgroundColor: "var(--color-blush)" }}
+              />
+            </figure>
+            <div aria-hidden="true" className="absolute right-0 bottom-0 w-[34%]">
+              <span className="absolute -top-9 -right-1 z-[2] -rotate-5 rounded-[16px_16px_4px_16px] border-2 border-ink bg-card px-3 py-2 font-display text-base leading-none font-extrabold whitespace-nowrap sm:text-lg">
+                Let's fold!
+              </span>
+              <Image
+                src="/assets/dog-mascot.png"
+                alt=""
+                width={388}
+                height={378}
+                className="block w-full rotate-4 mix-blend-multiply"
+              />
+            </div>
           </div>
         </div>
       </div>

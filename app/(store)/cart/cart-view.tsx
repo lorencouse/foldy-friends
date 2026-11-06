@@ -23,13 +23,30 @@ export function CartView() {
   if (lines.length === 0) {
     return (
       <div className="creases flex flex-col items-center gap-4 rounded-[28px] bg-sun-pale px-6 py-14 text-center">
-        <Image
-          src="/assets/dog-mascot.png"
-          alt=""
-          width={388}
-          height={378}
-          className="w-44 -rotate-4 mix-blend-multiply"
-        />
+        <div className="flex items-end justify-center">
+          <figure className="relative m-0 w-[min(56vw,240px)] -rotate-3 rounded-[10px] bg-card p-2 shadow-[0_18px_30px_-20px_rgba(31,42,68,.55)] sm:p-2.5">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-md">
+              <Image
+                src="/images/child-hands-folding-origami.webp"
+                alt="A child's small hands creasing a sheet of mint green paper beside a folded red fox"
+                fill
+                sizes="240px"
+                className="object-cover"
+              />
+            </div>
+            <span
+              className="tape tape-strip -top-3 left-[30%] h-5 w-20 rotate-2"
+              style={{ backgroundColor: "var(--color-mint)" }}
+            />
+          </figure>
+          <Image
+            src="/assets/dog-mascot.png"
+            alt=""
+            width={388}
+            height={378}
+            className="-ml-1 w-28 rotate-4 mix-blend-multiply sm:w-36"
+          />
+        </div>
         <h2 className="text-[2rem] leading-[1.1]">Nothing folded in here yet</h2>
         <p className="max-w-[420px] text-ink-soft">
           Find a friend to fold, or start with a pack of double-sided paper.
