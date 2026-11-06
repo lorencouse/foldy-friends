@@ -19,8 +19,8 @@ export default function NewProductPage() {
 async function NewProduct() {
   await requireAdmin();
   return (
-    <section className="pt-10 md:pt-16">
-      <h1 className="text-head">Add a product</h1>
+    <section className="wrap pt-10 pb-20 md:pt-16">
+      <h1 className="text-[clamp(2.25rem,4.4vw,3.5rem)] leading-none">Add a product</h1>
       <ProductForm
         initial={{
           name: "",

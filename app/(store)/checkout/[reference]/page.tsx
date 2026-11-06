@@ -37,25 +37,30 @@ async function OrderPlaced({ params }: { params: PageProps<"/checkout/[reference
     if (!user || user.id !== order.userId) notFound();
   }
   return (
-    <section className="grid gap-12 pt-10 md:grid-cols-2 md:pt-16">
+    <section className="wrap grid items-start gap-12 pt-10 pb-20 md:grid-cols-2 md:pt-16">
       <ClearCartOnMount />
       <div>
-        <h1 className="text-head">Order {order.reference} placed</h1>
-        <p className="mt-5 max-w-[44ch] text-lead">
+        <span className="tape -rotate-2" style={{ backgroundColor: "var(--color-mint)" }}>
+          Demo order
+        </span>
+        <h1 className="mt-4 text-[clamp(2.25rem,4.4vw,3.5rem)] leading-none">
+          Order {order.reference} placed
+        </h1>
+        <p className="mt-5 max-w-[44ch] text-lead text-ink-soft">
           Thank you, {order.shipping.name.split(" ")[0]}. In a real shop a confirmation would now be on its
           way to {order.email}. This one is a demo, so nothing was charged.
         </p>
         <div className="mt-10 flex flex-wrap gap-3">
-          <Link href="/shop" className="btn btn-accent">
+          <Link href="/shop" className="btn btn-primary">
             Keep shopping
           </Link>
-          <Link href="/account" className="btn btn-quiet">
+          <Link href="/account" className="btn">
             Your orders
           </Link>
         </div>
       </div>
-      <div className="edge-zigzag h-fit bg-paper-2 p-6 sm:p-8">
-        <h2 className="text-lead">Receipt</h2>
+      <div className="sheet sheet-raised h-fit overflow-hidden p-6 sm:p-8">
+        <h2 className="text-[1.75rem]">Receipt</h2>
         <ul className="mt-6 space-y-3 tabular-nums">
           {order.items.map((i) => (
             <li key={i.id} className="flex justify-between gap-4">
@@ -71,7 +76,8 @@ async function OrderPlaced({ params }: { params: PageProps<"/checkout/[reference
             <span>{order.shippingCents === 0 ? "Free" : formatPrice(order.shippingCents)}</span>
           </li>
         </ul>
-        <p className="-mx-6 mt-6 flex h-11 items-center justify-between bg-ink px-6 text-paper sm:-mx-8 sm:px-8">
+        <div className="dashed-rule mt-6" aria-hidden="true" />
+        <p className="mt-4 flex items-baseline justify-between font-display text-2xl font-extrabold">
           <span>Total</span>
           <span className="tabular-nums">{formatPrice(order.totalCents)}</span>
         </p>

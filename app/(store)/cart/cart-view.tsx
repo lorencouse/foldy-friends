@@ -1,106 +1,166 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { ProductArt } from "@/components/product-art";
+import { PictureTile } from "@/components/product-picture";
 import { cart, useCart } from "@/lib/cart";
 import { FREE_SHIPPING_FROM_CENTS, formatPrice, shippingFor } from "@/lib/money";
 
 export function CartView() {
   const lines = useCart();
   const subtotal = lines.reduce((s, l) => s + l.unitPriceCents * l.quantity, 0);
+  const savings = lines.reduce(
+    (s, l) =>
+      s +
+      (l.listPriceCents && l.listPriceCents > l.unitPriceCents ? l.listPriceCents - l.unitPriceCents : 0) *
+        l.quantity,
+    0,
+  );
   const shipping = shippingFor(subtotal);
+  const toFree = Math.max(0, FREE_SHIPPING_FROM_CENTS - subtotal);
+  const progress = Math.min(100, Math.round((subtotal / FREE_SHIPPING_FROM_CENTS) * 100));
 
   if (lines.length === 0) {
     return (
-      <div className="mt-10 grid items-center gap-10 bg-paper-2 p-8 md:grid-cols-2 md:p-12">
-        <div>
-          <p className="text-lead">Nothing folded in here yet.</p>
-          <p className="mt-2 text-muted">A pack of double-sided paper is a good first sheet.</p>
-          <Link href="/shop" className="btn mt-8">
-            Go to the shop
-          </Link>
-        </div>
-        <ProductArt art="paper-double" className="mx-auto w-full max-w-xs" />
+      <div className="creases flex flex-col items-center gap-4 rounded-[28px] bg-sun-pale px-6 py-14 text-center">
+        <Image
+          src="/assets/dog-mascot.png"
+          alt=""
+          width={388}
+          height={378}
+          className="w-44 -rotate-4 mix-blend-multiply"
+        />
+        <h2 className="text-[2rem] leading-[1.1]">Nothing folded in here yet</h2>
+        <p className="max-w-[420px] text-ink-soft">
+          Find a friend to fold, or start with a pack of double-sided paper.
+        </p>
+        <Link href="/shop" className="btn btn-primary mt-1">
+          Find a friend
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_24rem]">
-      <ul className="space-y-6">
+    <div className="flex flex-wrap items-start gap-8">
+      <ul className="flex min-w-0 flex-[999_1_560px] flex-col gap-4">
         {lines.map((l) => (
           <li
             key={`${l.productId}-${l.option}`}
-            className="grid grid-cols-[6rem_1fr] gap-5 sm:grid-cols-[8rem_1fr_auto]"
+            className="sheet grid grid-cols-[88px_minmax(0,1fr)] items-center gap-x-4 gap-y-3 p-3.5 sm:flex sm:gap-5 sm:p-4"
           >
-            <Link href={`/products/${l.slug}`} className="block aspect-square bg-paper-2">
-              <ProductArt art={l.art} option={l.option ?? undefined} className="size-full" />
+            <Link
+              href={`/products/${l.slug}`}
+              tabIndex={-1}
+              aria-hidden="true"
+              className="block w-[88px] flex-none sm:w-[120px]"
+            >
+              <PictureTile art={l.art} option={l.option} small className="rounded-[14px_0_14px_14px]" />
             </Link>
-            <div>
-              <Link href={`/products/${l.slug}`} className="font-medium hover:underline">
+            <div className="flex min-w-0 flex-1 flex-col">
+              <Link
+                href={`/products/${l.slug}`}
+                className="font-display text-[1.3125rem] leading-[1.2] font-bold hover:text-tomato"
+              >
                 {l.name}
               </Link>
-              {l.option && <p className="text-small text-muted">{l.option}</p>}
-              <p className="mt-1 tabular-nums">{formatPrice(l.unitPriceCents)}</p>
-              <div className="mt-3 flex items-center gap-1">
+              <p className="text-[0.9375rem] text-ink-soft">
+                {l.option && (
+                  <>
+                    <span>{l.option}</span> ·{" "}
+                  </>
+                )}
+                {formatPrice(l.unitPriceCents)} each
+              </p>
+              <button
+                type="button"
+                className="link-btn self-start"
+                onClick={() => cart.setQuantity(l.productId, l.option, 0)}
+              >
+                Remove<span className="sr-only"> {l.name}</span>
+              </button>
+            </div>
+            <div className="col-span-2 flex items-center justify-between gap-4 sm:contents">
+              <fieldset className="stepper">
+                <legend className="sr-only">Quantity of {l.name}</legend>
                 <button
                   type="button"
-                  className="btn btn-quiet min-h-10 w-10 px-0"
+                  className="step"
                   aria-label={`One fewer ${l.name}`}
                   onClick={() => cart.setQuantity(l.productId, l.option, l.quantity - 1)}
                 >
                   −
                 </button>
-                <span className="w-10 text-center tabular-nums" aria-live="polite">
+                <output
+                  aria-live="polite"
+                  className="min-w-8 text-center font-display text-lg font-extrabold"
+                >
                   {l.quantity}
-                </span>
+                </output>
                 <button
                   type="button"
-                  className="btn btn-quiet min-h-10 w-10 px-0"
+                  className="step"
                   aria-label={`One more ${l.name}`}
                   onClick={() => cart.setQuantity(l.productId, l.option, l.quantity + 1)}
+                  disabled={l.quantity >= 20}
                 >
                   +
                 </button>
-                <button
-                  type="button"
-                  className="ml-4 text-small underline underline-offset-4 hover:no-underline"
-                  onClick={() => cart.setQuantity(l.productId, l.option, 0)}
-                >
-                  Remove
-                </button>
-              </div>
+              </fieldset>
+              <strong className="min-w-[84px] text-right font-display text-[1.375rem] leading-none font-extrabold">
+                {formatPrice(l.unitPriceCents * l.quantity)}
+              </strong>
             </div>
-            <p className="col-start-2 font-medium tabular-nums sm:col-start-3 sm:text-right">
-              {formatPrice(l.unitPriceCents * l.quantity)}
-            </p>
           </li>
         ))}
       </ul>
-      <aside className="h-fit bg-paper-2 p-6 sm:p-8" aria-label="Order summary">
-        <h2 className="text-lead">Summary</h2>
-        <dl className="mt-6 space-y-3 tabular-nums">
-          <div className="flex justify-between">
-            <dt>Subtotal</dt>
-            <dd>{formatPrice(subtotal)}</dd>
+
+      <aside
+        aria-label="Order summary"
+        className="sheet sheet-raised flex min-w-0 flex-[1_1_340px] flex-col gap-4.5 rounded-3xl p-6"
+      >
+        <h2 className="text-[1.75rem] leading-[1.1]">Order summary</h2>
+        <div className="flex flex-col gap-2 rounded-[14px] bg-mint-pale px-4 py-3.5">
+          <span className="text-[0.9375rem] font-extrabold">
+            {toFree > 0 ? `${formatPrice(toFree)} away from free shipping` : "You have free shipping!"}
+          </span>
+          <div
+            className="h-3 overflow-hidden rounded-md bg-card"
+            role="progressbar"
+            aria-label="Progress to free shipping"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={progress}
+          >
+            <div
+              className="h-full rounded-md bg-mint bg-[repeating-linear-gradient(90deg,#57C9A1_0,#2F9A76_12px,#57C9A1_12px,#2F9A76_24px)]"
+              style={{ width: `${progress}%` }}
+            />
           </div>
-          <div className="flex justify-between">
-            <dt>Shipping</dt>
-            <dd>{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>
-          </div>
-          <div className="flex justify-between pt-3 text-lead font-medium">
-            <dt>Total</dt>
-            <dd>{formatPrice(subtotal + shipping)}</dd>
-          </div>
+        </div>
+        <dl className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-2.5 text-[1.0625rem]">
+          <dt className="text-ink-soft">Subtotal</dt>
+          <dd className="font-extrabold">{formatPrice(subtotal)}</dd>
+          {savings > 0 && (
+            <>
+              <dt className="text-ink-soft">You save</dt>
+              <dd className="font-extrabold text-mint-ink">{formatPrice(savings)}</dd>
+            </>
+          )}
+          <dt className="text-ink-soft">Shipping</dt>
+          <dd className="font-extrabold">{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>
         </dl>
-        {shipping > 0 && (
-          <p className="mt-4 text-small text-muted">
-            Add {formatPrice(FREE_SHIPPING_FROM_CENTS - subtotal)} more for free shipping.
-          </p>
-        )}
-        <Link href="/checkout" className="btn btn-accent mt-8 w-full">
+        <div className="dashed-rule" aria-hidden="true" />
+        <div className="flex items-baseline justify-between">
+          <span className="font-display text-[1.375rem] leading-none font-extrabold">Total</span>
+          <strong className="font-display text-[2rem] leading-none font-extrabold">
+            {formatPrice(subtotal + shipping)}
+          </strong>
+        </div>
+        <Link href="/checkout" className="btn btn-primary">
           Check out
         </Link>
+        <span className="text-center text-[0.875rem] text-ink-soft">Prices are confirmed at checkout.</span>
       </aside>
     </div>
   );

@@ -31,9 +31,9 @@ async function EditProduct({ params }: { params: PageProps<"/admin/products/[id]
   });
   if (!product) notFound();
   return (
-    <section className="pt-10 md:pt-16">
+    <section className="wrap pt-10 pb-20 md:pt-16">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <h1 className="text-head">{product.name}</h1>
+        <h1 className="text-[clamp(2.25rem,4.4vw,3.5rem)] leading-none">{product.name}</h1>
         <Link href={`/products/${product.slug}`} className="link">
           View in the shop
         </Link>

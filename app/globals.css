@@ -1,35 +1,49 @@
 @import "tailwindcss";
 
 /*
- * Foldy Friends tokens. Colours are origami paper (kami) colours: one paper
- * ground, one ink, a black-paper field for the opening and the close, and the
- * pack's bright sheets as whole-section fields. The one accent is kami yellow.
+ * Foldy Friends, "Paper Menagerie". Every surface is a sheet of paper: cream
+ * page, card stock for cards, kraft for quiet sections, and the navy of the
+ * origami cat logo as the ink for all text. Tomato is the only call to action;
+ * the other origami sheets tag categories and friends, always with ink on top.
  */
 @theme {
-  --font-sans: var(--font-switzer), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-nunito), ui-rounded, ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-baloo), var(--font-nunito), ui-rounded, ui-sans-serif, system-ui, sans-serif;
 
-  --color-paper: #f3f3f1;
-  --color-paper-2: #e7e7e3;
-  --color-ink: #1d1c1a;
-  --color-muted: #5b5850;
-  --color-night: #1d1c1a;
-  --color-night-2: #2a2926;
-  --color-bone: #f1f0ed;
-  --color-bone-muted: #b5b3ad;
-  --color-accent: #f2c12e;
-  --color-accent-ink: #1d1c1a;
-  --color-kami-red: #e0483a;
-  --color-kami-blue: #2a64b0;
-  --color-kami-green: #2f8a5b;
-  --color-kami-yellow: #f2c12e;
-  --color-kami-pink: #ef8fae;
+  --color-paper: #fbf6ec;
+  --color-card: #fffdf8;
+  --color-kraft: #f3eadb;
+  --color-crease: #e4d9c5;
+  --color-crease-dark: #c9bba2;
+  --color-ink: #1f2a44;
+  --color-ink-soft: #4a5470;
+  --color-ink-line: #34405e;
+  --color-ink-mist: #c9d0e2;
+
+  --color-tomato: #d23f2c;
+  --color-tomato-edge: #9e2c1d;
+  --color-sun: #f6b93b;
+  --color-sun-edge: #c48a16;
+  --color-sky: #5b9be0;
+  --color-mint: #3fb58e;
+  --color-mint-ink: #2e7d62;
+  --color-blush: #f2a0b5;
+  --color-midnight: #2b3768;
+  --color-midnight-2: #3a4785;
+
+  /* Pale sheets, for picture tiles and banners. */
+  --color-sun-pale: #fdf0d2;
+  --color-mint-pale: #ddf3ea;
+  --color-sky-pale: #e1eefb;
+  --color-blush-pale: #fce6ec;
+  --color-fox-pale: #fde7d6;
+  --color-crane-pale: #fbe3dc;
+
   --color-danger: #b42318;
 
-  --text-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
-  --text-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
-  --text-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
-  --text-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
-  --text-giant: clamp(5rem, 13vw, 14rem);
+  --text-small: 0.9375rem;
+  --text-body: 1.125rem;
+  --text-lead: 1.25rem;
 
   --ease-out-paper: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -40,156 +54,497 @@
     scroll-behavior: smooth;
   }
   body {
-    background: var(--color-paper);
+    background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: var(--text-body);
-    line-height: 1.5;
-    letter-spacing: -0.01em;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
   h1,
   h2,
   h3 {
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1.05;
     text-wrap: balance;
   }
   p {
     text-wrap: pretty;
   }
+  a {
+    color: inherit;
+  }
   :focus-visible {
-    outline: 3px solid var(--color-kami-blue);
+    outline: 3px solid var(--color-sky);
     outline-offset: 3px;
   }
   ::selection {
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
+    background: var(--color-sun);
+    color: var(--color-ink);
   }
   input,
   textarea,
-  select {
+  select,
+  button {
     font: inherit;
   }
 }
 
 @layer components {
-  /* One button shape for the whole site: square corners, flat fill. */
+  .wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: clamp(16px, 4vw, 48px);
+  }
+
+  .eyebrow {
+    font: 800 0.8125rem / 1.2 var(--font-sans);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+
+  /* Buttons that feel like card stock: a solid 4px edge, lift on hover, press flat. */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    min-height: 3.25rem;
-    padding: 0 1.5rem;
-    font-weight: 500;
-    background: var(--color-ink);
-    color: var(--color-paper);
-    transition:
-      transform 160ms var(--ease-out-paper),
-      background-color 160ms;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 26px;
+    border: 2px solid var(--color-ink);
+    border-radius: 14px;
+    background: var(--color-card);
+    color: var(--color-ink);
+    box-shadow: 0 4px 0 var(--color-ink);
+    font: 700 1.125rem / 1 var(--font-display);
+    white-space: nowrap;
+    text-decoration: none;
     cursor: pointer;
+    transition:
+      transform 150ms ease,
+      box-shadow 150ms ease;
   }
   .btn:hover {
-    background: #3a3833;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--color-ink);
   }
   .btn:active {
-    transform: translateY(1px) scale(0.99);
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--color-ink);
   }
   .btn:disabled {
-    opacity: 0.55;
+    opacity: 0.6;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 4px 0 var(--color-ink);
   }
-  .btn-accent {
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
+  .btn-primary {
+    background: var(--color-tomato);
+    color: #fff;
+    border-color: var(--color-tomato-edge);
+    box-shadow: 0 4px 0 var(--color-tomato-edge);
   }
-  .btn-accent:hover {
-    background: #f6cf55;
+  .btn-primary:hover {
+    box-shadow: 0 6px 0 var(--color-tomato-edge);
   }
-  .btn-quiet {
-    background: var(--color-paper-2);
+  .btn-primary:active {
+    box-shadow: 0 1px 0 var(--color-tomato-edge);
+  }
+  .btn-primary:disabled {
+    box-shadow: 0 4px 0 var(--color-tomato-edge);
+  }
+  .btn-sun {
+    background: var(--color-sun);
     color: var(--color-ink);
+    border-color: var(--color-sun-edge);
+    box-shadow: 0 4px 0 var(--color-sun-edge);
   }
-  .btn-quiet:hover {
-    background: #dcdcd7;
+  .btn-sun:hover {
+    box-shadow: 0 6px 0 var(--color-sun-edge);
+  }
+  .btn-sun:active {
+    box-shadow: 0 1px 0 var(--color-sun-edge);
+  }
+  .btn-sm {
+    min-height: 46px;
+    padding: 0 18px;
+    font-size: 1.0625rem;
+  }
+
+  .link {
+    font-weight: 800;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  .link:hover {
+    color: var(--color-tomato);
+  }
+  .link-btn {
+    min-height: 44px;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    font: 700 0.9375rem var(--font-sans);
+    color: var(--color-ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+  .link-btn:hover {
+    color: var(--color-tomato);
   }
 
   .field {
     display: block;
     width: 100%;
-    min-height: 3rem;
-    padding: 0.625rem 0.875rem;
-    background: #fff;
+    min-height: 52px;
+    padding: 12px 16px;
+    border: 2px solid var(--color-ink);
+    border-radius: 14px;
+    background: var(--color-card);
     color: var(--color-ink);
-    border: 1px solid #cfc9bd;
-    transition: border-color 120ms;
+    font: 600 1rem / 1.4 var(--font-sans);
   }
-  .field:focus {
-    border-color: var(--color-ink);
-    outline: none;
+  textarea.field {
+    min-height: 120px;
+  }
+  .field::placeholder {
+    color: #6b7390;
+  }
+  .field:focus-visible {
+    outline: 3px solid var(--color-sky);
+    outline-offset: 2px;
   }
   .field-label {
     display: block;
-    margin-bottom: 0.375rem;
-    font-weight: 500;
+    margin-bottom: 8px;
+    font-weight: 800;
+    font-size: 0.9375rem;
   }
 
-  .link {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
+  /* A sheet of card stock: cards, panels, summaries. */
+  .sheet {
+    background: var(--color-card);
+    border: 1.5px solid var(--color-crease);
+    border-radius: 22px;
   }
-  .link:hover {
-    text-decoration-thickness: 2px;
+  .sheet-raised {
+    box-shadow: 0 14px 30px -20px rgb(31 42 68 / 0.45);
   }
 
-  /* Paper edges: a scalloped sheet and a zigzag-cut slip. */
-  .edge-scallop {
-    --scallop-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14'%3E%3Cpath d='M0 14A14 14 0 0 1 28 14Z'/%3E%3C/svg%3E");
-    --scallop-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14'%3E%3Cpath d='M0 0A14 14 0 0 0 28 0Z'/%3E%3C/svg%3E");
-    --solid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4'/%3E%3C/svg%3E");
-    mask:
-      var(--scallop-top) top left / 28px 14px repeat-x,
-      var(--scallop-bottom) bottom left / 28px 14px repeat-x,
-      var(--solid) center / 100% calc(100% - 26px) no-repeat;
-    padding-block: 4rem;
+  /* Dog-eared top-right corner, on cards and image tiles (never buttons). */
+  .dogear {
+    --ear: 44px;
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - var(--ear)) 0, 100% var(--ear), 100% 100%, 0 100%);
   }
-  .leader {
-    height: 4px;
-    background:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='4'%3E%3Ccircle cx='2' cy='2' r='2' fill='%231d1c1a'/%3E%3C/svg%3E")
-      left center / 10px 4px repeat-x;
+  .dogear-sm {
+    --ear: 34px;
   }
-  .edge-zigzag {
-    --z: 12px;
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% calc(100% - var(--z)),
-      95% 100%,
-      90% calc(100% - var(--z)),
-      85% 100%,
-      80% calc(100% - var(--z)),
-      75% 100%,
-      70% calc(100% - var(--z)),
-      65% 100%,
-      60% calc(100% - var(--z)),
-      55% 100%,
-      50% calc(100% - var(--z)),
-      45% 100%,
-      40% calc(100% - var(--z)),
-      35% 100%,
-      30% calc(100% - var(--z)),
-      25% 100%,
-      20% calc(100% - var(--z)),
-      15% 100%,
-      10% calc(100% - var(--z)),
-      5% 100%,
-      0 calc(100% - var(--z))
+  .flap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    width: var(--ear, 44px);
+    height: var(--ear, 44px);
+    background: linear-gradient(
+      to bottom left,
+      transparent 50%,
+      rgb(255 255 255 / 0.62) 50%,
+      rgb(255 255 255 / 0.38) 100%
     );
-    padding-bottom: calc(var(--z) + 2rem);
+    filter: drop-shadow(-2px 3px 2px rgb(31 42 68 / 0.22));
+    pointer-events: none;
+  }
+
+  /*
+   * A coloured sheet folded corner to corner and opened again: light and shadow
+   * meet along the diagonals. Only these sheets carry the paper-fibre grain.
+   */
+  .creases {
+    background-image:
+      url("/assets/paper-grain.png"),
+      linear-gradient(
+        135deg,
+        rgb(255 255 255 / 0.26) 0%,
+        rgb(255 255 255 / 0.05) 49.7%,
+        rgb(31 42 68 / 0.09) 50.3%,
+        rgb(31 42 68 / 0) 100%
+      ),
+      linear-gradient(
+        45deg,
+        rgb(31 42 68 / 0.05) 0%,
+        rgb(31 42 68 / 0) 49.7%,
+        rgb(255 255 255 / 0.16) 50.3%,
+        rgb(255 255 255 / 0) 100%
+      );
+    background-size:
+      320px 320px,
+      100% 100%,
+      100% 100%;
+  }
+  .creases-dark {
+    background-image:
+      url("/assets/paper-grain.png"),
+      linear-gradient(
+        135deg,
+        rgb(255 255 255 / 0.1) 0%,
+        rgb(255 255 255 / 0.02) 49.7%,
+        rgb(0 0 0 / 0.18) 50.3%,
+        rgb(0 0 0 / 0) 100%
+      ),
+      linear-gradient(
+        45deg,
+        rgb(0 0 0 / 0.1) 0%,
+        rgb(0 0 0 / 0) 49.7%,
+        rgb(255 255 255 / 0.06) 50.3%,
+        rgb(255 255 255 / 0) 100%
+      );
+    background-size:
+      320px 320px,
+      100% 100%,
+      100% 100%;
+  }
+
+  /* Washi-tape label: solid tape, lighter bands at the torn ends, a soft sheen. */
+  .tape {
+    display: inline-block;
+    padding: 8px 18px;
+    background-color: var(--color-sun);
+    background-image:
+      linear-gradient(
+        90deg,
+        rgb(255 255 255 / 0.45) 0 7px,
+        transparent 7px calc(100% - 7px),
+        rgb(255 255 255 / 0.45) calc(100% - 7px)
+      ),
+      linear-gradient(180deg, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0) 70%);
+    clip-path: polygon(0 0, 100% 0, 97% 25%, 100% 50%, 97% 75%, 100% 100%, 0 100%, 3% 75%, 0 50%, 3% 25%);
+    color: var(--color-ink);
+    font: 800 0.8125rem / 1 var(--font-sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  /* A bare strip of tape holding a photo down. */
+  .tape-strip {
+    position: absolute;
+    width: 96px;
+    height: 26px;
+    padding: 0;
+    opacity: 0.92;
+  }
+
+  /* Accordion pleats: flat two-tone panels with a zigzag edge, for section borders. */
+  .pleats {
+    height: 24px;
+    background: url("/assets/pleat.svg") repeat-x left center / 44px 100%;
+  }
+  .pleats-ink {
+    height: 24px;
+    margin-bottom: -4px;
+    background: url("/assets/pleat-ink.svg") repeat-x left center / 44px 100%;
+  }
+
+  /* The cat logo as a single-colour stamp, for dark grounds. */
+  .ink-cat {
+    -webkit-mask: url("/assets/origami-cat-inverted.png") center / contain no-repeat;
+    mask: url("/assets/origami-cat-inverted.png") center / contain no-repeat;
+  }
+
+  /* Fold level, in diamonds. */
+  .dia {
+    display: block;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    background: var(--color-ink);
+  }
+  .dia-off {
+    display: block;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+    border: 2px solid var(--color-crease-dark);
+  }
+
+  .lift {
+    transition: transform 200ms ease;
+  }
+  .lift:hover {
+    transform: translateY(-4px);
+  }
+  .tile-link {
+    transition: transform 200ms ease;
+  }
+  .tile-link:hover {
+    transform: translateY(-6px) rotate(-0.6deg);
+  }
+
+  .navlink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 4px;
+    font: 700 1.0625rem / 1 var(--font-sans);
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .navlink:hover {
+    color: var(--color-tomato);
+  }
+  .navlink[aria-current="page"] {
+    box-shadow: inset 0 -3px 0 var(--color-tomato);
+  }
+  .icon-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    color: var(--color-ink);
+  }
+  .icon-btn:hover {
+    background: var(--color-kraft);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 2px solid var(--color-crease);
+    border-radius: 999px;
+    background: var(--color-card);
+    font: 800 1rem var(--font-sans);
+    white-space: nowrap;
+    transition: transform 150ms ease;
+  }
+  .chip:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-ink);
+  }
+  .chip[aria-current="page"] {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border: 2px solid var(--color-ink);
+    border-radius: 14px;
+    background: var(--color-card);
+  }
+  .step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    font: 800 1.25rem / 1 var(--font-sans);
+    color: var(--color-ink);
+    cursor: pointer;
+  }
+  .step:hover {
+    background: var(--color-kraft);
+  }
+  .step:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: transparent;
+  }
+
+  .swatch {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 18px 0 10px;
+    border: 2px solid var(--color-crease);
+    border-radius: 999px;
+    background: var(--color-card);
+    font: 700 1rem var(--font-sans);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .swatch:hover {
+    border-color: var(--color-ink);
+  }
+  :checked + .swatch {
+    border-color: var(--color-ink);
+    box-shadow: 0 3px 0 var(--color-ink);
+  }
+  :focus-visible + .swatch {
+    outline: 3px solid var(--color-sky);
+    outline-offset: 3px;
+  }
+
+  .details > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    list-style: none;
+    cursor: pointer;
+    font: 700 1.25rem / 1.2 var(--font-display);
+  }
+  .details > summary::-webkit-details-marker {
+    display: none;
+  }
+  .details .chev {
+    transition: transform 200ms ease;
+  }
+  .details[open] .chev {
+    transform: rotate(180deg);
+  }
+
+  .stars {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    transform: rotate(45deg);
+    background: #f6e7b8;
+    opacity: 0.8;
+  }
+
+  .dashed-rule {
+    height: 2px;
+    background-image: repeating-linear-gradient(90deg, var(--color-crease-dark) 0 8px, transparent 8px 14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .btn,
+  .chip,
+  .lift,
+  .tile-link,
+  .details .chev {
+    transition: none;
+  }
+  .btn:hover,
+  .btn:active,
+  .chip:hover,
+  .lift:hover,
+  .tile-link:hover {
+    transform: none;
   }
 }
 
@@ -206,34 +561,5 @@
   .js [data-rise].is-in {
     opacity: 1;
     translate: 0 0;
-  }
-
-  /* Signature move: the wordmark settles as the first screen scrolls away. */
-  @supports (animation-timeline: scroll()) {
-    .wordmark-scroll {
-      animation: wordmark-settle linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 100vh;
-      transform-origin: left bottom;
-    }
-    @keyframes wordmark-settle {
-      to {
-        scale: 0.93;
-      }
-    }
-  }
-
-  .drift {
-    animation: drift 18s ease-in-out infinite alternate;
-  }
-  @keyframes drift {
-    from {
-      scale: 1.02;
-      translate: -0.5% 0;
-    }
-    to {
-      scale: 1.08;
-      translate: 0.5% -1%;
-    }
   }
 }

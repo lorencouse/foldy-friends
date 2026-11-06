@@ -2,344 +2,419 @@ import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { AddToCart } from "@/components/add-to-cart";
-import { CartLink } from "@/components/cart-link";
-import { FoldingDog } from "@/components/folding-dog";
-import { ProductArt } from "@/components/product-art";
+import { Crane, Elephant, Fox, GluePen, Moon, Panda, PaperStack, Raccoon } from "@/components/menagerie";
+import { ProductCard } from "@/components/product-tile";
 import { SiteFooter } from "@/components/site-footer";
-import { Stage } from "@/components/stage";
-import { CATEGORY_INFO, getProducts } from "@/lib/catalog";
-import type { Category } from "@/lib/db/schema";
-import { effectivePrice, formatPrice } from "@/lib/money";
+import { SiteHeader } from "@/components/site-header";
+import { getProducts } from "@/lib/catalog";
 
-const nav = [
-  { href: "/shop/paper", label: "Paper" },
-  { href: "/shop/tools", label: "Tools" },
-  { href: "/shop/kits", label: "Kits" },
-  { href: "/account", label: "Account" },
+/** The friends shown first, in order; any others fill the row if one is missing. */
+const FAVOURITES = [
+  "fox-asleep-on-the-moon",
+  "panda-asleep-on-the-moon",
+  "raccoon-in-the-moon",
+  "double-sided-origami-paper",
 ];
 
 export default function Home() {
   return (
     <>
-      <div className="lg:grid lg:grid-cols-[47fr_53fr]">
-        {/* The fixed half */}
-        <div className="hidden lg:sticky lg:top-0 lg:block lg:h-svh lg:p-8 lg:pr-0">
-          <div className="h-full">
-            <Stage
-              initial="dog"
-              layers={{
-                dog: <FoldingDog />,
-                kit: (
-                  <div className="flex h-full items-center justify-center bg-night p-10">
-                    <ProductArt
-                      art="kit-fox"
-                      title="Drawing of the sleeping fox papercraft kit"
-                      className="w-full max-w-[560px]"
-                    />
-                  </div>
-                ),
-                list: (
-                  <div className="flex h-full items-center justify-center bg-night">
-                    <video
-                      className="w-full max-w-[640px]"
-                      src="/images/origami-icosahedron.webm"
-                      poster="/images/origami-icosahedron.jpg"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="none"
-                      aria-label="A folded paper icosahedron turning slowly"
-                    />
-                  </div>
-                ),
-                making: (
-                  <Image
-                    src="/images/kids-crafting-origami.webp"
-                    alt="Two children making paper crafts at a table"
-                    fill
-                    sizes="47vw"
-                    className="object-cover"
-                  />
-                ),
-                letter: (
-                  <Image
-                    src="/images/senbazuru-plate.jpg"
-                    alt="A 1797 woodblock print of a folded crane"
-                    fill
-                    sizes="47vw"
-                    className="object-cover object-top"
-                  />
-                ),
-              }}
+      <SiteHeader />
+      <main>
+        <Hero />
+        <div className="pleats" aria-hidden="true" />
+        <Categories />
+        <MoonDreamers />
+        <section aria-labelledby="favourites-heading" className="pb-[clamp(48px,6vw,96px)]">
+          <div className="wrap flex flex-col gap-8">
+            <SectionHead
+              eyebrow="Family favourites"
+              title="Top-selling friends"
+              id="favourites-heading"
+              link={{ href: "/shop", label: "Shop all" }}
             />
-          </div>
-        </div>
-
-        {/* The reading column */}
-        <main className="bg-night text-bone">
-          <section
-            data-stage="dog"
-            className="flex min-h-svh flex-col px-4 pt-6 pb-12 sm:px-8 lg:pl-[8%] lg:pr-8"
-          >
-            <nav aria-label="Main" className="flex flex-wrap items-center justify-end gap-x-6 gap-y-2">
-              {nav.map((n) => (
-                <Link key={n.href} href={n.href} className="hover:underline">
-                  {n.label}
-                </Link>
-              ))}
-              <CartLink className="btn btn-accent min-h-11 px-4" />
-            </nav>
-            <div className="my-auto max-w-[26ch] pt-16">
-              <p className="text-lead" data-rise>
-                Origami paper, glue and 3D paper animal kits, for families who fold together.
-              </p>
-              <Link
-                href="/shop"
-                className="btn btn-accent mt-8"
-                data-rise
-                style={{ "--i": 1 } as React.CSSProperties}
-              >
-                Shop the paper and kits
-              </Link>
-            </div>
-            <h1 className="wordmark-scroll mt-16 text-giant leading-[0.85] font-normal tracking-[-0.05em]">
-              foldy friends
-            </h1>
-          </section>
-          <div className="h-[80svh] lg:hidden">
-            <FoldingDog compact />
-          </div>
-
-          <Suspense fallback={<div className="min-h-[88svh]" />}>
-            <MoonKits />
-          </Suspense>
-
-          <section data-stage="list" className="bg-kami-blue px-4 py-24 sm:px-8 lg:pl-[8%] lg:pr-8 lg:py-32">
-            <Suspense fallback={<div className="min-h-[60svh]" />}>
-              <PriceList />
+            <Suspense fallback={<CardsSkeleton />}>
+              <Favourites />
             </Suspense>
-          </section>
-
-          <section data-stage="making" className="px-4 py-24 sm:px-8 lg:pl-[8%] lg:pr-8 lg:py-40">
-            <div className="max-w-[30ch]" data-rise>
-              <h2 className="text-head">From pack to friend</h2>
-              <p className="mt-6">
-                Every order is packed by hand and goes out the next working day. Most families are folding by
-                the weekend.
-              </p>
-            </div>
-            <div className="edge-zigzag mt-12 max-w-[30rem] bg-paper p-6 text-ink sm:p-8" data-rise>
-              <Itinerary />
-            </div>
-          </section>
-
-          <section
-            data-stage="letter"
-            className="bg-kami-yellow px-4 py-24 text-ink sm:px-8 lg:pl-[8%] lg:pr-8 lg:py-40"
-          >
-            <div className="max-w-[34rem]" data-rise>
-              <svg
-                viewBox="0 0 400 400"
-                className="size-11 bg-night"
-                role="img"
-                aria-label="Foldy, a paper dog"
-              >
-                <polygon points="110,140 290,140 240,250 160,250" fill="#f2c12e" />
-                <polygon points="110,140 62,262 140,205" fill="#d9a514" />
-                <polygon points="290,140 338,262 260,205" fill="#d9a514" />
-                <polygon points="186,222 214,222 200,240" fill="#1d1c1a" />
-                <circle cx="165" cy="186" r="9" fill="#1d1c1a" />
-                <circle cx="235" cy="186" r="9" fill="#1d1c1a" />
-              </svg>
-              <h2 className="sr-only">A letter from Foldy</h2>
-              <div className="mt-7 space-y-5 leading-[1.55]">
-                <p>Hello, I’m Foldy. I started life as a square of yellow paper on a kitchen table.</p>
-                <p>
-                  Six folds later I had ears, a nose and a name. That is the whole trick of origami: a flat
-                  sheet, a few careful creases, and suddenly there is somebody there.
-                </p>
-                <p>
-                  This shop stocks the things that made me: paper that holds a crease, glue that stays where
-                  you put it, and kits for when you want a bigger friend for the shelf.
-                </p>
-                <p>
-                  Pick a colour, sit down with someone you like, and fold. If it comes out wonky,{" "}
-                  <span className="bg-paper px-1">wonky is a breed too</span>.
-                </p>
-              </div>
-              <p className="mt-8 text-lead italic">Foldy</p>
-              <p className="text-small text-ink/75">Shop dog, folded in yellow</p>
-            </div>
-          </section>
-        </main>
-      </div>
-
-      {/* Breaks the split: the last picture, full width */}
-      <section className="relative bg-night text-bone">
-        <div className="relative h-[70svh] lg:h-[90svh]">
-          <Image
-            src="/images/boy-giving-mom-origami-dog.webp"
-            alt="A boy giving his mother a folded paper dog"
-            fill
-            sizes="100vw"
-            className="object-cover object-[30%_40%] lg:brightness-[0.6]"
-          />
-        </div>
-        <div className="px-4 py-12 sm:px-8 lg:absolute lg:inset-y-0 lg:right-0 lg:flex lg:w-[42%] lg:flex-col lg:justify-end lg:px-0 lg:pr-[6%] lg:pb-[8svh]">
-          <h2 className="text-head" data-rise>
-            Fold one for someone
-          </h2>
-          <p className="mt-4 max-w-[34ch]" data-rise style={{ "--i": 1 } as React.CSSProperties}>
-            A paper dog takes six folds and about two minutes. It tends to be kept for years.
-          </p>
-          <Link
-            href="/shop/paper"
-            className="btn btn-accent mt-8 self-start"
-            data-rise
-            style={{ "--i": 2 } as React.CSSProperties}
-          >
-            Choose some paper
-          </Link>
-        </div>
-      </section>
+          </div>
+        </section>
+        <ForParents />
+        <FoldClub />
+      </main>
       <SiteFooter />
     </>
   );
 }
 
-async function MoonKits() {
-  await connection();
-  const kits = await getProducts("kits");
-  const fox = kits.find((k) => k.art === "kit-fox") ?? kits[0];
-  if (!fox) return null;
-  const price = effectivePrice(fox);
+function SectionHead({
+  eyebrow,
+  title,
+  id,
+  link,
+}: {
+  eyebrow: string;
+  title: string;
+  id: string;
+  link?: { href: string; label: string };
+}) {
   return (
-    <section
-      data-stage="kit"
-      className="flex min-h-[88svh] flex-col justify-between gap-12 bg-night-2 px-4 py-24 sm:px-8 lg:pl-[8%] lg:pr-8"
-    >
-      <nav aria-label="Moon kits" className="flex flex-wrap gap-x-6 gap-y-2 text-lead">
-        {kits.map((k) => (
-          <Link
-            key={k.id}
-            href={`/products/${k.slug}`}
-            className={k.id === fox.id ? "text-bone" : "text-bone-muted hover:text-bone"}
-          >
-            {k.name.split(" ")[0]}
-          </Link>
-        ))}
-      </nav>
-      <ProductArt
-        art={fox.art}
-        className="w-full lg:hidden"
-        title="Drawing of the sleeping fox papercraft kit"
-      />
-      <div data-rise>
-        <h2 className="text-head">{fox.name}</h2>
-        <p className="mt-6 max-w-[34ch]">{fox.summary}</p>
-        <p className="mt-6 text-lead">
-          {formatPrice(price)}
-          {price < fox.priceCents && (
-            <span className="ml-3 text-body text-bone-muted line-through">{formatPrice(fox.priceCents)}</span>
-          )}
-        </p>
+    <div className="flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <p className="eyebrow">{eyebrow}</p>
+        <h2 id={id} className="mt-2 text-[clamp(2rem,4vw,2.75rem)]">
+          {title}
+        </h2>
       </div>
-      <div className="grid gap-2 sm:grid-cols-2">
-        <AddToCart product={fox} unitPriceCents={price} className="btn btn-accent h-[72px] w-full" />
-        <Link href={`/products/${fox.slug}`} className="btn btn-quiet h-[72px] w-full">
-          See the kit
+      {link && (
+        <Link href={link.href} className="link">
+          {link.label}
         </Link>
+      )}
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="relative overflow-hidden">
+      <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] items-center gap-12 pt-[clamp(32px,6vw,88px)] pb-[clamp(48px,6vw,96px)]">
+        <div className="flex flex-col items-start gap-6">
+          <span className="tape -rotate-2">New: Moon Dreamers kits</span>
+          <h1 className="text-[clamp(2.75rem,6.4vw,5.25rem)] leading-[0.98] tracking-[-0.025em]">
+            Fold a new{" "}
+            <span className="relative whitespace-nowrap">
+              friend
+              <svg
+                viewBox="0 0 200 20"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+                className="absolute right-0 -bottom-1.5 left-0 h-4 w-full"
+              >
+                <polyline
+                  points="2,12 25,4 48,14 71,4 94,14 117,4 140,14 163,4 186,14 198,8"
+                  fill="none"
+                  stroke="#D23F2C"
+                  strokeWidth="5"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>{" "}
+            today.
+          </h1>
+          <p className="max-w-[520px] text-lead text-ink-soft">
+            Origami paper, glue pens and papercraft animal kits for small hands and the grown-ups folding
+            right beside them.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/shop/kits" className="btn btn-primary">
+              Shop the kits
+            </Link>
+            <Link href="/shop/paper" className="btn">
+              Browse paper
+            </Link>
+          </div>
+          <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-2.5 text-[0.9375rem] font-bold text-ink-soft">
+            <li className="flex items-center gap-2">
+              <span className="dia" style={{ background: "var(--color-mint)" }} />
+              Paper that holds a crease
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="dia" style={{ background: "var(--color-sky)" }} />
+              Glue that stays put
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="dia" style={{ background: "var(--color-blush)" }} />
+              Fold level on every kit
+            </li>
+          </ul>
+        </div>
+
+        <div className="relative h-[clamp(340px,42vw,540px)]">
+          <div className="creases absolute inset-[4%_2%_10%_14%] rotate-7 rounded-[22px] bg-sky" />
+          <div className="creases absolute inset-[10%_12%_4%_2%] -rotate-5 rounded-[22px] bg-sun" />
+          <figure className="absolute inset-[9%_9%_12%_10%] m-0 flex -rotate-2 flex-col rounded-[10px] bg-card p-3.5 pb-12 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)]">
+            <div className="relative min-h-0 flex-1 overflow-hidden rounded-md">
+              <Image
+                src="/images/happy-kids-folding-origami-1024.webp"
+                alt="Two children folding colourful origami at a table"
+                fill
+                priority
+                sizes="(min-width: 1024px) 40vw, 90vw"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="absolute inset-x-0 bottom-3 text-center font-display text-lg leading-none font-bold text-ink-soft">
+              Folding together
+            </figcaption>
+            <span
+              className="tape tape-strip -top-3 left-[38%] -rotate-4"
+              style={{ backgroundColor: "var(--color-blush)" }}
+            />
+          </figure>
+          <Fox
+            className="absolute -bottom-[4%] -left-[2%] w-[32%]"
+            style={{ filter: "drop-shadow(0 10px 10px rgba(31,42,68,.25))" }}
+          />
+          <Crane
+            className="absolute -top-[3%] -right-[1%] w-[24%] rotate-8"
+            style={{ filter: "drop-shadow(0 8px 8px rgba(31,42,68,.2))" }}
+          />
+        </div>
       </div>
     </section>
   );
 }
 
-async function PriceList() {
-  await connection();
-  const all = await getProducts();
-  const groups = (Object.keys(CATEGORY_INFO) as Category[]).map((c) => ({
-    category: c,
-    items: all.filter((p) => p.category === c),
-  }));
+const CATEGORY_TILES = [
+  {
+    href: "/shop/paper",
+    title: "Paper",
+    note: "Plain, patterned, glitter",
+    color: "var(--color-sky)",
+    art: <PaperStack colors={["#F2A0B5", "#F6B93B", "#FFFDF8", "#3FB58E"]} className="w-[62%]" />,
+  },
+  {
+    href: "/shop/tools",
+    title: "Tools",
+    note: "Glue pens and sticks",
+    color: "var(--color-sun)",
+    art: <GluePen colors={["#F2A0B5", "#5B9BE0", "#D23F2C"]} className="w-[58%]" />,
+  },
+  {
+    href: "/shop/kits",
+    title: "Kits",
+    note: "3D papercraft animals",
+    color: "var(--color-mint)",
+    art: <Panda className="w-[52%]" />,
+  },
+];
+
+function Categories() {
   return (
-    <div className="edge-scallop mx-auto max-w-[40rem] bg-paper px-6 text-ink sm:px-14" data-rise>
-      <h2 className="text-center text-[clamp(2rem,3vw,3rem)]">The price list</h2>
-      <p className="mt-2 text-center text-small text-muted">Every sheet, pen and kit in the shop today.</p>
-      {groups.map((g) => (
-        <div key={g.category} className="mt-14">
-          <h3 className="text-center text-[1.375rem]">
-            <Link href={`/shop/${g.category}`} className="hover:underline">
-              {CATEGORY_INFO[g.category].title}
-            </Link>
-          </h3>
-          <ul className="mx-auto mt-6 max-w-[26rem] space-y-4">
-            {g.items.map((p) => (
-              <li key={p.id}>
-                <Link href={`/products/${p.slug}`} className="group flex justify-between gap-6">
-                  <span className="group-hover:underline">{p.name}</span>
-                  <span className="tabular-nums">{formatPrice(effectivePrice(p))}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-      <p className="mt-14 text-center text-small text-muted">
-        Free shipping over $35.
-        <br />
-        Packed and posted the next working day.
-      </p>
-    </div>
+    <section aria-labelledby="categories-heading" className="bg-kraft py-[clamp(48px,6vw,88px)]">
+      <div className="wrap flex flex-col gap-8">
+        <SectionHead
+          eyebrow="Shop by sheet"
+          title="Everything for the fold"
+          id="categories-heading"
+          link={{ href: "/shop", label: "See everything" }}
+        />
+        <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-6">
+          {CATEGORY_TILES.map((c) => (
+            <li key={c.href}>
+              <Link href={c.href} className="tile-link flex flex-col gap-3.5">
+                <div
+                  className="dogear creases flex aspect-[4/3] items-center justify-center rounded-[22px_0_22px_22px]"
+                  style={{ backgroundColor: c.color }}
+                >
+                  <span className="flap" />
+                  {c.art}
+                </div>
+                <div className="flex flex-wrap items-center justify-between gap-x-3">
+                  <span className="font-display text-[1.625rem] leading-none font-extrabold">{c.title}</span>
+                  <span className="text-[0.9375rem] font-bold text-ink-soft">{c.note}</span>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
 
-function Itinerary() {
-  const groups = [
-    {
-      when: "Today",
-      rows: [
-        ["You choose paper, glue or a kit", "2 min"],
-        ["We confirm by email", "at once"],
-      ],
-    },
-    {
-      when: "Tomorrow",
-      rows: [
-        ["Packed flat, by hand", "1 day"],
-        ["Posted, tracked", "same day"],
-      ],
-    },
-    {
-      when: "By the weekend",
-      rows: [
-        ["It arrives", "2–4 days"],
-        ["You fold a dog together", "2 min"],
-      ],
-    },
-  ];
+const DREAMERS = [
+  { name: "Fox", Animal: Fox },
+  { name: "Panda", Animal: Panda },
+  { name: "Raccoon", Animal: Raccoon },
+  { name: "Elephant", Animal: Elephant },
+];
+
+const STARS = [
+  "top-[12%] left-[46%]",
+  "top-[22%] left-[58%]",
+  "top-[70%] left-[52%]",
+  "top-[10%] right-[8%]",
+  "right-[30%] bottom-[14%]",
+  "top-[40%] left-[4%]",
+];
+
+function MoonDreamers() {
   return (
-    <div className="tabular-nums">
-      <h3 className="sr-only">How an order goes</h3>
-      {groups.map((g) => (
-        <div key={g.when} className="mt-7 first:mt-0">
-          <p className="font-semibold">{g.when}</p>
-          <ul className="mt-2 space-y-2">
-            {g.rows.map(([what, time]) => (
-              <li key={what} className="flex items-baseline gap-2">
-                <span>{what}</span>
-                <span aria-hidden className="leader mb-1 min-w-4 flex-1 self-end" />
-                <span className="whitespace-nowrap">{time}</span>
+    <section
+      id="moon-dreamers"
+      aria-labelledby="dreamers-heading"
+      className="scroll-mt-4 py-[clamp(48px,6vw,96px)]"
+    >
+      <div className="wrap">
+        <div className="dogear creases-dark relative grid grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] items-center gap-8 overflow-hidden rounded-[32px_0_32px_32px] bg-midnight p-[clamp(24px,5vw,72px)] text-paper">
+          <span className="flap" />
+          {STARS.map((s) => (
+            <span key={s} className={`stars ${s}`} aria-hidden="true" />
+          ))}
+          <div className="relative flex flex-col items-start gap-5">
+            <span className="tape -rotate-2">The new collection</span>
+            <h2 id="dreamers-heading" className="text-[clamp(2.25rem,4.6vw,3.625rem)] leading-none">
+              Meet the Moon Dreamers
+            </h2>
+            <p className="max-w-[460px] text-[#D9DEEE]">
+              Four sleepy friends to build, each curled up in its own paper crescent moon. A calm project to
+              make together, then a friend for the shelf.
+            </p>
+            <Link href="/shop/kits" className="btn btn-sun">
+              Meet the dreamers
+            </Link>
+          </div>
+          <div className="relative min-h-[300px] sm:min-h-[340px]">
+            <Moon fill="#F6B93B" sheen className="absolute top-0 right-0 w-[min(78%,340px)]" />
+            <ul className="absolute inset-x-0 bottom-0 grid grid-cols-4 gap-2 sm:gap-3">
+              {DREAMERS.map(({ name, Animal }) => (
+                <li key={name} className="flex flex-col items-center gap-1.5">
+                  <div className="flex aspect-square w-full items-center justify-center rounded-[18px] bg-midnight-2">
+                    <Animal sleepy className="w-4/5" />
+                  </div>
+                  <span className="text-[0.9375rem] font-extrabold">{name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+async function Favourites() {
+  await connection();
+  const all = await getProducts();
+  const picked = FAVOURITES.map((slug) => all.find((p) => p.slug === slug)).filter((p) => p !== undefined);
+  const rest = all.filter((p) => !picked.includes(p));
+  const shown = [...picked, ...rest].slice(0, 4);
+  if (shown.length === 0) return <p className="text-lead text-ink-soft">New friends are on their way.</p>;
+  return (
+    <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] gap-6">
+      {shown.map((p, i) => (
+        <li key={p.id}>
+          <ProductCard product={p} priority={i < 2} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function CardsSkeleton() {
+  return (
+    <ul
+      className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] gap-6"
+      aria-busy="true"
+      aria-label="Loading products"
+    >
+      {[0, 1, 2, 3].map((i) => (
+        <li key={i} className="sheet h-[520px] animate-pulse" />
+      ))}
+    </ul>
+  );
+}
+
+const LEVELS = [
+  { name: "Little folder", note: "First folds, a few steps.", filled: 1, color: "var(--color-mint)" },
+  { name: "Growing folder", note: "More steps, a little gluing.", filled: 2, color: "var(--color-sun)" },
+  { name: "Fold master", note: "3D builds to do together.", filled: 3, color: "var(--color-tomato)" },
+];
+
+function ForParents() {
+  return (
+    <section aria-labelledby="parents-heading" className="overflow-x-clip bg-kraft py-[clamp(48px,6vw,96px)]">
+      <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] items-center gap-[clamp(32px,5vw,72px)]">
+        <figure className="relative m-0 rotate-[1.5deg] rounded-[10px] bg-card p-3.5 shadow-[0_24px_40px_-26px_rgba(31,42,68,.55)]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-md">
+            <Image
+              src="/images/boy-giving-mom-origami-dog.webp"
+              alt="A boy handing his mother an origami dog he folded"
+              fill
+              sizes="(min-width: 1024px) 45vw, 90vw"
+              className="object-cover object-[30%_40%]"
+            />
+          </div>
+          <span
+            className="tape tape-strip -top-2.5 -left-3.5 -rotate-30"
+            style={{ backgroundColor: "var(--color-sky)" }}
+          />
+          <span
+            className="tape tape-strip -right-3.5 -bottom-2.5 -rotate-30"
+            style={{ backgroundColor: "var(--color-sun)" }}
+          />
+        </figure>
+        <div className="flex flex-col items-start gap-5">
+          <p className="eyebrow">For parents</p>
+          <h2 id="parents-heading" className="text-[clamp(2rem,4vw,3rem)]">
+            Pick the right fold, every time
+          </h2>
+          <p className="max-w-[520px] text-ink-soft">
+            Every kit shows a fold level, so you can match a project to your child's patience and hands before
+            you buy.
+          </p>
+          <ul className="grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,150px),1fr))] gap-3.5">
+            {LEVELS.map((l) => (
+              <li key={l.name} className="sheet flex flex-col gap-2 rounded-2xl p-4.5">
+                <span className="flex gap-1.5" role="img" aria-label={`Level ${l.filled} of 3`}>
+                  {[1, 2, 3].map((n) =>
+                    n <= l.filled ? (
+                      <span key={n} className="dia" style={{ background: l.color }} />
+                    ) : (
+                      <span key={n} className="dia-off" />
+                    ),
+                  )}
+                </span>
+                <strong className="font-display text-xl leading-[1.1] font-bold">{l.name}</strong>
+                <span className="text-[0.9375rem] leading-normal text-ink-soft">{l.note}</span>
               </li>
             ))}
           </ul>
+          <Link href="/shop/kits" className="btn btn-primary">
+            Compare the kits
+          </Link>
         </div>
-      ))}
-      <p className="-mx-6 mt-8 flex h-11 items-center justify-between bg-ink px-6 text-paper sm:-mx-8 sm:px-8">
-        <span>A new friend on the table</span>
-        <span>about 3 days</span>
-      </p>
-    </div>
+      </div>
+    </section>
+  );
+}
+
+function FoldClub() {
+  return (
+    <section aria-labelledby="club-heading" className="py-[clamp(48px,6vw,96px)]">
+      <div className="wrap">
+        <div className="creases relative grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] items-center gap-8 overflow-hidden rounded-[32px] bg-sun p-[clamp(28px,5vw,64px)]">
+          <div className="flex flex-col items-start gap-3.5">
+            <h2 id="club-heading" className="text-[clamp(2rem,4vw,3rem)]">
+              Join the Fold Club
+            </h2>
+            <p className="max-w-[460px]">
+              New friends, sales and folding ideas. Write to us and we will add you to the list; ask to leave
+              any time.
+            </p>
+            <a
+              className="btn btn-primary mt-2"
+              href="mailto:hello@foldyfriends.com?subject=Join%20the%20Fold%20Club"
+            >
+              Email us to join
+            </a>
+          </div>
+          <div aria-hidden="true" className="relative w-[min(100%,240px)] justify-self-center">
+            <span className="absolute -top-1 -left-7 z-[2] -rotate-5 rounded-[16px_16px_16px_4px] border-2 border-ink bg-card px-4 py-2.5 font-display text-lg leading-none font-extrabold">
+              Let's fold!
+            </span>
+            <Image
+              src="/assets/dog-mascot.png"
+              alt=""
+              width={388}
+              height={378}
+              className="block w-full rotate-4 mix-blend-multiply"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

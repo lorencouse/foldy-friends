@@ -11,7 +11,7 @@ Live: https://www.foldyfriends.com
 - **Next.js 16** (App Router, Cache Components, Partial Prefetching), React 19, TypeScript
 - **Postgres** with **Drizzle ORM**; migrations in `drizzle/`
 - **Better Auth** (email and password, admin role)
-- **Tailwind CSS 4**, self-hosted Switzer font, product pictures drawn as SVG
+- **Tailwind CSS 4**, self-hosted Baloo 2 and Nunito fonts, product pictures drawn as SVG
 - **Biome** for lint and format, **Playwright** for end-to-end tests
 - Deployed as a Docker image (Next.js standalone output) on Coolify
 
@@ -45,16 +45,21 @@ CI runs all of these on every pull request.
 
 ## How it fits together
 
-- `app/page.tsx`: the home page. The left half stays fixed while the right half
-  scrolls; the fold-a-dog panel is `components/folding-dog.tsx`.
+- `app/page.tsx`: the home page. `app/globals.css` holds the "Paper Menagerie"
+  look: colour tokens and the paper details (dog-ear corners, creased sheets,
+  washi tape, accordion pleats, card-stock buttons).
 - `app/(store)/`: shop, category and product pages, cart, checkout, sign-in,
   account and admin.
 - `lib/catalog.ts`: cached catalogue reads (`"use cache"` with the `products` tag).
   Admin saves call `updateTag` so changes show at once.
 - `lib/cart.ts`: the cart lives in the browser (localStorage). Checkout re-prices
   every line from the database.
-- `components/product-art.tsx`: the drawn product pictures. Uploaded photos
-  (served from `/media`, stored in `UPLOAD_DIR`) replace a drawing.
+- `components/menagerie.tsx` and `components/product-picture.tsx`: the folded-paper
+  animals and the drawn product pictures on their coloured sheets;
+  `components/product-art.tsx` holds a closer drawing of each product for the
+  product page. Uploaded photos (served from `/media`, stored in `UPLOAD_DIR`)
+  replace the drawings.
+- `lib/fold-level.ts`: reads a kit's fold level ("Difficulty 3 of 6") from its description.
 
 ## Deploying (Coolify)
 
@@ -69,10 +74,3 @@ Mount a persistent volume at `/data/uploads` for uploaded photos.
 Images are built on a developer machine, not on the server:
 `COOLIFY_TOKEN=... scripts/deploy.sh` builds for arm64, copies the image to the
 box's private registry, points the Coolify app at the new tag and redeploys.
-
-## Credits
-
-Folding diagrams from _Hiden Senbazuru Orikata_ (1797) by Shimokōbe Shūsui,
-public domain, via The Metropolitan Museum of Art and Wikimedia Commons.
-"Rotating origami icosahedron" by Dolev, CC BY-SA 3.0, via Wikimedia Commons.
-Full list in `data/image-credits.json`.

@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
-import credits from "@/data/image-credits.json";
+import { FREE_SHIPPING_FROM_CENTS, formatPrice, formatPriceShort, SHIPPING_CENTS } from "@/lib/money";
 
 const menu = [
+  { href: "/shop", label: "Shop all" },
   { href: "/shop/paper", label: "Paper" },
   { href: "/shop/tools", label: "Tools" },
   { href: "/shop/kits", label: "Kits" },
@@ -10,74 +10,51 @@ const menu = [
   { href: "/cart", label: "Cart" },
 ];
 
-const prints = credits.filter((c) => c.media === "image");
-const clip = credits.find((c) => c.media === "video");
-
 export function SiteFooter() {
   return (
-    <footer className="grid bg-night text-bone md:grid-cols-2">
-      <div className="relative min-h-[50svh] overflow-hidden md:min-h-[88svh]">
-        <Image
-          src="/images/senbazuru-spread.jpg"
-          alt="Two pages of a 1797 book on folding paper cranes"
-          fill
-          sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover object-[70%_50%]"
-        />
-      </div>
-      <div className="flex flex-col px-4 pt-16 pb-8 sm:px-8 md:px-[8%] md:pt-20">
-        <p className="text-lead font-medium tracking-[-0.03em]">foldy friends</p>
-        <nav aria-label="Footer" className="group mt-10">
-          <ul className="space-y-4 md:space-y-6">
+    <>
+      <div className="pleats-ink" aria-hidden="true" />
+      <footer className="bg-ink text-paper">
+        <div className="wrap flex flex-wrap justify-between gap-x-12 gap-y-10 pt-14 pb-10">
+          <div className="flex max-w-[340px] flex-col gap-3.5">
+            <div className="flex items-center gap-2.5">
+              <div className="ink-cat size-12 bg-paper" aria-hidden="true" />
+              <p className="font-display text-[1.75rem] leading-none font-extrabold">foldy friends</p>
+            </div>
+            <p className="text-base text-ink-mist">
+              Paper, tools and kits for families who like to make things together.
+            </p>
+          </div>
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-12 gap-y-1 text-base font-bold">
             {menu.map((m) => (
-              <li key={m.href}>
-                <Link
-                  href={m.href}
-                  className="inline-block text-[clamp(2rem,4vw,3.5rem)] leading-none font-medium tracking-[-0.03em] transition-[translate,color] duration-200 group-hover:text-bone-muted hover:!text-bone hover:translate-x-3"
-                >
-                  {m.label}
-                </Link>
-              </li>
+              <Link key={m.href} href={m.href} className="flex min-h-11 items-center hover:text-sun">
+                {m.label}
+              </Link>
             ))}
-          </ul>
-        </nav>
-        <div className="mt-16 grid gap-8 text-small sm:grid-cols-2">
-          <div>
-            <p className="font-medium">Write to us</p>
-            <a className="link" href="mailto:hello@foldyfriends.com">
-              hello@foldyfriends.com
-            </a>
-          </div>
-          <div>
-            <p className="font-medium">Shipping</p>
-            <p className="text-bone-muted">Free over $35. Otherwise $4.95, in the US.</p>
+          </nav>
+          <div className="flex flex-col gap-5 text-base">
+            <div>
+              <p className="font-extrabold">Write to us</p>
+              <a
+                className="text-ink-mist underline underline-offset-4 hover:text-sun"
+                href="mailto:hello@foldyfriends.com"
+              >
+                hello@foldyfriends.com
+              </a>
+            </div>
+            <div>
+              <p className="font-extrabold">Shipping</p>
+              <p className="text-ink-mist">
+                Free over {formatPriceShort(FREE_SHIPPING_FROM_CENTS)}. Otherwise{" "}
+                {formatPrice(SHIPPING_CENTS)}, in the US.
+              </p>
+            </div>
           </div>
         </div>
-        <div className="mt-auto pt-16 text-small text-bone-muted">
-          <p>
-            Folding diagrams from{" "}
-            {prints.map((c, i) => (
-              <span key={c.ref}>
-                {i > 0 && " and "}
-                <a className="link" href={c.page}>
-                  {c.title.split(" (")[0]}
-                </a>
-              </span>
-            ))}{" "}
-            by Shimokōbe Shūsui, 1797, public domain.
-            {clip && (
-              <>
-                {" "}
-                <a className="link" href={clip.page}>
-                  Rotating origami icosahedron
-                </a>{" "}
-                by Dolev, {clip.license}, via Wikimedia Commons.
-              </>
-            )}
-          </p>
-          <p className="mt-2">© Foldy Friends. A portfolio shop: no real orders are taken.</p>
+        <div className="wrap border-t border-ink-line pt-4.5 pb-6 text-[0.875rem] text-ink-mist">
+          © Foldy Friends. A portfolio shop: no real orders are taken.
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

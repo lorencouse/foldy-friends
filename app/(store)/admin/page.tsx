@@ -26,21 +26,21 @@ async function ProductTable() {
   await requireAdmin();
   const rows = await db.select().from(products).orderBy(asc(products.category), asc(products.name));
   return (
-    <section className="pt-10 md:pt-16">
+    <section className="wrap pt-10 pb-20 md:pt-16">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
-          <h1 className="text-head">Products</h1>
-          <p className="mt-3 text-muted">
+          <h1 className="text-[clamp(2.25rem,4.4vw,3.5rem)] leading-none">Products</h1>
+          <p className="mt-3 text-ink-soft">
             {rows.length} products, {rows.filter((r) => r.stock === 0).length} sold out.
           </p>
         </div>
-        <Link href="/admin/products/new" className="btn btn-accent">
+        <Link href="/admin/products/new" className="btn btn-primary">
           Add a product
         </Link>
       </div>
       <div className="mt-10 overflow-x-auto">
         <table className="w-full min-w-[40rem] text-left">
-          <thead className="text-small text-muted">
+          <thead className="text-small text-ink-soft">
             <tr className="border-b border-[#d6d0c4]">
               <th className="py-3 pr-4 font-medium">Product</th>
               <th className="py-3 pr-4 font-medium">Category</th>
@@ -53,7 +53,7 @@ async function ProductTable() {
               <tr key={p.id} className="border-b border-[#e3ded4]">
                 <td className="py-3 pr-4">
                   <Link href={`/admin/products/${p.id}`} className="flex items-center gap-4 hover:underline">
-                    <span className="size-12 shrink-0 bg-paper-2">
+                    <span className="size-12 shrink-0 overflow-hidden rounded-lg">
                       {p.images[0] ? (
                         // biome-ignore lint/performance/noImgElement: uploaded files are served by /media
                         <img src={`/media/${p.images[0]}`} alt="" className="size-full object-cover" />

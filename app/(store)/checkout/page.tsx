@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function CheckoutPage() {
   return (
-    <section className="pt-10 md:pt-16">
-      <h1 className="text-head">Checkout</h1>
-      <p className="mt-4 max-w-[52ch] text-lead text-muted">
+    <section className="wrap pt-10 pb-20 md:pt-16">
+      <h1 className="text-[clamp(2.25rem,4.4vw,3.5rem)] leading-none">Checkout</h1>
+      <p className="mt-4 max-w-[52ch] text-lead text-ink-soft">
         This is a portfolio shop. Placing an order records it, but nothing is charged or shipped.
       </p>
       <Suspense fallback={<div className="mt-10 min-h-[60svh]" />}>

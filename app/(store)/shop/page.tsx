@@ -1,40 +1,25 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Suspense } from "react";
-import { CategoryTabs, GridSkeleton, ProductGrid } from "@/components/catalogue";
+import { Listing, ListingSkeleton, ShopBanner } from "@/components/catalogue";
 
 export const metadata: Metadata = {
   title: "Shop",
   description: "Origami paper, glue pens and sticks, and 3D papercraft animal kits.",
 };
 
-export default function ShopPage() {
+export default function ShopPage({ searchParams }: PageProps<"/shop">) {
   return (
     <>
-      <section className="grid items-end gap-8 pt-10 pb-16 md:grid-cols-[5fr_6fr] md:pt-16">
-        <div>
-          <h1 className="text-[clamp(3rem,6.5vw,6.5rem)] leading-[0.95]">Everything for folding</h1>
-          <p className="mt-6 max-w-[36ch] text-lead">
-            Paper that holds a crease, glue that stays put, and moon kits for the shelf.
-          </p>
-        </div>
-        <div className="relative aspect-[4/3] overflow-hidden">
-          <Image
-            src="/images/happy-kids-folding-origami-1024.webp"
-            alt="Children folding paper at a table"
-            fill
-            priority
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover"
-          />
-        </div>
-      </section>
-      <CategoryTabs />
-      <div className="mt-12">
-        <Suspense fallback={<GridSkeleton />}>
-          <ProductGrid />
+      <ShopBanner
+        eyebrow="The whole shop"
+        title="Paper, tools and kits"
+        blurb="Everything you need to fold a friend, from your first square to a sleeping fox on the moon."
+      />
+      <section className="wrap pt-2 pb-20">
+        <Suspense fallback={<ListingSkeleton />}>
+          <Listing searchParams={searchParams} />
         </Suspense>
-      </div>
+      </section>
     </>
   );
 }

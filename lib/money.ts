@@ -7,6 +7,11 @@ export function formatPrice(cents: number) {
   return usd.format(cents / 100);
 }
 
+/** A price for running text: whole dollars drop the cents ("$35"). */
+export function formatPriceShort(cents: number) {
+  return formatPrice(cents).replace(/\.00$/, "");
+}
+
 /** The price a buyer actually pays: the sale price when one is set and lower. */
 export function effectivePrice(p: { priceCents: number; salePriceCents: number | null }) {
   return p.salePriceCents != null && p.salePriceCents < p.priceCents ? p.salePriceCents : p.priceCents;

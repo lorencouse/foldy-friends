@@ -87,7 +87,7 @@ export function ProductForm({ initial }: { initial: Initial }) {
             className="field"
             aria-describedby="description-hint"
           />
-          <p id="description-hint" className="mt-1 text-small text-muted">
+          <p id="description-hint" className="mt-1 text-small text-ink-soft">
             Leave a blank line between paragraphs.
           </p>
         </div>
@@ -120,7 +120,7 @@ export function ProductForm({ initial }: { initial: Initial }) {
                   defaultChecked={initial.art === key}
                   className="peer sr-only"
                 />
-                <span className="block outline-offset-2 peer-checked:outline-3 peer-checked:outline-ink peer-focus-visible:outline-3 peer-focus-visible:outline-kami-blue">
+                <span className="block outline-offset-2 peer-checked:outline-3 peer-checked:outline-ink peer-focus-visible:outline-3 peer-focus-visible:outline-sky">
                   <ProductArt art={key} className="block w-full" />
                 </span>
                 <span className="sr-only">{key}</span>
@@ -139,7 +139,7 @@ export function ProductForm({ initial }: { initial: Initial }) {
                   <img src={`/media/${img}`} alt="" className="aspect-square w-full object-cover" />
                   <button
                     type="button"
-                    className="btn btn-quiet mt-1 min-h-9 w-full px-2 text-small"
+                    className="btn mt-1 min-h-9 w-full px-2 text-small"
                     disabled={busy}
                     onClick={() =>
                       initial.id && startTransition(() => removePhoto(initial.id as string, img))
@@ -163,7 +163,7 @@ export function ProductForm({ initial }: { initial: Initial }) {
             aria-describedby="photos-hint"
             className="block w-full text-small file:mr-4 file:min-h-11 file:cursor-pointer file:bg-ink file:px-4 file:text-paper"
           />
-          <p id="photos-hint" className="mt-1 text-small text-muted">
+          <p id="photos-hint" className="mt-1 text-small text-ink-soft">
             JPEG, PNG, WebP or AVIF, up to 5 MB each. The first photo leads.
           </p>
         </div>
@@ -174,15 +174,15 @@ export function ProductForm({ initial }: { initial: Initial }) {
           </p>
         )}
         {state.saved && (
-          <p role="status" className="bg-paper-2 p-3">
+          <p role="status" className="sheet p-3">
             Saved.
           </p>
         )}
         <div className="flex flex-wrap gap-3">
-          <button type="submit" className="btn btn-accent" disabled={pending}>
+          <button type="submit" className="btn btn-primary" disabled={pending}>
             {pending ? "Saving…" : initial.id ? "Save changes" : "Create product"}
           </button>
-          <Link href="/admin" className="btn btn-quiet">
+          <Link href="/admin" className="btn">
             Back to products
           </Link>
         </div>
@@ -233,7 +233,7 @@ function Text({
         {...rest}
       />
       {hint && (
-        <p id={`${name}-hint`} className="mt-1 text-small text-muted">
+        <p id={`${name}-hint`} className="mt-1 text-small text-ink-soft">
           {hint}
         </p>
       )}

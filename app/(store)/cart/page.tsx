@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function CartPage() {
   return (
-    <section className="pt-10 md:pt-16">
-      <h1 className="text-head">Your cart</h1>
+    <section className="wrap flex flex-col gap-7 pt-10 pb-20">
+      <h1 className="text-[clamp(2.375rem,4.4vw,3.5rem)] leading-none tracking-[-0.02em]">Your cart</h1>
       <CartView />
     </section>
   );

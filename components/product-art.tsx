@@ -9,20 +9,20 @@ import { useId } from "react";
 type Pt = [number, number];
 
 export const PAPER = {
-  red: "#e0483a",
-  blue: "#2a64b0",
-  green: "#2f8a5b",
-  yellow: "#f2c12e",
-  pink: "#ef8fae",
+  red: "#d23f2c",
+  blue: "#5b9be0",
+  green: "#3fb58e",
+  yellow: "#f6b93b",
+  pink: "#f2a0b5",
   orange: "#ee7f2d",
   teal: "#2d9c9a",
-  ink: "#1d1c1a",
-  paper: "#f3f3f1",
-  night: "#1c2a44",
+  ink: "#1f2a44",
+  paper: "#fbf6ec",
+  night: "#2b3768",
 } as const;
 
 const MOON_SHADES: Record<string, string[]> = {
-  Yellow: ["#f2c12e", "#e5b021", "#f7d35e"],
+  Yellow: ["#f6b93b", "#e9a92a", "#f9cb66"],
   Blue: ["#7fb0e6", "#6a9ed8", "#9cc4ef"],
   White: ["#f1eee6", "#dedad0", "#fbfaf6"],
 };
@@ -114,7 +114,7 @@ function Stars() {
     [360, 320],
   ];
   return (
-    <g fill="#f3f3f1">
+    <g fill="#f6e7b8">
       {s.map(([x, y]) => (
         <polygon
           key={`${x}-${y}`}

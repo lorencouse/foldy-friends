@@ -3,13 +3,19 @@ import localFont from "next/font/local";
 import { Rise } from "@/components/rise";
 import "./globals.css";
 
-const switzer = localFont({
-  src: [
-    { path: "./fonts/switzer-400.woff2", weight: "400" },
-    { path: "./fonts/switzer-500.woff2", weight: "500" },
-    { path: "./fonts/switzer-600.woff2", weight: "600" },
-  ],
-  variable: "--font-switzer",
+// Baloo 2 for headings and buttons, Nunito for reading. Both are variable
+// fonts (latin subset), self-hosted so the build needs no network.
+const baloo = localFont({
+  src: "./fonts/baloo-2-latin.woff2",
+  weight: "400 800",
+  variable: "--font-baloo",
+  display: "swap",
+});
+
+const nunito = localFont({
+  src: "./fonts/nunito-latin.woff2",
+  weight: "400 900",
+  variable: "--font-nunito",
   display: "swap",
 });
 
@@ -25,11 +31,11 @@ export const metadata: Metadata = {
   openGraph: { siteName: "Foldy Friends", type: "website" },
 };
 
-export const viewport: Viewport = { themeColor: "#1d1c1a" };
+export const viewport: Viewport = { themeColor: "#fbf6ec" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={switzer.variable}>
+    <html lang="en" className={`${baloo.variable} ${nunito.variable}`}>
       <body>
         <script
           // Marks the page as scripted so entrance animations can hide content
