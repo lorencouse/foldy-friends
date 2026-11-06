@@ -106,7 +106,8 @@ size before approving anything:
 - Draw into a review dir, look at every frame, then `--promote` only the
   approved ones; promoting costs nothing and never redraws.
 - Existing files are never redrawn without `--force`; a forced review redraw
-  parks the old frame in `<review-dir>/_superseded/`.
+  parks the old frame in `<review-dir>/_superseded/` only once its
+  replacement has arrived, so a refused or failed batch leaves it in place.
 - Draw at the size the placement needs. `width` and `height` in the manifest
   are the WebP written to `public/`; 2K is right for full-width pictures, 1K
   for anything shown in a small box.
