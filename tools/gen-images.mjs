@@ -351,6 +351,8 @@ async function main() {
   const args = process.argv.slice(2);
   const reviewDirFlag = argValue(args, "--review-dir");
   const maxUsd = Number(argValue(args, "--max-usd") ?? 0.5);
+  if (!Number.isFinite(maxUsd) || maxUsd < 0)
+    throw new Error("--max-usd needs a dollar amount like 0.5");
   const flags = new Set(args.filter((a) => a.startsWith("--")));
   const wanted = args.filter((a) => !a.startsWith("--"));
   const review = flags.has("--review");
@@ -361,6 +363,8 @@ async function main() {
   if (flags.has("--print-style")) return console.log(CONTRACT);
   const manifest = readJson(MANIFEST, { images: [] });
   const ledger = readJson(LEDGER, { calls: [], images: 0, usd: 0 });
+  const unknown = wanted.filter((s) => !manifest.images.some((e) => e.slug === s));
+  if (unknown.length) throw new Error(`not in tools/images.json: ${unknown.join(", ")}`);
 
   if (flags.has("--sheet")) {
     const dir = resolve(reviewDirFlag || DEFAULT_REVIEW);
@@ -417,8 +421,6 @@ async function main() {
 
   if (!wanted.length)
     throw new Error("name the slugs to draw (see tools/images.json); nothing draws by default");
-  const unknown = wanted.filter((s) => !manifest.images.some((e) => e.slug === s));
-  if (unknown.length) throw new Error(`not in tools/images.json: ${unknown.join(", ")}`);
 
   const jobs = [];
   for (const entry of manifest.images.filter((e) => wanted.includes(e.slug))) {
