@@ -66,7 +66,7 @@ export function SignInForm() {
           aria-describedby="password-hint"
           className="field"
         />
-        <p id="password-hint" className="mt-1 text-small text-muted">
+        <p id="password-hint" className="mt-1 text-small text-ink-soft">
           At least 8 characters.
         </p>
       </div>
@@ -75,7 +75,7 @@ export function SignInForm() {
           {error}
         </p>
       )}
-      <button type="submit" className="btn w-full" disabled={pending}>
+      <button type="submit" className="btn btn-primary w-full" disabled={pending}>
         {pending ? "One moment…" : mode === "sign-in" ? "Sign in" : "Create account"}
       </button>
       <p>

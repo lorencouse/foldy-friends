@@ -14,7 +14,7 @@ export function CheckoutForm({ defaultEmail, defaultName }: { defaultEmail: stri
 
   if (lines.length === 0) {
     return (
-      <p className="mt-10 text-lead">
+      <p className="sheet mt-10 p-6 text-lead">
         Your cart is empty.{" "}
         <Link href="/shop" className="link">
           Go to the shop
@@ -59,8 +59,8 @@ export function CheckoutForm({ defaultEmail, defaultName }: { defaultEmail: stri
         <Field name="region" label="State" autoComplete="address-level1" />
         <Field name="postalCode" label="ZIP code" autoComplete="postal-code" inputMode="numeric" />
       </div>
-      <aside className="h-fit bg-paper-2 p-6 sm:p-8" aria-label="Order summary">
-        <h2 className="text-lead">Your order</h2>
+      <aside className="sheet sheet-raised h-fit p-6 sm:p-8" aria-label="Order summary">
+        <h2 className="text-[1.75rem]">Your order</h2>
         <ul className="mt-6 space-y-3">
           {lines.map((l) => (
             <li key={`${l.productId}-${l.option}`} className="flex justify-between gap-4">
@@ -77,7 +77,7 @@ export function CheckoutForm({ defaultEmail, defaultName }: { defaultEmail: stri
             <dt>Shipping</dt>
             <dd>{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>
           </div>
-          <div className="flex justify-between text-lead font-medium">
+          <div className="flex items-baseline justify-between border-t-2 border-dashed border-crease-dark pt-3 font-display text-2xl font-extrabold">
             <dt>Total</dt>
             <dd>{formatPrice(subtotal + shipping)}</dd>
           </div>
@@ -87,7 +87,7 @@ export function CheckoutForm({ defaultEmail, defaultName }: { defaultEmail: stri
             {state.error}
           </p>
         )}
-        <button type="submit" className="btn btn-accent mt-8 w-full" disabled={pending}>
+        <button type="submit" className="btn btn-primary mt-8 w-full" disabled={pending}>
           {pending ? "Placing your order…" : "Place demo order"}
         </button>
       </aside>

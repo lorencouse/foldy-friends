@@ -9,6 +9,8 @@ export type CartLine = {
   art: string;
   option: string | null;
   unitPriceCents: number;
+  /** The regular price, when the item was added on sale; shown as savings. Display only. */
+  listPriceCents?: number;
   quantity: number;
 };
 

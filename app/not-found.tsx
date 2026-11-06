@@ -1,25 +1,40 @@
+import Image from "next/image";
 import Link from "next/link";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export default function NotFound() {
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto grid min-h-[70svh] max-w-[1440px] items-center gap-12 px-4 py-24 sm:px-8 md:grid-cols-2">
+      <main className="wrap grid min-h-[60svh] items-center gap-12 py-16 md:grid-cols-2 md:py-24">
         <div>
-          <h1 className="text-head">This page came unfolded</h1>
-          <p className="mt-5 max-w-[40ch] text-lead text-muted">
+          <span className="tape -rotate-2" style={{ backgroundColor: "var(--color-blush)" }}>
+            Page not found
+          </span>
+          <h1 className="mt-4 text-[clamp(2.25rem,4.4vw,3.5rem)] leading-none">This page came unfolded</h1>
+          <p className="mt-5 max-w-[40ch] text-lead text-ink-soft">
             We could not find what you were looking for. It may have sold out or moved.
           </p>
-          <Link href="/shop" className="btn btn-accent mt-8">
+          <Link href="/shop" className="btn btn-primary mt-8">
             Go to the shop
           </Link>
         </div>
-        <svg viewBox="0 0 400 400" className="mx-auto w-full max-w-sm" aria-hidden>
-          <polygon points="200,40 360,200 200,360 40,200" fill="#f2c12e" />
-          <polygon points="40,200 200,200 200,360" fill="#d9a514" />
-        </svg>
+        <div
+          className="dogear creases mx-auto flex aspect-square w-full max-w-sm items-center justify-center rounded-[28px_0_28px_28px] bg-sun-pale"
+          aria-hidden="true"
+        >
+          <span className="flap" />
+          <Image
+            src="/assets/origami-cat-inverted.png"
+            alt=""
+            width={192}
+            height={192}
+            className="w-[60%] -rotate-6 mix-blend-multiply"
+          />
+        </div>
       </main>
+      <SiteFooter />
     </>
   );
 }

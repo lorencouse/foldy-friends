@@ -6,7 +6,7 @@ export function SignOutButton() {
   return (
     <button
       type="button"
-      className="btn btn-quiet"
+      className="btn"
       onClick={async () => {
         await authClient.signOut();
         window.location.assign("/");

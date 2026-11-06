@@ -1,13 +1,13 @@
 import { expect, test } from "@playwright/test";
 
-test("home page says what the shop is and folds the dog", async ({ page }) => {
+test("home page says what the shop is and leads to the kits", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1, name: "foldy friends" })).toBeVisible();
-  const fold = page.getByRole("button", { name: /unfold and start again/i }).first();
-  await fold.scrollIntoViewIfNeeded();
-  await fold.click();
-  await expect(page.getByText("Start with a square, turned to a diamond.").first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "The price list" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Fold a new friend today." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Meet the Moon Dreamers" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Top-selling friends" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Fox asleep on the moon" }).first()).toBeVisible();
+  await page.getByRole("link", { name: "Shop the kits" }).click();
+  await expect(page.getByRole("heading", { level: 1, name: "Kits" })).toBeVisible();
 });
 
 test("browse, add to cart and place a demo order", async ({ page }) => {
@@ -37,7 +37,7 @@ test("browse, add to cart and place a demo order", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: /Order FF-[0-9A-F]{8} placed/ })).toBeVisible();
   await expect(page.getByText("$59.94").first()).toBeVisible();
   await page.goto("/cart");
-  await expect(page.getByText("Nothing folded in here yet.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Nothing folded in here yet" })).toBeVisible();
 });
 
 test("a shopper can sign up and review a product", async ({ page }) => {
@@ -86,5 +86,5 @@ test("signing up from the account page lands on the account", async ({ page }) =
   await expect(page.getByRole("heading", { level: 1, name: "Hello, Pat" })).toBeVisible();
 
   await page.getByRole("button", { name: "Sign out" }).click();
-  await expect(page.getByRole("heading", { level: 1, name: "foldy friends" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Fold a new friend today." })).toBeVisible();
 });
