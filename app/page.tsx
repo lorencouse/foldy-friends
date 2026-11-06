@@ -334,7 +334,7 @@ function ForParents() {
               alt="A boy handing his mother a red paper dog he folded"
               fill
               sizes="(min-width: 1024px) 45vw, 90vw"
-              className="object-cover object-[30%_40%]"
+              className="object-cover object-[25%_40%] md:object-[50%_40%]"
             />
           </div>
           <span
