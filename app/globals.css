@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+/*
+ * Foldy Friends tokens. Colours are origami paper (kami) colours: one paper
+ * ground, one ink, a black-paper field for the opening and the close, and the
+ * pack's bright sheets as whole-section fields. The one accent is kami yellow.
+ */
+@theme {
+  --font-sans: var(--font-switzer), ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #f3f3f1;
+  --color-paper-2: #e7e7e3;
+  --color-ink: #1d1c1a;
+  --color-muted: #5b5850;
+  --color-night: #1d1c1a;
+  --color-night-2: #2a2926;
+  --color-bone: #f1f0ed;
+  --color-bone-muted: #b5b3ad;
+  --color-accent: #f2c12e;
+  --color-accent-ink: #1d1c1a;
+  --color-kami-red: #e0483a;
+  --color-kami-blue: #2a64b0;
+  --color-kami-green: #2f8a5b;
+  --color-kami-yellow: #f2c12e;
+  --color-kami-pink: #ef8fae;
+  --color-danger: #b42318;
+
+  --text-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --text-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --text-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --text-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
+  --text-giant: clamp(5rem, 13vw, 14rem);
+
+  --ease-out-paper: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-kami-blue);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+@layer components {
+  /* One button shape for the whole site: square corners, flat fill. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    font-weight: 500;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    transition:
+      transform 160ms var(--ease-out-paper),
+      background-color 160ms;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: #3a3833;
+  }
+  .btn:active {
+    transform: translateY(1px) scale(0.99);
+  }
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn-accent {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+  .btn-accent:hover {
+    background: #f6cf55;
+  }
+  .btn-quiet {
+    background: var(--color-paper-2);
+    color: var(--color-ink);
+  }
+  .btn-quiet:hover {
+    background: #dcdcd7;
+  }
+
+  .field {
+    display: block;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.625rem 0.875rem;
+    background: #fff;
+    color: var(--color-ink);
+    border: 1px solid #cfc9bd;
+    transition: border-color 120ms;
+  }
+  .field:focus {
+    border-color: var(--color-ink);
+    outline: none;
+  }
+  .field-label {
+    display: block;
+    margin-bottom: 0.375rem;
+    font-weight: 500;
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Paper edges: a scalloped sheet and a zigzag-cut slip. */
+  .edge-scallop {
+    --scallop-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14'%3E%3Cpath d='M0 14A14 14 0 0 1 28 14Z'/%3E%3C/svg%3E");
+    --scallop-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14'%3E%3Cpath d='M0 0A14 14 0 0 0 28 0Z'/%3E%3C/svg%3E");
+    --solid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4'/%3E%3C/svg%3E");
+    mask:
+      var(--scallop-top) top left / 28px 14px repeat-x,
+      var(--scallop-bottom) bottom left / 28px 14px repeat-x,
+      var(--solid) center / 100% calc(100% - 26px) no-repeat;
+    padding-block: 4rem;
+  }
+  .leader {
+    height: 4px;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='4'%3E%3Ccircle cx='2' cy='2' r='2' fill='%231d1c1a'/%3E%3C/svg%3E")
+      left center / 10px 4px repeat-x;
+  }
+  .edge-zigzag {
+    --z: 12px;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - var(--z)),
+      95% 100%,
+      90% calc(100% - var(--z)),
+      85% 100%,
+      80% calc(100% - var(--z)),
+      75% 100%,
+      70% calc(100% - var(--z)),
+      65% 100%,
+      60% calc(100% - var(--z)),
+      55% 100%,
+      50% calc(100% - var(--z)),
+      45% 100%,
+      40% calc(100% - var(--z)),
+      35% 100%,
+      30% calc(100% - var(--z)),
+      25% 100%,
+      20% calc(100% - var(--z)),
+      15% 100%,
+      10% calc(100% - var(--z)),
+      5% 100%,
+      0 calc(100% - var(--z))
+    );
+    padding-bottom: calc(var(--z) + 2rem);
+  }
+}
+
+/* Entrances: content is visible by default and only animates when JS marks it. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-rise] {
+    opacity: 0;
+    translate: 0 24px;
+    transition:
+      opacity 700ms var(--ease-out-paper),
+      translate 700ms var(--ease-out-paper);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+  .js [data-rise].is-in {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  /* Signature move: the wordmark settles as the first screen scrolls away. */
+  @supports (animation-timeline: scroll()) {
+    .wordmark-scroll {
+      animation: wordmark-settle linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+      transform-origin: left bottom;
+    }
+    @keyframes wordmark-settle {
+      to {
+        scale: 0.93;
+      }
+    }
+  }
+
+  .drift {
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from {
+      scale: 1.02;
+      translate: -0.5% 0;
+    }
+    to {
+      scale: 1.08;
+      translate: 0.5% -1%;
+    }
+  }
+}

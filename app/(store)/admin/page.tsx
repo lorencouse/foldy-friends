@@ -1,0 +1,79 @@
+import { asc } from "drizzle-orm";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Suspense } from "react";
+import { ProductArt } from "@/components/product-art";
+import { CATEGORY_INFO } from "@/lib/catalog";
+import { db } from "@/lib/db";
+import { products } from "@/lib/db/schema";
+import { effectivePrice, formatPrice } from "@/lib/money";
+import { requireAdmin } from "@/lib/session";
+
+export const metadata: Metadata = {
+  title: "Products",
+  robots: { index: false },
+};
+
+export default function AdminPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[60svh]" aria-busy="true" />}>
+      <ProductTable />
+    </Suspense>
+  );
+}
+
+async function ProductTable() {
+  await requireAdmin();
+  const rows = await db.select().from(products).orderBy(asc(products.category), asc(products.name));
+  return (
+    <section className="pt-10 md:pt-16">
+      <div className="flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <h1 className="text-head">Products</h1>
+          <p className="mt-3 text-muted">
+            {rows.length} products, {rows.filter((r) => r.stock === 0).length} sold out.
+          </p>
+        </div>
+        <Link href="/admin/products/new" className="btn btn-accent">
+          Add a product
+        </Link>
+      </div>
+      <div className="mt-10 overflow-x-auto">
+        <table className="w-full min-w-[40rem] text-left">
+          <thead className="text-small text-muted">
+            <tr className="border-b border-[#d6d0c4]">
+              <th className="py-3 pr-4 font-medium">Product</th>
+              <th className="py-3 pr-4 font-medium">Category</th>
+              <th className="py-3 pr-4 text-right font-medium">Price</th>
+              <th className="py-3 text-right font-medium">Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((p) => (
+              <tr key={p.id} className="border-b border-[#e3ded4]">
+                <td className="py-3 pr-4">
+                  <Link href={`/admin/products/${p.id}`} className="flex items-center gap-4 hover:underline">
+                    <span className="size-12 shrink-0 bg-paper-2">
+                      {p.images[0] ? (
+                        // biome-ignore lint/performance/noImgElement: uploaded files are served by /media
+                        <img src={`/media/${p.images[0]}`} alt="" className="size-full object-cover" />
+                      ) : (
+                        <ProductArt art={p.art} className="size-full" />
+                      )}
+                    </span>
+                    {p.name}
+                  </Link>
+                </td>
+                <td className="py-3 pr-4">{CATEGORY_INFO[p.category].title}</td>
+                <td className="py-3 pr-4 text-right tabular-nums">{formatPrice(effectivePrice(p))}</td>
+                <td className={`py-3 text-right tabular-nums ${p.stock === 0 ? "text-danger" : ""}`}>
+                  {p.stock}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
