@@ -1,0 +1,40 @@
+{
+  "images": [
+    {
+      "slug": "test-kitchen-table",
+      "note": "Test sheet 1: the hero. Two kids folding at a kitchen table, a parent nearby.",
+      "aspect": "3:2",
+      "size": "2K",
+      "width": 1600,
+      "height": 1067,
+      "prompt": "Late on a weekday afternoon, two siblings fold origami at a wooden kitchen table, seen from across the table at the children's eye level. On the left a girl of about nine with brown skin and her curly hair pulled into an untidy bun, in a mustard knit jumper, holds a half-folded sky blue crane in both hands, pinching a wing point between her thumb and first finger, her tongue just showing in concentration. On the right her brother of about six with a gap in his front teeth, in a faded navy t-shirt, kneels up on his chair and presses a crease flat on a tomato red sheet with the side of his fist, looking across at her work. Between them on the table: a small loose stack of square papers in sunshine yellow, mint green and blush pink, two finished lopsided cranes, a mug, and a pencil. Behind them, a little out of focus, their father in a grey cardigan leans on the kitchen counter with a cup of tea, half-smiling as he watches; he is clearly secondary and only partly in frame. Daylight comes from a window on the left. There are exactly three people in the picture."
+    },
+    {
+      "slug": "test-handing-gift",
+      "note": "Test sheet 2: a child proudly handing a parent a folded animal.",
+      "aspect": "16:9",
+      "size": "2K",
+      "width": 1920,
+      "height": 1080,
+      "prompt": "In a living room in soft morning light, a boy of about seven with pale freckled skin and messy sandy hair, in a striped long-sleeved t-shirt, holds out a small folded paper dog face in tomato red with both hands toward his mother, arms outstretched, grinning with pride. His mother, a woman in her late thirties of East Asian descent with her hair in a loose clip and wearing a cream linen shirt, has crouched down to his height on the rug and is reaching out one open hand to take it, smiling with real surprise. They face each other in profile, the boy on the left and his mother on the right, so the paper dog sits between them in the middle of the frame. The dog face has two folded-down ears and the white reverse of the paper shows on the ear tips. Behind them a sofa with a rumpled throw, a bookshelf of plain-spined books and a window. The left third of the frame is quieter room and wall, with space around the pair. There are exactly two people in the picture."
+    },
+    {
+      "slug": "test-bedtime-floor",
+      "note": "Test sheet 3: a parent and child folding together on a living-room floor at bedtime, lamp light. For the Moon Dreamers bedtime scene.",
+      "aspect": "3:2",
+      "size": "2K",
+      "width": 1600,
+      "height": 1067,
+      "prompt": "Evening, just before bed. A father in his forties with dark brown skin, short greying beard and reading glasses pushed up on his head, wearing a soft navy sweatshirt, sits cross-legged on a living-room rug beside his daughter of about five, who wears star-print pyjamas and has her hair in two uneven braids. She sits leaning against his side, both of them looking down at a small sky blue paper boat she is holding up in her two hands, her mouth open in a delighted laugh. His near hand rests lightly on the rug beside her; his other hand holds a sheet of folded midnight blue paper. A few more square sheets in sunshine yellow and mint green lie on the rug in front of them, and a folded yellow star and a crooked crane. The only light is a warm table lamp on a side table to the right, so the room behind them falls into soft dusk shadow with a sofa edge and a dark window. Warm, quiet and a little sleepy, not dramatic. There are exactly two people in the picture."
+    },
+    {
+      "slug": "test-small-hands",
+      "note": "Test sheet 4: close-up of small hands making a fold.",
+      "aspect": "4:3",
+      "size": "2K",
+      "width": 1600,
+      "height": 1200,
+      "prompt": "A close-up, looking down at a wooden table from just above, of a child's two small hands making a fold in a square sheet of mint green origami paper. The child is about eight; only the hands, the wrists and the turned-back cuffs of an oatmeal coloured jumper are in the frame. The left hand holds the paper steady with the fingertips; the right index finger runs firmly along a fresh diagonal crease, pressing it flat. Both hands are complete and natural: each has exactly four fingers and one thumb, with short, slightly uneven nails and a little pencil smudge on one knuckle. The paper is a solid mint green on top with the white reverse showing along the folded edge, and earlier crease lines are faintly visible across it. To one side, slightly out of focus, a finished small tomato red fox face and a few loose sheets in blush pink and sunshine yellow. Soft window light from the top left, with a gentle shadow under the raised paper edge. No face is in the picture."
+    }
+  ]
+}
