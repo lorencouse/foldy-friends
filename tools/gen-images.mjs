@@ -10,6 +10,7 @@
  *   node tools/gen-images.mjs --batch --force a                 # redraw one that exists
  *   node tools/gen-images.mjs --batch-collect                   # pick up a batch this process stopped waiting on
  *   node tools/gen-images.mjs --sheet a b c d                   # retile the contact sheet, free
+ *   node tools/gen-images.mjs --promote a b                     # approved review draws -> public/<out>.webp, free
  *   node tools/gen-images.mjs --print-style                     # the contract every prompt is joined to
  *   node tools/gen-images.mjs --list-models                     # what the key can reach
  *
@@ -365,6 +366,29 @@ async function main() {
     const dir = resolve(reviewDirFlag || DEFAULT_REVIEW);
     const picked = manifest.images.filter((e) => !wanted.length || wanted.includes(e.slug));
     console.log((await contactSheet(picked, dir)) || "no review files to tile");
+    return;
+  }
+
+  // --promote takes approved review originals live: the model's bytes become
+  // the master and the WebP is written to public/<out>.webp. Nothing is drawn.
+  if (flags.has("--promote")) {
+    if (!wanted.length) throw new Error("--promote needs the slugs to take live");
+    const dir = resolve(reviewDirFlag || DEFAULT_REVIEW);
+    for (const entry of manifest.images.filter((e) => wanted.includes(e.slug))) {
+      const job = jobFor(entry, null);
+      const src = join(dir, `${entry.slug}.jpeg`);
+      if (!job.dest) throw new Error(`${entry.slug} has no "out" path to promote to`);
+      if (!existsSync(src)) throw new Error(`${entry.slug}: nothing in ${dir} to promote`);
+      if (existsSync(job.dest) && !force) {
+        console.log(`${entry.slug}: ${job.dest} exists, skipped (--force to replace)`);
+        continue;
+      }
+      const buf = readFileSync(src);
+      mkdirSync(dirname(job.master), { recursive: true });
+      writeFileSync(job.master, buf);
+      await writeWebp(buf, job.dest, entry.width, entry.height);
+      console.log(`${entry.slug} -> ${job.dest.replace(`${ROOT}/`, "")}`);
+    }
     return;
   }
 

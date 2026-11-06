@@ -56,8 +56,8 @@ export default function Home() {
                 ),
                 making: (
                   <Image
-                    src="/images/kids-crafting-origami.webp"
-                    alt="Two children making paper crafts at a table"
+                    src="/images/grandmother-and-boy-folding-frogs.webp"
+                    alt="A grandmother laughing as her grandson makes a paper frog hop on the rug"
                     fill
                     sizes="47vw"
                     className="object-cover"
@@ -180,8 +180,8 @@ export default function Home() {
       <section className="relative bg-night text-bone">
         <div className="relative h-[70svh] lg:h-[90svh]">
           <Image
-            src="/images/boy-giving-mom-origami-dog.webp"
-            alt="A boy giving his mother a folded paper dog"
+            src="/images/boy-handing-mom-origami-dog.webp"
+            alt="A boy handing his mother a red paper dog he folded"
             fill
             sizes="100vw"
             className="object-cover object-[30%_40%] lg:brightness-[0.6]"

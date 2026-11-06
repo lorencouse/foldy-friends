@@ -20,8 +20,8 @@ export default function ShopPage() {
         </div>
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
-            src="/images/happy-kids-folding-origami-1024.webp"
-            alt="Children folding paper at a table"
+            src="/images/kids-folding-origami-kitchen-table.webp"
+            alt="A brother and sister folding paper cranes at the kitchen table while their dad watches"
             fill
             priority
             sizes="(min-width: 768px) 50vw, 100vw"
