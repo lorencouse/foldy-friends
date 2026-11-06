@@ -422,6 +422,7 @@ async function main() {
     throw new Error("name the slugs to draw (see tools/images.json); nothing draws by default");
 
   const jobs = [];
+  const superseded = [];
   for (const entry of manifest.images.filter((e) => wanted.includes(e.slug))) {
     const job = jobFor(entry, reviewDir);
     if (!review && !job.dest)
@@ -431,13 +432,7 @@ async function main() {
       console.log(`${entry.slug}: exists, skipped (--force to redraw)`);
       continue;
     }
-    // A forced review redraw keeps the frame it replaces. Not on a dry run:
-    // pricing must not touch the disk.
-    if (review && existsSync(target) && force && !dryRun) {
-      const kept = join(reviewDir, "_superseded", `${entry.slug}-${stamp()}.jpeg`);
-      mkdirSync(dirname(kept), { recursive: true });
-      renameSync(target, kept);
-    }
+    if (review && existsSync(target)) superseded.push(job);
     jobs.push(job);
   }
 
@@ -479,6 +474,13 @@ async function main() {
     throw new Error("drawing goes through the Batch API only: add --batch to submit");
   if (!key) throw new Error("GEMINI_API_KEY not set (repo .env or the environment)");
 
+  // A forced review redraw keeps the frame it replaces, moved aside only once
+  // nothing can refuse the run.
+  for (const j of superseded) {
+    const kept = join(reviewDir, "_superseded", `${j.slug}-${stamp()}.jpeg`);
+    mkdirSync(dirname(kept), { recursive: true });
+    renameSync(j.reviewFile, kept);
+  }
   const { name, file } = await submit(key, jobs, reviewDir);
   if ((await collect(key, name, file, jobs, ledger)) && review) {
     console.log(
