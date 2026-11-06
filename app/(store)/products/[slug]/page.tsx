@@ -157,7 +157,9 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
             )}
 
             <AddToCart product={product} unitPriceCents={price} variant="full" />
-            <p className="flex items-center gap-2 text-[0.9375rem] font-bold text-mint-ink">
+            <p
+              className={`flex items-center gap-2 text-[0.9375rem] font-bold ${product.stock > 0 ? "text-mint-ink" : "text-ink-soft"}`}
+            >
               <span
                 className="dia"
                 style={{ background: product.stock > 0 ? "var(--color-mint)" : "var(--color-tomato)" }}
