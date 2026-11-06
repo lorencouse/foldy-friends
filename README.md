@@ -1,46 +1,78 @@
-# Getting Started with Create React App
+# Foldy Friends
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A small online shop for origami paper, glue and 3D paper animal kits, built as a
+portfolio project. Shoppers can browse, sign up, review products and place demo
+orders; an admin can edit the catalogue and upload photos. No payments are taken.
 
-## Available Scripts
+Live: https://www.foldyfriends.com
 
-In the project directory, you can run:
+## Stack
 
-### `npm start`
+- **Next.js 16** (App Router, Cache Components, Partial Prefetching), React 19, TypeScript
+- **Postgres** with **Drizzle ORM**; migrations in `drizzle/`
+- **Better Auth** (email and password, admin role)
+- **Tailwind CSS 4**, self-hosted Switzer font, product pictures drawn as SVG
+- **Biome** for lint and format, **Playwright** for end-to-end tests
+- Deployed as a Docker image (Next.js standalone output) on Coolify
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Run it locally
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Needs Node 24+ and Docker.
 
-### `npm test`
+```bash
+cp .env.example .env            # then set BETTER_AUTH_SECRET (openssl rand -hex 32)
+docker compose up -d db         # Postgres on localhost:5433
+npm install
+npm run db:migrate && npm run db:seed
+npm run dev                     # http://localhost:3000
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To make someone an admin, have them sign up, then run
+`npm run make-admin -- someone@example.com` (in production:
+`node scripts/make-admin.ts someone@example.com` inside the container).
+Admins see **Manage products** on their account page (`/admin`).
 
-### `npm run build`
+## Checks
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm run lint        # Biome
+npm run typecheck
+npm run build       # needs no database
+npm run test:e2e    # Playwright; builds must exist and the database must be up
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+CI runs all of these on every pull request.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## How it fits together
 
-### `npm run eject`
+- `app/page.tsx`: the home page. The left half stays fixed while the right half
+  scrolls; the fold-a-dog panel is `components/folding-dog.tsx`.
+- `app/(store)/`: shop, category and product pages, cart, checkout, sign-in,
+  account and admin.
+- `lib/catalog.ts`: cached catalogue reads (`"use cache"` with the `products` tag).
+  Admin saves call `updateTag` so changes show at once.
+- `lib/cart.ts`: the cart lives in the browser (localStorage). Checkout re-prices
+  every line from the database.
+- `components/product-art.tsx`: the drawn product pictures. Uploaded photos
+  (served from `/media`, stored in `UPLOAD_DIR`) replace a drawing.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Deploying (Coolify)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The `Dockerfile` builds a standalone server. On start the container runs the
+migrations, seeds the starter catalogue into an empty database, then serves on
+port 3000 with a health check at `/api/health`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Environment: `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL` and
+`SITE_URL` (the public address), optional `TRUSTED_ORIGINS`.
+Mount a persistent volume at `/data/uploads` for uploaded photos.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Images are built on a developer machine, not on the server:
+`COOLIFY_TOKEN=... scripts/deploy.sh` builds for arm64, copies the image to the
+box's private registry, points the Coolify app at the new tag and redeploys.
 
-## Learn More
+## Credits
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Folding diagrams from _Hiden Senbazuru Orikata_ (1797) by Shimokōbe Shūsui,
+public domain, via The Metropolitan Museum of Art and Wikimedia Commons.
+"Rotating origami icosahedron" by Dolev, CC BY-SA 3.0, via Wikimedia Commons.
+Full list in `data/image-credits.json`.

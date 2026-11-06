@@ -1,0 +1,14 @@
+# Local development database. Production runs Postgres as a Coolify resource.
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: foldy
+      POSTGRES_PASSWORD: foldy
+      POSTGRES_DB: foldy
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+volumes:
+  pgdata:

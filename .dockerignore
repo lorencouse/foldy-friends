@@ -1,0 +1,13 @@
+.git
+.next
+node_modules
+.env
+.env.*
+!.env.example
+uploads
+test-results
+playwright-report
+.taste-skill
+e2e
+*.md
+!README.md

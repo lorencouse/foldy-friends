@@ -1,54 +1,47 @@
-"use client";
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
+import { Rise } from "@/components/rise";
+import "./globals.css";
 
-import "@/styles/main.css";
-import React, { ReactNode } from "react";
-import Navbar from "@/components/nav/navbar";
-import { Footer } from "@/components/footer";
-import { ShopContextProvider } from "@/context/ShopContext";
-import { Comfortaa, Baloo_2, Quicksand } from "next/font/google";
-import { ThemeProvider } from "@/context/theme-provider";
-
-const comfortaa = Comfortaa({
-  weight: ["400", "700"],
-  subsets: ["latin"],
+const switzer = localFont({
+  src: [
+    { path: "./fonts/switzer-400.woff2", weight: "400" },
+    { path: "./fonts/switzer-500.woff2", weight: "500" },
+    { path: "./fonts/switzer-600.woff2", weight: "600" },
+  ],
+  variable: "--font-switzer",
+  display: "swap",
 });
 
-const baloo2 = Baloo_2({
-  weight: ["400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-});
+const siteUrl = process.env.SITE_URL ?? "https://www.foldyfriends.com";
 
-const quicksand = Quicksand({
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["latin"],
-});
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Foldy Friends: origami paper, glue and paper animal kits",
+    template: "%s · Foldy Friends",
+  },
+  description: "Origami paper, glue pens and 3D paper animal kits for kids and families who fold together.",
+  openGraph: { siteName: "Foldy Friends", type: "website" },
+};
 
-interface LayoutProps {
-  children: ReactNode;
-}
+export const viewport: Viewport = { themeColor: "#1d1c1a" };
 
-const Layout = ({ children }: LayoutProps) => {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${comfortaa.className} ${baloo2.className} ${quicksand.className}`}
-    >
-      <body className="min-h-screen flex flex-col bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ShopContextProvider>
-            <Navbar />
-            <main className="min-h-[80vh] md:mt-16">{children}</main>
-            <Footer />
-          </ShopContextProvider>
-        </ThemeProvider>
+    <html lang="en" className={switzer.variable}>
+      <body>
+        <script
+          // Marks the page as scripted so entrance animations can hide content
+          // only when they can also reveal it.
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: static one-liner
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
+        {children}
+        <Rise />
       </body>
     </html>
   );
-};
-
-export default Layout;
+}
