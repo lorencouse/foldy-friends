@@ -72,3 +72,19 @@ test("unknown pages get a friendly 404", async ({ page }) => {
   await expect(page.locator('meta[name="robots"][content*="noindex"]').first()).toBeAttached();
   await expect(page.getByRole("heading", { name: "This page came unfolded" })).toBeVisible();
 });
+
+test("signing up from the account page lands on the account", async ({ page }) => {
+  const email = `acct-${Date.now()}-${Math.random().toString(36).slice(2, 7)}@example.com`;
+  await page.goto("/");
+  await page.getByRole("link", { name: "Account" }).first().click();
+  await expect(page).toHaveURL(/\/sign-in\?next=%2Faccount/);
+  await page.getByRole("button", { name: "Create an account" }).click();
+  await page.getByLabel("Your name").fill("Pat Paper");
+  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Password").fill("paper-cranes-1000");
+  await page.getByRole("button", { name: "Create account" }).click();
+  await expect(page.getByRole("heading", { level: 1, name: "Hello, Pat" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Sign out" }).click();
+  await expect(page.getByRole("heading", { level: 1, name: "foldy friends" })).toBeVisible();
+});

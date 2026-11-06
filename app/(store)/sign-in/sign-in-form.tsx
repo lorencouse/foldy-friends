@@ -1,11 +1,10 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 
 export function SignInForm() {
-  const router = useRouter();
   const params = useSearchParams();
   const next = safeNext(params.get("next"));
   const [mode, setMode] = useState<"sign-in" | "sign-up">("sign-in");
@@ -32,8 +31,9 @@ export function SignInForm() {
       setError(result.error.message ?? "That did not work. Try again.");
       return;
     }
-    router.replace(next);
-    router.refresh();
+    // A full page load, so no page remembered from before sign-in (such as the
+    // redirect that sent you here) is reused.
+    window.location.assign(next);
   }
 
   return (
