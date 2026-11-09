@@ -7,13 +7,13 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { orderItems, orders, products } from "@/lib/db/schema";
-import { effectivePrice, shippingFor } from "@/lib/money";
+import { effectivePrice, MAX_LINE_QUANTITY, shippingFor } from "@/lib/money";
 import { getUser } from "@/lib/session";
 
 const Line = z.object({
   productId: z.uuid(),
   option: z.string().max(40).nullable(),
-  quantity: z.number().int().min(1).max(20),
+  quantity: z.number().int().min(1).max(MAX_LINE_QUANTITY),
 });
 
 const CheckoutInput = z.object({

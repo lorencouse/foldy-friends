@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useOption } from "@/components/product-option";
 import { moonFill } from "@/components/product-picture";
 import { cart } from "@/lib/cart";
-import { formatPrice } from "@/lib/money";
+import { formatPrice, MAX_LINE_QUANTITY } from "@/lib/money";
 
 type Props = {
   product: {
@@ -24,8 +24,6 @@ type Props = {
    */
   variant?: "card" | "full";
 };
-
-const MAX_QTY = 20;
 
 export function AddToCart({ product, unitPriceCents, variant = "card" }: Props) {
   const [localOption, setLocalOption] = useState<string | null>(product.options[0] ?? null);
@@ -123,8 +121,8 @@ export function AddToCart({ product, unitPriceCents, variant = "card" }: Props) 
             type="button"
             className="step"
             aria-label="One more"
-            onClick={() => setQuantity((q) => Math.min(MAX_QTY, q + 1))}
-            disabled={quantity >= MAX_QTY}
+            onClick={() => setQuantity((q) => Math.min(MAX_LINE_QUANTITY, q + 1))}
+            disabled={quantity >= MAX_LINE_QUANTITY}
           >
             +
           </button>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { GuideCard } from "@/components/guides/guide-card";
 import { Crane, Frog } from "@/components/menagerie";
 import { GUIDES } from "@/lib/guides";
+import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Origami guides: easy step-by-step folds",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     "Free step-by-step origami guides for kids and families: a crane, a jumping frog, a fox, a boat, a heart and more, with a clear diagram for every fold.",
   alternates: { canonical: "/guides" },
   openGraph: {
-    siteName: "Foldy Friends",
+    siteName: SITE_NAME,
     url: "/guides",
     title: "Origami guides: easy step-by-step folds",
     description:

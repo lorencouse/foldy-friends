@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PictureTile } from "@/components/product-picture";
 import { cart, useCart } from "@/lib/cart";
-import { FREE_SHIPPING_FROM_CENTS, formatPrice, shippingFor } from "@/lib/money";
+import { FREE_SHIPPING_FROM_CENTS, formatPrice, MAX_LINE_QUANTITY, shippingFor } from "@/lib/money";
 
 export function CartView() {
   const lines = useCart();
@@ -119,7 +119,7 @@ export function CartView() {
                   className="step"
                   aria-label={`One more ${l.name}`}
                   onClick={() => cart.setQuantity(l.productId, l.option, l.quantity + 1)}
-                  disabled={l.quantity >= 20}
+                  disabled={l.quantity >= MAX_LINE_QUANTITY}
                 >
                   +
                 </button>

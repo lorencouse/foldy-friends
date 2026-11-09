@@ -17,6 +17,9 @@ export function effectivePrice(p: { priceCents: number; salePriceCents: number |
   return p.salePriceCents != null && p.salePriceCents < p.priceCents ? p.salePriceCents : p.priceCents;
 }
 
+/** The most of one product, in one option, that a single order line can hold. */
+export const MAX_LINE_QUANTITY = 20;
+
 export const FREE_SHIPPING_FROM_CENTS = 3500;
 export const SHIPPING_CENTS = 495;
 

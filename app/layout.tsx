@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Rise } from "@/components/rise";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Baloo 2 for headings and buttons, Nunito for reading. Both are variable
@@ -19,16 +20,14 @@ const nunito = localFont({
   display: "swap",
 });
 
-const siteUrl = process.env.SITE_URL ?? "https://www.foldyfriends.com";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Foldy Friends: origami paper, glue and paper animal kits",
     template: "%s · Foldy Friends",
   },
   description: "Origami paper, glue pens and 3D paper animal kits for kids and families who fold together.",
-  openGraph: { siteName: "Foldy Friends", type: "website" },
+  openGraph: { siteName: SITE_NAME, type: "website" },
 };
 
 export const viewport: Viewport = { themeColor: "#fbf6ec" };

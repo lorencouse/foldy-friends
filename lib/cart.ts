@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { MAX_LINE_QUANTITY } from "@/lib/money";
 
 export type CartLine = {
   productId: string;
@@ -64,7 +65,9 @@ export const cart = {
     const found = lines.find((l) => same(l, line.productId, line.option));
     write(
       found
-        ? lines.map((l) => (l === found ? { ...l, quantity: Math.min(l.quantity + quantity, 20) } : l))
+        ? lines.map((l) =>
+            l === found ? { ...l, quantity: Math.min(l.quantity + quantity, MAX_LINE_QUANTITY) } : l,
+          )
         : [...lines, { ...line, quantity }],
     );
   },
@@ -73,7 +76,9 @@ export const cart = {
     write(
       quantity <= 0
         ? lines.filter((l) => !same(l, productId, option))
-        : lines.map((l) => (same(l, productId, option) ? { ...l, quantity: Math.min(quantity, 20) } : l)),
+        : lines.map((l) =>
+            same(l, productId, option) ? { ...l, quantity: Math.min(quantity, MAX_LINE_QUANTITY) } : l,
+          ),
     );
   },
   clear() {

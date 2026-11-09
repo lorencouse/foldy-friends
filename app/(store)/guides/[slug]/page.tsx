@@ -7,13 +7,12 @@ import { GuideCard } from "@/components/guides/guide-card";
 import { GuideProducts, GuideProductsSkeleton } from "@/components/guides/guide-products";
 import { FinishedModel, GuideSteps, NotationKey } from "@/components/guides/guide-steps";
 import { GUIDES, type Guide, getGuide, guideLevel, isoMinutes } from "@/lib/guides";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 // Every guide is prerendered; any other slug is a 404.
 export function generateStaticParams() {
   return GUIDES.map((g) => ({ slug: g.slug }));
 }
-
-const siteUrl = process.env.SITE_URL ?? "https://www.foldyfriends.com";
 
 export async function generateMetadata({ params }: PageProps<"/guides/[slug]">): Promise<Metadata> {
   const { slug } = await params;
@@ -26,7 +25,7 @@ export async function generateMetadata({ params }: PageProps<"/guides/[slug]">):
     alternates: { canonical: url },
     openGraph: {
       type: "article",
-      siteName: "Foldy Friends",
+      siteName: SITE_NAME,
       url,
       title: guide.seoTitle,
       description: guide.description,
@@ -189,7 +188,7 @@ function StepByStep({ guide, beginner }: { guide: Guide; beginner: boolean }) {
 }
 
 function structuredData(guide: Guide) {
-  const url = `${siteUrl}/guides/${guide.slug}`;
+  const url = `${SITE_URL}/guides/${guide.slug}`;
   return {
     "@context": "https://schema.org",
     "@type": "HowTo",
