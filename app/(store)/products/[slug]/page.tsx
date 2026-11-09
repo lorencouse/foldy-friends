@@ -4,7 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { AddToCart } from "@/components/add-to-cart";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FoldDiamonds } from "@/components/fold-level";
+import { JsonLd } from "@/components/json-ld";
 import { ProductGallery } from "@/components/product-gallery";
 import { OptionProvider } from "@/components/product-option";
 import { ProductDrawing, tileFor } from "@/components/product-picture";
@@ -77,42 +79,15 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD from our own data
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={jsonLd} />
       <div className="wrap pt-5">
-        <nav aria-label="Breadcrumb" className="text-[0.9375rem] font-bold text-ink-soft">
-          <ol className="flex flex-wrap gap-x-2">
-            <li>
-              <Link href="/" className="inline-flex min-h-11 items-center hover:text-tomato">
-                Home
-              </Link>
-            </li>
-            <li aria-hidden="true" className="flex items-center">
-              /
-            </li>
-            <li>
-              <Link
-                href={`/shop/${product.category}`}
-                className="inline-flex min-h-11 items-center hover:text-tomato"
-              >
-                {category.title}
-              </Link>
-            </li>
-            <li aria-hidden="true" className="flex items-center">
-              /
-            </li>
-            <li className="flex min-w-0 items-center text-ink">
-              <span aria-current="page" className="truncate">
-                {product.name}
-              </span>
-            </li>
-          </ol>
-        </nav>
+        <Breadcrumbs
+          items={[
+            { href: "/", label: "Home" },
+            { href: `/shop/${product.category}`, label: category.title },
+            { label: product.name },
+          ]}
+        />
       </div>
       <OptionProvider initial={product.options[0] ?? null}>
         <article className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] items-start gap-[clamp(28px,5vw,72px)] pt-4 pb-[72px]">
