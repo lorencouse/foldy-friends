@@ -42,7 +42,11 @@ export function FinishedModel({ guide, className = "" }: { guide: Guide; classNa
       <FoldDiagram
         diagram={set.finished}
         color={set.color}
-        label={`A finished origami ${guide.name.toLowerCase()}`}
+        label={
+          guide.slug === "how-to-start-origami"
+            ? guide.steps[0].alt
+            : `A finished origami ${guide.name.toLowerCase()}`
+        }
         className="w-[88%]"
       />
     </div>

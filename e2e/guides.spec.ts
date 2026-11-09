@@ -37,6 +37,12 @@ test("a kit's page links back to its guide", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("the beginner guide's picture is described as what it shows", async ({ page }) => {
+  await page.goto("/guides/how-to-start-origami");
+  await expect(page.getByRole("img", { name: /^A coloured square of origami paper/ })).toHaveCount(2);
+  await expect(page.getByRole("img", { name: /^A finished origami/ })).toHaveCount(0);
+});
+
 test("the sitemap lists the guides", async ({ request }) => {
   const res = await request.get("/sitemap.xml");
   const xml = await res.text();
