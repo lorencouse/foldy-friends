@@ -45,7 +45,7 @@ CI runs all of these on every pull request.
 
 ## How it fits together
 
-- `app/page.tsx`: the home page. `app/globals.css` holds the "Paper Menagerie"
+- `app/(store)/page.tsx`: the home page. `app/globals.css` holds the "Paper Menagerie"
   look: colour tokens and the paper details (dog-ear corners, creased sheets,
   washi tape, accordion pleats, card-stock buttons).
 - `app/(store)/`: shop, category, product and guide pages, cart, checkout, sign-in,

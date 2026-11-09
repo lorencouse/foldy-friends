@@ -4,8 +4,6 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { Crane, Elephant, Fox, GluePen, Moon, Panda, PaperStack, Raccoon } from "@/components/menagerie";
 import { ProductCard } from "@/components/product-tile";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { getProducts } from "@/lib/catalog";
 import { CATEGORIES, CATEGORY_INFO, type Category } from "@/lib/categories";
 
@@ -20,29 +18,25 @@ const FAVOURITES = [
 export default function Home() {
   return (
     <>
-      <SiteHeader />
-      <main>
-        <Hero />
-        <div className="pleats" aria-hidden="true" />
-        <Categories />
-        <MoonDreamers />
-        <section aria-labelledby="favourites-heading" className="pb-[clamp(48px,6vw,96px)]">
-          <div className="wrap flex flex-col gap-8">
-            <SectionHead
-              eyebrow="Family favourites"
-              title="Top-selling friends"
-              id="favourites-heading"
-              link={{ href: "/shop", label: "Shop all" }}
-            />
-            <Suspense fallback={<CardsSkeleton />}>
-              <Favourites />
-            </Suspense>
-          </div>
-        </section>
-        <ForParents />
-        <FoldClub />
-      </main>
-      <SiteFooter />
+      <Hero />
+      <div className="pleats" aria-hidden="true" />
+      <Categories />
+      <MoonDreamers />
+      <section aria-labelledby="favourites-heading" className="pb-[clamp(48px,6vw,96px)]">
+        <div className="wrap flex flex-col gap-8">
+          <SectionHead
+            eyebrow="Family favourites"
+            title="Top-selling friends"
+            id="favourites-heading"
+            link={{ href: "/shop", label: "Shop all" }}
+          />
+          <Suspense fallback={<CardsSkeleton />}>
+            <Favourites />
+          </Suspense>
+        </div>
+      </section>
+      <ForParents />
+      <FoldClub />
     </>
   );
 }
