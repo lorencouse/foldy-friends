@@ -4,12 +4,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { AddToCart } from "@/components/add-to-cart";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FoldDiamonds } from "@/components/fold-level";
+import { JsonLd } from "@/components/json-ld";
 import { ProductGallery } from "@/components/product-gallery";
 import { OptionProvider } from "@/components/product-option";
 import { ProductDrawing, tileFor } from "@/components/product-picture";
-import { EYEBROW } from "@/components/product-tile";
-import { CATEGORY_INFO, getProduct, getRelated, getReviews, type Product } from "@/lib/catalog";
+import { StarRow } from "@/components/stars";
+import { getProduct, getRelated, getReviews, type Product } from "@/lib/catalog";
+import { CATEGORY_INFO } from "@/lib/categories";
 import { descriptionParagraphs, foldLevel, needs } from "@/lib/fold-level";
 import { guidesForProduct } from "@/lib/guides";
 import {
@@ -20,7 +23,7 @@ import {
   SHIPPING_CENTS,
 } from "@/lib/money";
 import { getUser } from "@/lib/session";
-import { ReviewForm, Star } from "./review-form";
+import { ReviewForm } from "./review-form";
 
 export async function generateMetadata({ params }: PageProps<"/products/[slug]">): Promise<Metadata> {
   const { slug } = await params;
@@ -41,12 +44,6 @@ export default function ProductPage({ params }: PageProps<"/products/[slug]">) {
   );
 }
 
-const LEVEL_NOTES: Record<string, string> = {
-  "Little folder": "A few simple steps, good for first folds.",
-  "Growing folder": "More steps and some gluing; a grown-up helps.",
-  "Fold master": "A long build, best done together.",
-};
-
 async function ProductView({ params }: { params: PageProps<"/products/[slug]">["params"] }) {
   const { slug } = await params;
   const product = await getProduct(slug);
@@ -57,7 +54,8 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
   const level = foldLevel(product.description);
   const need = needs(product.description);
   const about = descriptionParagraphs(product.description);
-  const eyebrow = product.category === "kits" ? `Moon Dreamers · ${EYEBROW.kits}` : EYEBROW[product.category];
+  const eyebrow =
+    product.category === "kits" ? `Moon Dreamers · ${category.productEyebrow}` : category.productEyebrow;
   const guides = guidesForProduct(product.slug);
 
   const jsonLd = {
@@ -76,42 +74,15 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD from our own data
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={jsonLd} />
       <div className="wrap pt-5">
-        <nav aria-label="Breadcrumb" className="text-[0.9375rem] font-bold text-ink-soft">
-          <ol className="flex flex-wrap gap-x-2">
-            <li>
-              <Link href="/" className="inline-flex min-h-11 items-center hover:text-tomato">
-                Home
-              </Link>
-            </li>
-            <li aria-hidden="true" className="flex items-center">
-              /
-            </li>
-            <li>
-              <Link
-                href={`/shop/${product.category}`}
-                className="inline-flex min-h-11 items-center hover:text-tomato"
-              >
-                {category.title}
-              </Link>
-            </li>
-            <li aria-hidden="true" className="flex items-center">
-              /
-            </li>
-            <li className="flex min-w-0 items-center text-ink">
-              <span aria-current="page" className="truncate">
-                {product.name}
-              </span>
-            </li>
-          </ol>
-        </nav>
+        <Breadcrumbs
+          items={[
+            { href: "/", label: "Home" },
+            { href: `/shop/${product.category}`, label: category.title },
+            { label: product.name },
+          ]}
+        />
       </div>
       <OptionProvider initial={product.options[0] ?? null}>
         <article className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] items-start gap-[clamp(28px,5vw,72px)] pt-4 pb-[72px]">
@@ -153,7 +124,7 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
                   <strong className="text-base">
                     Fold level {level.level} of {level.of} · {level.name}
                   </strong>
-                  <span className="text-[0.9375rem] text-ink-soft">{LEVEL_NOTES[level.name]}</span>
+                  <span className="text-[0.9375rem] text-ink-soft">{level.note}</span>
                 </div>
               </div>
             )}
@@ -284,11 +255,7 @@ async function RatingSummary({ productId }: { productId: string }) {
   if (!count || average == null) return null;
   return (
     <p className="flex items-center gap-2 text-[0.9375rem] font-bold">
-      <span className="flex" aria-hidden>
-        {[1, 2, 3, 4, 5].map((n) => (
-          <Star key={n} filled={n <= Math.round(average)} size={18} />
-        ))}
-      </span>
+      <StarRow rating={Math.round(average)} />
       {average.toFixed(1)} out of 5, from {count} {count === 1 ? "review" : "reviews"}
     </p>
   );
@@ -309,11 +276,7 @@ async function Reviews({ product }: { product: Product }) {
         <ul className="flex w-full flex-col gap-4">
           {list.map((r) => (
             <li key={r.id} className="sheet rounded-2xl p-5">
-              <p className="flex" role="img" aria-label={`${r.rating} out of 5`}>
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <Star key={n} filled={n <= r.rating} size={18} />
-                ))}
-              </p>
+              <StarRow rating={r.rating} label={`${r.rating} out of 5`} />
               <h3 className="mt-2 text-xl font-bold">{r.title}</h3>
               <p className="mt-1">{r.body}</p>
               <p className="mt-2 text-[0.9375rem] text-ink-soft">

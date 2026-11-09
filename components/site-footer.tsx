@@ -1,11 +1,10 @@
 import Link from "next/link";
+import { CATEGORY_LINKS } from "@/lib/categories";
 import { FREE_SHIPPING_FROM_CENTS, formatPrice, formatPriceShort, SHIPPING_CENTS } from "@/lib/money";
 
 const menu = [
   { href: "/shop", label: "Shop all" },
-  { href: "/shop/paper", label: "Paper" },
-  { href: "/shop/tools", label: "Tools" },
-  { href: "/shop/kits", label: "Kits" },
+  ...CATEGORY_LINKS,
   { href: "/guides", label: "Origami guides" },
   { href: "/account", label: "Your account" },
   { href: "/cart", label: "Cart" },

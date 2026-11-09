@@ -16,5 +16,3 @@ export const auth = betterAuth({
   rateLimit: { enabled: process.env.AUTH_RATE_LIMIT !== "off" },
   plugins: [admin(), nextCookies()],
 });
-
-export type Session = typeof auth.$Infer.Session;

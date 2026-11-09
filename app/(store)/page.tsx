@@ -2,11 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
+import { FoldDiamonds } from "@/components/fold-level";
 import { Crane, Elephant, Fox, GluePen, Moon, Panda, PaperStack, Raccoon } from "@/components/menagerie";
 import { ProductCard } from "@/components/product-tile";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { TapedPhoto } from "@/components/taped-photo";
 import { getProducts } from "@/lib/catalog";
+import { CATEGORIES, CATEGORY_INFO, type Category } from "@/lib/categories";
+import { FOLD_LEVELS } from "@/lib/fold-level";
 
 /** The friends shown first, in order; any others fill the row if one is missing. */
 const FAVOURITES = [
@@ -19,29 +21,25 @@ const FAVOURITES = [
 export default function Home() {
   return (
     <>
-      <SiteHeader />
-      <main>
-        <Hero />
-        <div className="pleats" aria-hidden="true" />
-        <Categories />
-        <MoonDreamers />
-        <section aria-labelledby="favourites-heading" className="pb-[clamp(48px,6vw,96px)]">
-          <div className="wrap flex flex-col gap-8">
-            <SectionHead
-              eyebrow="Family favourites"
-              title="Top-selling friends"
-              id="favourites-heading"
-              link={{ href: "/shop", label: "Shop all" }}
-            />
-            <Suspense fallback={<CardsSkeleton />}>
-              <Favourites />
-            </Suspense>
-          </div>
-        </section>
-        <ForParents />
-        <FoldClub />
-      </main>
-      <SiteFooter />
+      <Hero />
+      <div className="pleats" aria-hidden="true" />
+      <Categories />
+      <MoonDreamers />
+      <section aria-labelledby="favourites-heading" className="pb-[clamp(48px,6vw,96px)]">
+        <div className="wrap flex flex-col gap-8">
+          <SectionHead
+            eyebrow="Family favourites"
+            title="Top-selling friends"
+            id="favourites-heading"
+            link={{ href: "/shop", label: "Shop all" }}
+          />
+          <Suspense fallback={<CardsSkeleton />}>
+            <Favourites />
+          </Suspense>
+        </div>
+      </section>
+      <ForParents />
+      <FoldClub />
     </>
   );
 }
@@ -133,25 +131,16 @@ function Hero() {
         <div className="relative h-[clamp(340px,42vw,540px)]">
           <div className="creases absolute inset-[4%_2%_10%_14%] rotate-7 rounded-[22px] bg-sky" />
           <div className="creases absolute inset-[10%_12%_4%_2%] -rotate-5 rounded-[22px] bg-sun" />
-          <figure className="absolute inset-[9%_9%_12%_10%] m-0 flex -rotate-2 flex-col rounded-[10px] bg-card p-3.5 pb-12 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)]">
-            <div className="relative min-h-0 flex-1 overflow-hidden rounded-md">
-              <Image
-                src="/images/kids-folding-origami-kitchen-table.webp"
-                alt="A brother and sister folding paper cranes at the kitchen table while their dad watches"
-                fill
-                priority
-                sizes="(min-width: 1024px) 40vw, 90vw"
-                className="object-cover"
-              />
-            </div>
-            <figcaption className="absolute inset-x-0 bottom-3 text-center font-display text-lg leading-none font-bold text-ink-soft">
-              Folding together
-            </figcaption>
-            <span
-              className="tape tape-strip -top-3 left-[38%] -rotate-4"
-              style={{ backgroundColor: "var(--color-blush)" }}
-            />
-          </figure>
+          <TapedPhoto
+            src="/images/kids-folding-origami-kitchen-table.webp"
+            alt="A brother and sister folding paper cranes at the kitchen table while their dad watches"
+            priority
+            sizes="(min-width: 1024px) 40vw, 90vw"
+            aspect="min-h-0 flex-1"
+            caption="Folding together"
+            tapes={[{ color: "var(--color-blush)", className: "-top-3 left-[38%] -rotate-4" }]}
+            className="absolute inset-[9%_9%_12%_10%] flex -rotate-2 flex-col p-3.5 pb-12 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)]"
+          />
           <Fox
             className="absolute -bottom-[4%] -left-[2%] w-[32%]"
             style={{ filter: "drop-shadow(0 10px 10px rgba(31,42,68,.25))" }}
@@ -166,29 +155,23 @@ function Hero() {
   );
 }
 
-const CATEGORY_TILES = [
-  {
-    href: "/shop/paper",
-    title: "Paper",
+const CATEGORY_TILES: Record<Category, { note: string; color: string; art: React.ReactNode }> = {
+  paper: {
     note: "Plain, patterned, glitter",
     color: "var(--color-sky)",
     art: <PaperStack colors={["#F2A0B5", "#F6B93B", "#FFFDF8", "#3FB58E"]} className="w-[62%]" />,
   },
-  {
-    href: "/shop/tools",
-    title: "Tools",
+  tools: {
     note: "Glue pens and sticks",
     color: "var(--color-sun)",
     art: <GluePen colors={["#F2A0B5", "#5B9BE0", "#D23F2C"]} className="w-[58%]" />,
   },
-  {
-    href: "/shop/kits",
-    title: "Kits",
+  kits: {
     note: "3D papercraft animals",
     color: "var(--color-mint)",
     art: <Panda className="w-[52%]" />,
   },
-];
+};
 
 function Categories() {
   return (
@@ -201,19 +184,21 @@ function Categories() {
           link={{ href: "/shop", label: "See everything" }}
         />
         <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-6">
-          {CATEGORY_TILES.map((c) => (
-            <li key={c.href}>
-              <Link href={c.href} className="tile-link flex flex-col gap-3.5">
+          {CATEGORIES.map((c) => (
+            <li key={c}>
+              <Link href={`/shop/${c}`} className="tile-link flex flex-col gap-3.5">
                 <div
                   className="dogear creases flex aspect-[4/3] items-center justify-center rounded-[22px_0_22px_22px]"
-                  style={{ backgroundColor: c.color }}
+                  style={{ backgroundColor: CATEGORY_TILES[c].color }}
                 >
                   <span className="flap" />
-                  {c.art}
+                  {CATEGORY_TILES[c].art}
                 </div>
                 <div className="flex flex-wrap items-center justify-between gap-x-3">
-                  <span className="font-display text-[1.625rem] leading-none font-extrabold">{c.title}</span>
-                  <span className="text-[0.9375rem] font-bold text-ink-soft">{c.note}</span>
+                  <span className="font-display text-[1.625rem] leading-none font-extrabold">
+                    {CATEGORY_INFO[c].title}
+                  </span>
+                  <span className="text-[0.9375rem] font-bold text-ink-soft">{CATEGORY_TILES[c].note}</span>
                 </div>
               </Link>
             </li>
@@ -268,24 +253,15 @@ function MoonDreamers() {
           </div>
           <div className="relative flex flex-col gap-7 pt-4">
             <Moon fill="#F6B93B" sheen className="absolute -top-3 -right-3 w-[min(46%,220px)]" />
-            <figure className="relative m-0 w-[84%] -rotate-2 rounded-[10px] bg-card p-2.5 pb-10 shadow-[0_24px_40px_-24px_rgba(0,0,0,.7)] sm:p-3 sm:pb-11">
-              <div className="relative aspect-[3/2] overflow-hidden rounded-md">
-                <Image
-                  src="/images/dad-and-daughter-folding-at-bedtime.webp"
-                  alt="A dad and his daughter in star pyjamas looking at the paper boat she folded, on the rug before bed"
-                  fill
-                  sizes="(min-width: 1024px) 480px, 85vw"
-                  className="object-cover"
-                />
-              </div>
-              <figcaption className="absolute inset-x-0 bottom-3 text-center font-display text-lg leading-none font-bold text-ink-soft">
-                One more fold before bed
-              </figcaption>
-              <span
-                className="tape tape-strip -top-3 left-[36%] rotate-3"
-                style={{ backgroundColor: "var(--color-sky)" }}
-              />
-            </figure>
+            <TapedPhoto
+              src="/images/dad-and-daughter-folding-at-bedtime.webp"
+              alt="A dad and his daughter in star pyjamas looking at the paper boat she folded, on the rug before bed"
+              sizes="(min-width: 1024px) 480px, 85vw"
+              aspect="aspect-[3/2]"
+              caption="One more fold before bed"
+              tapes={[{ color: "var(--color-sky)", className: "-top-3 left-[36%] rotate-3" }]}
+              className="relative w-[84%] -rotate-2 p-2.5 pb-10 shadow-[0_24px_40px_-24px_rgba(0,0,0,.7)] sm:p-3 sm:pb-11"
+            />
             <ul className="relative grid grid-cols-4 gap-2 sm:gap-3">
               {DREAMERS.map(({ name, Animal }) => (
                 <li key={name} className="flex flex-col items-center gap-1.5">
@@ -335,35 +311,22 @@ function CardsSkeleton() {
   );
 }
 
-const LEVELS = [
-  { name: "Little folder", note: "First folds, a few steps.", filled: 1, color: "var(--color-mint)" },
-  { name: "Growing folder", note: "More steps, a little gluing.", filled: 2, color: "var(--color-sun)" },
-  { name: "Fold master", note: "3D builds to do together.", filled: 3, color: "var(--color-tomato)" },
-];
-
 function ForParents() {
   return (
     <section aria-labelledby="parents-heading" className="overflow-x-clip bg-kraft py-[clamp(48px,6vw,96px)]">
       <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] items-center gap-[clamp(32px,5vw,72px)]">
-        <figure className="relative m-0 rotate-[1.5deg] rounded-[10px] bg-card p-3.5 shadow-[0_24px_40px_-26px_rgba(31,42,68,.55)]">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-md">
-            <Image
-              src="/images/boy-handing-mom-origami-dog.webp"
-              alt="A boy handing his mother a red paper dog he folded"
-              fill
-              sizes="(min-width: 1024px) 45vw, 90vw"
-              className="object-cover object-[25%_40%] md:object-[50%_40%]"
-            />
-          </div>
-          <span
-            className="tape tape-strip -top-2.5 -left-3.5 -rotate-30"
-            style={{ backgroundColor: "var(--color-sky)" }}
-          />
-          <span
-            className="tape tape-strip -right-3.5 -bottom-2.5 -rotate-30"
-            style={{ backgroundColor: "var(--color-sun)" }}
-          />
-        </figure>
+        <TapedPhoto
+          src="/images/boy-handing-mom-origami-dog.webp"
+          alt="A boy handing his mother a red paper dog he folded"
+          sizes="(min-width: 1024px) 45vw, 90vw"
+          aspect="aspect-[4/3]"
+          imageClassName="object-[25%_40%] md:object-[50%_40%]"
+          tapes={[
+            { color: "var(--color-sky)", className: "-top-2.5 -left-3.5 -rotate-30" },
+            { color: "var(--color-sun)", className: "-right-3.5 -bottom-2.5 -rotate-30" },
+          ]}
+          className="relative rotate-[1.5deg] p-3.5 shadow-[0_24px_40px_-26px_rgba(31,42,68,.55)]"
+        />
         <div className="flex flex-col items-start gap-5">
           <p className="eyebrow">For parents</p>
           <h2 id="parents-heading" className="text-[clamp(2rem,4vw,3rem)]">
@@ -374,19 +337,11 @@ function ForParents() {
             you buy.
           </p>
           <ul className="grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,150px),1fr))] gap-3.5">
-            {LEVELS.map((l) => (
+            {FOLD_LEVELS.map((l, i) => (
               <li key={l.name} className="sheet flex flex-col gap-2 rounded-2xl p-4.5">
-                <span className="flex gap-1.5" role="img" aria-label={`Level ${l.filled} of 3`}>
-                  {[1, 2, 3].map((n) =>
-                    n <= l.filled ? (
-                      <span key={n} className="dia" style={{ background: l.color }} />
-                    ) : (
-                      <span key={n} className="dia-off" />
-                    ),
-                  )}
-                </span>
+                <FoldDiamonds level={{ level: i + 1, of: FOLD_LEVELS.length }} color={l.color} />
                 <strong className="font-display text-xl leading-[1.1] font-bold">{l.name}</strong>
-                <span className="text-[0.9375rem] leading-normal text-ink-soft">{l.note}</span>
+                <span className="text-[0.9375rem] leading-normal text-ink-soft">{l.homeNote}</span>
               </li>
             ))}
           </ul>
@@ -420,21 +375,14 @@ function FoldClub() {
             </a>
           </div>
           <div className="relative w-[min(100%,400px)] justify-self-center pb-6">
-            <figure className="relative m-0 w-[70%] -rotate-2 rounded-[10px] bg-card p-2.5 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)] sm:p-3">
-              <div className="relative aspect-square overflow-hidden rounded-md">
-                <Image
-                  src="/images/girl-holding-up-paper-crane.webp"
-                  alt="A girl holding up a red paper crane she folded"
-                  fill
-                  sizes="(min-width: 768px) 280px, 65vw"
-                  className="object-cover"
-                />
-              </div>
-              <span
-                className="tape tape-strip -top-3 left-[34%] -rotate-4"
-                style={{ backgroundColor: "var(--color-blush)" }}
-              />
-            </figure>
+            <TapedPhoto
+              src="/images/girl-holding-up-paper-crane.webp"
+              alt="A girl holding up a red paper crane she folded"
+              sizes="(min-width: 768px) 280px, 65vw"
+              aspect="aspect-square"
+              tapes={[{ color: "var(--color-blush)", className: "-top-3 left-[34%] -rotate-4" }]}
+              className="relative w-[70%] -rotate-2 p-2.5 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)] sm:p-3"
+            />
             <div aria-hidden="true" className="absolute right-0 bottom-0 w-[34%]">
               <span className="absolute -top-9 -right-1 z-[2] -rotate-5 rounded-[16px_16px_4px_16px] border-2 border-ink bg-card px-3 py-2 font-display text-base leading-none font-extrabold whitespace-nowrap sm:text-lg">
                 Let's fold!

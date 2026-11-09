@@ -1,43 +1,37 @@
 import "server-only";
-import { and, avg, count, desc, eq, inArray, ne } from "drizzle-orm";
+import { and, asc, avg, count, desc, eq, inArray, ne } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { db } from "@/lib/db";
-import { type Category, products, reviews, user } from "@/lib/db/schema";
+import { products, reviews, user } from "@/lib/db/schema";
 
 export type Product = typeof products.$inferSelect;
 
-export const CATEGORY_INFO: Record<Category, { title: string; blurb: string }> = {
-  paper: {
-    title: "Paper",
-    blurb: "Square sheets that hold a crease: plain, double-sided, patterned and glittering.",
-  },
-  tools: {
-    title: "Tools",
-    blurb: "Glue pens and sticks for tabs, flaps and models that get played with.",
-  },
-  kits: {
-    title: "Kits",
-    blurb: "3D papercraft animals asleep on the moon. Score, fold, glue, display.",
-  },
-};
-
 export const PRODUCTS_TAG = "products";
 
-export async function getProducts(category?: Category) {
+export async function getProducts() {
   "use cache";
   cacheTag(PRODUCTS_TAG);
   cacheLife("hours");
   return db.query.products.findMany({
-    where: category ? eq(products.category, category) : undefined,
     orderBy: [products.category, products.name],
   });
 }
 
 export async function getProduct(slug: string) {
   "use cache";
-  cacheTag(PRODUCTS_TAG, `product:${slug}`);
+  cacheTag(PRODUCTS_TAG);
   cacheLife("hours");
   return (await db.query.products.findFirst({ where: eq(products.slug, slug) })) ?? null;
+}
+
+/** Every product for the admin table. Not cached, so it always shows current stock. */
+export async function getAllProductsFresh() {
+  return db.select().from(products).orderBy(asc(products.category), asc(products.name));
+}
+
+/** One product for the admin form. Not cached, so it always shows the saved values. */
+export async function getProductById(id: string) {
+  return (await db.query.products.findFirst({ where: eq(products.id, id) })) ?? null;
 }
 
 /** Products by slug, in the order asked for; unknown slugs are left out. */

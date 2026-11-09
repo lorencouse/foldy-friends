@@ -8,8 +8,8 @@ import { add, type P, scale, sub } from "@/lib/guides/geom";
  * same size on screen whatever the scale.
  */
 
-export const INK = "#1F2A44";
-export const WHITE_SIDE = "#FFFDF8";
+const INK = "#1F2A44";
+const WHITE_SIDE = "#FFFDF8";
 
 const W = 240;
 const H = 200;

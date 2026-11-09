@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useOption } from "@/components/product-option";
 import { moonFill } from "@/components/product-picture";
+import { QuantityStepper } from "@/components/quantity-stepper";
 import { cart } from "@/lib/cart";
 import { formatPrice } from "@/lib/money";
 
@@ -24,8 +25,6 @@ type Props = {
    */
   variant?: "card" | "full";
 };
-
-const MAX_QTY = 20;
 
 export function AddToCart({ product, unitPriceCents, variant = "card" }: Props) {
   const [localOption, setLocalOption] = useState<string | null>(product.options[0] ?? null);
@@ -105,30 +104,7 @@ export function AddToCart({ product, unitPriceCents, variant = "card" }: Props) 
         </fieldset>
       )}
       <div className="flex flex-wrap items-stretch gap-3.5">
-        <fieldset className="stepper">
-          <legend className="sr-only">Quantity</legend>
-          <button
-            type="button"
-            className="step"
-            aria-label="One fewer"
-            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            disabled={quantity <= 1}
-          >
-            −
-          </button>
-          <output aria-live="polite" className="min-w-9 text-center font-display text-xl font-extrabold">
-            {quantity}
-          </output>
-          <button
-            type="button"
-            className="step"
-            aria-label="One more"
-            onClick={() => setQuantity((q) => Math.min(MAX_QTY, q + 1))}
-            disabled={quantity >= MAX_QTY}
-          >
-            +
-          </button>
-        </fieldset>
+        <QuantityStepper quantity={quantity} onChange={setQuantity} />
         <button
           type="button"
           className="btn btn-primary min-h-14 flex-[1_1_220px] text-[1.1875rem]"

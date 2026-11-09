@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { Field, FormError } from "@/components/field";
 import { authClient } from "@/lib/auth-client";
 
 export function SignInForm() {
@@ -38,43 +39,17 @@ export function SignInForm() {
 
   return (
     <form onSubmit={onSubmit} className="mt-10 space-y-5">
-      {mode === "sign-up" && (
-        <div>
-          <label htmlFor="name" className="field-label">
-            Your name
-          </label>
-          <input id="name" name="name" autoComplete="name" required className="field" />
-        </div>
-      )}
-      <div>
-        <label htmlFor="email" className="field-label">
-          Email
-        </label>
-        <input id="email" name="email" type="email" autoComplete="email" required className="field" />
-      </div>
-      <div>
-        <label htmlFor="password" className="field-label">
-          Password
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
-          minLength={8}
-          required
-          aria-describedby="password-hint"
-          className="field"
-        />
-        <p id="password-hint" className="mt-1 text-small text-ink-soft">
-          At least 8 characters.
-        </p>
-      </div>
-      {error && (
-        <p role="alert" className="text-danger">
-          {error}
-        </p>
-      )}
+      {mode === "sign-up" && <Field name="name" label="Your name" autoComplete="name" />}
+      <Field name="email" label="Email" type="email" autoComplete="email" />
+      <Field
+        name="password"
+        label="Password"
+        type="password"
+        autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
+        minLength={8}
+        hint="At least 8 characters."
+      />
+      <FormError message={error} />
       <button type="submit" className="btn btn-primary w-full" disabled={pending}>
         {pending ? "One moment…" : mode === "sign-in" ? "Sign in" : "Create account"}
       </button>

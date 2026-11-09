@@ -1,11 +1,9 @@
-import { asc } from "drizzle-orm";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { ProductArt } from "@/components/product-art";
-import { CATEGORY_INFO } from "@/lib/catalog";
-import { db } from "@/lib/db";
-import { products } from "@/lib/db/schema";
+import { ProductDrawing, tileFor } from "@/components/product-picture";
+import { getAllProductsFresh } from "@/lib/catalog";
+import { CATEGORY_INFO } from "@/lib/categories";
 import { effectivePrice, formatPrice } from "@/lib/money";
 import { requireAdmin } from "@/lib/session";
 
@@ -24,7 +22,7 @@ export default function AdminPage() {
 
 async function ProductTable() {
   await requireAdmin();
-  const rows = await db.select().from(products).orderBy(asc(products.category), asc(products.name));
+  const rows = await getAllProductsFresh();
   return (
     <section className="wrap pt-10 pb-20 md:pt-16">
       <div className="flex flex-wrap items-end justify-between gap-6">
@@ -53,12 +51,15 @@ async function ProductTable() {
               <tr key={p.id} className="border-b border-[#e3ded4]">
                 <td className="py-3 pr-4">
                   <Link href={`/admin/products/${p.id}`} className="flex items-center gap-4 hover:underline">
-                    <span className="size-12 shrink-0 overflow-hidden rounded-lg">
+                    <span
+                      className="relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-lg"
+                      style={{ backgroundColor: tileFor(p.art, p.category) }}
+                    >
                       {p.images[0] ? (
                         // biome-ignore lint/performance/noImgElement: uploaded files are served by /media
                         <img src={`/media/${p.images[0]}`} alt="" className="size-full object-cover" />
                       ) : (
-                        <ProductArt art={p.art} className="size-full" />
+                        <ProductDrawing art={p.art} category={p.category} option={p.options[0]} />
                       )}
                     </span>
                     {p.name}

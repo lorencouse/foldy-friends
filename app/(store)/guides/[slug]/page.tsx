@@ -2,18 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FoldDiamonds } from "@/components/fold-level";
 import { GuideCard } from "@/components/guides/guide-card";
 import { GuideProducts, GuideProductsSkeleton } from "@/components/guides/guide-products";
 import { FinishedModel, GuideSteps, NotationKey } from "@/components/guides/guide-steps";
+import { JsonLd } from "@/components/json-ld";
 import { GUIDES, type Guide, getGuide, guideLevel, isoMinutes } from "@/lib/guides";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 // Every guide is prerendered; any other slug is a 404.
 export function generateStaticParams() {
   return GUIDES.map((g) => ({ slug: g.slug }));
 }
-
-const siteUrl = process.env.SITE_URL ?? "https://www.foldyfriends.com";
 
 export async function generateMetadata({ params }: PageProps<"/guides/[slug]">): Promise<Metadata> {
   const { slug } = await params;
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/guides/[slug]">):
     alternates: { canonical: url },
     openGraph: {
       type: "article",
-      siteName: "Foldy Friends",
+      siteName: SITE_NAME,
       url,
       title: guide.seoTitle,
       description: guide.description,
@@ -46,37 +47,11 @@ export default async function GuidePage({ params }: PageProps<"/guides/[slug]">)
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD from our own content
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(guide)).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={structuredData(guide)} />
       <div className="wrap pt-5">
-        <nav aria-label="Breadcrumb" className="text-[0.9375rem] font-bold text-ink-soft">
-          <ol className="flex flex-wrap gap-x-2">
-            <li>
-              <Link href="/" className="inline-flex min-h-11 items-center hover:text-tomato">
-                Home
-              </Link>
-            </li>
-            <li aria-hidden="true" className="flex items-center">
-              /
-            </li>
-            <li>
-              <Link href="/guides" className="inline-flex min-h-11 items-center hover:text-tomato">
-                Guides
-              </Link>
-            </li>
-            <li aria-hidden="true" className="flex items-center">
-              /
-            </li>
-            <li className="flex min-w-0 items-center text-ink">
-              <span aria-current="page" className="truncate">
-                {guide.name}
-              </span>
-            </li>
-          </ol>
-        </nav>
+        <Breadcrumbs
+          items={[{ href: "/", label: "Home" }, { href: "/guides", label: "Guides" }, { label: guide.name }]}
+        />
       </div>
 
       <article>
@@ -189,7 +164,7 @@ function StepByStep({ guide, beginner }: { guide: Guide; beginner: boolean }) {
 }
 
 function structuredData(guide: Guide) {
-  const url = `${siteUrl}/guides/${guide.slug}`;
+  const url = `${SITE_URL}/guides/${guide.slug}`;
   return {
     "@context": "https://schema.org",
     "@type": "HowTo",

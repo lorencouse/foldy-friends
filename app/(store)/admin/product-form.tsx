@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useActionState, useTransition } from "react";
-import { ProductArt } from "@/components/product-art";
+import { Field, FormError, TextareaField } from "@/components/field";
+import { ProductDrawing, tileFor } from "@/components/product-picture";
+import { CATEGORIES, CATEGORY_INFO } from "@/lib/categories";
 import { deleteProduct, type ProductFormState, removePhoto, saveProduct } from "./actions";
 
-export const ART_KEYS = [
+const ART_KEYS = [
   "paper-double",
   "paper-patterned",
   "paper-iridescent",
@@ -47,8 +49,8 @@ export function ProductForm({ initial }: { initial: Initial }) {
     <form action={action} className="mt-10 grid gap-12 lg:grid-cols-[2fr_1fr]">
       {initial.id && <input type="hidden" name="id" value={initial.id} />}
       <div className="grid gap-5 sm:grid-cols-2">
-        <Text name="name" label="Name" defaultValue={initial.name} wide />
-        <Text
+        <Field name="name" label="Name" defaultValue={initial.name} wide />
+        <Field
           name="slug"
           label="Web address"
           defaultValue={initial.slug}
@@ -59,46 +61,46 @@ export function ProductForm({ initial }: { initial: Initial }) {
             Category
           </label>
           <select id="category" name="category" defaultValue={initial.category} className="field">
-            <option value="paper">Paper</option>
-            <option value="tools">Tools</option>
-            <option value="kits">Kits</option>
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {CATEGORY_INFO[c].title}
+              </option>
+            ))}
           </select>
         </div>
-        <Text name="price" label="Price (USD)" defaultValue={cents(initial.priceCents)} inputMode="decimal" />
-        <Text
+        <Field
+          name="price"
+          label="Price (USD)"
+          defaultValue={cents(initial.priceCents)}
+          inputMode="decimal"
+        />
+        <Field
           name="salePrice"
           label="Sale price (USD, optional)"
           defaultValue={cents(initial.salePriceCents)}
           inputMode="decimal"
           required={false}
         />
-        <Text name="stock" label="In stock" type="number" min={0} defaultValue={String(initial.stock)} />
-        <Text name="sku" label="SKU (optional)" defaultValue={initial.sku ?? ""} required={false} />
-        <Text name="summary" label="One-line summary" defaultValue={initial.summary} required={false} wide />
-        <div className="sm:col-span-2">
-          <label htmlFor="description" className="field-label">
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            rows={8}
-            defaultValue={initial.description}
-            className="field"
-            aria-describedby="description-hint"
-          />
-          <p id="description-hint" className="mt-1 text-small text-ink-soft">
-            Leave a blank line between paragraphs.
-          </p>
-        </div>
-        <Text
+        <Field name="stock" label="In stock" type="number" min={0} defaultValue={String(initial.stock)} />
+        <Field name="sku" label="SKU (optional)" defaultValue={initial.sku ?? ""} required={false} />
+        <Field name="summary" label="One-line summary" defaultValue={initial.summary} required={false} wide />
+        <TextareaField
+          name="description"
+          label="Description"
+          rows={8}
+          defaultValue={initial.description}
+          required={false}
+          hint="Leave a blank line between paragraphs."
+          wide
+        />
+        <Field
           name="options"
           label="Options (optional)"
           defaultValue={initial.options.join(", ")}
           required={false}
           hint="Comma-separated, e.g. Blue, Yellow, White."
         />
-        <Text
+        <Field
           name="tags"
           label="Tags (optional)"
           defaultValue={initial.tags.join(", ")}
@@ -120,8 +122,11 @@ export function ProductForm({ initial }: { initial: Initial }) {
                   defaultChecked={initial.art === key}
                   className="peer sr-only"
                 />
-                <span className="block outline-offset-2 peer-checked:outline-3 peer-checked:outline-ink peer-focus-visible:outline-3 peer-focus-visible:outline-sky">
-                  <ProductArt art={key} className="block w-full" />
+                <span
+                  className="relative flex aspect-square items-center justify-center overflow-hidden outline-offset-2 peer-checked:outline-3 peer-checked:outline-ink peer-focus-visible:outline-3 peer-focus-visible:outline-sky"
+                  style={{ backgroundColor: tileFor(key) }}
+                >
+                  <ProductDrawing art={key} />
                 </span>
                 <span className="sr-only">{key}</span>
               </label>
@@ -168,11 +173,7 @@ export function ProductForm({ initial }: { initial: Initial }) {
           </p>
         </div>
 
-        {state.error && (
-          <p role="alert" className="text-danger">
-            {state.error}
-          </p>
-        )}
+        <FormError message={state.error} />
         {state.saved && (
           <p role="status" className="sheet p-3">
             Saved.
@@ -202,41 +203,5 @@ export function ProductForm({ initial }: { initial: Initial }) {
         )}
       </div>
     </form>
-  );
-}
-
-function Text({
-  name,
-  label,
-  hint,
-  wide = false,
-  required = true,
-  ...rest
-}: {
-  name: string;
-  label: string;
-  hint?: string;
-  wide?: boolean;
-  required?: boolean;
-} & React.InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <div className={wide ? "sm:col-span-2" : undefined}>
-      <label htmlFor={name} className="field-label">
-        {label}
-      </label>
-      <input
-        id={name}
-        name={name}
-        required={required}
-        aria-describedby={hint ? `${name}-hint` : undefined}
-        className="field"
-        {...rest}
-      />
-      {hint && (
-        <p id={`${name}-hint`} className="mt-1 text-small text-ink-soft">
-          {hint}
-        </p>
-      )}
-    </div>
   );
 }

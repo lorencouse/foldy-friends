@@ -3,12 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PictureTile } from "@/components/product-picture";
-import { cart, useCart } from "@/lib/cart";
-import { FREE_SHIPPING_FROM_CENTS, formatPrice, shippingFor } from "@/lib/money";
+import { QuantityStepper } from "@/components/quantity-stepper";
+import { TapedPhoto } from "@/components/taped-photo";
+import { cart, cartSubtotal, useCart } from "@/lib/cart";
+import { FREE_SHIPPING_FROM_CENTS, formatPrice, formatShipping, shippingFor } from "@/lib/money";
 
 export function CartView() {
   const lines = useCart();
-  const subtotal = lines.reduce((s, l) => s + l.unitPriceCents * l.quantity, 0);
+  const subtotal = cartSubtotal(lines);
   const savings = lines.reduce(
     (s, l) =>
       s +
@@ -24,21 +26,14 @@ export function CartView() {
     return (
       <div className="creases flex flex-col items-center gap-4 rounded-[28px] bg-sun-pale px-6 py-14 text-center">
         <div className="flex items-end justify-center">
-          <figure className="relative m-0 w-[min(56vw,240px)] -rotate-3 rounded-[10px] bg-card p-2 shadow-[0_18px_30px_-20px_rgba(31,42,68,.55)] sm:p-2.5">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-md">
-              <Image
-                src="/images/child-hands-folding-origami.webp"
-                alt="A child's small hands creasing a sheet of mint green paper beside a folded red fox"
-                fill
-                sizes="240px"
-                className="object-cover"
-              />
-            </div>
-            <span
-              className="tape tape-strip -top-3 left-[30%] h-5 w-20 rotate-2"
-              style={{ backgroundColor: "var(--color-mint)" }}
-            />
-          </figure>
+          <TapedPhoto
+            src="/images/child-hands-folding-origami.webp"
+            alt="A child's small hands creasing a sheet of mint green paper beside a folded red fox"
+            sizes="240px"
+            aspect="aspect-[4/3]"
+            tapes={[{ color: "var(--color-mint)", className: "-top-3 left-[30%] h-5 w-20 rotate-2" }]}
+            className="relative w-[min(56vw,240px)] -rotate-3 p-2 shadow-[0_18px_30px_-20px_rgba(31,42,68,.55)] sm:p-2.5"
+          />
           <Image
             src="/assets/dog-mascot.png"
             alt=""
@@ -98,32 +93,13 @@ export function CartView() {
               </button>
             </div>
             <div className="col-span-2 flex items-center justify-between gap-4 sm:contents">
-              <fieldset className="stepper">
-                <legend className="sr-only">Quantity of {l.name}</legend>
-                <button
-                  type="button"
-                  className="step"
-                  aria-label={`One fewer ${l.name}`}
-                  onClick={() => cart.setQuantity(l.productId, l.option, l.quantity - 1)}
-                >
-                  −
-                </button>
-                <output
-                  aria-live="polite"
-                  className="min-w-8 text-center font-display text-lg font-extrabold"
-                >
-                  {l.quantity}
-                </output>
-                <button
-                  type="button"
-                  className="step"
-                  aria-label={`One more ${l.name}`}
-                  onClick={() => cart.setQuantity(l.productId, l.option, l.quantity + 1)}
-                  disabled={l.quantity >= 20}
-                >
-                  +
-                </button>
-              </fieldset>
+              <QuantityStepper
+                quantity={l.quantity}
+                onChange={(quantity) => cart.setQuantity(l.productId, l.option, quantity)}
+                min={0}
+                itemName={l.name}
+                compact
+              />
               <strong className="min-w-[84px] text-right font-display text-[1.375rem] leading-none font-extrabold">
                 {formatPrice(l.unitPriceCents * l.quantity)}
               </strong>
@@ -165,7 +141,7 @@ export function CartView() {
             </>
           )}
           <dt className="text-ink-soft">Shipping</dt>
-          <dd className="font-extrabold">{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>
+          <dd className="font-extrabold">{formatShipping(shipping)}</dd>
         </dl>
         <div className="dashed-rule" aria-hidden="true" />
         <div className="flex items-baseline justify-between">

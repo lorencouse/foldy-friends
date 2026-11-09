@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ProductArt } from "@/components/product-art";
 import { useOption } from "@/components/product-option";
 import { isDarkTile, PictureTile, ProductDrawing, tileFor } from "@/components/product-picture";
 
-type View = { key: string; label: string; kind: "finished" | "pieces" | "drawing" | "photo"; photo?: string };
+type View = { key: string; label: string; kind: "finished" | "pieces" | "photo"; photo?: string };
 
 /**
  * The product's pictures: a large dog-eared sheet and thumbnails to switch it.
@@ -25,7 +24,6 @@ export function ProductGallery({
           ...(product.category === "kits"
             ? [{ key: "pieces", label: "The printed pieces", kind: "pieces" } as View]
             : []),
-          { key: "drawing", label: "A closer drawing", kind: "drawing" },
         ];
   const [current, setCurrent] = useState(views[0].key);
   const view = views.find((v) => v.key === current) ?? views[0];
@@ -68,19 +66,6 @@ function Main({
   option: string | null;
 }) {
   const alt = view.kind === "photo" ? product.name : "";
-  if (view.kind === "drawing") {
-    return (
-      <div className="dogear relative aspect-square overflow-hidden rounded-[28px_0_28px_28px]">
-        <span className="flap" />
-        <ProductArt
-          art={product.art}
-          option={option ?? undefined}
-          title={`Drawing of ${product.name}`}
-          className="size-full"
-        />
-      </div>
-    );
-  }
   return (
     <PictureTile
       art={product.art}
@@ -114,11 +99,6 @@ function Thumb({
   if (view.kind === "photo") {
     // biome-ignore lint/performance/noImgElement: uploaded files are served by /media
     return <img src={`/media/${view.photo}`} alt="" className="aspect-square w-full object-cover" />;
-  }
-  if (view.kind === "drawing") {
-    return (
-      <ProductArt art={product.art} option={option ?? undefined} className="block aspect-square w-full" />
-    );
   }
   return (
     <div

@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
 import { connection } from "next/server";
 import { getProducts } from "@/lib/catalog";
-import { CATEGORIES } from "@/lib/db/schema";
+import { CATEGORIES } from "@/lib/categories";
 import { GUIDES } from "@/lib/guides";
+import { SITE_URL as site } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   await connection();
-  const site = process.env.SITE_URL ?? "https://www.foldyfriends.com";
   const products = await getProducts();
   return [
     { url: site, changeFrequency: "weekly", priority: 1 },

@@ -4,9 +4,10 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { OrderLineLabel } from "@/components/order-line-label";
 import { db } from "@/lib/db";
 import { orders } from "@/lib/db/schema";
-import { formatPrice } from "@/lib/money";
+import { formatPrice, formatShipping } from "@/lib/money";
 import { getUser } from "@/lib/session";
 import { ClearCartOnMount } from "./clear-cart";
 
@@ -64,16 +65,13 @@ async function OrderPlaced({ params }: { params: PageProps<"/checkout/[reference
         <ul className="mt-6 space-y-3 tabular-nums">
           {order.items.map((i) => (
             <li key={i.id} className="flex justify-between gap-4">
-              <span>
-                {i.quantity} × {i.name}
-                {i.option ? ` (${i.option})` : ""}
-              </span>
+              <OrderLineLabel quantity={i.quantity} name={i.name} option={i.option} />
               <span>{formatPrice(i.unitPriceCents * i.quantity)}</span>
             </li>
           ))}
           <li className="flex justify-between">
             <span>Shipping</span>
-            <span>{order.shippingCents === 0 ? "Free" : formatPrice(order.shippingCents)}</span>
+            <span>{formatShipping(order.shippingCents)}</span>
           </li>
         </ul>
         <div className="dashed-rule mt-6" aria-hidden="true" />

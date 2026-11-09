@@ -1,15 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CartLink } from "@/components/cart-link";
+import { CATEGORY_LINKS } from "@/lib/categories";
 import { FREE_SHIPPING_FROM_CENTS, formatPriceShort } from "@/lib/money";
 
-const links = [
-  { href: "/shop", label: "Shop all" },
-  { href: "/shop/paper", label: "Paper" },
-  { href: "/shop/tools", label: "Tools" },
-  { href: "/shop/kits", label: "Kits" },
-  { href: "/guides", label: "Guides" },
-];
+const links = [{ href: "/shop", label: "Shop all" }, ...CATEGORY_LINKS, { href: "/guides", label: "Guides" }];
 
 export function SiteHeader() {
   return (
