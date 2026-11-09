@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useTransition } from "react";
 import { ProductDrawing, tileFor } from "@/components/product-picture";
+import { CATEGORIES, CATEGORY_INFO } from "@/lib/categories";
 import { deleteProduct, type ProductFormState, removePhoto, saveProduct } from "./actions";
 
 const ART_KEYS = [
@@ -59,9 +60,11 @@ export function ProductForm({ initial }: { initial: Initial }) {
             Category
           </label>
           <select id="category" name="category" defaultValue={initial.category} className="field">
-            <option value="paper">Paper</option>
-            <option value="tools">Tools</option>
-            <option value="kits">Kits</option>
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {CATEGORY_INFO[c].title}
+              </option>
+            ))}
           </select>
         </div>
         <Text name="price" label="Price (USD)" defaultValue={cents(initial.priceCents)} inputMode="decimal" />

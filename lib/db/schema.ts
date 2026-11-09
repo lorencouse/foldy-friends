@@ -11,12 +11,10 @@ import {
   uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
+import type { Category } from "../categories";
 import { user } from "./auth-schema";
 
 export * from "./auth-schema";
-
-export const CATEGORIES = ["paper", "tools", "kits"] as const;
-export type Category = (typeof CATEGORIES)[number];
 
 export const products = pgTable(
   "products",

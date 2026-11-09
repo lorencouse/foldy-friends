@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ProductDrawing, tileFor } from "@/components/product-picture";
-import { CATEGORY_INFO } from "@/lib/catalog";
+import { CATEGORY_INFO } from "@/lib/categories";
 import { db } from "@/lib/db";
 import { products } from "@/lib/db/schema";
 import { effectivePrice, formatPrice } from "@/lib/money";

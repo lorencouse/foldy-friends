@@ -5,8 +5,9 @@ import { updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { PRODUCTS_TAG } from "@/lib/catalog";
+import { CATEGORIES } from "@/lib/categories";
 import { db } from "@/lib/db";
-import { CATEGORIES, products } from "@/lib/db/schema";
+import { products } from "@/lib/db/schema";
 import { requireAdmin } from "@/lib/session";
 import { deleteUpload, saveUpload } from "@/lib/uploads";
 

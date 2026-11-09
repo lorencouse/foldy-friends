@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/product-tile";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getProducts } from "@/lib/catalog";
+import { CATEGORIES, CATEGORY_INFO, type Category } from "@/lib/categories";
 
 /** The friends shown first, in order; any others fill the row if one is missing. */
 const FAVOURITES = [
@@ -166,29 +167,23 @@ function Hero() {
   );
 }
 
-const CATEGORY_TILES = [
-  {
-    href: "/shop/paper",
-    title: "Paper",
+const CATEGORY_TILES: Record<Category, { note: string; color: string; art: React.ReactNode }> = {
+  paper: {
     note: "Plain, patterned, glitter",
     color: "var(--color-sky)",
     art: <PaperStack colors={["#F2A0B5", "#F6B93B", "#FFFDF8", "#3FB58E"]} className="w-[62%]" />,
   },
-  {
-    href: "/shop/tools",
-    title: "Tools",
+  tools: {
     note: "Glue pens and sticks",
     color: "var(--color-sun)",
     art: <GluePen colors={["#F2A0B5", "#5B9BE0", "#D23F2C"]} className="w-[58%]" />,
   },
-  {
-    href: "/shop/kits",
-    title: "Kits",
+  kits: {
     note: "3D papercraft animals",
     color: "var(--color-mint)",
     art: <Panda className="w-[52%]" />,
   },
-];
+};
 
 function Categories() {
   return (
@@ -201,19 +196,21 @@ function Categories() {
           link={{ href: "/shop", label: "See everything" }}
         />
         <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-6">
-          {CATEGORY_TILES.map((c) => (
-            <li key={c.href}>
-              <Link href={c.href} className="tile-link flex flex-col gap-3.5">
+          {CATEGORIES.map((c) => (
+            <li key={c}>
+              <Link href={`/shop/${c}`} className="tile-link flex flex-col gap-3.5">
                 <div
                   className="dogear creases flex aspect-[4/3] items-center justify-center rounded-[22px_0_22px_22px]"
-                  style={{ backgroundColor: c.color }}
+                  style={{ backgroundColor: CATEGORY_TILES[c].color }}
                 >
                   <span className="flap" />
-                  {c.art}
+                  {CATEGORY_TILES[c].art}
                 </div>
                 <div className="flex flex-wrap items-center justify-between gap-x-3">
-                  <span className="font-display text-[1.625rem] leading-none font-extrabold">{c.title}</span>
-                  <span className="text-[0.9375rem] font-bold text-ink-soft">{c.note}</span>
+                  <span className="font-display text-[1.625rem] leading-none font-extrabold">
+                    {CATEGORY_INFO[c].title}
+                  </span>
+                  <span className="text-[0.9375rem] font-bold text-ink-soft">{CATEGORY_TILES[c].note}</span>
                 </div>
               </Link>
             </li>

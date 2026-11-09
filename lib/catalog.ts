@@ -2,24 +2,9 @@ import "server-only";
 import { and, avg, count, desc, eq, inArray, ne } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { db } from "@/lib/db";
-import { type Category, products, reviews, user } from "@/lib/db/schema";
+import { products, reviews, user } from "@/lib/db/schema";
 
 export type Product = typeof products.$inferSelect;
-
-export const CATEGORY_INFO: Record<Category, { title: string; blurb: string }> = {
-  paper: {
-    title: "Paper",
-    blurb: "Square sheets that hold a crease: plain, double-sided, patterned and glittering.",
-  },
-  tools: {
-    title: "Tools",
-    blurb: "Glue pens and sticks for tabs, flaps and models that get played with.",
-  },
-  kits: {
-    title: "Kits",
-    blurb: "3D papercraft animals asleep on the moon. Score, fold, glue, display.",
-  },
-};
 
 export const PRODUCTS_TAG = "products";
 

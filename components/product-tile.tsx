@@ -3,14 +3,9 @@ import { AddToCart } from "@/components/add-to-cart";
 import { FoldDiamonds } from "@/components/fold-level";
 import { PictureTile } from "@/components/product-picture";
 import type { Product } from "@/lib/catalog";
+import { CATEGORY_INFO } from "@/lib/categories";
 import { foldLevel } from "@/lib/fold-level";
 import { effectivePrice, formatPrice } from "@/lib/money";
-
-export const EYEBROW: Record<string, string> = {
-  kits: "3D papercraft kit",
-  paper: "Origami paper",
-  tools: "Glue and tools",
-};
 
 /** One washi-tape badge for a product: Beginner for first folds, otherwise Sale. */
 function badgeFor(product: Pick<Product, "tags" | "priceCents" | "salePriceCents">) {
@@ -50,7 +45,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
         </PictureTile>
       </Link>
       <div className="flex flex-1 flex-col gap-2 px-5 pt-4 pb-5">
-        <span className="eyebrow">{EYEBROW[product.category]}</span>
+        <span className="eyebrow">{CATEGORY_INFO[product.category].productEyebrow}</span>
         <h3 className="text-[1.375rem] leading-[1.15] font-bold">
           <Link
             href={`/products/${product.slug}`}

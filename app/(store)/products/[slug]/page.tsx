@@ -8,8 +8,8 @@ import { FoldDiamonds } from "@/components/fold-level";
 import { ProductGallery } from "@/components/product-gallery";
 import { OptionProvider } from "@/components/product-option";
 import { ProductDrawing, tileFor } from "@/components/product-picture";
-import { EYEBROW } from "@/components/product-tile";
-import { CATEGORY_INFO, getProduct, getRelated, getReviews, type Product } from "@/lib/catalog";
+import { getProduct, getRelated, getReviews, type Product } from "@/lib/catalog";
+import { CATEGORY_INFO } from "@/lib/categories";
 import { descriptionParagraphs, foldLevel, needs } from "@/lib/fold-level";
 import { guidesForProduct } from "@/lib/guides";
 import {
@@ -57,7 +57,8 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
   const level = foldLevel(product.description);
   const need = needs(product.description);
   const about = descriptionParagraphs(product.description);
-  const eyebrow = product.category === "kits" ? `Moon Dreamers · ${EYEBROW.kits}` : EYEBROW[product.category];
+  const eyebrow =
+    product.category === "kits" ? `Moon Dreamers · ${category.productEyebrow}` : category.productEyebrow;
   const guides = guidesForProduct(product.slug);
 
   const jsonLd = {

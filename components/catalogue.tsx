@@ -4,8 +4,8 @@ import { connection } from "next/server";
 import { GluePen, Moon, Panda, PaperStack } from "@/components/menagerie";
 import { ProductCard } from "@/components/product-tile";
 import { SortSelect } from "@/components/sort-select";
-import { CATEGORY_INFO, getProducts, type Product } from "@/lib/catalog";
-import type { Category } from "@/lib/db/schema";
+import { getProducts, type Product } from "@/lib/catalog";
+import { CATEGORY_LINKS, type Category } from "@/lib/categories";
 import { effectivePrice } from "@/lib/money";
 import { parseSort, type Sort } from "@/lib/sort";
 
@@ -152,13 +152,11 @@ export async function Listing({
   const [{ sort: rawSort }, all] = await Promise.all([searchParams, getProducts()]);
   const sort = parseSort(rawSort);
   const products = sortProducts(category ? all.filter((p) => p.category === category) : all, sort);
-  const chips: { href: string; label: string; count: number; key?: Category }[] = [
+  const chips: { href: string; label: string; count: number; category?: Category }[] = [
     { href: "/shop", label: "All", count: all.length },
-    ...(Object.keys(CATEGORY_INFO) as Category[]).map((c) => ({
-      href: `/shop/${c}`,
-      label: CATEGORY_INFO[c].title,
-      count: all.filter((p) => p.category === c).length,
-      key: c,
+    ...CATEGORY_LINKS.map((link) => ({
+      ...link,
+      count: all.filter((p) => p.category === link.category).length,
     })),
   ];
   const query = sort === "featured" ? "" : `?sort=${sort}`;
@@ -171,7 +169,7 @@ export async function Listing({
               key={c.href}
               href={`${c.href}${query}`}
               className="chip"
-              aria-current={c.key === category ? "page" : undefined}
+              aria-current={c.category === category ? "page" : undefined}
             >
               {c.label} <span className="font-bold opacity-75">{c.count}</span>
             </Link>

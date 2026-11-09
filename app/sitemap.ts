@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { connection } from "next/server";
 import { getProducts } from "@/lib/catalog";
-import { CATEGORIES } from "@/lib/db/schema";
+import { CATEGORIES } from "@/lib/categories";
 import { GUIDES } from "@/lib/guides";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
