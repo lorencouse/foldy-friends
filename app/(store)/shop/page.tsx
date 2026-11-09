@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Listing, ListingSkeleton, ShopBanner } from "@/components/catalogue";
+import { Listing, ListingSkeleton } from "@/components/catalogue";
+import { ShopBanner } from "@/components/shop-banner";
 
 export const metadata: Metadata = {
   title: "Shop",

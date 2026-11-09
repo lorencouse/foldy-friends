@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { FoldDiamonds } from "@/components/fold-level";
 import { Crane, Elephant, Fox, GluePen, Moon, Panda, PaperStack, Raccoon } from "@/components/menagerie";
 import { ProductCard } from "@/components/product-tile";
+import { TapedPhoto } from "@/components/taped-photo";
 import { getProducts } from "@/lib/catalog";
 import { CATEGORIES, CATEGORY_INFO, type Category } from "@/lib/categories";
 import { FOLD_LEVELS } from "@/lib/fold-level";
@@ -130,25 +131,16 @@ function Hero() {
         <div className="relative h-[clamp(340px,42vw,540px)]">
           <div className="creases absolute inset-[4%_2%_10%_14%] rotate-7 rounded-[22px] bg-sky" />
           <div className="creases absolute inset-[10%_12%_4%_2%] -rotate-5 rounded-[22px] bg-sun" />
-          <figure className="absolute inset-[9%_9%_12%_10%] m-0 flex -rotate-2 flex-col rounded-[10px] bg-card p-3.5 pb-12 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)]">
-            <div className="relative min-h-0 flex-1 overflow-hidden rounded-md">
-              <Image
-                src="/images/kids-folding-origami-kitchen-table.webp"
-                alt="A brother and sister folding paper cranes at the kitchen table while their dad watches"
-                fill
-                priority
-                sizes="(min-width: 1024px) 40vw, 90vw"
-                className="object-cover"
-              />
-            </div>
-            <figcaption className="absolute inset-x-0 bottom-3 text-center font-display text-lg leading-none font-bold text-ink-soft">
-              Folding together
-            </figcaption>
-            <span
-              className="tape tape-strip -top-3 left-[38%] -rotate-4"
-              style={{ backgroundColor: "var(--color-blush)" }}
-            />
-          </figure>
+          <TapedPhoto
+            src="/images/kids-folding-origami-kitchen-table.webp"
+            alt="A brother and sister folding paper cranes at the kitchen table while their dad watches"
+            priority
+            sizes="(min-width: 1024px) 40vw, 90vw"
+            aspect="min-h-0 flex-1"
+            caption="Folding together"
+            tapes={[{ color: "var(--color-blush)", className: "-top-3 left-[38%] -rotate-4" }]}
+            className="absolute inset-[9%_9%_12%_10%] flex -rotate-2 flex-col p-3.5 pb-12 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)]"
+          />
           <Fox
             className="absolute -bottom-[4%] -left-[2%] w-[32%]"
             style={{ filter: "drop-shadow(0 10px 10px rgba(31,42,68,.25))" }}
@@ -261,24 +253,15 @@ function MoonDreamers() {
           </div>
           <div className="relative flex flex-col gap-7 pt-4">
             <Moon fill="#F6B93B" sheen className="absolute -top-3 -right-3 w-[min(46%,220px)]" />
-            <figure className="relative m-0 w-[84%] -rotate-2 rounded-[10px] bg-card p-2.5 pb-10 shadow-[0_24px_40px_-24px_rgba(0,0,0,.7)] sm:p-3 sm:pb-11">
-              <div className="relative aspect-[3/2] overflow-hidden rounded-md">
-                <Image
-                  src="/images/dad-and-daughter-folding-at-bedtime.webp"
-                  alt="A dad and his daughter in star pyjamas looking at the paper boat she folded, on the rug before bed"
-                  fill
-                  sizes="(min-width: 1024px) 480px, 85vw"
-                  className="object-cover"
-                />
-              </div>
-              <figcaption className="absolute inset-x-0 bottom-3 text-center font-display text-lg leading-none font-bold text-ink-soft">
-                One more fold before bed
-              </figcaption>
-              <span
-                className="tape tape-strip -top-3 left-[36%] rotate-3"
-                style={{ backgroundColor: "var(--color-sky)" }}
-              />
-            </figure>
+            <TapedPhoto
+              src="/images/dad-and-daughter-folding-at-bedtime.webp"
+              alt="A dad and his daughter in star pyjamas looking at the paper boat she folded, on the rug before bed"
+              sizes="(min-width: 1024px) 480px, 85vw"
+              aspect="aspect-[3/2]"
+              caption="One more fold before bed"
+              tapes={[{ color: "var(--color-sky)", className: "-top-3 left-[36%] rotate-3" }]}
+              className="relative w-[84%] -rotate-2 p-2.5 pb-10 shadow-[0_24px_40px_-24px_rgba(0,0,0,.7)] sm:p-3 sm:pb-11"
+            />
             <ul className="relative grid grid-cols-4 gap-2 sm:gap-3">
               {DREAMERS.map(({ name, Animal }) => (
                 <li key={name} className="flex flex-col items-center gap-1.5">
@@ -332,25 +315,18 @@ function ForParents() {
   return (
     <section aria-labelledby="parents-heading" className="overflow-x-clip bg-kraft py-[clamp(48px,6vw,96px)]">
       <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] items-center gap-[clamp(32px,5vw,72px)]">
-        <figure className="relative m-0 rotate-[1.5deg] rounded-[10px] bg-card p-3.5 shadow-[0_24px_40px_-26px_rgba(31,42,68,.55)]">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-md">
-            <Image
-              src="/images/boy-handing-mom-origami-dog.webp"
-              alt="A boy handing his mother a red paper dog he folded"
-              fill
-              sizes="(min-width: 1024px) 45vw, 90vw"
-              className="object-cover object-[25%_40%] md:object-[50%_40%]"
-            />
-          </div>
-          <span
-            className="tape tape-strip -top-2.5 -left-3.5 -rotate-30"
-            style={{ backgroundColor: "var(--color-sky)" }}
-          />
-          <span
-            className="tape tape-strip -right-3.5 -bottom-2.5 -rotate-30"
-            style={{ backgroundColor: "var(--color-sun)" }}
-          />
-        </figure>
+        <TapedPhoto
+          src="/images/boy-handing-mom-origami-dog.webp"
+          alt="A boy handing his mother a red paper dog he folded"
+          sizes="(min-width: 1024px) 45vw, 90vw"
+          aspect="aspect-[4/3]"
+          imageClassName="object-[25%_40%] md:object-[50%_40%]"
+          tapes={[
+            { color: "var(--color-sky)", className: "-top-2.5 -left-3.5 -rotate-30" },
+            { color: "var(--color-sun)", className: "-right-3.5 -bottom-2.5 -rotate-30" },
+          ]}
+          className="relative rotate-[1.5deg] p-3.5 shadow-[0_24px_40px_-26px_rgba(31,42,68,.55)]"
+        />
         <div className="flex flex-col items-start gap-5">
           <p className="eyebrow">For parents</p>
           <h2 id="parents-heading" className="text-[clamp(2rem,4vw,3rem)]">
@@ -399,21 +375,14 @@ function FoldClub() {
             </a>
           </div>
           <div className="relative w-[min(100%,400px)] justify-self-center pb-6">
-            <figure className="relative m-0 w-[70%] -rotate-2 rounded-[10px] bg-card p-2.5 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)] sm:p-3">
-              <div className="relative aspect-square overflow-hidden rounded-md">
-                <Image
-                  src="/images/girl-holding-up-paper-crane.webp"
-                  alt="A girl holding up a red paper crane she folded"
-                  fill
-                  sizes="(min-width: 768px) 280px, 65vw"
-                  className="object-cover"
-                />
-              </div>
-              <span
-                className="tape tape-strip -top-3 left-[34%] -rotate-4"
-                style={{ backgroundColor: "var(--color-blush)" }}
-              />
-            </figure>
+            <TapedPhoto
+              src="/images/girl-holding-up-paper-crane.webp"
+              alt="A girl holding up a red paper crane she folded"
+              sizes="(min-width: 768px) 280px, 65vw"
+              aspect="aspect-square"
+              tapes={[{ color: "var(--color-blush)", className: "-top-3 left-[34%] -rotate-4" }]}
+              className="relative w-[70%] -rotate-2 p-2.5 shadow-[0_24px_40px_-24px_rgba(31,42,68,.55)] sm:p-3"
+            />
             <div aria-hidden="true" className="absolute right-0 bottom-0 w-[34%]">
               <span className="absolute -top-9 -right-1 z-[2] -rotate-5 rounded-[16px_16px_4px_16px] border-2 border-ink bg-card px-3 py-2 font-display text-base leading-none font-extrabold whitespace-nowrap sm:text-lg">
                 Let's fold!

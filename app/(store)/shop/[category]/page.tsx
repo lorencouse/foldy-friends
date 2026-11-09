@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { Listing, ListingSkeleton, ShopBanner } from "@/components/catalogue";
+import { Listing, ListingSkeleton } from "@/components/catalogue";
+import { ShopBanner } from "@/components/shop-banner";
 import { CATEGORIES, CATEGORY_INFO, type Category } from "@/lib/categories";
 
 const isCategory = (c: string): c is Category => (CATEGORIES as readonly string[]).includes(c);

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PictureTile } from "@/components/product-picture";
+import { TapedPhoto } from "@/components/taped-photo";
 import { cart, useCart } from "@/lib/cart";
 import { FREE_SHIPPING_FROM_CENTS, formatPrice, MAX_LINE_QUANTITY, shippingFor } from "@/lib/money";
 
@@ -24,21 +25,14 @@ export function CartView() {
     return (
       <div className="creases flex flex-col items-center gap-4 rounded-[28px] bg-sun-pale px-6 py-14 text-center">
         <div className="flex items-end justify-center">
-          <figure className="relative m-0 w-[min(56vw,240px)] -rotate-3 rounded-[10px] bg-card p-2 shadow-[0_18px_30px_-20px_rgba(31,42,68,.55)] sm:p-2.5">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-md">
-              <Image
-                src="/images/child-hands-folding-origami.webp"
-                alt="A child's small hands creasing a sheet of mint green paper beside a folded red fox"
-                fill
-                sizes="240px"
-                className="object-cover"
-              />
-            </div>
-            <span
-              className="tape tape-strip -top-3 left-[30%] h-5 w-20 rotate-2"
-              style={{ backgroundColor: "var(--color-mint)" }}
-            />
-          </figure>
+          <TapedPhoto
+            src="/images/child-hands-folding-origami.webp"
+            alt="A child's small hands creasing a sheet of mint green paper beside a folded red fox"
+            sizes="240px"
+            aspect="aspect-[4/3]"
+            tapes={[{ color: "var(--color-mint)", className: "-top-3 left-[30%] h-5 w-20 rotate-2" }]}
+            className="relative w-[min(56vw,240px)] -rotate-3 p-2 shadow-[0_18px_30px_-20px_rgba(31,42,68,.55)] sm:p-2.5"
+          />
           <Image
             src="/assets/dog-mascot.png"
             alt=""

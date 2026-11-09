@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { GuideCard } from "@/components/guides/guide-card";
 import { Crane, Frog } from "@/components/menagerie";
+import { PageBanner } from "@/components/page-banner";
 import { GUIDES } from "@/lib/guides";
 import { SITE_NAME } from "@/lib/site";
 
@@ -23,31 +24,19 @@ export default function GuidesPage() {
   const [first, ...rest] = GUIDES;
   return (
     <>
-      <section className="pt-8 pb-6 sm:pt-10">
-        <div className="wrap">
-          <div
-            className="creases relative flex flex-wrap items-center justify-between gap-6 overflow-hidden rounded-[28px] p-[clamp(24px,4vw,48px)]"
-            style={{ backgroundColor: "var(--color-mint-pale)" }}
-          >
-            <div className="flex max-w-[600px] flex-[1_1_320px] flex-col gap-2.5">
-              <p className="eyebrow" style={{ color: "var(--color-mint-ink)" }}>
-                Origami guides
-              </p>
-              <h1 className="text-[clamp(2.5rem,5vw,4rem)] leading-none tracking-[-0.02em]">
-                Fold it step by step
-              </h1>
-              <p>
-                Free guides to the classic models, with a drawing for every fold. Start with a square of
-                paper, and a grown-up nearby for the tricky bits.
-              </p>
-            </div>
-            <div className="flex items-end gap-2" aria-hidden="true">
-              <Crane className="w-28 sm:w-36" />
-              <Frog className="w-20 sm:w-24" />
-            </div>
-          </div>
+      <PageBanner
+        tone="var(--color-mint-pale)"
+        ink="var(--color-mint-ink)"
+        eyebrow="Origami guides"
+        title="Fold it step by step"
+        blurb="Free guides to the classic models, with a drawing for every fold. Start with a square of paper, and a grown-up nearby for the tricky bits."
+        textClassName="max-w-[600px]"
+      >
+        <div className="flex items-end gap-2" aria-hidden="true">
+          <Crane className="w-28 sm:w-36" />
+          <Frog className="w-20 sm:w-24" />
         </div>
-      </section>
+      </PageBanner>
 
       <section aria-labelledby="first-heading" className="wrap pt-6 pb-4">
         <Link
