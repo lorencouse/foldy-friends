@@ -48,7 +48,7 @@ CI runs all of these on every pull request.
 - `app/page.tsx`: the home page. `app/globals.css` holds the "Paper Menagerie"
   look: colour tokens and the paper details (dog-ear corners, creased sheets,
   washi tape, accordion pleats, card-stock buttons).
-- `app/(store)/`: shop, category and product pages, cart, checkout, sign-in,
+- `app/(store)/`: shop, category, product and guide pages, cart, checkout, sign-in,
   account and admin.
 - `lib/catalog.ts`: cached catalogue reads (`"use cache"` with the `products` tag).
   Admin saves call `updateTag` so changes show at once.
