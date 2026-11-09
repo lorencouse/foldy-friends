@@ -114,10 +114,10 @@ export const frog: DiagramSet = {
     [
       face(lower, "back"),
       crease([50, 100], [50, H]),
-      face(cornerL, "back"),
-      face(cornerR, "back"),
-      face(legL, "back"),
-      face(legR, "back"),
+      face(cornerL),
+      face(cornerR),
+      face(legL),
+      face(legR),
       valley([25, 75], [25, H]),
       valley([75, 75], [75, H]),
       arrow("valley", [2, 150], [47, 150], -0.35),
@@ -126,16 +126,16 @@ export const frog: DiagramSet = {
     // 6. Fold the bottom edge up to the frog's point.
     [
       ...side(H),
-      face(legL, "back"),
-      face(legR, "back"),
+      face(legL),
+      face(legR),
       valley([25, c1], [75, c1]),
       arrow("valley", [50, H - 2], [50, 53], 0.55),
     ],
     // 7. Fold the same layer back down so its edge meets the fold below: the spring.
     [
       ...side(c1),
-      face(legL, "back"),
-      face(legR, "back"),
+      face(legL),
+      face(legR),
       face([
         [25, 50],
         [75, 50],
@@ -148,8 +148,8 @@ export const frog: DiagramSet = {
     // 8. Turn over. Press on its back end and let your finger slide off.
     [
       ...side(c1),
-      face(legL, "back"),
-      face(legR, "back"),
+      face(legL),
+      face(legR),
       face([
         [25, c2],
         [75, c2],

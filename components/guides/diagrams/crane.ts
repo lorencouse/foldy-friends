@@ -108,8 +108,8 @@ export const crane: DiagramSet = {
     [
       face(base),
       face([O, K1, Bb, K2]),
-      face([K1, Bb, F], "back"),
-      face([K2, Bb, F], "back"),
+      face([K1, Bb, F]),
+      face([K2, Bb, F]),
       valley(K1, K2),
       arrow("unfold", [0, 3], [0, K1[1] * 2 - 2], -0.9),
     ],
