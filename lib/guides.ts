@@ -51,7 +51,6 @@ const Frontmatter = z.object({
   steps: z.array(Step).min(1),
 });
 
-export type GuideStep = z.infer<typeof Step>;
 export type GuideMeta = z.infer<typeof Frontmatter> & { slug: string };
 export type Guide = GuideMeta & { Content: MDXContent };
 

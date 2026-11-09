@@ -16,7 +16,6 @@ export type Item =
   | { k: "line"; a: P; b: P; style: LineStyle }
   | { k: "arrow"; type: ArrowType; from: P; to: P; bend: number }
   | { k: "dot"; at: P; r: number; fill?: string }
-  | { k: "eye"; at: P; w: number }
   | { k: "symbol"; type: SymbolType };
 
 export type LineStyle = "valley" | "mountain" | "crease" | "hidden" | "edge" | "cut";
@@ -52,7 +51,6 @@ export const edge = (a: P, b: P): Item => ({ k: "line", a, b, style: "edge" });
 export const cut = (a: P, b: P): Item => ({ k: "line", a, b, style: "cut" });
 /** A drawn mark (an eye, a nose), `r` in screen pixels. */
 export const dot = (at: P, r = 3, fill?: string): Item => ({ k: "dot", at, r, fill });
-export const eye = (at: P, w = 8): Item => ({ k: "eye", at, w });
 export const turnOver: Item = { k: "symbol", type: "turn" };
 
 /** An arrow from a point on the paper to where it lands. `bend` curves it (+ left, − right). */

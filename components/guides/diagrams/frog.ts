@@ -114,8 +114,8 @@ export const frog: DiagramSet = {
     [
       face(lower, "back"),
       crease([50, 100], [50, H]),
-      face(cornerL),
-      face(cornerR),
+      face(cornerL, "back"),
+      face(cornerR, "back"),
       face(legL, "back"),
       face(legR, "back"),
       valley([25, 75], [25, H]),

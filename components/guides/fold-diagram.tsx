@@ -30,7 +30,7 @@ function bounds(items: Diagram) {
     if (it.k === "face") pts.push(...it.pts);
     else if (it.k === "line") pts.push(it.a, it.b);
     else if (it.k === "arrow") pts.push(it.from, it.to, control(it.from, it.to, it.bend));
-    else if (it.k === "dot" || it.k === "eye") pts.push(it.at);
+    else if (it.k === "dot") pts.push(it.at);
   }
   let x0 = Infinity;
   let y0 = Infinity;
@@ -226,19 +226,6 @@ export function FoldDiagram({
     } else if (it.k === "dot") {
       paper.push(
         <circle key={key} cx={f(map(it.at)[0])} cy={f(map(it.at)[1])} r={it.r} fill={it.fill ?? INK} />,
-      );
-    } else if (it.k === "eye") {
-      const [x, y] = map(it.at);
-      const w = it.w / 2;
-      paper.push(
-        <path
-          key={key}
-          d={`M${f(x - w)} ${f(y)} Q${f(x)} ${f(y + w * 0.9)} ${f(x + w)} ${f(y)}`}
-          fill="none"
-          stroke={INK}
-          strokeWidth={2.4}
-          strokeLinecap="round"
-        />,
       );
     } else if (it.k === "arrow") {
       const from = map(it.from);
