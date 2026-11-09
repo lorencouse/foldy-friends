@@ -1,11 +1,9 @@
-import { asc } from "drizzle-orm";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ProductDrawing, tileFor } from "@/components/product-picture";
+import { getAllProductsFresh } from "@/lib/catalog";
 import { CATEGORY_INFO } from "@/lib/categories";
-import { db } from "@/lib/db";
-import { products } from "@/lib/db/schema";
 import { effectivePrice, formatPrice } from "@/lib/money";
 import { requireAdmin } from "@/lib/session";
 
@@ -24,7 +22,7 @@ export default function AdminPage() {
 
 async function ProductTable() {
   await requireAdmin();
-  const rows = await db.select().from(products).orderBy(asc(products.category), asc(products.name));
+  const rows = await getAllProductsFresh();
   return (
     <section className="wrap pt-10 pb-20 md:pt-16">
       <div className="flex flex-wrap items-end justify-between gap-6">

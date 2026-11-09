@@ -50,8 +50,8 @@ CI runs all of these on every pull request.
   washi tape, accordion pleats, card-stock buttons).
 - `app/(store)/`: shop, category, product and guide pages, cart, checkout, sign-in,
   account and admin.
-- `lib/catalog.ts`: cached catalogue reads (`"use cache"` with the `products` tag).
-  Admin saves call `updateTag` so changes show at once.
+- `lib/catalog.ts`: catalogue reads, cached with `"use cache"` and the `products` tag
+  (the admin's own reads stay uncached). Admin saves call `updateTag` so changes show at once.
 - `lib/cart.ts`: the cart lives in the browser (localStorage). Checkout re-prices
   every line from the database.
 - `components/menagerie.tsx` and `components/product-picture.tsx`: the folded-paper

@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Project notes
 
-- Cache Components is on: anything reading cookies, headers or the database at request time sits behind `<Suspense>`; catalogue reads go through `lib/catalog.ts`.
+- Cache Components is on: anything reading cookies, headers or the database at request time sits behind `<Suspense>`; page reads of the catalogue go through `lib/catalog.ts`, and server actions may read directly when they need current data before writing.
 - The build must work without a database (Coolify builds the image before the database is reachable). Pages that read data call `connection()` or read `params` inside a Suspense boundary.
 - Prices are integer cents. Checkout never trusts prices from the browser.
 - Demo orders do not reduce stock, so visitors cannot sell the shop out.

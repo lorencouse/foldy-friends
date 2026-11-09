@@ -1,11 +1,9 @@
-import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { z } from "zod";
-import { db } from "@/lib/db";
-import { products } from "@/lib/db/schema";
+import { getProductById } from "@/lib/catalog";
 import { requireAdmin } from "@/lib/session";
 import { ProductForm } from "../../product-form";
 
@@ -26,9 +24,7 @@ async function EditProduct({ params }: { params: PageProps<"/admin/products/[id]
   await requireAdmin();
   const { id } = await params;
   if (!z.uuid().safeParse(id).success) notFound();
-  const product = await db.query.products.findFirst({
-    where: eq(products.id, id),
-  });
+  const product = await getProductById(id);
   if (!product) notFound();
   return (
     <section className="wrap pt-10 pb-20 md:pt-16">
