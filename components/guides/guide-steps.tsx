@@ -9,7 +9,8 @@ export function GuideSteps({ guide }: { guide: Guide }) {
     <ol className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-6" aria-label="Steps">
       {guide.steps.map((step, i) => (
         <li
-          key={step.title}
+          // biome-ignore lint/suspicious/noArrayIndexKey: steps never reorder and titles can repeat
+          key={i}
           id={`step-${i + 1}`}
           className="sheet flex scroll-mt-6 flex-col overflow-hidden"
           data-rise
@@ -84,6 +85,21 @@ export function NotationKey() {
           <path d="M8 18 Q32 -4 54 16" fill="none" stroke="currentColor" strokeWidth="1.8" />
           <polygon points="56,18 44,15 51,8" fill="currentColor" />
           <polygon points="6,20 9,8 15,14" fill="#FFFDF8" stroke="currentColor" strokeWidth="1.4" />
+        </>
+      ),
+    },
+    {
+      label: "Pull out or open",
+      svg: (
+        <>
+          <path d="M6 12 H46" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          <polygon
+            points="59,12 46,5 46,19"
+            fill="#FFFDF8"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinejoin="round"
+          />
         </>
       ),
     },

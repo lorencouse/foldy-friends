@@ -24,11 +24,11 @@ export type LineStyle = "valley" | "mountain" | "crease" | "hidden" | "edge" | "
  * valley: fold towards you (solid head). mountain: fold behind (open half head).
  * unfold: fold, then unfold (solid head out, open head back). push: press or
  * sink here (hollow arrow, used for reverse and squash folds). pull: pull out
- * or open (open head).
+ * or open (hollow head).
  */
 export type ArrowType = "valley" | "mountain" | "unfold" | "push" | "pull";
 /** Symbols drawn in the corner of a panel. */
-export type SymbolType = "turn" | "rotate";
+export type SymbolType = "turn";
 
 export type Diagram = readonly Item[];
 
@@ -54,7 +54,6 @@ export const cut = (a: P, b: P): Item => ({ k: "line", a, b, style: "cut" });
 export const dot = (at: P, r = 3, fill?: string): Item => ({ k: "dot", at, r, fill });
 export const eye = (at: P, w = 8): Item => ({ k: "eye", at, w });
 export const turnOver: Item = { k: "symbol", type: "turn" };
-export const rotateSymbol: Item = { k: "symbol", type: "rotate" };
 
 /** An arrow from a point on the paper to where it lands. `bend` curves it (+ left, − right). */
 export const arrow = (type: ArrowType, from: P, to: P, bend = 0.35): Item => ({

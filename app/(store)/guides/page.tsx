@@ -18,24 +18,10 @@ export const metadata: Metadata = {
   },
 };
 
-const siteUrl = process.env.SITE_URL ?? "https://www.foldyfriends.com";
-
 export default function GuidesPage() {
   const [first, ...rest] = GUIDES;
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Origami guides",
-    url: `${siteUrl}/guides`,
-    hasPart: GUIDES.map((g) => ({ "@type": "HowTo", name: g.title, url: `${siteUrl}/guides/${g.slug}` })),
-  };
   return (
     <>
-      <script
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD from our own content
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
       <section className="pt-8 pb-6 sm:pt-10">
         <div className="wrap">
           <div

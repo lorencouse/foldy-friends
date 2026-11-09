@@ -5,10 +5,9 @@ import { FoldDiagram } from "@/components/guides/fold-diagram";
 import { type GuideMeta, guideLevel } from "@/lib/guides";
 
 /** A guide on the index and in "more guides": the finished model, name and level. */
-export function GuideCard({ guide, headingLevel = "h3" }: { guide: GuideMeta; headingLevel?: "h2" | "h3" }) {
+export function GuideCard({ guide }: { guide: GuideMeta }) {
   const set = DIAGRAMS[guide.slug];
   const level = guideLevel(guide);
-  const Heading = headingLevel;
   return (
     <article className="sheet sheet-raised lift relative flex h-full flex-col overflow-hidden" data-rise>
       <div
@@ -22,11 +21,11 @@ export function GuideCard({ guide, headingLevel = "h3" }: { guide: GuideMeta; he
         <span className="eyebrow">
           {guide.steps.length} steps · {guide.minutes} min
         </span>
-        <Heading className="text-[1.375rem] leading-[1.15] font-bold">
+        <h3 className="text-[1.375rem] leading-[1.15] font-bold">
           <Link href={`/guides/${guide.slug}`} className="after:absolute after:inset-0 hover:text-tomato">
             {guide.title}
           </Link>
-        </Heading>
+        </h3>
         <p className="line-clamp-3 text-[0.9375rem] leading-normal text-ink-soft">{guide.summary}</p>
         <p className="mt-auto flex items-center gap-2.5 pt-1 text-[0.9375rem] font-bold">
           <FoldDiamonds level={level} size="sm" />

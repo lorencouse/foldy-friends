@@ -192,32 +192,20 @@ function structuredData(guide: Guide) {
   const url = `${siteUrl}/guides/${guide.slug}`;
   return {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "HowTo",
-        "@id": `${url}#howto`,
-        name: guide.title,
-        description: guide.description,
-        url,
-        totalTime: isoMinutes(guide.minutes),
-        dateModified: guide.updated,
-        supply: [{ "@type": "HowToSupply", name: guide.paper }],
-        step: guide.steps.map((s, i) => ({
-          "@type": "HowToStep",
-          position: i + 1,
-          name: s.title,
-          text: s.text,
-          url: `${url}#step-${i + 1}`,
-        })),
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
-          { "@type": "ListItem", position: 2, name: "Guides", item: `${siteUrl}/guides` },
-          { "@type": "ListItem", position: 3, name: guide.name, item: url },
-        ],
-      },
-    ],
+    "@type": "HowTo",
+    "@id": `${url}#howto`,
+    name: guide.title,
+    description: guide.description,
+    url,
+    totalTime: isoMinutes(guide.minutes),
+    dateModified: guide.updated,
+    supply: [{ "@type": "HowToSupply", name: guide.paper }],
+    step: guide.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.title,
+      text: s.text,
+      url: `${url}#step-${i + 1}`,
+    })),
   };
 }

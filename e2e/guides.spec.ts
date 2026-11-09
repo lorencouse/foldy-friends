@@ -16,20 +16,25 @@ test("a guide shows every step with a diagram, structured data and shop links", 
   await expect(steps.first().getByRole("img", { name: /diagonals/ })).toBeVisible();
 
   const jsonLd = await page.locator('script[type="application/ld+json"]').first().textContent();
-  const data = JSON.parse(jsonLd ?? "{}");
-  const howTo = data["@graph"].find((n: { "@type": string }) => n["@type"] === "HowTo");
+  const howTo = JSON.parse(jsonLd ?? "{}");
+  expect(howTo["@type"]).toBe("HowTo");
   expect(howTo.step).toHaveLength(14);
 
   await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", /paper crane/);
   await page.getByRole("link", { name: "Double-sided origami paper, 100 sheets" }).first().click();
-  await expect(page.getByRole("heading", { level: 1, name: "Double-sided origami paper, 100 sheets" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Double-sided origami paper, 100 sheets" }),
+  ).toBeVisible();
   await expect(page.getByRole("link", { name: "How to fold a paper crane" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "How to fold an origami elephant face" })).toBeVisible();
 });
 
 test("a kit's page links back to its guide", async ({ page }) => {
   await page.goto("/products/panda-asleep-on-the-moon");
   await page.getByRole("link", { name: "How to fold an origami panda face" }).click();
-  await expect(page.getByRole("heading", { level: 1, name: "How to fold an origami panda face" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "How to fold an origami panda face" }),
+  ).toBeVisible();
 });
 
 test("the sitemap lists the guides", async ({ request }) => {

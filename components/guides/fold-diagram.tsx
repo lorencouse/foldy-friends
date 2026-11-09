@@ -89,6 +89,29 @@ function openHead(tip: P, dir: P, key: string) {
   );
 }
 
+/** A hollow, symmetric head (pull out or open). */
+function hollowHead(tip: P, dir: P, key: string) {
+  const u = unit(dir);
+  const n: P = [-u[1], u[0]];
+  const base = sub(tip, scale(u, 13));
+  return (
+    <polygon
+      key={key}
+      points={[tip, add(base, scale(n, 7)), sub(base, scale(n, 7))].map(pt).join(" ")}
+      fill={WHITE_SIDE}
+      stroke={INK}
+      strokeWidth={1.6}
+      strokeLinejoin="round"
+    />
+  );
+}
+
+function arrowHead(type: ArrowType, tip: P, dir: P) {
+  if (type === "mountain") return openHead(tip, dir, "h");
+  if (type === "pull") return hollowHead(tip, dir, "h");
+  return solidHead(tip, dir, "h");
+}
+
 function drawArrow(type: ArrowType, from: P, to: P, c: P, key: string) {
   if (type === "push") {
     // A hollow arrow with a notched tail, pointing at `to`.
@@ -127,9 +150,7 @@ function drawArrow(type: ArrowType, from: P, to: P, c: P, key: string) {
         strokeWidth={1.8}
         strokeLinecap="round"
       />
-      {type === "mountain" || type === "pull"
-        ? openHead(to, sub(to, c), "h")
-        : solidHead(to, sub(to, c), "h")}
+      {arrowHead(type, to, sub(to, c))}
       {type === "unfold" && openHead(from, sub(from, c), "t")}
     </g>
   );
@@ -151,21 +172,6 @@ export function TurnOverMark({ x = W - 40, y = 26 }: { x?: number; y?: number })
   );
 }
 
-function RotateSymbol() {
-  const cx = W - 26;
-  const cy = 24;
-  const r = 12;
-  const start: P = [cx, cy - r];
-  const end: P = [cx - r, cy];
-  return (
-    <g>
-      <circle cx={cx} cy={cy} r={r + 5} fill="none" stroke={INK} strokeWidth={1.4} opacity={0.35} />
-      <path d={`M${pt(start)} A${r} ${r} 0 1 1 ${pt(end)}`} fill="none" stroke={INK} strokeWidth={1.8} />
-      {solidHead(end, [0, -1], "r")}
-    </g>
-  );
-}
-
 export function FoldDiagram({
   diagram,
   color,
@@ -174,12 +180,12 @@ export function FoldDiagram({
 }: {
   diagram: Diagram;
   color: string;
-  /** Alt text: what the diagram shows. */
+  /** Alt text: what the diagram shows. Empty for a decorative drawing. */
   label: string;
   className?: string;
 }) {
   const b = bounds(diagram);
-  // Leave the top-right corner clear for a turn-over or rotate symbol.
+  // Leave the top-right corner clear for a turn-over symbol.
   const room = diagram.some((it) => it.k === "symbol") ? 44 : 0;
   const s = Math.min((W - 2 * PAD - room) / (b.x1 - b.x0 || 1), (H - 2 * PAD) / (b.y1 - b.y0 || 1));
   const ox = (W - room - (b.x1 - b.x0) * s) / 2 - b.x0 * s;
@@ -240,13 +246,17 @@ export function FoldDiagram({
       overlay.push(drawArrow(it.type, from, to, control(from, to, it.bend), key));
     } else if (it.type === "turn") {
       overlay.push(<TurnOverMark key={key} />);
-    } else {
-      overlay.push(<RotateSymbol key={key} />);
     }
   });
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label} className={className}>
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      className={className}
+      role={label ? "img" : undefined}
+      aria-label={label || undefined}
+      aria-hidden={label ? undefined : true}
+    >
       {paper}
       {overlay}
     </svg>

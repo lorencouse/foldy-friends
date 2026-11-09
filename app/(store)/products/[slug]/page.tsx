@@ -58,7 +58,7 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
   const need = needs(product.description);
   const about = descriptionParagraphs(product.description);
   const eyebrow = product.category === "kits" ? `Moon Dreamers · ${EYEBROW.kits}` : EYEBROW[product.category];
-  const guides = guidesForProduct(product.slug).slice(0, 6);
+  const guides = guidesForProduct(product.slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
