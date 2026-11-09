@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, type ReactNode, use, useState } from "react";
-import { ProductArt } from "@/components/product-art";
 
 type Ctx = { option: string | null; setOption: (o: string) => void };
 const OptionContext = createContext<Ctx | null>(null);
@@ -14,9 +13,4 @@ export function OptionProvider({ initial, children }: { initial: string | null; 
 
 export function useOption() {
   return use(OptionContext);
-}
-
-export function OptionArt({ art, title, className }: { art: string; title: string; className?: string }) {
-  const ctx = useOption();
-  return <ProductArt art={art} option={ctx?.option ?? undefined} title={title} className={className} />;
 }

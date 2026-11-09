@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useActionState, useTransition } from "react";
-import { ProductArt } from "@/components/product-art";
+import { ProductDrawing, tileFor } from "@/components/product-picture";
 import { deleteProduct, type ProductFormState, removePhoto, saveProduct } from "./actions";
 
 export const ART_KEYS = [
@@ -120,8 +120,11 @@ export function ProductForm({ initial }: { initial: Initial }) {
                   defaultChecked={initial.art === key}
                   className="peer sr-only"
                 />
-                <span className="block outline-offset-2 peer-checked:outline-3 peer-checked:outline-ink peer-focus-visible:outline-3 peer-focus-visible:outline-sky">
-                  <ProductArt art={key} className="block w-full" />
+                <span
+                  className="relative flex aspect-square items-center justify-center overflow-hidden outline-offset-2 peer-checked:outline-3 peer-checked:outline-ink peer-focus-visible:outline-3 peer-focus-visible:outline-sky"
+                  style={{ backgroundColor: tileFor(key) }}
+                >
+                  <ProductDrawing art={key} />
                 </span>
                 <span className="sr-only">{key}</span>
               </label>

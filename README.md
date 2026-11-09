@@ -55,10 +55,8 @@ CI runs all of these on every pull request.
 - `lib/cart.ts`: the cart lives in the browser (localStorage). Checkout re-prices
   every line from the database.
 - `components/menagerie.tsx` and `components/product-picture.tsx`: the folded-paper
-  animals and the drawn product pictures on their coloured sheets;
-  `components/product-art.tsx` holds a closer drawing of each product for the
-  product page. Uploaded photos (served from `/media`, stored in `UPLOAD_DIR`)
-  replace the drawings.
+  animals and the drawn product pictures on their coloured sheets. Uploaded photos
+  (served from `/media`, stored in `UPLOAD_DIR`) replace the drawings.
 - `lib/fold-level.ts`: reads a kit's fold level ("Difficulty 3 of 6") from its description.
 - `content/guides/*.mdx`: the origami how-to guides at `/guides`. Each file's YAML
   frontmatter holds its title, SEO title and description, steps and the
