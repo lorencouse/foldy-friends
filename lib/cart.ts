@@ -86,6 +86,10 @@ export const cart = {
   },
 };
 
+export function cartSubtotal(lines: CartLine[]) {
+  return lines.reduce((s, l) => s + l.unitPriceCents * l.quantity, 0);
+}
+
 export function useCart() {
   return useSyncExternalStore(subscribe, read, () => EMPTY);
 }

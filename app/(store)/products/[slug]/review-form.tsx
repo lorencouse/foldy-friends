@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { Field, FormError, TextareaField } from "@/components/field";
+import { Star } from "@/components/stars";
 import { type ReviewState, submitReview } from "./actions";
 
 export function ReviewForm({ productId }: { productId: string }) {
@@ -45,16 +46,5 @@ export function ReviewForm({ productId }: { productId: string }) {
         {pending ? "Posting…" : "Post review"}
       </button>
     </form>
-  );
-}
-
-export function Star({ filled, size = 32 }: { filled: boolean; size?: number }) {
-  return (
-    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden>
-      <polygon
-        points="12,2 15,9 22,9.5 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.5 9,9"
-        fill={filled ? "#f6b93b" : "#d6ccb8"}
-      />
-    </svg>
   );
 }

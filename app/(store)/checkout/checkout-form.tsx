@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { Field, FormError } from "@/components/field";
-import { useCart } from "@/lib/cart";
-import { formatPrice, shippingFor } from "@/lib/money";
+import { OrderLineLabel } from "@/components/order-line-label";
+import { cartSubtotal, useCart } from "@/lib/cart";
+import { formatPrice, formatShipping, shippingFor } from "@/lib/money";
 import { type CheckoutState, placeOrder } from "./actions";
 
 export function CheckoutForm({ defaultEmail, defaultName }: { defaultEmail: string; defaultName: string }) {
   const lines = useCart();
   const [state, action, pending] = useActionState<CheckoutState, FormData>(placeOrder, {});
-  const subtotal = lines.reduce((s, l) => s + l.unitPriceCents * l.quantity, 0);
+  const subtotal = cartSubtotal(lines);
   const shipping = shippingFor(subtotal);
 
   if (lines.length === 0) {
@@ -65,10 +66,7 @@ export function CheckoutForm({ defaultEmail, defaultName }: { defaultEmail: stri
         <ul className="mt-6 space-y-3">
           {lines.map((l) => (
             <li key={`${l.productId}-${l.option}`} className="flex justify-between gap-4">
-              <span>
-                {l.quantity} × {l.name}
-                {l.option ? ` (${l.option})` : ""}
-              </span>
+              <OrderLineLabel quantity={l.quantity} name={l.name} option={l.option} />
               <span className="tabular-nums">{formatPrice(l.unitPriceCents * l.quantity)}</span>
             </li>
           ))}
@@ -76,7 +74,7 @@ export function CheckoutForm({ defaultEmail, defaultName }: { defaultEmail: stri
         <dl className="mt-6 space-y-2 tabular-nums">
           <div className="flex justify-between">
             <dt>Shipping</dt>
-            <dd>{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>
+            <dd>{formatShipping(shipping)}</dd>
           </div>
           <div className="flex items-baseline justify-between border-t-2 border-dashed border-crease-dark pt-3 font-display text-2xl font-extrabold">
             <dt>Total</dt>

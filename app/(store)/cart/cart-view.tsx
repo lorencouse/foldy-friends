@@ -5,12 +5,12 @@ import Link from "next/link";
 import { PictureTile } from "@/components/product-picture";
 import { QuantityStepper } from "@/components/quantity-stepper";
 import { TapedPhoto } from "@/components/taped-photo";
-import { cart, useCart } from "@/lib/cart";
-import { FREE_SHIPPING_FROM_CENTS, formatPrice, shippingFor } from "@/lib/money";
+import { cart, cartSubtotal, useCart } from "@/lib/cart";
+import { FREE_SHIPPING_FROM_CENTS, formatPrice, formatShipping, shippingFor } from "@/lib/money";
 
 export function CartView() {
   const lines = useCart();
-  const subtotal = lines.reduce((s, l) => s + l.unitPriceCents * l.quantity, 0);
+  const subtotal = cartSubtotal(lines);
   const savings = lines.reduce(
     (s, l) =>
       s +
@@ -141,7 +141,7 @@ export function CartView() {
             </>
           )}
           <dt className="text-ink-soft">Shipping</dt>
-          <dd className="font-extrabold">{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>
+          <dd className="font-extrabold">{formatShipping(shipping)}</dd>
         </dl>
         <div className="dashed-rule" aria-hidden="true" />
         <div className="flex items-baseline justify-between">

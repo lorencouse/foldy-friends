@@ -26,3 +26,7 @@ export const SHIPPING_CENTS = 495;
 export function shippingFor(subtotalCents: number) {
   return subtotalCents === 0 || subtotalCents >= FREE_SHIPPING_FROM_CENTS ? 0 : SHIPPING_CENTS;
 }
+
+export function formatShipping(cents: number) {
+  return cents === 0 ? "Free" : formatPrice(cents);
+}

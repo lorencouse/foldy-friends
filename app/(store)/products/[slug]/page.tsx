@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/json-ld";
 import { ProductGallery } from "@/components/product-gallery";
 import { OptionProvider } from "@/components/product-option";
 import { ProductDrawing, tileFor } from "@/components/product-picture";
+import { StarRow } from "@/components/stars";
 import { getProduct, getRelated, getReviews, type Product } from "@/lib/catalog";
 import { CATEGORY_INFO } from "@/lib/categories";
 import { descriptionParagraphs, foldLevel, needs } from "@/lib/fold-level";
@@ -22,7 +23,7 @@ import {
   SHIPPING_CENTS,
 } from "@/lib/money";
 import { getUser } from "@/lib/session";
-import { ReviewForm, Star } from "./review-form";
+import { ReviewForm } from "./review-form";
 
 export async function generateMetadata({ params }: PageProps<"/products/[slug]">): Promise<Metadata> {
   const { slug } = await params;
@@ -254,11 +255,7 @@ async function RatingSummary({ productId }: { productId: string }) {
   if (!count || average == null) return null;
   return (
     <p className="flex items-center gap-2 text-[0.9375rem] font-bold">
-      <span className="flex" aria-hidden>
-        {[1, 2, 3, 4, 5].map((n) => (
-          <Star key={n} filled={n <= Math.round(average)} size={18} />
-        ))}
-      </span>
+      <StarRow rating={Math.round(average)} />
       {average.toFixed(1)} out of 5, from {count} {count === 1 ? "review" : "reviews"}
     </p>
   );
@@ -279,11 +276,7 @@ async function Reviews({ product }: { product: Product }) {
         <ul className="flex w-full flex-col gap-4">
           {list.map((r) => (
             <li key={r.id} className="sheet rounded-2xl p-5">
-              <p className="flex" role="img" aria-label={`${r.rating} out of 5`}>
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <Star key={n} filled={n <= r.rating} size={18} />
-                ))}
-              </p>
+              <StarRow rating={r.rating} label={`${r.rating} out of 5`} />
               <h3 className="mt-2 text-xl font-bold">{r.title}</h3>
               <p className="mt-1">{r.body}</p>
               <p className="mt-2 text-[0.9375rem] text-ink-soft">
