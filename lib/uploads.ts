@@ -11,7 +11,7 @@ const TYPES: Record<string, string> = {
   "image/webp": "webp",
   "image/avif": "avif",
 };
-export const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
 
 /** Only names we generated can be read or deleted. */
 export const SAFE_NAME = /^[0-9a-f-]{36}\.(jpg|png|webp|avif)$/;

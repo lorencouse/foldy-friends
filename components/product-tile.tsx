@@ -13,7 +13,7 @@ export const EYEBROW: Record<string, string> = {
 };
 
 /** One washi-tape badge for a product: Beginner for first folds, otherwise Sale. */
-export function badgeFor(product: Pick<Product, "tags" | "priceCents" | "salePriceCents">) {
+function badgeFor(product: Pick<Product, "tags" | "priceCents" | "salePriceCents">) {
   if (product.tags.includes("beginner")) return { label: "Beginner", color: "var(--color-mint)" };
   if (effectivePrice(product) < product.priceCents) return { label: "Sale", color: "var(--color-blush)" };
   return null;

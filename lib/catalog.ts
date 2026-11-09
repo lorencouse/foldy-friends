@@ -23,19 +23,18 @@ export const CATEGORY_INFO: Record<Category, { title: string; blurb: string }> =
 
 export const PRODUCTS_TAG = "products";
 
-export async function getProducts(category?: Category) {
+export async function getProducts() {
   "use cache";
   cacheTag(PRODUCTS_TAG);
   cacheLife("hours");
   return db.query.products.findMany({
-    where: category ? eq(products.category, category) : undefined,
     orderBy: [products.category, products.name],
   });
 }
 
 export async function getProduct(slug: string) {
   "use cache";
-  cacheTag(PRODUCTS_TAG, `product:${slug}`);
+  cacheTag(PRODUCTS_TAG);
   cacheLife("hours");
   return (await db.query.products.findFirst({ where: eq(products.slug, slug) })) ?? null;
 }

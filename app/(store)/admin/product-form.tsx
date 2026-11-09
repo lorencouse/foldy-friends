@@ -5,7 +5,7 @@ import { useActionState, useTransition } from "react";
 import { ProductDrawing, tileFor } from "@/components/product-picture";
 import { deleteProduct, type ProductFormState, removePhoto, saveProduct } from "./actions";
 
-export const ART_KEYS = [
+const ART_KEYS = [
   "paper-double",
   "paper-patterned",
   "paper-iridescent",

@@ -39,7 +39,7 @@ const LOOKS: Record<string, Look> = {
   "glue-sticks-plain": { kind: "tool", tile: "#F3EADB", colors: ["#5B9BE0", "#3FB58E", "#D23F2C"] },
 };
 
-export function lookFor(art: string, category?: string): Look {
+function lookFor(art: string, category?: string): Look {
   const known = LOOKS[art];
   if (known) return known;
   if (art.startsWith("kit-") || category === "kits") return LOOKS["kit-fox"];
