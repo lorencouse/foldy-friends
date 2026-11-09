@@ -43,12 +43,6 @@ export default function ProductPage({ params }: PageProps<"/products/[slug]">) {
   );
 }
 
-const LEVEL_NOTES: Record<string, string> = {
-  "Little folder": "A few simple steps, good for first folds.",
-  "Growing folder": "More steps and some gluing; a grown-up helps.",
-  "Fold master": "A long build, best done together.",
-};
-
 async function ProductView({ params }: { params: PageProps<"/products/[slug]">["params"] }) {
   const { slug } = await params;
   const product = await getProduct(slug);
@@ -129,7 +123,7 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
                   <strong className="text-base">
                     Fold level {level.level} of {level.of} · {level.name}
                   </strong>
-                  <span className="text-[0.9375rem] text-ink-soft">{LEVEL_NOTES[level.name]}</span>
+                  <span className="text-[0.9375rem] text-ink-soft">{level.note}</span>
                 </div>
               </div>
             )}

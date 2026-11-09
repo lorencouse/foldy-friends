@@ -6,7 +6,7 @@ export function FoldDiamonds({
   size = "md",
   color,
 }: {
-  level: FoldLevel;
+  level: Pick<FoldLevel, "level" | "of">;
   size?: "sm" | "md";
   color?: string;
 }) {

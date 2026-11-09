@@ -2,10 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
+import { FoldDiamonds } from "@/components/fold-level";
 import { Crane, Elephant, Fox, GluePen, Moon, Panda, PaperStack, Raccoon } from "@/components/menagerie";
 import { ProductCard } from "@/components/product-tile";
 import { getProducts } from "@/lib/catalog";
 import { CATEGORIES, CATEGORY_INFO, type Category } from "@/lib/categories";
+import { FOLD_LEVELS } from "@/lib/fold-level";
 
 /** The friends shown first, in order; any others fill the row if one is missing. */
 const FAVOURITES = [
@@ -326,12 +328,6 @@ function CardsSkeleton() {
   );
 }
 
-const LEVELS = [
-  { name: "Little folder", note: "First folds, a few steps.", filled: 1, color: "var(--color-mint)" },
-  { name: "Growing folder", note: "More steps, a little gluing.", filled: 2, color: "var(--color-sun)" },
-  { name: "Fold master", note: "3D builds to do together.", filled: 3, color: "var(--color-tomato)" },
-];
-
 function ForParents() {
   return (
     <section aria-labelledby="parents-heading" className="overflow-x-clip bg-kraft py-[clamp(48px,6vw,96px)]">
@@ -365,19 +361,11 @@ function ForParents() {
             you buy.
           </p>
           <ul className="grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,150px),1fr))] gap-3.5">
-            {LEVELS.map((l) => (
+            {FOLD_LEVELS.map((l, i) => (
               <li key={l.name} className="sheet flex flex-col gap-2 rounded-2xl p-4.5">
-                <span className="flex gap-1.5" role="img" aria-label={`Level ${l.filled} of 3`}>
-                  {[1, 2, 3].map((n) =>
-                    n <= l.filled ? (
-                      <span key={n} className="dia" style={{ background: l.color }} />
-                    ) : (
-                      <span key={n} className="dia-off" />
-                    ),
-                  )}
-                </span>
+                <FoldDiamonds level={{ level: i + 1, of: FOLD_LEVELS.length }} color={l.color} />
                 <strong className="font-display text-xl leading-[1.1] font-bold">{l.name}</strong>
-                <span className="text-[0.9375rem] leading-normal text-ink-soft">{l.note}</span>
+                <span className="text-[0.9375rem] leading-normal text-ink-soft">{l.homeNote}</span>
               </li>
             ))}
           </ul>

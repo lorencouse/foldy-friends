@@ -9,7 +9,7 @@ import * as frog from "@/content/guides/frog.mdx";
 import * as heart from "@/content/guides/heart.mdx";
 import * as start from "@/content/guides/how-to-start-origami.mdx";
 import * as panda from "@/content/guides/panda.mdx";
-import { type FoldLevel, levelName } from "@/lib/fold-level";
+import { type FoldLevel, namedLevel } from "@/lib/fold-level";
 
 /**
  * Origami how-to guides. Each guide is an MDX file in content/guides: YAML
@@ -91,7 +91,7 @@ export function guidesForProduct(productSlug: string) {
 }
 
 export function guideLevel(guide: Pick<GuideMeta, "level">): FoldLevel {
-  return { level: guide.level, of: 3, name: levelName(guide.level / 3) };
+  return namedLevel(guide.level, 3);
 }
 
 /** ISO 8601 duration, e.g. PT15M, for structured data. */
