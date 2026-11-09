@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
+import { Field, FormError } from "@/components/field";
 import { useCart } from "@/lib/cart";
 import { formatPrice, shippingFor } from "@/lib/money";
 import { type CheckoutState, placeOrder } from "./actions";
@@ -82,37 +83,11 @@ export function CheckoutForm({ defaultEmail, defaultName }: { defaultEmail: stri
             <dd>{formatPrice(subtotal + shipping)}</dd>
           </div>
         </dl>
-        {state.error && (
-          <p role="alert" className="mt-6 text-danger">
-            {state.error}
-          </p>
-        )}
+        <FormError message={state.error} className="mt-6" />
         <button type="submit" className="btn btn-primary mt-8 w-full" disabled={pending}>
           {pending ? "Placing your order…" : "Place demo order"}
         </button>
       </aside>
     </form>
-  );
-}
-
-function Field({
-  name,
-  label,
-  wide = false,
-  required = true,
-  ...rest
-}: {
-  name: string;
-  label: string;
-  wide?: boolean;
-  required?: boolean;
-} & React.InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <div className={wide ? "sm:col-span-2" : undefined}>
-      <label htmlFor={`co-${name}`} className="field-label">
-        {label}
-      </label>
-      <input id={`co-${name}`} name={name} required={required} className="field" {...rest} />
-    </div>
   );
 }

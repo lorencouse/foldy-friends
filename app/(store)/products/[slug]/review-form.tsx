@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { Field, FormError, TextareaField } from "@/components/field";
 import { type ReviewState, submitReview } from "./actions";
 
 export function ReviewForm({ productId }: { productId: string }) {
@@ -37,23 +38,9 @@ export function ReviewForm({ productId }: { productId: string }) {
           ))}
         </div>
       </fieldset>
-      <div>
-        <label htmlFor="review-title" className="field-label">
-          Title
-        </label>
-        <input id="review-title" name="title" required maxLength={80} className="field" />
-      </div>
-      <div>
-        <label htmlFor="review-body" className="field-label">
-          Your review
-        </label>
-        <textarea id="review-body" name="body" required minLength={10} rows={4} className="field" />
-      </div>
-      {state.error && (
-        <p role="alert" className="text-danger">
-          {state.error}
-        </p>
-      )}
+      <Field id="review-title" name="title" label="Title" maxLength={80} />
+      <TextareaField id="review-body" name="body" label="Your review" minLength={10} rows={4} />
+      <FormError message={state.error} />
       <button type="submit" className="btn btn-primary" disabled={pending}>
         {pending ? "Posting…" : "Post review"}
       </button>

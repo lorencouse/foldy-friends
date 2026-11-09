@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PictureTile } from "@/components/product-picture";
+import { QuantityStepper } from "@/components/quantity-stepper";
 import { TapedPhoto } from "@/components/taped-photo";
 import { cart, useCart } from "@/lib/cart";
-import { FREE_SHIPPING_FROM_CENTS, formatPrice, MAX_LINE_QUANTITY, shippingFor } from "@/lib/money";
+import { FREE_SHIPPING_FROM_CENTS, formatPrice, shippingFor } from "@/lib/money";
 
 export function CartView() {
   const lines = useCart();
@@ -92,32 +93,13 @@ export function CartView() {
               </button>
             </div>
             <div className="col-span-2 flex items-center justify-between gap-4 sm:contents">
-              <fieldset className="stepper">
-                <legend className="sr-only">Quantity of {l.name}</legend>
-                <button
-                  type="button"
-                  className="step"
-                  aria-label={`One fewer ${l.name}`}
-                  onClick={() => cart.setQuantity(l.productId, l.option, l.quantity - 1)}
-                >
-                  −
-                </button>
-                <output
-                  aria-live="polite"
-                  className="min-w-8 text-center font-display text-lg font-extrabold"
-                >
-                  {l.quantity}
-                </output>
-                <button
-                  type="button"
-                  className="step"
-                  aria-label={`One more ${l.name}`}
-                  onClick={() => cart.setQuantity(l.productId, l.option, l.quantity + 1)}
-                  disabled={l.quantity >= MAX_LINE_QUANTITY}
-                >
-                  +
-                </button>
-              </fieldset>
+              <QuantityStepper
+                quantity={l.quantity}
+                onChange={(quantity) => cart.setQuantity(l.productId, l.option, quantity)}
+                min={0}
+                itemName={l.name}
+                compact
+              />
               <strong className="min-w-[84px] text-right font-display text-[1.375rem] leading-none font-extrabold">
                 {formatPrice(l.unitPriceCents * l.quantity)}
               </strong>
