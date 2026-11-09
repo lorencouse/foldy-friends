@@ -1,3 +1,4 @@
+import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 
 const securityHeaders = [
@@ -31,4 +32,13 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Origami guides are MDX files in content/guides with YAML frontmatter, which
+// is exported from each file as `guide`. Plugins are named by string so the
+// Turbopack build can load them.
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: ["remark-frontmatter", ["remark-mdx-frontmatter", { name: "guide" }]],
+  },
+});
+
+export default withMDX(nextConfig);

@@ -8,6 +8,7 @@ const links = [
   { href: "/shop/paper", label: "Paper" },
   { href: "/shop/tools", label: "Tools" },
   { href: "/shop/kits", label: "Kits" },
+  { href: "/guides", label: "Guides" },
 ];
 
 export function SiteHeader() {

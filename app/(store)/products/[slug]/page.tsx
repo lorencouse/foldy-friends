@@ -11,6 +11,7 @@ import { ProductDrawing, tileFor } from "@/components/product-picture";
 import { EYEBROW } from "@/components/product-tile";
 import { CATEGORY_INFO, getProduct, getRelated, getReviews, type Product } from "@/lib/catalog";
 import { descriptionParagraphs, foldLevel, needs } from "@/lib/fold-level";
+import { guidesForProduct } from "@/lib/guides";
 import {
   effectivePrice,
   FREE_SHIPPING_FROM_CENTS,
@@ -57,6 +58,7 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
   const need = needs(product.description);
   const about = descriptionParagraphs(product.description);
   const eyebrow = product.category === "kits" ? `Moon Dreamers · ${EYEBROW.kits}` : EYEBROW[product.category];
+  const guides = guidesForProduct(product.slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -189,6 +191,23 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
                   <p key={para.slice(0, 32)}>{para}</p>
                 ))}
               </Details>
+              {guides.length > 0 && (
+                <Details title="Fold it: free guides" open>
+                  <ul className="flex flex-col gap-2">
+                    {guides.map((g) => (
+                      <li key={g.slug}>
+                        <Link href={`/guides/${g.slug}`} className="link">
+                          {g.title}
+                        </Link>
+                        <span className="text-[0.9375rem]">
+                          {" "}
+                          · {g.steps.length} steps, about {g.minutes} minutes
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </Details>
+              )}
               <Details title="Shipping">
                 <p>
                   Free shipping on orders over {formatPriceShort(FREE_SHIPPING_FROM_CENTS)}; otherwise{" "}

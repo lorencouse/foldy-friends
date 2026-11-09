@@ -6,6 +6,7 @@ const menu = [
   { href: "/shop/paper", label: "Paper" },
   { href: "/shop/tools", label: "Tools" },
   { href: "/shop/kits", label: "Kits" },
+  { href: "/guides", label: "Origami guides" },
   { href: "/account", label: "Your account" },
   { href: "/cart", label: "Cart" },
 ];

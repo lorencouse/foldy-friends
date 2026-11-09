@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { connection } from "next/server";
 import { getProducts } from "@/lib/catalog";
 import { CATEGORIES } from "@/lib/db/schema";
+import { GUIDES } from "@/lib/guides";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   await connection();
@@ -13,6 +14,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...CATEGORIES.map((c) => ({
       url: `${site}/shop/${c}`,
       changeFrequency: "weekly" as const,
+    })),
+    { url: `${site}/guides`, changeFrequency: "monthly" },
+    ...GUIDES.map((g) => ({
+      url: `${site}/guides/${g.slug}`,
+      lastModified: g.updated,
+      changeFrequency: "monthly" as const,
     })),
     ...products.map((p) => ({
       url: `${site}/products/${p.slug}`,

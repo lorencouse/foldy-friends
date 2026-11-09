@@ -1,5 +1,5 @@
 import "server-only";
-import { and, avg, count, desc, eq, ne } from "drizzle-orm";
+import { and, avg, count, desc, eq, inArray, ne } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { db } from "@/lib/db";
 import { type Category, products, reviews, user } from "@/lib/db/schema";
@@ -38,6 +38,15 @@ export async function getProduct(slug: string) {
   cacheTag(PRODUCTS_TAG, `product:${slug}`);
   cacheLife("hours");
   return (await db.query.products.findFirst({ where: eq(products.slug, slug) })) ?? null;
+}
+
+/** Products by slug, in the order asked for; unknown slugs are left out. */
+export async function getProductsBySlugs(slugs: readonly string[]) {
+  "use cache";
+  cacheTag(PRODUCTS_TAG);
+  cacheLife("hours");
+  const found = await db.query.products.findMany({ where: inArray(products.slug, [...slugs]) });
+  return slugs.flatMap((s) => found.find((p) => p.slug === s) ?? []);
 }
 
 export async function getRelated(product: Product, limit = 3) {
