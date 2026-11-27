@@ -350,8 +350,8 @@
 
   /* The cat logo as a single-colour stamp, for dark grounds. */
   .ink-cat {
-    -webkit-mask: url("/assets/origami-cat-inverted.png") center / contain no-repeat;
-    mask: url("/assets/origami-cat-inverted.png") center / contain no-repeat;
+    -webkit-mask: url("/assets/origami-cat-inverted.svg") center / contain no-repeat;
+    mask: url("/assets/origami-cat-inverted.svg") center / contain no-repeat;
   }
 
   /* Fold level, in diamonds. */

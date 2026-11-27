@@ -388,7 +388,8 @@ function FoldClub() {
                 Let's fold!
               </span>
               <Image
-                src="/assets/dog-mascot.png"
+                src="/assets/dog-mascot.svg"
+                unoptimized
                 alt=""
                 width={388}
                 height={378}

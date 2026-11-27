@@ -35,7 +35,8 @@ export function CartView() {
             className="relative w-[min(56vw,240px)] -rotate-3 p-2 shadow-[0_18px_30px_-20px_rgba(31,42,68,.55)] sm:p-2.5"
           />
           <Image
-            src="/assets/dog-mascot.png"
+            src="/assets/dog-mascot.svg"
+            unoptimized
             alt=""
             width={388}
             height={378}

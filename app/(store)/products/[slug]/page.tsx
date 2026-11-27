@@ -201,7 +201,8 @@ async function ProductView({ params }: { params: PageProps<"/products/[slug]">["
           >
             <span className="flap" />
             <Image
-              src="/assets/origami-cat-inverted.png"
+              src="/assets/origami-cat-inverted.svg"
+              unoptimized
               alt=""
               width={192}
               height={192}
