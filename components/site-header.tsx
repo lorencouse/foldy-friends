@@ -22,7 +22,8 @@ export function SiteHeader() {
         <div className="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-1 py-3">
           <Link href="/" className="flex min-h-11 items-center gap-2.5" aria-label="Foldy Friends home">
             <Image
-              src="/assets/origami-cat-inverted.png"
+              src="/assets/origami-cat-inverted.svg"
+              unoptimized
               alt=""
               width={50}
               height={50}
